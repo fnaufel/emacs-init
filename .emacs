@@ -1365,6 +1365,7 @@ with leading and trailing spaces removed."
 (require 'sunrise-x-modeline)
 (require 'sunrise-checkpoint)
 (require 'sunrise-popviewer)
+(require 'sunrise-x-tree)
 
 (add-to-list 'auto-mode-alist '("\\.srvm\\'" . sunrise-virtual-mode))
 
