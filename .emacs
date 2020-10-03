@@ -230,6 +230,7 @@
  '(sunrise-quit-hook (quote (sunrise-quit-function)))
  '(sunrise-terminal-program "bash")
  '(sunrise-traditional-other-window t)
+ '(sunrise-tree-isearch-always-sticky t)
  '(sunrise-use-commander-keys nil)
  '(sunrise-visit-buffer-function (quote special-display-popup-frame))
  '(sunrise-window-split-style (quote horizontal))
@@ -1555,6 +1556,7 @@ A prefix argument is handled like `move-to-window-line':
 (other-frame -1)
 (maximize-current-frame)
 (sunrise "/home/fnaufel/Documents" nil)
+;;(sunrise-tree-view)
 
 ;; ;;; Go back to initial frame and maximize
 (other-frame -1)
