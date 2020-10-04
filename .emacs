@@ -224,6 +224,7 @@
  '(sunrise-listing-switches
    "--time-style=+[%Y-%m-%d-%H:%M] --group-directories-first -alDhG")
  '(sunrise-mode-hook (quote (sunrise-mark-sync)))
+ '(sunrise-modeline-use-utf8-marks t)
  '(sunrise-popviewer-enabled t)
  '(sunrise-popviewer-mode t)
  '(sunrise-popviewer-style (quote dedicated-frames))
@@ -1364,10 +1365,10 @@ with leading and trailing spaces removed."
                                    
 (require 'sunrise)
 ;;(require 'sunrise-x-buttons)
-(require 'sunrise-x-modeline)
+(require 'sunrise-modeline)
 (require 'sunrise-checkpoint)
 (require 'sunrise-popviewer)
-(require 'sunrise-x-tree)
+(require 'sunrise-tree)
 
 (add-to-list 'auto-mode-alist '("\\.srvm\\'" . sunrise-virtual-mode))
 
