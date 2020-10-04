@@ -1399,6 +1399,32 @@ with leading and trailing spaces removed."
        (sunrise-scrollable-viewer (current-buffer)))))
   (message "Browsing \"%s\" in web browser" file))
 
+;;; Modified to set `dired-directory' buffer-local variable
+;;; and thus prevent an error from ocurring in dired
+(defun sunrise-tree-list (dir)
+  "Return the list of subdirectories in DIR."
+  (setq dired-directory dir)
+  (let ((entries (directory-files dir 'full)) dirs entry rel-entry)
+    (while entries
+      (setq entry (car entries)
+            rel-entry (file-relative-name entry (concat entry "/.."))
+            entries (cdr entries))
+
+      (cond ((eq ?. (string-to-char (substring entry -1)))
+             (ignore))
+
+            ((and dired-omit-mode (eq ?. (string-to-char rel-entry)))
+             (ignore))
+
+            ((file-directory-p entry)
+             (setq dirs (cons entry dirs)))
+
+            ((and (not sunrise-tree-omit-archives) (sunrise-avfs-directory-p entry))
+             (setq dirs (cons (sunrise-tree-avfs-dir entry) dirs)))
+
+            (t (ignore))))
+    (nreverse dirs)))
+
 
 ;;;  _   _                     _    ____   ____ ___ ___   _                  
 ;;; | \ | | ___  _ __         / \  / ___| / ___|_ _|_ _| | | _____ _   _ ___ 
@@ -1555,8 +1581,14 @@ A prefix argument is handled like `move-to-window-line':
 (make-frame)
 (other-frame -1)
 (maximize-current-frame)
-(sunrise "/home/fnaufel/Documents" nil)
-;;(sunrise-tree-view)
+(sunrise "/home/fnaufel" "/home/fnaufel/Documents")
+;; Set tree view for left-hand pane...
+(sunrise-tree-view)
+;; ...and for right-hand pane
+(other-window 1)
+(sunrise-tree-view)
+;; go back to left-hand pane
+(other-window 1)
 
 ;; ;;; Go back to initial frame and maximize
 (other-frame -1)
