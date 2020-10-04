@@ -240,6 +240,7 @@
  '(term-mode-hook (quote ((lambda nil (yas-minor-mode -1)))))
  '(tool-bar-mode nil)
  '(user-full-name "")
+ '(vc-follow-symlinks t)
  '(woman-use-own-frame nil)
  '(xterm-color-use-bold-for-bright t))
 
