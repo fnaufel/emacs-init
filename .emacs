@@ -1,3 +1,7 @@
+;; github-clone
+;; org-journal
+
+
 ;;;   ____          _                  _         
 ;;;  / ___|   _ ___| |_ ___  _ __ ___ (_)_______ 
 ;;; | |  | | | / __| __/ _ \| '_ ` _ \| |_  / _ \
@@ -89,7 +93,7 @@
       nil))))
  '(org-agenda-files
    (quote
-    ("~/Documents/OrgFiles/algebra-linear.org" "~/Documents/OrgFiles/introBayes.org" "~/Documents/OrgFiles/estatistica.org" "~/Documents/OrgFiles/prob-est.org" "~/Documents/OrgFiles/r.org" "~/Documents/OrgFiles/fundamentos.org" "~/Documents/OrgFiles/nederlands.org" "~/Documents/OrgFiles/combinatoria.org" "~/Documents/OrgFiles/ga.org" "~/Documents/OrgFiles/todo.org" "~/Documents/OrgFiles/matdiscr.org" "/home/fnaufel/Documents/OrgFiles/ab.org" "/home/fnaufel/Documents/OrgFiles/android.org" "/home/fnaufel/Documents/OrgFiles/blogFnaufel.org" "/home/fnaufel/Documents/OrgFiles/blogJulianNeuer.org" "/home/fnaufel/Documents/OrgFiles/blogSagAllesAb.org" "/home/fnaufel/Documents/OrgFiles/comics.org" "/home/fnaufel/Documents/OrgFiles/computacaoESociedade.org" "/home/fnaufel/Documents/OrgFiles/deutsch.org" "/home/fnaufel/Documents/OrgFiles/development.org" "/home/fnaufel/Documents/OrgFiles/downloads.org" "/home/fnaufel/Documents/OrgFiles/emacs.org" "/home/fnaufel/Documents/OrgFiles/games.org" "/home/fnaufel/Documents/OrgFiles/irc.org" "/home/fnaufel/Documents/OrgFiles/javascript.org" "/home/fnaufel/Documents/OrgFiles/kindle.org" "/home/fnaufel/Documents/OrgFiles/latex.org" "/home/fnaufel/Documents/OrgFiles/lattes.org" "/home/fnaufel/Documents/OrgFiles/lftc.org" "/home/fnaufel/Documents/OrgFiles/linguistics.org" "/home/fnaufel/Documents/OrgFiles/llarc.org" "/home/fnaufel/Documents/OrgFiles/logic.org" "/home/fnaufel/Documents/OrgFiles/macOSX.org" "/home/fnaufel/Documents/OrgFiles/movies.org" "/home/fnaufel/Documents/OrgFiles/music.org" "/home/fnaufel/Documents/OrgFiles/personal.org" "/home/fnaufel/Documents/OrgFiles/photography.org" "/home/fnaufel/Documents/OrgFiles/python.org" "/home/fnaufel/Documents/OrgFiles/quotes.org" "/home/fnaufel/Documents/OrgFiles/rcn-rfm.org" "/home/fnaufel/Documents/OrgFiles/reading.org" "/home/fnaufel/Documents/OrgFiles/research.org" "/home/fnaufel/Documents/OrgFiles/serenitas50.org" "/home/fnaufel/Documents/OrgFiles/sites.org" "/home/fnaufel/Documents/OrgFiles/smw.org" "/home/fnaufel/Documents/OrgFiles/statistics.org" "/home/fnaufel/Documents/OrgFiles/test.org" "/home/fnaufel/Documents/OrgFiles/ubuntu.org" "/home/fnaufel/Documents/OrgFiles/weekly.org" "/home/fnaufel/Documents/OrgFiles/writing.org" "/home/fnaufel/Documents/OrgFiles/zitat.org")))
+    ("~/Documents/OrgFiles/todo.org" "~/Documents/OrgFiles/linear-algebra.org" "~/Documents/OrgFiles/probability.org" "~/Documents/OrgFiles/introBayes.org" "~/Documents/OrgFiles/estatistica.org" "~/Documents/OrgFiles/prob-est.org" "~/Documents/OrgFiles/r.org" "~/Documents/OrgFiles/fundamentos.org" "~/Documents/OrgFiles/nederlands.org" "~/Documents/OrgFiles/combinatoria.org" "~/Documents/OrgFiles/ga.org" "~/Documents/OrgFiles/matdiscr.org" "/home/fnaufel/Documents/OrgFiles/ab.org" "/home/fnaufel/Documents/OrgFiles/android.org" "/home/fnaufel/Documents/OrgFiles/blogFnaufel.org" "/home/fnaufel/Documents/OrgFiles/blogJulianNeuer.org" "/home/fnaufel/Documents/OrgFiles/blogSagAllesAb.org" "/home/fnaufel/Documents/OrgFiles/comics.org" "/home/fnaufel/Documents/OrgFiles/computacaoESociedade.org" "/home/fnaufel/Documents/OrgFiles/deutsch.org" "/home/fnaufel/Documents/OrgFiles/development.org" "/home/fnaufel/Documents/OrgFiles/downloads.org" "/home/fnaufel/Documents/OrgFiles/emacs.org" "/home/fnaufel/Documents/OrgFiles/games.org" "/home/fnaufel/Documents/OrgFiles/irc.org" "/home/fnaufel/Documents/OrgFiles/javascript.org" "/home/fnaufel/Documents/OrgFiles/kindle.org" "/home/fnaufel/Documents/OrgFiles/latex.org" "/home/fnaufel/Documents/OrgFiles/lattes.org" "/home/fnaufel/Documents/OrgFiles/lftc.org" "/home/fnaufel/Documents/OrgFiles/linguistics.org" "/home/fnaufel/Documents/OrgFiles/llarc.org" "/home/fnaufel/Documents/OrgFiles/logic.org" "/home/fnaufel/Documents/OrgFiles/macOSX.org" "/home/fnaufel/Documents/OrgFiles/movies.org" "/home/fnaufel/Documents/OrgFiles/music.org" "/home/fnaufel/Documents/OrgFiles/personal.org" "/home/fnaufel/Documents/OrgFiles/photography.org" "/home/fnaufel/Documents/OrgFiles/python.org" "/home/fnaufel/Documents/OrgFiles/quotes.org" "/home/fnaufel/Documents/OrgFiles/rcn-rfm.org" "/home/fnaufel/Documents/OrgFiles/reading.org" "/home/fnaufel/Documents/OrgFiles/research.org" "/home/fnaufel/Documents/OrgFiles/serenitas50.org" "/home/fnaufel/Documents/OrgFiles/sites.org" "/home/fnaufel/Documents/OrgFiles/smw.org" "/home/fnaufel/Documents/OrgFiles/statistics.org" "/home/fnaufel/Documents/OrgFiles/test.org" "/home/fnaufel/Documents/OrgFiles/ubuntu.org" "/home/fnaufel/Documents/OrgFiles/weekly.org" "/home/fnaufel/Documents/OrgFiles/writing.org" "/home/fnaufel/Documents/OrgFiles/zitat.org")))
  '(org-agenda-include-diary t)
  '(org-agenda-sorting-strategy
    (quote
@@ -149,6 +153,7 @@
  '(org-log-into-drawer t)
  '(org-lowest-priority 67)
  '(org-num-face (quote success))
+ '(org-num-max-level 2)
  '(org-odd-levels-only t)
  '(org-pretty-entities nil)
  '(org-refile-targets (quote ((org-agenda-files :maxlevel . 10))))
@@ -165,6 +170,7 @@
  '(org-reveal-transition "none")
  '(org-reverse-note-order t)
  '(org-special-ctrl-a/e t)
+ '(org-startup-folded t)
  '(org-table-convert-region-max-lines 99999)
  '(org-tag-alist
    (quote
@@ -190,7 +196,7 @@
  '(package-enable-at-startup nil)
  '(package-selected-packages
    (quote
-    (calfw calfw-org helm-org system-packages org org-ac org-journal xonsh-mode js2-mode anzu github-clone helpful info-colors js-comint nodejs-repl org-autolist org-web-tools typo web-beautify elpy markdown-toc markdown-preview-mode markdown-mode sudo-edit magit lua-mode htmlize dash-functional smartparens multiple-cursors expand-region)))
+    (org-journal auctex auto-complete-auctex calfw calfw-org helm-org system-packages org org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl org-autolist typo web-beautify elpy markdown-toc markdown-preview-mode markdown-mode sudo-edit magit lua-mode htmlize dash-functional smartparens multiple-cursors expand-region)))
  '(python-shell-interpreter "python3")
  '(rcirc-authinfo (quote (("freenode" nickserv "SagAllesAb" "54g4ll354b"))))
  '(rcirc-default-full-name "Sag alles ab!")
@@ -227,7 +233,7 @@
  '(sunrise-modeline-use-utf8-marks t)
  '(sunrise-popviewer-enabled t)
  '(sunrise-popviewer-mode t)
- '(sunrise-popviewer-style (quote dedicated-frames))
+ '(sunrise-popviewer-style (quote multiple-frames))
  '(sunrise-quit-hook (quote (sunrise-quit-function)))
  '(sunrise-terminal-program "bash")
  '(sunrise-traditional-other-window t)
@@ -290,7 +296,6 @@
 ;;; |____/ \___|\__| |_|  \___/|_| |_|\__|
 
 ;;; Set font
-
 (defun fontify-frame (frame)
 ;  (set-frame-parameter frame 'font "Hack-13"))
   (set-frame-parameter frame 'font "Jetbrains Mono-13"))
@@ -300,6 +305,7 @@
 (fontify-frame nil)
 ;; Fontify any future frames
 (push 'fontify-frame after-make-frame-functions)
+
 
 
 ;;;  ____  _             _                                  
@@ -392,7 +398,7 @@ There are two things you can do about this warning:
 ;;;  \__, |_|\__|_| |_|\__,_|_.__/       \___|_|\___/|_| |_|\___|
 ;;;  |___/                                                       
 
-(require 'github-clone)
+; (require 'github-clone)
 
 
 ;;;  _          _        __       _ 
@@ -502,16 +508,6 @@ There are two things you can do about this warning:
 
 (require 'org-autolist)
 (add-hook 'org-mode-hook (lambda () (org-autolist-mode)))
-
-
-;;;                                    _           _              _     
-;;;   ___  _ __ __ _     __      _____| |__       | |_ ___   ___ | |___ 
-;;;  / _ \| '__/ _` |____\ \ /\ / / _ \ '_ \ _____| __/ _ \ / _ \| / __|
-;;; | (_) | | | (_| |_____\ V  V /  __/ |_) |_____| || (_) | (_) | \__ \
-;;;  \___/|_|  \__, |      \_/\_/ \___|_.__/       \__\___/ \___/|_|___/
-;;;            |___/                                                    
-
-(require 'org-web-tools)
 
 
 ;;;  _____                  
@@ -1270,6 +1266,12 @@ with leading and trailing spaces removed."
           (function (lambda ()
                       (define-key LaTeX-mode-map "\C-ci" 'latex-help))))
 (setq reftex-plug-into-AUCTeX t)
+(setq TeX-auto-save t)
+(setq TeX-parse-self t)
+(setq-default TeX-master nil)
+
+;; (require 'auto-complete-auctex)
+
 
 
 ;;;     _         _         __ _ _ _ 
@@ -1349,7 +1351,7 @@ with leading and trailing spaces removed."
 ;;;  \___/|_|  \__, |    _/ |\___/ \__,_|_|  |_| |_|\__,_|_|
 ;;;            |___/    |__/                                
 
-(require 'org-journal)
+;(require 'org-journal)
 
 (global-unset-key (kbd "C-c C-j"))
 (global-set-key (kbd "C-c s") 'org-journal-search)
