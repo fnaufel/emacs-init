@@ -196,7 +196,7 @@
  '(package-enable-at-startup nil)
  '(package-selected-packages
    (quote
-    (org-journal auctex auto-complete-auctex calfw calfw-org helm-org system-packages org org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl org-autolist typo web-beautify elpy markdown-toc markdown-preview-mode markdown-mode sudo-edit magit lua-mode htmlize dash-functional smartparens multiple-cursors expand-region)))
+    (auctex auto-complete-auctex calfw calfw-org helm-org system-packages org org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl org-autolist typo web-beautify elpy markdown-toc markdown-preview-mode markdown-mode sudo-edit magit lua-mode htmlize dash-functional smartparens multiple-cursors expand-region)))
  '(python-shell-interpreter "python3")
  '(rcirc-authinfo (quote (("freenode" nickserv "SagAllesAb" "54g4ll354b"))))
  '(rcirc-default-full-name "Sag alles ab!")
