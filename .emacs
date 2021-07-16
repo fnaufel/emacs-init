@@ -106,6 +106,11 @@
  '(org-agenda-window-setup (quote current-window))
  '(org-blank-before-new-entry (quote ((heading . t) (plain-list-item . t))))
  '(org-catch-invisible-edits nil)
+ '(org-clock-clocktable-default-properties
+   (quote
+    (:maxlevel 2 :scope agenda :block thismonth :fileskip0 t :link t :narrow 70! :hidefiles t :formula % :sort
+               (1 . 97))))
+ '(org-clock-mode-line-total (quote today))
  '(org-confirm-elisp-link-function (quote y-or-n-p))
  '(org-confirm-shell-link-function (quote y-or-n-p))
  '(org-cycle-global-at-bob t)
@@ -127,7 +132,10 @@
       (match-string 1 link)
       (match-string 2 link))
      ("\\(?:mobi\\|epub\\|azw\\)" . "ebook-viewer %s")
-     ("\\.Rproj\\'" . "rstudio %s"))))
+     ("\\.Rproj\\'" . "rstudio %s")
+     ("\\.png\\'" . "gwenview %s")
+     ("\\.jpe?g\\'" . "gwenview %s")
+     ("\\.gif\\'" . "gwenview %s"))))
  '(org-footnote-auto-label (quote confirm))
  '(org-footnote-section nil)
  '(org-format-latex-options
@@ -622,6 +630,11 @@ There are two things you can do about this warning:
 
 ;;; Default mode for new buffers
 (setq-default major-mode 'org-mode)
+
+;;; Clock
+(setq org-clock-persist 'history)
+(org-clock-persistence-insinuate)
+
 
 ;; Keys
 (global-set-key "\C-ck" 'org-store-link)
