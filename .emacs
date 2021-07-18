@@ -86,11 +86,11 @@
        (alltodo ""
                 ((org-agenda-sorting-strategy
                   (quote
-                   (user-defined-up priority-down todo-state-up))))))
+                   (priority-down todo-state-up))))))
       nil))))
  '(org-agenda-files
    (quote
-    ("~/Documents/OrgFiles/elm.org" "~/Documents/OrgFiles/todo.org" "~/Documents/OrgFiles/linear-algebra.org" "~/Documents/OrgFiles/probability.org" "~/Documents/OrgFiles/introBayes.org" "~/Documents/OrgFiles/estatistica.org" "~/Documents/OrgFiles/prob-est.org" "~/Documents/OrgFiles/r.org" "~/Documents/OrgFiles/fundamentos.org" "~/Documents/OrgFiles/nederlands.org" "~/Documents/OrgFiles/combinatoria.org" "~/Documents/OrgFiles/ga.org" "~/Documents/OrgFiles/matdiscr.org" "/home/fnaufel/Documents/OrgFiles/ab.org" "/home/fnaufel/Documents/OrgFiles/android.org" "/home/fnaufel/Documents/OrgFiles/blogFnaufel.org" "/home/fnaufel/Documents/OrgFiles/blogJulianNeuer.org" "/home/fnaufel/Documents/OrgFiles/blogSagAllesAb.org" "/home/fnaufel/Documents/OrgFiles/comics.org" "/home/fnaufel/Documents/OrgFiles/computacaoESociedade.org" "/home/fnaufel/Documents/OrgFiles/deutsch.org" "/home/fnaufel/Documents/OrgFiles/development.org" "/home/fnaufel/Documents/OrgFiles/downloads.org" "/home/fnaufel/Documents/OrgFiles/emacs.org" "/home/fnaufel/Documents/OrgFiles/games.org" "/home/fnaufel/Documents/OrgFiles/irc.org" "/home/fnaufel/Documents/OrgFiles/javascript.org" "/home/fnaufel/Documents/OrgFiles/kindle.org" "/home/fnaufel/Documents/OrgFiles/latex.org" "/home/fnaufel/Documents/OrgFiles/lattes.org" "/home/fnaufel/Documents/OrgFiles/lftc.org" "/home/fnaufel/Documents/OrgFiles/linguistics.org" "/home/fnaufel/Documents/OrgFiles/llarc.org" "/home/fnaufel/Documents/OrgFiles/logic.org" "/home/fnaufel/Documents/OrgFiles/macOSX.org" "/home/fnaufel/Documents/OrgFiles/movies.org" "/home/fnaufel/Documents/OrgFiles/music.org" "/home/fnaufel/Documents/OrgFiles/personal.org" "/home/fnaufel/Documents/OrgFiles/photography.org" "/home/fnaufel/Documents/OrgFiles/python.org" "/home/fnaufel/Documents/OrgFiles/quotes.org" "/home/fnaufel/Documents/OrgFiles/rcn-rfm.org" "/home/fnaufel/Documents/OrgFiles/reading.org" "/home/fnaufel/Documents/OrgFiles/research.org" "/home/fnaufel/Documents/OrgFiles/serenitas50.org" "/home/fnaufel/Documents/OrgFiles/sites.org" "/home/fnaufel/Documents/OrgFiles/smw.org" "/home/fnaufel/Documents/OrgFiles/statistics.org" "/home/fnaufel/Documents/OrgFiles/test.org" "/home/fnaufel/Documents/OrgFiles/ubuntu.org" "/home/fnaufel/Documents/OrgFiles/weekly.org" "/home/fnaufel/Documents/OrgFiles/writing.org" "/home/fnaufel/Documents/OrgFiles/zitat.org")))
+    ("~/Documents/OrgFiles/blog.org" "~/Documents/OrgFiles/elm.org" "~/Documents/OrgFiles/todo.org" "~/Documents/OrgFiles/linear-algebra.org" "~/Documents/OrgFiles/probability.org" "~/Documents/OrgFiles/introBayes.org" "~/Documents/OrgFiles/estatistica.org" "~/Documents/OrgFiles/prob-est.org" "~/Documents/OrgFiles/r.org" "~/Documents/OrgFiles/fundamentos.org" "~/Documents/OrgFiles/nederlands.org" "~/Documents/OrgFiles/combinatoria.org" "~/Documents/OrgFiles/ga.org" "~/Documents/OrgFiles/matdiscr.org" "/home/fnaufel/Documents/OrgFiles/ab.org" "/home/fnaufel/Documents/OrgFiles/android.org" "/home/fnaufel/Documents/OrgFiles/blogFnaufel.org" "/home/fnaufel/Documents/OrgFiles/blogJulianNeuer.org" "/home/fnaufel/Documents/OrgFiles/blogSagAllesAb.org" "/home/fnaufel/Documents/OrgFiles/comics.org" "/home/fnaufel/Documents/OrgFiles/computacaoESociedade.org" "/home/fnaufel/Documents/OrgFiles/deutsch.org" "/home/fnaufel/Documents/OrgFiles/development.org" "/home/fnaufel/Documents/OrgFiles/downloads.org" "/home/fnaufel/Documents/OrgFiles/emacs.org" "/home/fnaufel/Documents/OrgFiles/games.org" "/home/fnaufel/Documents/OrgFiles/irc.org" "/home/fnaufel/Documents/OrgFiles/javascript.org" "/home/fnaufel/Documents/OrgFiles/kindle.org" "/home/fnaufel/Documents/OrgFiles/latex.org" "/home/fnaufel/Documents/OrgFiles/lattes.org" "/home/fnaufel/Documents/OrgFiles/lftc.org" "/home/fnaufel/Documents/OrgFiles/linguistics.org" "/home/fnaufel/Documents/OrgFiles/llarc.org" "/home/fnaufel/Documents/OrgFiles/logic.org" "/home/fnaufel/Documents/OrgFiles/macOSX.org" "/home/fnaufel/Documents/OrgFiles/movies.org" "/home/fnaufel/Documents/OrgFiles/music.org" "/home/fnaufel/Documents/OrgFiles/personal.org" "/home/fnaufel/Documents/OrgFiles/photography.org" "/home/fnaufel/Documents/OrgFiles/python.org" "/home/fnaufel/Documents/OrgFiles/quotes.org" "/home/fnaufel/Documents/OrgFiles/rcn-rfm.org" "/home/fnaufel/Documents/OrgFiles/reading.org" "/home/fnaufel/Documents/OrgFiles/research.org" "/home/fnaufel/Documents/OrgFiles/serenitas50.org" "/home/fnaufel/Documents/OrgFiles/sites.org" "/home/fnaufel/Documents/OrgFiles/smw.org" "/home/fnaufel/Documents/OrgFiles/statistics.org" "/home/fnaufel/Documents/OrgFiles/test.org" "/home/fnaufel/Documents/OrgFiles/ubuntu.org" "/home/fnaufel/Documents/OrgFiles/weekly.org" "/home/fnaufel/Documents/OrgFiles/writing.org" "/home/fnaufel/Documents/OrgFiles/zitat.org")))
  '(org-agenda-include-diary t)
  '(org-agenda-sorting-strategy
    (quote
@@ -162,6 +162,9 @@
  '(org-num-max-level 2)
  '(org-odd-levels-only t)
  '(org-pretty-entities nil)
+ '(org-priority-default 40)
+ '(org-priority-highest 0)
+ '(org-priority-lowest 60)
  '(org-refile-targets (quote ((org-agenda-files :maxlevel . 10))))
  '(org-refile-use-outline-path (quote file))
  '(org-return-follows-link t)
@@ -197,7 +200,7 @@
      ("latex" . 120))))
  '(org-todo-keywords
    (quote
-    ((sequence "TODO(t!)" "STARTED(s!)" "|" "CANCELED(c!)" "DONE(d!)"))))
+    ((sequence "STARTED(s!)" "NEXT(n!)" "TODO(t!)" "|" "CANCELED(c!)" "DONE(d!)"))))
  '(org-use-speed-commands t)
  '(package-enable-at-startup nil)
  '(package-selected-packages
