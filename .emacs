@@ -90,7 +90,7 @@
       nil))))
  '(org-agenda-files
    (quote
-    ("~/Documents/OrgFiles/blog.org" "~/Documents/OrgFiles/elm.org" "~/Documents/OrgFiles/todo.org" "~/Documents/OrgFiles/linear-algebra.org" "~/Documents/OrgFiles/probability.org" "~/Documents/OrgFiles/introBayes.org" "~/Documents/OrgFiles/estatistica.org" "~/Documents/OrgFiles/prob-est.org" "~/Documents/OrgFiles/r.org" "~/Documents/OrgFiles/fundamentos.org" "~/Documents/OrgFiles/nederlands.org" "~/Documents/OrgFiles/combinatoria.org" "~/Documents/OrgFiles/ga.org" "~/Documents/OrgFiles/matdiscr.org" "/home/fnaufel/Documents/OrgFiles/ab.org" "/home/fnaufel/Documents/OrgFiles/android.org" "/home/fnaufel/Documents/OrgFiles/blogFnaufel.org" "/home/fnaufel/Documents/OrgFiles/blogJulianNeuer.org" "/home/fnaufel/Documents/OrgFiles/blogSagAllesAb.org" "/home/fnaufel/Documents/OrgFiles/comics.org" "/home/fnaufel/Documents/OrgFiles/computacaoESociedade.org" "/home/fnaufel/Documents/OrgFiles/deutsch.org" "/home/fnaufel/Documents/OrgFiles/development.org" "/home/fnaufel/Documents/OrgFiles/downloads.org" "/home/fnaufel/Documents/OrgFiles/emacs.org" "/home/fnaufel/Documents/OrgFiles/games.org" "/home/fnaufel/Documents/OrgFiles/irc.org" "/home/fnaufel/Documents/OrgFiles/javascript.org" "/home/fnaufel/Documents/OrgFiles/kindle.org" "/home/fnaufel/Documents/OrgFiles/latex.org" "/home/fnaufel/Documents/OrgFiles/lattes.org" "/home/fnaufel/Documents/OrgFiles/lftc.org" "/home/fnaufel/Documents/OrgFiles/linguistics.org" "/home/fnaufel/Documents/OrgFiles/llarc.org" "/home/fnaufel/Documents/OrgFiles/logic.org" "/home/fnaufel/Documents/OrgFiles/macOSX.org" "/home/fnaufel/Documents/OrgFiles/movies.org" "/home/fnaufel/Documents/OrgFiles/music.org" "/home/fnaufel/Documents/OrgFiles/personal.org" "/home/fnaufel/Documents/OrgFiles/photography.org" "/home/fnaufel/Documents/OrgFiles/python.org" "/home/fnaufel/Documents/OrgFiles/quotes.org" "/home/fnaufel/Documents/OrgFiles/rcn-rfm.org" "/home/fnaufel/Documents/OrgFiles/reading.org" "/home/fnaufel/Documents/OrgFiles/research.org" "/home/fnaufel/Documents/OrgFiles/serenitas50.org" "/home/fnaufel/Documents/OrgFiles/sites.org" "/home/fnaufel/Documents/OrgFiles/smw.org" "/home/fnaufel/Documents/OrgFiles/statistics.org" "/home/fnaufel/Documents/OrgFiles/test.org" "/home/fnaufel/Documents/OrgFiles/ubuntu.org" "/home/fnaufel/Documents/OrgFiles/weekly.org" "/home/fnaufel/Documents/OrgFiles/writing.org" "/home/fnaufel/Documents/OrgFiles/zitat.org")))
+    ("~/Documents/OrgFiles/books.org" "~/Documents/OrgFiles/blog.org" "~/Documents/OrgFiles/todo.org" "~/Documents/OrgFiles/linear-algebra.org" "~/Documents/OrgFiles/probability.org" "~/Documents/OrgFiles/estatistica.org" "~/Documents/OrgFiles/prob-est.org" "~/Documents/OrgFiles/r.org" "~/Documents/OrgFiles/combinatoria.org" "~/Documents/OrgFiles/ga.org" "~/Documents/OrgFiles/matdiscr.org" "/home/fnaufel/Documents/OrgFiles/android.org" "/home/fnaufel/Documents/OrgFiles/deutsch.org" "/home/fnaufel/Documents/OrgFiles/development.org" "/home/fnaufel/Documents/OrgFiles/emacs.org" "/home/fnaufel/Documents/OrgFiles/javascript.org" "/home/fnaufel/Documents/OrgFiles/kindle.org" "/home/fnaufel/Documents/OrgFiles/latex.org" "/home/fnaufel/Documents/OrgFiles/linguistics.org" "/home/fnaufel/Documents/OrgFiles/movies.org" "/home/fnaufel/Documents/OrgFiles/music.org" "/home/fnaufel/Documents/OrgFiles/personal.org" "/home/fnaufel/Documents/OrgFiles/python.org" "/home/fnaufel/Documents/OrgFiles/quotes.org" "/home/fnaufel/Documents/OrgFiles/rcn-rfm.org" "/home/fnaufel/Documents/OrgFiles/research.org" "/home/fnaufel/Documents/OrgFiles/smw.org" "/home/fnaufel/Documents/OrgFiles/statistics.org" "/home/fnaufel/Documents/OrgFiles/ubuntu.org")))
  '(org-agenda-include-diary t)
  '(org-agenda-sorting-strategy
    (quote
@@ -108,8 +108,7 @@
  '(org-catch-invisible-edits nil)
  '(org-clock-clocktable-default-properties
    (quote
-    (:maxlevel 2 :scope agenda :block thismonth :fileskip0 t :link t :narrow 70! :hidefiles t :formula % :sort
-               (1 . 97))))
+    (:maxlevel 3 :scope agenda :block thisweek :step day :fileskip0 t :link t :narrow 70! :hidefiles nil :formula % :stepskip0 t :tcolumns 1)))
  '(org-clock-mode-line-total (quote today))
  '(org-confirm-elisp-link-function (quote y-or-n-p))
  '(org-confirm-shell-link-function (quote y-or-n-p))
@@ -635,7 +634,7 @@ There are two things you can do about this warning:
 (setq-default major-mode 'org-mode)
 
 ;;; Clock
-(setq org-clock-persist 'history)
+(setq org-clock-persist t)
 (org-clock-persistence-insinuate)
 
 
@@ -1602,8 +1601,7 @@ A prefix argument is handled like `move-to-window-line':
 
 ;;; Bash shell (splits window automatically)
 (shell)
-;(comint-send-string nil "cd /home/fnaufel/\n")
-;(shell-resync-dirs)
+(comint-send-string (get-buffer-process (shell)) "cd /home/fnaufel/\n")
 
 
 ;;; Third frame: sunrise ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
