@@ -1602,6 +1602,8 @@ A prefix argument is handled like `move-to-window-line':
 ;;; Bash shell (splits window automatically)
 (shell)
 (comint-send-string (get-buffer-process (shell)) "cd /home/fnaufel/\n")
+(sleep-for 1)
+(dirs)
 
 
 ;;; Third frame: sunrise ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
