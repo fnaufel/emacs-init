@@ -113,9 +113,11 @@
  '(org-confirm-elisp-link-function (quote y-or-n-p))
  '(org-confirm-shell-link-function (quote y-or-n-p))
  '(org-cycle-global-at-bob t)
+ '(org-cycle-level-faces nil)
  '(org-cycle-separator-lines 1)
  '(org-deadline-warning-days 7)
  '(org-default-priority 66)
+ '(org-ellipsis " 🡇")
  '(org-export-latex-packages-alist (quote (("" "minted" t))))
  '(org-file-apps
    (quote
@@ -179,6 +181,15 @@
  '(org-reverse-note-order t)
  '(org-special-ctrl-a/e t)
  '(org-startup-folded t)
+ '(org-superstar-cycle-headline-bullets nil)
+ '(org-superstar-headline-bullets-list (quote ("✱")))
+ '(org-superstar-prettify-item-bullets nil)
+ '(org-superstar-special-todo-items t)
+ '(org-superstar-todo-bullet-alist
+   (quote
+    (("TODO" . 9744)
+     ("DONE" . 9745)
+     ("default" . 9673))))
  '(org-table-convert-region-max-lines 99999)
  '(org-tag-alist
    (quote
@@ -204,7 +215,7 @@
  '(package-enable-at-startup nil)
  '(package-selected-packages
    (quote
-    (yaml-mode all elm-mode elm-yasnippets auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl org-autolist typo web-beautify elpy markdown-toc markdown-preview-mode markdown-mode sudo-edit magit lua-mode htmlize dash-functional multiple-cursors expand-region)))
+    (org-superstar org-journal yaml-mode all elm-mode elm-yasnippets auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl org-autolist typo web-beautify elpy markdown-toc markdown-preview-mode markdown-mode magit lua-mode htmlize dash-functional multiple-cursors expand-region)))
  '(python-shell-interpreter "python3")
  '(rcirc-authinfo (quote (("freenode" nickserv "SagAllesAb" "54g4ll354b"))))
  '(rcirc-default-full-name "Sag alles ab!")
@@ -272,6 +283,7 @@
  '(cfw:face-toolbar-button-on ((t (:foreground "light gray" :weight bold))))
  '(highlight-indent-face ((t (:background "dark gray"))))
  '(org-date ((((class color) (background dark)) (:foreground "orange1" :underline t))))
+ '(org-ellipsis ((t (:foreground "LightGoldenrod" :underline nil))))
  '(org-journal-calendar-entry-face ((t (:foreground "#bbbb00" :slant italic))))
  '(org-journal-calendar-scheduled-face ((t (:foreground "#ff0000" :slant italic))))
  '(sunrise-active-path-face ((t (:background "dark blue" :foreground "yellow" :weight bold :height 120))))
@@ -616,6 +628,22 @@ There are two things you can do about this warning:
 
 ;; Auto numbering of headlines
 (add-hook 'org-mode-hook (lambda () (org-num-mode)))
+
+;; org-superstar
+(require 'org-superstar)
+(add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
+
+;; set basic title font
+(set-face-attribute 'org-level-8 nil :weight 'bold :inherit 'default :foreground "dark orange")
+
+;; ;; ;; Low levels are unimportant => no scaling
+(set-face-attribute 'org-level-7 nil :inherit 'org-level-8)
+(set-face-attribute 'org-level-6 nil :inherit 'org-level-8)
+(set-face-attribute 'org-level-5 nil :inherit 'org-level-8)
+(set-face-attribute 'org-level-4 nil :inherit 'org-level-8)
+(set-face-attribute 'org-level-3 nil :inherit 'org-level-8 :height 1.05) 
+(set-face-attribute 'org-level-2 nil :inherit 'org-level-8 :height 1.1) 
+(set-face-attribute 'org-level-1 nil :inherit 'org-level-8 :height 1.15) 
 
 
 ;;; Shorter key bindings for next and previous link
@@ -1144,11 +1172,11 @@ with leading and trailing spaces removed."
         ((eq arg 2) (find-file "~/.emacs"))
         ((eq arg 3) (dired "~/Documents/OrgFiles"))
         ((eq arg 4) (ansi-term "/home/fnaufel/.local/bin/xonsh" "xonsh"))
-        ((eq arg 6) (find-file "~/Documents/OrgFiles/Journal/journal.org"))
-;        ((eq arg 7) (async-shell-command "jupyter --simple-prompt" "ipython3"))
-        ((eq arg 7) (async-shell-command "/home/fnaufel/anaconda3/bin/jupyter console" "jupyter-output"))
-        ((eq arg 8) (ipython-qtconsole))
-        ((eq arg 9) (ipython-notebook-int))
+        ;; ((eq arg 6) (find-file "~/Documents/OrgFiles/Journal/journal.org"))
+        ;; ((eq arg 7) (async-shell-command "jupyter --simple-prompt" "ipython3"))
+        ;; ((eq arg 7) (async-shell-command "/home/fnaufel/anaconda3/bin/jupyter console" "jupyter-output"))
+        ;; ((eq arg 8) (ipython-qtconsole))
+        ;; ((eq arg 9) (ipython-notebook-int))
         (t (find-function 'eejump))))
 
 
@@ -1377,7 +1405,7 @@ with leading and trailing spaces removed."
 ;;;  \___/|_|  \__, |    _/ |\___/ \__,_|_|  |_| |_|\__,_|_|
 ;;;            |___/    |__/                                
 
-;(require 'org-journal)
+(require 'org-journal)
 
 (global-unset-key (kbd "C-c C-j"))
 (global-set-key (kbd "C-c s") 'org-journal-search)
@@ -1602,7 +1630,7 @@ A prefix argument is handled like `move-to-window-line':
 ;;; Bash shell (splits window automatically)
 (shell)
 (comint-send-string (get-buffer-process (shell)) "cd /home/fnaufel/\n")
-(sleep-for 1)
+(sleep-for 3)
 (dirs)
 
 
