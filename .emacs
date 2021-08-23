@@ -88,9 +88,7 @@
                   (quote
                    (priority-down todo-state-up))))))
       nil))))
- '(org-agenda-files
-   (quote
-    ("~/Documents/OrgFiles/books.org" "~/Documents/OrgFiles/blog.org" "~/Documents/OrgFiles/todo.org" "~/Documents/OrgFiles/linear-algebra.org" "~/Documents/OrgFiles/probability.org" "~/Documents/OrgFiles/estatistica.org" "~/Documents/OrgFiles/prob-est.org" "~/Documents/OrgFiles/r.org" "~/Documents/OrgFiles/combinatoria.org" "~/Documents/OrgFiles/ga.org" "~/Documents/OrgFiles/matdiscr.org" "/home/fnaufel/Documents/OrgFiles/android.org" "/home/fnaufel/Documents/OrgFiles/deutsch.org" "/home/fnaufel/Documents/OrgFiles/development.org" "/home/fnaufel/Documents/OrgFiles/emacs.org" "/home/fnaufel/Documents/OrgFiles/javascript.org" "/home/fnaufel/Documents/OrgFiles/kindle.org" "/home/fnaufel/Documents/OrgFiles/latex.org" "/home/fnaufel/Documents/OrgFiles/linguistics.org" "/home/fnaufel/Documents/OrgFiles/movies.org" "/home/fnaufel/Documents/OrgFiles/music.org" "/home/fnaufel/Documents/OrgFiles/personal.org" "/home/fnaufel/Documents/OrgFiles/python.org" "/home/fnaufel/Documents/OrgFiles/quotes.org" "/home/fnaufel/Documents/OrgFiles/rcn-rfm.org" "/home/fnaufel/Documents/OrgFiles/research.org" "/home/fnaufel/Documents/OrgFiles/smw.org" "/home/fnaufel/Documents/OrgFiles/statistics.org" "/home/fnaufel/Documents/OrgFiles/ubuntu.org")))
+ '(org-agenda-files "~/.agenda_files")
  '(org-agenda-include-diary t)
  '(org-agenda-sorting-strategy
    (quote
@@ -1629,9 +1627,9 @@ A prefix argument is handled like `move-to-window-line':
 
 ;;; Bash shell (splits window automatically)
 (shell)
-(sleep-for 1)
-(comint-send-string (get-buffer-process (shell)) "cd /home/fnaufel/\n")
 (sleep-for 3)
+(comint-send-string (get-buffer-process (shell)) "cd /home/fnaufel/\n")
+(sleep-for 1)
 (dirs)
 
 
