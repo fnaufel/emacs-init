@@ -579,6 +579,18 @@ There are two things you can do about this warning:
 (add-hook 'term-mode-hook (lambda()
                 (yas-minor-mode -1)))
 
+;;; https://orgmode.org/manual/Conflicts.html#Conflicts
+(defun yas/org-very-safe-expand ()
+  (let ((yas/fallback-behavior 'return-nil)) (yas/expand)))
+
+(add-hook 'org-mode-hook
+          (lambda ()
+            (make-variable-buffer-local 'yas/trigger-key)
+            (setq yas/trigger-key [tab])
+            (add-to-list 'org-tab-first-hook 'yas/org-very-safe-expand)
+            (define-key yas/keymap [tab] 'yas/next-field)))
+
+
 
 ;;;  ____  _          _ _ 
 ;;; / ___|| |__   ___| | |
@@ -1483,6 +1495,15 @@ with leading and trailing spaces removed."
 
             (t (ignore))))
     (nreverse dirs)))
+
+
+(defun open-dir-in-sunrise ()
+  (interactive)
+  (save-excursion
+    (sunrise-dired (ffap-guess-file-name-at-point))))
+
+(global-set-key (kbd "C-x C-j") 'open-dir-in-sunrise)
+
 
 
 ;;;  _   _                     _    ____   ____ ___ ___   _                  
