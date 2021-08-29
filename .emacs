@@ -213,7 +213,7 @@
  '(package-enable-at-startup nil)
  '(package-selected-packages
    (quote
-    (cdlatex org-superstar org-journal yaml-mode all elm-mode elm-yasnippets auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl org-autolist typo web-beautify elpy markdown-toc markdown-preview-mode markdown-mode magit lua-mode htmlize dash-functional multiple-cursors expand-region)))
+    (bash-completion cdlatex org-superstar org-journal yaml-mode all elm-mode elm-yasnippets auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl org-autolist typo web-beautify elpy markdown-toc markdown-preview-mode markdown-mode magit lua-mode htmlize dash-functional multiple-cursors expand-region)))
  '(python-shell-interpreter "python3")
  '(rcirc-authinfo (quote (("freenode" nickserv "SagAllesAb" "54g4ll354b"))))
  '(rcirc-default-full-name "Sag alles ab!")
@@ -756,6 +756,17 @@ There are two things you can do about this warning:
 (define-key org-mode-map (kbd "C-c C-j") 'helm-org-in-buffer-headings)
 (define-key org-mode-map (kbd "C-c i") 'helm-org-parent-headings)
 (define-key org-mode-map (kbd "C-c g") 'helm-org-agenda-files-headings)
+
+
+;;;  _               _                                 _      _   _             
+;;; | |__   __ _ ___| |__     ___ ___  _ __ ___  _ __ | | ___| |_(_) ___  _ __  
+;;; | '_ \ / _` / __| '_ \   / __/ _ \| '_ ` _ \| '_ \| |/ _ \ __| |/ _ \| '_ \ 
+;;; | |_) | (_| \__ \ | | | | (_| (_) | | | | | | |_) | |  __/ |_| | (_) | | | |
+;;; |_.__/ \__,_|___/_| |_|  \___\___/|_| |_| |_| .__/|_|\___|\__|_|\___/|_| |_|
+;;;                                             |_|                             
+
+(require 'bash-completion)
+(bash-completion-setup)
 
 
 ;;;                                  _                      _             
