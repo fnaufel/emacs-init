@@ -186,6 +186,8 @@
  '(org-superstar-todo-bullet-alist
    (quote
     (("TODO" . 9744)
+     ("NEXT" . 9744)
+     ("STARTED" . 9744)
      ("DONE" . 9745)
      ("default" . 9673))))
  '(org-table-convert-region-max-lines 99999)
