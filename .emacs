@@ -1590,12 +1590,16 @@ A prefix argument is handled like `move-to-window-line':
 
 
 (global-set-key "\M-r" 'cycle-window-line)
-(global-set-key (kbd "C-<insert>") 'scroll-n-lines-ahead)
+(global-set-key (kbd "C-*") 'scroll-n-lines-ahead)
 (global-set-key (kbd "C-/") 'scroll-n-lines-behind)
 (global-set-key (kbd "C-x C-y") 'transpose-sentences)
 (global-set-key (kbd "s-<prior>") 'scroll-down)
 (global-set-key (kbd "s-<next>") 'scroll-up)
 (global-set-key (kbd "C-c u") 'org-mark-ring-goto)
+
+(global-set-key (kbd "C-<insert>") 'kill-ring-save)
+
+
 
 
 
