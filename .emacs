@@ -783,7 +783,7 @@ There are two things you can do about this warning:
 (sp-with-modes '(markdown-mode gfm-mode rst-mode org-mode)
   (sp-local-pair "*" "*")
   (sp-local-pair "/" "/")
-  (sp-local-pair "_" "_")
+;  (sp-local-pair "_" "_")
 )
 
 (defun sp-select-up ()
@@ -795,31 +795,28 @@ There are two things you can do about this warning:
 
 
 ;; From https://github.com/Fuco1/.emacs.d/blob/master/files/smartparens.el
-(define-key smartparens-mode-map (kbd "M-f") 'sp-forward-sexp)
-(define-key smartparens-mode-map (kbd "M-b") 'sp-backward-sexp)
+(define-key smartparens-mode-map (kbd "C-M-f") 'sp-forward-sexp)
+(define-key smartparens-mode-map (kbd "C-M-b") 'sp-backward-sexp)
 
-(define-key smartparens-mode-map (kbd "C-M-n") 'sp-next-sexp)
-(define-key smartparens-mode-map (kbd "C-M-p") 'sp-previous-sexp)
+(define-key smartparens-mode-map (kbd "C-S-n") 'sp-next-sexp)
+(define-key smartparens-mode-map (kbd "C-S-p") 'sp-previous-sexp)
 
 (define-key smartparens-mode-map (kbd "C-M-d") 'sp-down-sexp)
 (define-key smartparens-mode-map (kbd "C-M-a") 'sp-backward-down-sexp)
 
-(define-key smartparens-mode-map (kbd "C-S-d") 'sp-beginning-of-sexp)
-(define-key smartparens-mode-map (kbd "C-S-a") 'sp-end-of-sexp)
+(define-key smartparens-mode-map (kbd "C-S-a") 'sp-beginning-of-sexp)
+(define-key smartparens-mode-map (kbd "C-S-e") 'sp-end-of-sexp)
 
-(define-key smartparens-mode-map (kbd "C-M-e") 'sp-up-sexp)
-(define-key smartparens-mode-map (kbd "C-M-u") 'sp-backward-up-sexp)
+(define-key smartparens-mode-map (kbd "C-M-u") 'sp-up-sexp)
+(define-key smartparens-mode-map (kbd "C-M-e") 'sp-backward-up-sexp)
+
 (define-key smartparens-mode-map (kbd "C-M-t") 'sp-transpose-sexp)
 
 (define-key smartparens-mode-map (kbd "C-M-k") 'sp-kill-sexp)
 (define-key smartparens-mode-map (kbd "C-M-w") 'sp-copy-sexp)
 
-(define-key smartparens-mode-map (kbd "M-<delete>") 'sp-unwrap-sexp)
-(define-key smartparens-mode-map (kbd "M-<backspace>") 'sp-backward-unwrap-sexp)
-
 (define-key smartparens-mode-map (kbd "C-]") 'sp-select-up)
 (define-key smartparens-mode-map (kbd "C-}") 'sp-select-next-thing)
-
 
 
 ;;;                  _ _   _       _                                               
