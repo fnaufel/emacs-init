@@ -108,6 +108,7 @@
    (quote
     (:maxlevel 3 :scope agenda :block thisweek :step day :fileskip0 t :link t :narrow 70! :hidefiles nil :formula % :stepskip0 t :tcolumns 1)))
  '(org-clock-mode-line-total (quote today))
+ '(org-complete-tags-always-offer-all-agenda-tags t)
  '(org-confirm-elisp-link-function (quote y-or-n-p))
  '(org-confirm-shell-link-function (quote y-or-n-p))
  '(org-cycle-global-at-bob t)
@@ -178,6 +179,7 @@
  '(org-reveal-transition "none")
  '(org-reverse-note-order t)
  '(org-special-ctrl-a/e t)
+ '(org-src-window-setup (quote current-window))
  '(org-startup-folded t)
  '(org-superstar-cycle-headline-bullets nil)
  '(org-superstar-headline-bullets-list (quote ("✱")))
@@ -192,23 +194,6 @@
      ("CANCELED" . 128473)
      ("default" . 9673))))
  '(org-table-convert-region-max-lines 99999)
- '(org-tag-alist
-   (quote
-    (("uff" . 117)
-     ("research" . 114)
-     ("deutsch" . 100)
-     ("music" . 109)
-     ("movies" . 102)
-     ("kids" . 107)
-     ("personal" . 112)
-     ("books" . 98)
-     ("bel" . 101)
-     ("llarc" . 108)
-     ("sites" . 115)
-     ("ubuntu" . 116)
-     ("free" . 103)
-     ("mac" . 99)
-     ("latex" . 120))))
  '(org-todo-keywords
    (quote
     ((sequence "STARTED(s!)" "NEXT(n!)" "TODO(t!)" "|" "CANCELED(c!)" "DONE(d!)"))))
