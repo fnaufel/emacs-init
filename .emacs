@@ -273,6 +273,8 @@
  '(org-journal-calendar-entry-face ((t (:foreground "#bbbb00" :slant italic))))
  '(org-journal-calendar-scheduled-face ((t (:foreground "#ff0000" :slant italic))))
  '(sunrise-active-path-face ((t (:background "dark blue" :foreground "yellow" :weight bold :height 120))))
+ '(sunrise-html-face ((t (:foreground "green yellow"))))
+ '(sunrise-log-face ((t (:foreground "goldenrod"))))
  '(sunrise-packaged-face ((t (:foreground "magenta"))))
  '(sunrise-passive-path-face ((t (:background "dark gray" :foreground "black" :weight bold :height 120))))
  '(sunrise-xml-face ((t (:foreground "medium spring green"))))
