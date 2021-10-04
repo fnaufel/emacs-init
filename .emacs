@@ -60,6 +60,7 @@
  '(flymake-gui-warnings-enabled nil)
  '(fringe-mode nil nil (fringe))
  '(global-hl-line-mode t)
+ '(helm-autoresize-mode t)
  '(helm-man-or-woman-function (quote woman))
  '(helm-prevent-escaping-from-minibuffer nil)
  '(hl-line-sticky-flag nil)
