@@ -1603,7 +1603,7 @@ A prefix argument is handled like `move-to-window-line':
 (global-set-key (kbd "s-j") 'shrink-window-horizontally)
 (global-set-key (kbd "s-l") 'enlarge-window-horizontally)
 (global-set-key (kbd "s-i") 'enlarge-window)
-(global-set-key (kbd "s-k") 'balance-windows)
+(global-set-key (kbd "s-/") 'balance-windows)
 
 ;;; Maximize frame
 (defun maximize-current-frame () 
@@ -1611,6 +1611,36 @@ A prefix argument is handled like `move-to-window-line':
 
 ;;; Set background of hl-line
 (set-face-background hl-line-face "gray20")
+
+;;; Killing buffers
+(defun close-and-kill-this-pane ()
+  "If there are multiple windows, then close this pane and kill the buffer in it also."
+  (interactive)
+  (kill-buffer-but-not-some)
+  (if (not (one-window-p))
+      (delete-window)))
+
+(defun close-and-kill-next-pane ()
+  "If there are multiple windows, then close the other pane and kill the buffer in it also."
+  (interactive)
+  (other-window 1)
+  (kill-buffer-but-not-some)
+  (if (not (one-window-p))
+      (delete-window)))
+
+(setq not-to-kill-buffer-list '("*scratch*" "#emacs" "*Messages*"))
+(defun kill-buffer-but-not-some ()
+  "A function that you can use instead of kill-this-buffer, but which prevents some buffers to be killed by mistake."
+  (interactive)
+  (if (member (buffer-name (current-buffer)) not-to-kill-buffer-list)
+      (bury-buffer)
+    (kill-buffer (current-buffer))))
+
+(global-set-key (kbd "C-x k") 'kill-buffer-but-not-some)
+(global-set-key (kbd "s-k") 'close-and-kill-this-pane)
+(global-set-key (kbd "s-o") 'close-and-kill-next-pane)
+
+
 
 
 ;;; __     ___     _ _      __ _ _           
