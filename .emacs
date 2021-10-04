@@ -1708,3 +1708,4 @@ A prefix argument is handled like `move-to-window-line':
 (other-frame -1)
 ;;(maximize-current-frame)
 
+(put 'set-goal-column 'disabled nil)
