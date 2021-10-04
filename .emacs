@@ -228,6 +228,7 @@
  '(smartparens-global-mode nil)
  '(sml-modeline-borders nil)
  '(sml-modeline-mode t)
+ '(sp-navigate-interactive-always-progress-point t)
  '(split-height-threshold 80)
  '(sunrise-confirm-kill-viewer nil)
  '(sunrise-cursor-follows-mouse nil)
@@ -797,20 +798,17 @@ There are two things you can do about this warning:
 
 
 ;; From https://github.com/Fuco1/.emacs.d/blob/master/files/smartparens.el
-(define-key smartparens-mode-map (kbd "C-M-f") 'sp-forward-sexp)
 (define-key smartparens-mode-map (kbd "C-M-b") 'sp-backward-sexp)
+(define-key smartparens-mode-map (kbd "C-M-f") 'sp-forward-sexp)
 
-(define-key smartparens-mode-map (kbd "C-S-n") 'sp-next-sexp)
 (define-key smartparens-mode-map (kbd "C-S-p") 'sp-previous-sexp)
+(define-key smartparens-mode-map (kbd "C-S-n") 'sp-next-sexp)
 
 (define-key smartparens-mode-map (kbd "C-M-d") 'sp-down-sexp)
-(define-key smartparens-mode-map (kbd "C-M-a") 'sp-backward-down-sexp)
+(define-key smartparens-mode-map (kbd "C-M-u") 'sp-backward-up-sexp)
 
 (define-key smartparens-mode-map (kbd "C-S-a") 'sp-beginning-of-sexp)
 (define-key smartparens-mode-map (kbd "C-S-e") 'sp-end-of-sexp)
-
-(define-key smartparens-mode-map (kbd "C-M-u") 'sp-up-sexp)
-(define-key smartparens-mode-map (kbd "C-M-e") 'sp-backward-up-sexp)
 
 (define-key smartparens-mode-map (kbd "C-M-t") 'sp-transpose-sexp)
 
