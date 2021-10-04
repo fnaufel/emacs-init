@@ -37,8 +37,8 @@
  '(comint-input-ring-size 5000)
  '(comint-terminfo-terminal "eterm-color")
  '(company-tooltip-limit 30)
- '(cua-mode t nil (cua-base))
- '(cua-remap-control-v t)
+ '(cua-mode nil nil (cua-base))
+ '(cua-remap-control-v nil)
  '(delete-by-moving-to-trash t)
  '(describe-char-unidata-list
    (quote
@@ -1581,7 +1581,7 @@ A prefix argument is handled like `move-to-window-line':
 
 (global-set-key (kbd "C-<insert>") 'kill-ring-save)
 
-
+(global-set-key (kbd "C-z") 'undo)
 
 
 
