@@ -80,6 +80,7 @@
  '(max-specpdl-size 3000)
  '(mc/mode-line (quote (" mc:" (:eval (format "%d" (mc/num-cursors))))))
  '(minibuffer-auto-raise nil)
+ '(org-adapt-indentation t)
  '(org-agenda-custom-commands
    (quote
     (("i" "Initial"
@@ -144,6 +145,7 @@
     (:foreground default :background default :scale 1.5 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
                  ("begin" "$1" "$" "$$" "\\(" "\\["))))
  '(org-hide-leading-stars t)
+ '(org-indent-mode-turns-off-org-adapt-indentation nil)
  '(org-journal-date-format "[%Y-%m-%d %A]")
  '(org-journal-date-prefix "* ")
  '(org-journal-dir "/home/fnaufel/Documents/OrgFiles/Journal")
