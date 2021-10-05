@@ -1584,6 +1584,10 @@ A prefix argument is handled like `move-to-window-line':
 
 (global-set-key (kbd "C-z") 'undo)
 
+(global-set-key (kbd "C-<return>") 'cua-rectangle-mark-mode)
+(define-key org-mode-map (kbd "C-<return>") 'cua-rectangle-mark-mode)
+
+
 
 
 ;;;  ____         __  __                                 _ 
