@@ -663,7 +663,7 @@ There are two things you can do about this warning:
 (add-to-list 'auto-mode-alist '("\\.0x.*$" . org-mode))
 
 ;;; Default mode for new buffers
-(setq-default major-mode 'org-mode)
+;(setq-default major-mode 'org-mode)
 
 ;;; Clock
 (setq org-clock-persist t)
@@ -800,7 +800,6 @@ There are two things you can do about this warning:
 )
 
 
-;; From https://github.com/Fuco1/.emacs.d/blob/master/files/smartparens.el
 (define-key smartparens-mode-map (kbd "C-M-b") 'sp-backward-sexp)
 (define-key smartparens-mode-map (kbd "C-M-f") 'sp-forward-sexp)
 
