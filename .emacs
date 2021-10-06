@@ -204,7 +204,7 @@
  '(package-enable-at-startup nil)
  '(package-selected-packages
    (quote
-    (git-timemachine bash-completion cdlatex org-superstar org-journal yaml-mode all elm-mode elm-yasnippets auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl org-autolist typo web-beautify elpy markdown-toc markdown-preview-mode markdown-mode magit lua-mode htmlize dash-functional multiple-cursors expand-region)))
+    (skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion cdlatex org-superstar org-journal yaml-mode all elm-mode elm-yasnippets auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl org-autolist typo web-beautify elpy markdown-toc markdown-preview-mode markdown-mode magit lua-mode htmlize dash-functional multiple-cursors expand-region)))
  '(python-shell-interpreter "python3")
  '(rcirc-authinfo (quote (("freenode" nickserv "SagAllesAb" "54g4ll354b"))))
  '(rcirc-default-full-name "Sag alles ab!")
@@ -356,7 +356,6 @@ There are two things you can do about this warning:
 
 ;(add-to-list 'package-archives
 ;             '("melpa-stable" . "http://stable.melpa.org/packages/") t)
-
 
 (add-to-list 'package-archives
              '("gnu" . "http://elpa.gnu.org/packages/") t)
@@ -546,6 +545,18 @@ There are two things you can do about this warning:
 ;;(add-hook 'text-mode-hook 'typo-mode)
 
 
+;;;                                                                    _      
+;;;   ___ ___  _ __ ___  _ __   __ _ _ __  _   _   _ __ ___   ___   __| | ___ 
+;;;  / __/ _ \| '_ ` _ \| '_ \ / _` | '_ \| | | | | '_ ` _ \ / _ \ / _` |/ _ \
+;;; | (_| (_) | | | | | | |_) | (_| | | | | |_| | | | | | | | (_) | (_| |  __/
+;;;  \___\___/|_| |_| |_| .__/ \__,_|_| |_|\__, | |_| |_| |_|\___/ \__,_|\___|
+;;;                     |_|                |___/                              
+
+(require 'company)                                   ; load company mode
+(add-hook 'after-init-hook 'global-company-mode)     ; turn on globally
+(global-set-key (kbd "<s-return>") 'company-complete)
+
+
 ;;;               _           _                      _   _  __       
 ;;; __      _____| |__       | |__   ___  __ _ _   _| |_(_)/ _|_   _ 
 ;;; \ \ /\ / / _ \ '_ \ _____| '_ \ / _ \/ _` | | | | __| | |_| | | |
@@ -555,6 +566,73 @@ There are two things you can do about this warning:
 
 (require 'web-beautify)                 ; bind a key
 
+
+;;;               _     
+;;; __      _____| |__  
+;;; \ \ /\ / / _ \ '_ \ 
+;;;  \ V  V /  __/ |_) |
+;;;   \_/\_/ \___|_.__/ 
+                    
+;;;      _                _                                  _   
+;;;   __| | _____   _____| | ___  _ __  _ __ ___   ___ _ __ | |_ 
+;;;  / _` |/ _ \ \ / / _ \ |/ _ \| '_ \| '_ ` _ \ / _ \ '_ \| __|
+;;; | (_| |  __/\ V /  __/ | (_) | |_) | | | | | |  __/ | | | |_ 
+;;;  \__,_|\___| \_/ \___|_|\___/| .__/|_| |_| |_|\___|_| |_|\__|
+;;;                              |_|                             
+
+
+;;; web-mode
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.ts\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.css?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.js\\'" . web-mode))
+
+(defun my-web-mode-hook ()
+  "Hooks for Web mode."
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-code-indent-offset 2)
+  (setq web-mode-css-indent-offset 2)
+  (local-set-key (kbd "RET") 'newline-and-indent))
+(add-hook 'web-mode-hook  'my-web-mode-hook)    
+
+(setq tab-width 2)
+(setq web-mode-enable-current-column-highlight t)
+(setq web-mode-enable-current-element-highlight t)
+
+;;; web-mode-edit-element
+(require 'web-mode-edit-element)
+(add-hook 'web-mode-hook 'web-mode-edit-element-minor-mode)
+
+;;; company backends
+(require 'company-web-html)                          ; load company mode html backend
+(setq company-tooltip-limit 20)                      ; bigger popup window
+(setq company-tooltip-align-annotations 't)          ; align annotations to the right tooltip border
+(setq company-idle-delay .3)                         ; decrease delay before autocompletion popup shows
+(setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
+(global-set-key (kbd "C-c /") 'company-files)        ; Force complete file names on "C-c /" key
+
+(defun my-web-mode-company-hook ()
+  ()
+  (set (make-local-variable 'company-backends) '(company-css company-web-html company-yasnippet company-files)))
+(add-hook 'web-mode-hook  'my-web-mode-company-hook)    
+
+;;; emmet
+(require 'emmet-mode)
+(add-hook 'web-mode-hook  'emmet-mode)
+(add-hook 'web-mode-before-auto-complete-hooks
+    '(lambda ()
+     (let ((web-mode-cur-language
+  	    (web-mode-language-at-pos)))
+               (if (string= web-mode-cur-language "php")
+    	   (yas-activate-extra-mode 'php-mode)
+      	 (yas-deactivate-extra-mode 'php-mode))
+               (if (string= web-mode-cur-language "css")
+    	   (setq emmet-use-css-transform t)
+      	 (setq emmet-use-css-transform nil)))))
+
+;;; skewer
+(require 'skewer-mode)
 
 
 ;;;                        _                  _   
@@ -1371,19 +1449,6 @@ with leading and trailing spaces removed."
 (add-hook 'dired-mode-hook
           '(lambda ()
              (define-key dired-mode-map [(meta up)] 'dired-up-directory)))
-
-
-
-;;;  _   _ _____ __  __ _     
-;;; | | | |_   _|  \/  | |    
-;;; | |_| | | | | |\/| | |    
-;;; |  _  | | | | |  | | |___ 
-;;; |_| |_| |_| |_|  |_|_____|
-                          
-;;; Use html-mode for html
-(setq auto-mode-alist (cons '("\\.html$" . html-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '("\\.htm$" . html-mode) auto-mode-alist))
-
 
 
 ;;;  ___ ____   ____ 
