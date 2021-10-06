@@ -248,7 +248,7 @@
  '(sunrise-traditional-other-window t)
  '(sunrise-tree-isearch-always-sticky t)
  '(sunrise-use-commander-keys nil)
- '(sunrise-visit-buffer-function (quote special-display-popup-frame))
+ '(sunrise-visit-buffer-function (quote display-buffer-other-frame))
  '(sunrise-window-split-style (quote horizontal))
  '(sunrise-windows-default-ratio 75)
  '(sunrise-windows-locked nil)
