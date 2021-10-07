@@ -824,6 +824,22 @@ There are two things you can do about this warning:
 (define-key org-mode-map (kbd "C-c g") 'helm-org-agenda-files-headings)
 
 
+;;;  _ _                                    _                   
+;;; | (_)_ __   ___   _ __  _   _ _ __ ___ | |__   ___ _ __ ___ 
+;;; | | | '_ \ / _ \ | '_ \| | | | '_ ` _ \| '_ \ / _ \ '__/ __|
+;;; | | | | | |  __/ | | | | |_| | | | | | | |_) |  __/ |  \__ \
+;;; |_|_|_| |_|\___| |_| |_|\__,_|_| |_| |_|_.__/ \___|_|  |___/
+                                                            
+(global-display-line-numbers-mode t)
+
+;; Disable line numbers for some modes
+(dolist (mode '(org-mode-hook
+                term-mode-hook
+                shell-mode-hook
+                help-mode-hook
+	            treemacs-mode-hook))
+  (add-hook mode (lambda () (display-line-numbers-mode 0))))
+
 ;;;  _               _                                 _      _   _             
 ;;; | |__   __ _ ___| |__     ___ ___  _ __ ___  _ __ | | ___| |_(_) ___  _ __  
 ;;; | '_ \ / _` / __| '_ \   / __/ _ \| '_ ` _ \| '_ \| |/ _ \ __| |/ _ \| '_ \ 
