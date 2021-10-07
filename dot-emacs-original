@@ -1,14 +1,3 @@
-;; -*- lexical-binding: t; -*-
-
-;; The default is 800 kilobytes.  Measured in bytes.
-(setq gc-cons-threshold (* 50 1000 1000))
-
-;; Profile emacs startup
-(add-hook 'emacs-startup-hook
-          (lambda ()
-            (message "*** Emacs loaded in %s with %d garbage collections."
-                     (emacs-init-time)
-                     gcs-done)))
 
 ;;;   ____          _                  _         
 ;;;  / ___|   _ ___| |_ ___  _ __ ___ (_)_______ 
@@ -91,7 +80,7 @@
  '(max-lisp-eval-depth 1000)
  '(max-specpdl-size 3000)
  '(mc/mode-line (quote (" mc:" (:eval (format "%d" (mc/num-cursors))))))
- '(menu-bar-mode nil)
+ '(menu-bar-mode t)
  '(minibuffer-auto-raise nil)
  '(org-adapt-indentation t)
  '(org-agenda-custom-commands
@@ -1748,7 +1737,7 @@ A prefix argument is handled like `move-to-window-line':
 (defun close-and-kill-this-pane ()
   "If there are multiple windows, then close this pane and kill the buffer in it also."
   (interactive)
-  (kill-buffer-but-not-some)
+  (kill-buffer-but-not-some 0)
   (if (not (one-window-p))
       (delete-window)))
 
@@ -1756,7 +1745,7 @@ A prefix argument is handled like `move-to-window-line':
   "If there are multiple windows, then close the other pane and kill the buffer in it also."
   (interactive)
   (other-window 1)
-  (kill-buffer-but-not-some)
+  (kill-buffer-but-not-some 0)
   (if (not (one-window-p))
       (delete-window)))
 
@@ -1766,11 +1755,11 @@ A prefix argument is handled like `move-to-window-line':
   "A function that you can use instead of kill-this-buffer, but which prevents some buffers to be killed by mistake.
 
 When called with a universal prefix argument, delete the frame too."
-  (interactive "P")
+  (interactive "p")
   (if (member (buffer-name (current-buffer)) not-to-kill-buffer-list)
       (bury-buffer)
     (kill-buffer (current-buffer)))
-  (unless (null arg)
+  (when (> arg 1)
       (delete-frame)))
 
 (global-set-key (kbd "C-x k") 'kill-buffer-but-not-some)

@@ -1,0 +1,303 @@
+;; -*- lexical-binding: t; -*-
+
+;; The default is 800 kilobytes.  Measured in bytes.
+(setq gc-cons-threshold (* 50 1000 1000))
+
+;; Profile emacs startup
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (message "*** Emacs loaded in %s seconds with %d garbage collections."
+                     (emacs-init-time "%.2f")
+                     gcs-done)))
+
+
+;;;  ____            _                               _               
+;;; |  _ \ __ _  ___| | ____ _  __ _  ___   ___  ___| |_ _   _ _ __  
+;;; | |_) / _` |/ __| |/ / _` |/ _` |/ _ \ / __|/ _ \ __| | | | '_ \ 
+;;; |  __/ (_| | (__|   < (_| | (_| |  __/ \__ \  __/ |_| |_| | |_) |
+;;; |_|   \__,_|\___|_|\_\__,_|\__, |\___| |___/\___|\__|\__,_| .__/ 
+;;;                            |___/                          |_|    
+
+(require 'package)
+
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                         ("org" . "https://orgmode.org/elpa/")
+                         ("elpa" . "https://elpa.gnu.org/packages/")))
+
+(package-initialize)
+(unless package-archive-contents
+  (package-refresh-contents))
+
+(add-to-list 'load-path "/home/fnaufel/.emacs.d/lisp/")
+
+
+;;;  ____  _             _                                  
+;;; / ___|| |_ __ _ _ __| |_   ___  ___ _ ____   _____ _ __ 
+;;; \___ \| __/ _` | '__| __| / __|/ _ \ '__\ \ / / _ \ '__|
+;;;  ___) | || (_| | |  | |_  \__ \  __/ |   \ v /  __/ |   
+;;; |____/ \__\__,_|_|   \__| |___/\___|_|    \_/ \___|_|   
+                                                        
+(server-start)
+
+
+;;;  _   _ ___                    __ _       
+;;; | | | |_ _|   ___ ___  _ __  / _(_) __ _ 
+;;; | | | || |   / __/ _ \| '_ \| |_| |/ _` |
+;;; | |_| || |  | (_| (_) | | | |  _| | (_| |
+;;;  \___/|___|  \___\___/|_| |_|_| |_|\__, |
+;;;                                    |___/ 
+;;; UI config
+
+;;; Set font
+(defun fontify-frame (frame)
+  (set-frame-parameter frame 'font "Jetbrains Mono-13"))
+
+;;; Fontify current frame
+(fontify-frame nil)
+
+;;; Fontify any future frames
+(push 'fontify-frame after-make-frame-functions)
+
+
+;;;  ____       _               
+;;; / ___|  ___| |_ _   _ _ __  
+;;; \___ \ / _ \ __| | | | '_ \ 
+;;;  ___) |  __/ |_| |_| | |_) |
+;;; |____/ \___|\__|\__,_| .__/ 
+;;;                      |_|    
+
+(require 'setup)
+
+;;; From https://github.com/daviwil/dotfiles/blob/master/Emacs.org
+;;; See also https://www.emacswiki.org/emacs/SetupEl
+(setup-define :delay
+              (lambda (&rest time)
+                `(run-with-idle-timer ,(or time 1)
+                                      nil ;; Don't repeat
+                                      (lambda () (require ',(setup-get 'feature)))))
+              :documentation "Delay loading the feature until a certain amount of idle time has passed.")
+
+(setup-define :disabled
+              (lambda ()
+                `,(setup-quit))
+              :documentation "Always stop evaluating the body.")
+
+(setup-define :load-after
+              (lambda (features &rest body)
+                (let ((body `(progn
+                               (require ',(setup-get 'feature))
+                               ,@body)))
+                  (dolist (feature (if (listp features)
+                                       (nreverse features)
+                                     (list features)))
+                    (setq body `(with-eval-after-load ',feature ,body)))
+                  body))
+              :documentation "Load the current feature after FEATURES."
+              :indent 1)
+
+
+;;;  ____            _                         
+;;; |  _ \ __ _  ___| | ____ _  __ _  ___  ___ 
+;;; | |_) / _` |/ __| |/ / _` |/ _` |/ _ \/ __|
+;;; |  __/ (_| | (__|   < (_| | (_| |  __/\__ \
+;;; |_|   \__,_|\___|_|\_\__,_|\__, |\___||___/
+;;;                            |___/           
+
+
+;;; which-key
+(setup (:package which-key)
+  (diminish 'which-key-mode)
+  (which-key-mode)
+  (setq which-key-idle-delay 1))
+
+
+;;; anzu
+(setup (:package anzu)
+  (global-anzu-mode 1))
+
+
+;;; helpful
+(setup (:package helpful)
+  (:option counsel-describe-function-function #'helpful-callable
+           counsel-describe-variable-function #'helpful-variable)
+  (:global [remap describe-function] counsel-describe-function
+           [remap describe-command] helpful-command
+           [remap describe-variable] counsel-describe-variable
+           [remap describe-key] helpful-key
+           "C-c C-d" helpful-at-point
+           "C-h F" . helpful-function))
+
+
+;;; info-colors
+(setup (:package info-colors)
+  (:with-hook Info-selection-hook
+    (:hook info-colors-fontify-node)))
+
+
+;;; markdown-mode
+(setup (:package markdown-mode)
+  :mode ("\\.md\\'" "\\.Rmd\\'"))
+
+(setup (:package markdown-toc))
+
+
+;;; yaml
+(setup (:package yaml-mode)
+  :bind (:map yaml-mode-map
+              ("C-m" . newline-and-indent))
+  :mode "\\.yml\\'")
+
+
+;;; web-beautify
+(setup (:package web-beautify))
+
+
+;;; lsp
+(defun efs/lsp-mode-setup ()
+  (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
+  (lsp-headerline-breadcrumb-mode))
+
+(setup (:package lsp-mode)
+  :commands (lsp lsp-deferred)
+  :hook (lsp-mode . efs/lsp-mode-setup)
+  :init
+  (setq lsp-keymap-prefix "s-q")
+  :config
+  (lsp-enable-which-key-integration t))
+
+(setup (:package lsp-ui)
+  :hook (lsp-mode . lsp-ui-mode)
+  :custom
+  (lsp-ui-doc-position 'bottom))
+
+(setup (:package lsp-treemacs)
+  :after lsp)
+
+(setup (:package helm-lsp)
+  :bind (:map lsp-mode-map
+              ([remap xref-find-apropos] . #'helm-lsp-workspace-symbol)))
+
+
+;;; company
+(setup (:package company)
+  :after lsp-mode
+  :hook (lsp-mode . company-mode)
+  :bind (:map company-active-map
+         ("<tab>" . company-complete-selection))
+        (:map lsp-mode-map
+         ("<tab>" . company-indent-or-complete-common))
+  :custom
+  (company-minimum-prefix-length 3)
+  (company-idle-delay 0.0))
+
+(setup (:package company-box)
+  :hook (company-mode . company-box-mode))
+
+
+;;; js2-mode
+(setup (:package typescript-mode)
+  :mode ("\\.js\\'" "\\.ts\\'")
+  :hook (js2-mode . lsp-deferred)
+  :config
+  (setq js-indent-level 2))
+
+
+;;; projectile
+(setup (:package projectile)
+  :diminish projectile-mode
+  :config (projectile-mode)
+  :custom ((projectile-completion-system 'helm))
+  :bind-keymap
+  ("C-c p" . projectile-command-map)
+  :init
+  ;; NOTE: Set this to the folder where you keep your Git repos!
+  (when (file-directory-p "~/Development/00-Present/")
+    (setq projectile-project-search-path '("~/Development/00-Present/")))
+  (setq projectile-switch-project-action #'projectile-dired))
+
+(setup (:package counsel-projectile)
+  :config (counsel-projectile-mode))
+
+
+;;; magit
+(setup (:package magit))
+
+
+;;; yasnippet
+
+;;; https://orgmode.org/manual/Conflicts.html#Conflicts
+(defun yas/org-very-safe-expand ()
+  (let ((yas/fallback-behavior 'return-nil)) (yas/expand)))
+
+(setup (:package yasnippet)
+  :config
+  (yas-global-mode 1)
+  :hook (
+         (term-mode-hook . (lambda() (yas-minor-mode -1)))
+         (org-mode-hook .
+                        (lambda ()
+                          (make-variable-buffer-local 'yas/trigger-key)
+                          (setq yas/trigger-key [tab])
+                          (add-to-list 'org-tab-first-hook 'yas/org-very-safe-expand)
+                          (define-key yas/keymap [tab] 'yas/next-field)))))
+
+
+;;; org-mode
+(setup (:package org-superstar)
+  :config
+  ;; set basic title font
+  (set-face-attribute 'org-level-8 nil :weight 'bold :inherit 'default :foreground "dark orange")
+  ;; ;; ;; Low levels are unimportant => no scaling
+  (set-face-attribute 'org-level-7 nil :inherit 'org-level-8)
+  (set-face-attribute 'org-level-6 nil :inherit 'org-level-8)
+  (set-face-attribute 'org-level-5 nil :inherit 'org-level-8)
+  (set-face-attribute 'org-level-4 nil :inherit 'org-level-8)
+  (set-face-attribute 'org-level-3 nil :inherit 'org-level-8 :height 1.05) 
+  (set-face-attribute 'org-level-2 nil :inherit 'org-level-8 :height 1.1) 
+  (set-face-attribute 'org-level-1 nil :inherit 'org-level-8 :height 1.15))
+
+(setup (:package org-mode)
+  :hook (
+         (org-mode . (lambda () (turn-on-auto-fill)))
+         (org-mode . (lambda () (org-num-mode)))
+         (org-mode . (lambda () (org-superstar-mode 1)))
+         (org-mode . turn-on-org-cdlatex))
+  ;Associate claws-mail compose files to org mode
+  :mode ("\\.org\\'" "\\.0x.*$")
+  :config
+  ;;; Clock
+  (setq org-clock-persist t)
+  (org-clock-persistence-insinuate)
+  :bind (
+         ("C-c k" . org-store-link)
+         ("C-c a" . org-agenda)
+         :map org-mode-map
+         ("C-n" . org-next-link)
+         ("C-p" . org-previous-link)
+         ("C-c C-x i" . org-insert-columns-dblock)))
+
+
+;;; calfw
+(setup (:package calfw))
+(setup (:package calfw-org)
+  :after calfw
+  :bind
+  ("s-c" . cfw:open-org-calendar)
+  :config
+  (setq cfw:org-overwrite-default-keybinding t))
+
+
+;;;  ____  _          _ _ 
+;;; / ___|| |__   ___| | |
+;;; \___ \| '_ \ / _ \ | |
+;;;  ___) | | | |  __/ | |
+;;; |____/|_| |_|\___|_|_|
+
+;;; Shell
+
+;;; Fix junk characters in shell mode
+(autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+(add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
+
+
