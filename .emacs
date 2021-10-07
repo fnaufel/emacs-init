@@ -76,6 +76,7 @@
  '(initial-buffer-choice nil)
  '(initial-major-mode (quote org-mode))
  '(initial-scratch-message nil)
+ '(lsp-clients-deno-server "/home/fnaufel/.deno/bin/deno")
  '(max-lisp-eval-depth 1000)
  '(max-specpdl-size 3000)
  '(mc/mode-line (quote (" mc:" (:eval (format "%d" (mc/num-cursors))))))
@@ -204,7 +205,7 @@
  '(package-enable-at-startup nil)
  '(package-selected-packages
    (quote
-    (skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion cdlatex org-superstar org-journal yaml-mode all elm-mode elm-yasnippets auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl org-autolist typo web-beautify elpy markdown-toc markdown-preview-mode markdown-mode magit lua-mode htmlize dash-functional multiple-cursors expand-region)))
+    (lsp-mode ac-js2 skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion cdlatex org-superstar org-journal yaml-mode all elm-mode elm-yasnippets auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl org-autolist typo web-beautify elpy markdown-toc markdown-preview-mode markdown-mode magit lua-mode htmlize dash-functional multiple-cursors expand-region)))
  '(python-shell-interpreter "python3")
  '(rcirc-authinfo (quote (("freenode" nickserv "SagAllesAb" "54g4ll354b"))))
  '(rcirc-default-full-name "Sag alles ab!")
@@ -385,18 +386,6 @@ There are two things you can do about this warning:
 ;;; Anzu (show number of matches during search)
 (require 'anzu)
 (global-anzu-mode +1)
-
-
-
-;;;    _     ____                           _      
-;;;   (_)___|___ \      _ __ ___   ___   __| | ___ 
-;;;   | / __| __) |____| '_ ` _ \ / _ \ / _` |/ _ \
-;;;   | \__ \/ __/_____| | | | | | (_) | (_| |  __/
-;;;  _/ |___/_____|    |_| |_| |_|\___/ \__,_|\___|
-;;; |__/                                           
-
-(require 'js2-mode)
-(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 
 
 
@@ -583,10 +572,8 @@ There are two things you can do about this warning:
 
 ;;; web-mode
 (require 'web-mode)
-(add-to-list 'auto-mode-alist '("\\.ts\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.css?\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.js\\'" . web-mode))
 
 (defun my-web-mode-hook ()
   "Hooks for Web mode."
@@ -613,26 +600,35 @@ There are two things you can do about this warning:
 (global-set-key (kbd "C-c /") 'company-files)        ; Force complete file names on "C-c /" key
 
 (defun my-web-mode-company-hook ()
-  ()
-  (set (make-local-variable 'company-backends) '(company-css company-web-html company-yasnippet company-files)))
+  (set (make-local-variable 'company-backends) '(company-css company-web-html company-yasnippet company-files ac-js2-company)))
 (add-hook 'web-mode-hook  'my-web-mode-company-hook)    
 
 ;;; emmet
-(require 'emmet-mode)
-(add-hook 'web-mode-hook  'emmet-mode)
-(add-hook 'web-mode-before-auto-complete-hooks
-    '(lambda ()
-     (let ((web-mode-cur-language
-  	    (web-mode-language-at-pos)))
-               (if (string= web-mode-cur-language "php")
-    	   (yas-activate-extra-mode 'php-mode)
-      	 (yas-deactivate-extra-mode 'php-mode))
-               (if (string= web-mode-cur-language "css")
-    	   (setq emmet-use-css-transform t)
-      	 (setq emmet-use-css-transform nil)))))
+;; (require 'emmet-mode)
+;; (add-hook 'web-mode-hook  'emmet-mode)
+;; (add-hook 'web-mode-before-auto-complete-hooks
+;;     '(lambda ()
+;;      (let ((web-mode-cur-language
+;;   	    (web-mode-language-at-pos)))
+;;                (if (string= web-mode-cur-language "php")
+;;     	   (yas-activate-extra-mode 'php-mode)
+;;       	 (yas-deactivate-extra-mode 'php-mode))
+;;                (if (string= web-mode-cur-language "css")
+;;     	   (setq emmet-use-css-transform t)
+;;       	 (setq emmet-use-css-transform nil)))))
 
 ;;; skewer
 (require 'skewer-mode)
+
+;;; js2-mode
+(require 'js2-mode)
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+(add-to-list 'auto-mode-alist '("\\.ts\\'" . js2-mode))
+
+;;; completion
+;; (add-to-list 'company-backends 'ac-js2-company) ; with company (not working)
+(add-hook 'js2-mode-hook 'ac-js2-mode)          ; with auto-complete
+
 
 
 ;;;                        _                  _   
