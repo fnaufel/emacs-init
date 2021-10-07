@@ -1694,12 +1694,17 @@ A prefix argument is handled like `move-to-window-line':
       (delete-window)))
 
 (setq not-to-kill-buffer-list '("*scratch*" "#emacs" "*Messages*"))
-(defun kill-buffer-but-not-some ()
-  "A function that you can use instead of kill-this-buffer, but which prevents some buffers to be killed by mistake."
-  (interactive)
+
+(defun kill-buffer-but-not-some (&optional arg)
+  "A function that you can use instead of kill-this-buffer, but which prevents some buffers to be killed by mistake.
+
+When called with a universal prefix argument, delete the frame too."
+  (interactive "P")
   (if (member (buffer-name (current-buffer)) not-to-kill-buffer-list)
       (bury-buffer)
-    (kill-buffer (current-buffer))))
+    (kill-buffer (current-buffer)))
+  (unless (null arg)
+      (delete-frame)))
 
 (global-set-key (kbd "C-x k") 'kill-buffer-but-not-some)
 (global-set-key (kbd "s-k") 'close-and-kill-this-pane)
