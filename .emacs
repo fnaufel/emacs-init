@@ -1749,23 +1749,33 @@ A prefix argument is handled like `move-to-window-line':
   "If there are multiple windows, then close this pane and kill the buffer in it also."
   (interactive)
   (kill-buffer-but-not-some)
-  (if (not (one-window-p))
+  (unless (one-window-p)
       (delete-window)))
 
 (defun close-and-kill-next-pane ()
   "If there are multiple windows, then close the other pane and kill the buffer in it also."
   (interactive)
-  (other-window 1)
-  (kill-buffer-but-not-some)
-  (if (not (one-window-p))
-      (delete-window)))
+  (unless (one-window-p)
+    (save-excursion
+      (other-window 1)
+      (kill-buffer-but-not-some)
+      (delete-window))))
 
-(setq not-to-kill-buffer-list '("*scratch*" "#emacs" "*Messages*"))
+(setq not-to-kill-buffer-list
+      '("*scratch*"
+        "#emacs"
+        "*Messages*"
+        "*shell*"
+        "*xonsh*"
+        "Sunrise Tree"
+        "Sunrise Tree<2>"))
 
 (defun kill-buffer-but-not-some (&optional arg)
-  "A function that you can use instead of kill-this-buffer, but which prevents some buffers to be killed by mistake.
+  "A function that you can use instead of kill-this-buffer, 
+but which prevents some buffers to be killed by mistake.
 
-When called with a universal prefix argument, delete the frame too."
+When called with a universal prefix argument, delete the frame
+too."
   (interactive "P")
   (if (member (buffer-name (current-buffer)) not-to-kill-buffer-list)
       (bury-buffer)
