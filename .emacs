@@ -47,6 +47,7 @@
  '(comint-input-ring-file-name "/home/fnaufel/.bash_history")
  '(comint-input-ring-size 5000)
  '(comint-terminfo-terminal "eterm-color")
+ '(company-selection-wrap-around t)
  '(company-tooltip-limit 30)
  '(cua-mode nil nil (cua-base))
  '(cua-remap-control-v nil)
@@ -563,9 +564,14 @@ There are two things you can do about this warning:
 ;;;  \___\___/|_| |_| |_| .__/ \__,_|_| |_|\__, | |_| |_| |_|\___/ \__,_|\___|
 ;;;                     |_|                |___/                              
 
-;; (require 'company)                                   ; load company mode
-;; (add-hook 'after-init-hook 'global-company-mode)     ; turn on globally
-;; (global-set-key (kbd "<s-return>") 'company-complete)
+(require 'company)                                   ; load company mode
+
+;; elisp
+(add-hook 'ielm-mode-hook 'company-mode)
+(add-hook 'emacs-lisp-mode-hook 'company-mode)
+
+(global-set-key (kbd "<s-return>") 'company-complete)
+
 
 
 ;;;               _           _                      _   _  __       
