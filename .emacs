@@ -59,13 +59,6 @@
    "--time-style=+[%Y-%m-%d-%H:%M] --group-directories-first -alDhG")
  '(eldoc-idle-delay 0)
  '(eldoc-minor-mode-string nil)
- '(elpy-interactive-python-command "ipython3")
- '(elpy-mode-hook (quote (subword-mode yafolding-mode)))
- '(elpy-modules
-   (quote
-    (elpy-module-company elpy-module-eldoc elpy-module-flymake elpy-module-pyvenv elpy-module-highlight-indentation elpy-module-yasnippet elpy-module-sane-defaults)))
- '(elpy-rpc-backend "rope")
- '(elpy-rpc-python-command "python3")
  '(enable-recursive-minibuffers nil)
  '(find-directory-functions (quote (sunrise-dired cvs-dired-noselect dired-noselect)))
  '(flymake-fringe-indicator-position (quote left-fringe))
@@ -219,7 +212,7 @@
  '(package-enable-at-startup nil)
  '(package-selected-packages
    (quote
-    (rainbow-delimiters helm-projectile projectile company-box setup use-package helm-lsp lsp-treemacs lsp-ui which-key lsp-mode ac-js2 skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion cdlatex org-superstar org-journal yaml-mode all elm-mode elm-yasnippets auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl org-autolist typo web-beautify elpy markdown-toc markdown-preview-mode markdown-mode magit lua-mode htmlize dash-functional multiple-cursors expand-region)))
+    (lsp-pyright rainbow-delimiters helm-projectile projectile company-box setup use-package helm-lsp lsp-treemacs lsp-ui which-key lsp-mode ac-js2 skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion cdlatex org-superstar org-journal yaml-mode all elm-mode elm-yasnippets auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl org-autolist typo web-beautify markdown-toc markdown-preview-mode markdown-mode magit lua-mode htmlize dash-functional multiple-cursors expand-region)))
  '(python-shell-interpreter "python3")
  '(rcirc-authinfo (quote (("freenode" nickserv "SagAllesAb" "54g4ll354b"))))
  '(rcirc-default-full-name "Sag alles ab!")
@@ -1074,12 +1067,12 @@ There are two things you can do about this warning:
 ;;;  \___|_| .__/ \__, |
 ;;;        |_|    |___/ 
 
-(add-to-list 'package-archives
-             '("elpy" . "http://jorgenschaefer.github.io/packages/"))
-(package-initialize)
-(elpy-enable)
+;; (add-to-list 'package-archives
+;;              '("elpy" . "http://jorgenschaefer.github.io/packages/"))
+;; (package-initialize)
+;; (elpy-enable)
 
-(define-key elpy-mode-map (kbd "<C-tab>") 'elpy-company-backend)
+;; (define-key elpy-mode-map (kbd "<C-tab>") 'elpy-company-backend)
 
 ;;; Code folding
 (global-set-key (kbd "s->") 'yafolding-show-all)
@@ -1904,7 +1897,7 @@ too."
      (define-key term-raw-map (kbd "C-c C-y") 'term-paste)
      (define-key term-raw-map (kbd "C-y") 'term-paste)))
 
-(setq elpy-rpc-virtualenv-path 'current)
+;; (setq elpy-rpc-virtualenv-path 'current)
 (ansi-term "/home/fnaufel/.local/bin/xonsh" "xonsh")
 
 ;;; Bash shell (splits window automatically)
