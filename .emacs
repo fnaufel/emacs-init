@@ -89,6 +89,7 @@
  '(initial-major-mode (quote org-mode))
  '(initial-scratch-message nil)
  '(lsp-clients-deno-server "/home/fnaufel/.deno/bin/deno")
+ '(lsp-keymap-prefix "s-q")
  '(max-lisp-eval-depth 1000)
  '(max-specpdl-size 3000)
  '(mc/mode-line (quote (" mc:" (:eval (format "%d" (mc/num-cursors))))))
@@ -475,6 +476,23 @@ There are two things you can do about this warning:
 (add-hook 'Info-selection-hook 'info-colors-fontify-node)
 
 
+;;;    _                                _       _   
+;;;   (_) __ ___   ____ _ ___  ___ _ __(_)_ __ | |_ 
+;;;   | |/ _` \ \ / / _` / __|/ __| '__| | '_ \| __|
+;;;   | | (_| |\ V / (_| \__ \ (__| |  | | |_) | |_ 
+;;;  _/ |\__,_| \_/ \__,_|___/\___|_|  |_| .__/ \__|
+;;; |__/                                 |_|        
+
+;;; skewer
+(require 'skewer-mode)
+
+;;; js2-mode
+(require 'js2-mode)
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+(add-to-list 'auto-mode-alist '("\\.ts\\'" . js2-mode))
+
+
+
 ;;;    _                               _       _   
 ;;;   (_)___        ___ ___  _ __ ___ (_)_ __ | |_ 
 ;;;   | / __|_____ / __/ _ \| '_ ` _ \| | '_ \| __|
@@ -482,13 +500,13 @@ There are two things you can do about this warning:
 ;;;  _/ |___/      \___\___/|_| |_| |_|_|_| |_|\__|
 ;;; |__/                                           
 
-(require 'js-comint)
-(defun inferior-js-mode-hook-setup ()
-  (add-hook 'comint-output-filter-functions 'js-comint-process-output))
-(add-hook 'inferior-js-mode-hook 'inferior-js-mode-hook-setup t)
+;; (require 'js-comint)
+;; (defun inferior-js-mode-hook-setup ()
+;;   (add-hook 'comint-output-filter-functions 'js-comint-process-output))
+;; (add-hook 'inferior-js-mode-hook 'inferior-js-mode-hook-setup t)
 
-(setq js-comint-program-command "node")
-(setq js-comint-program-arguments '("--interactive"))
+;; (setq js-comint-program-command "node")
+;; (setq js-comint-program-arguments '("--interactive"))
 
 
 ;;;                  _       _                          _ 
@@ -498,15 +516,15 @@ There are two things you can do about this warning:
 ;;; |_| |_|\___/ \__,_|\___|/ |___/     |_|  \___| .__/|_|
 ;;;                       |__/                   |_|      
 
-(require 'nodejs-repl)
+;; (require 'nodejs-repl)
 
-(add-hook 'js-mode-hook
-          (lambda ()
-            (define-key js-mode-map (kbd "C-x C-e") 'nodejs-repl-send-last-expression)
-            (define-key js-mode-map (kbd "C-c C-j") 'nodejs-repl-send-line)
-            (define-key js-mode-map (kbd "C-c C-r") 'nodejs-repl-send-region)
-            (define-key js-mode-map (kbd "C-c C-l") 'nodejs-repl-load-file)
-            (define-key js-mode-map (kbd "C-c C-z") 'nodejs-repl-switch-to-repl)))
+;; (add-hook 'js-mode-hook
+;;           (lambda ()
+;;             (define-key js-mode-map (kbd "C-x C-e") 'nodejs-repl-send-last-expression)
+;;             (define-key js-mode-map (kbd "C-c C-j") 'nodejs-repl-send-line)
+;;             (define-key js-mode-map (kbd "C-c C-r") 'nodejs-repl-send-region)
+;;             (define-key js-mode-map (kbd "C-c C-l") 'nodejs-repl-load-file)
+;;             (define-key js-mode-map (kbd "C-c C-z") 'nodejs-repl-switch-to-repl)))
 
 
 ;;;                       _       _                     
@@ -570,13 +588,15 @@ There are two things you can do about this warning:
 (add-hook 'lsp-mode-hook 'company-mode)
 
 (global-set-key (kbd "<s-return>") 'company-complete)
-(define-key company-active-map "<tab>" 'company-complete-selection)
+(define-key company-active-map (kbd "<tab>") 'company-complete-selection)
 
 (setq company-minimum-prefix-length 3)
 (setq company-idle-delay 0.0)
 
-(require 'company-box)
-(add-hook 'company-mode-hook 'company-box-mode)
+;;; This apparently keeps company popups from showing
+;; (require 'company-box)
+;; (add-hook 'company-mode-hook 'company-box-mode)
+
 
 
 ;;;               _           _                      _   _  __       
@@ -598,16 +618,31 @@ There are two things you can do about this warning:
 
 (require 'lsp)
 
+;; Modes for which to enable lsp
+(dolist (mode '(html-mode-hook
+                c-mode-hook
+                c++-mode-hook
+                css-mode-hook
+                js-mode-hook
+                sh-mode-hook
+                java-mode-hook
+                python-mode-hook
+                markdown-mode-hook
+                ess-mode-hook
+                sgml-mode-hook
+                yaml-mode-hook))
+  (add-hook mode #'lsp))
+
+
 (defun efs/lsp-mode-setup ()
   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
   (lsp-headerline-breadcrumb-mode))
 
 (add-hook 'lsp-mode-hook 'efs/lsp-mode-setup)
 
-(setq lsp-keymap-prefix "s-q")
 (lsp-enable-which-key-integration t)
 
-(define-key lsp-mode-map "<tab>" 'company-indent-or-complete-common)
+(define-key lsp-mode-map (kbd "<tab>") 'company-indent-or-complete-common)
 
 (require 'lsp-ui)
 (add-hook 'lsp-mode-hook 'lsp-ui-mode)
@@ -633,6 +668,7 @@ There are two things you can do about this warning:
 (define-key projectile-mode-map (kbd "s-w") 'projectile-command-map)
 
 (setq projectile-completion-system 'helm)
+(setq projectile-project-search-path '("~/Development/00-Present"))
 
 (require 'helm-projectile)
 (helm-projectile-on)
@@ -709,14 +745,6 @@ There are two things you can do about this warning:
 ;;                (if (string= web-mode-cur-language "css")
 ;;     	   (setq emmet-use-css-transform t)
 ;;       	 (setq emmet-use-css-transform nil)))))
-
-;; ;;; skewer
-;; (require 'skewer-mode)
-
-;; ;;; js2-mode
-;; (require 'js2-mode)
-;; (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-;; (add-to-list 'auto-mode-alist '("\\.ts\\'" . js2-mode))
 
 ;; ;;; completion
 ;; ;; (add-to-list 'company-backends 'ac-js2-company) ; with company (not working)
