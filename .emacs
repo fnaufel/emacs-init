@@ -218,7 +218,7 @@
  '(package-enable-at-startup nil)
  '(package-selected-packages
    (quote
-    (setup use-package helm-lsp lsp-treemacs lsp-ui which-key lsp-mode ac-js2 skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion cdlatex org-superstar org-journal yaml-mode all elm-mode elm-yasnippets auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl org-autolist typo web-beautify elpy markdown-toc markdown-preview-mode markdown-mode magit lua-mode htmlize dash-functional multiple-cursors expand-region)))
+    (rainbow-delimiters helm-projectile projectile company-box setup use-package helm-lsp lsp-treemacs lsp-ui which-key lsp-mode ac-js2 skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion cdlatex org-superstar org-journal yaml-mode all elm-mode elm-yasnippets auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl org-autolist typo web-beautify elpy markdown-toc markdown-preview-mode markdown-mode magit lua-mode htmlize dash-functional multiple-cursors expand-region)))
  '(python-shell-interpreter "python3")
  '(rcirc-authinfo (quote (("freenode" nickserv "SagAllesAb" "54g4ll354b"))))
  '(rcirc-default-full-name "Sag alles ab!")
@@ -290,6 +290,15 @@
  '(org-ellipsis ((t (:foreground "LightGoldenrod" :underline nil))))
  '(org-journal-calendar-entry-face ((t (:foreground "#bbbb00" :slant italic))))
  '(org-journal-calendar-scheduled-face ((t (:foreground "#ff0000" :slant italic))))
+ '(rainbow-delimiters-base-error-face ((t (:inherit rainbow-delimiters-base-face :foreground "red"))))
+ '(rainbow-delimiters-depth-1-face ((t (:inherit rainbow-delimiters-base-face :foreground "gray90"))))
+ '(rainbow-delimiters-depth-2-face ((t (:inherit rainbow-delimiters-base-face :foreground "deep sky blue"))))
+ '(rainbow-delimiters-depth-3-face ((t (:inherit rainbow-delimiters-base-face :foreground "lawn green"))))
+ '(rainbow-delimiters-depth-4-face ((t (:inherit rainbow-delimiters-base-face :foreground "yellow2"))))
+ '(rainbow-delimiters-depth-5-face ((t (:inherit rainbow-delimiters-base-face :foreground "violet"))))
+ '(rainbow-delimiters-depth-6-face ((t (:inherit rainbow-delimiters-base-face :foreground "CadetBlue3"))))
+ '(rainbow-delimiters-depth-8-face ((t (:inherit rainbow-delimiters-base-face :foreground "cyan"))))
+ '(rainbow-delimiters-depth-9-face ((t (:inherit rainbow-delimiters-base-face :foreground "light salmon"))))
  '(sunrise-active-path-face ((t (:background "dark blue" :foreground "yellow" :weight bold :height 120))))
  '(sunrise-html-face ((t (:foreground "green yellow"))))
  '(sunrise-log-face ((t (:foreground "goldenrod"))))
@@ -533,17 +542,6 @@ There are two things you can do about this warning:
              (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
 
 
-;;;                                    _        _ _     _   
-;;;   ___  _ __ __ _        __ _ _   _| |_ ___ | (_)___| |_ 
-;;;  / _ \| '__/ _` |_____ / _` | | | | __/ _ \| | / __| __|
-;;; | (_) | | | (_| |_____| (_| | |_| | || (_) | | \__ \ |_ 
-;;;  \___/|_|  \__, |      \__,_|\__,_|\__\___/|_|_|___/\__|
-;;;            |___/                                        
-
-(require 'org-autolist)
-(add-hook 'org-mode-hook (lambda () (org-autolist-mode)))
-
-
 ;;;  _____                  
 ;;; |_   _|   _ _ __   ___  
 ;;;   | || | | | '_ \ / _ \ 
@@ -551,7 +549,7 @@ There are two things you can do about this warning:
 ;;;   |_| \__, | .__/ \___/ 
 ;;;       |___/|_|          
 
-(require 'typo)
+;;(require 'typo)
 
 ;;(typo-global-mode 1)
 ;;(add-hook 'text-mode-hook 'typo-mode)
@@ -564,14 +562,21 @@ There are two things you can do about this warning:
 ;;;  \___\___/|_| |_| |_| .__/ \__,_|_| |_|\__, | |_| |_| |_|\___/ \__,_|\___|
 ;;;                     |_|                |___/                              
 
-(require 'company)                                   ; load company mode
+(require 'company)
 
 ;; elisp
 (add-hook 'ielm-mode-hook 'company-mode)
 (add-hook 'emacs-lisp-mode-hook 'company-mode)
+(add-hook 'lsp-mode-hook 'company-mode)
 
 (global-set-key (kbd "<s-return>") 'company-complete)
+(define-key company-active-map "<tab>" 'company-complete-selection)
 
+(setq company-minimum-prefix-length 3)
+(setq company-idle-delay 0.0)
+
+(require 'company-box)
+(add-hook 'company-mode-hook 'company-box-mode)
 
 
 ;;;               _           _                      _   _  __       
@@ -581,7 +586,7 @@ There are two things you can do about this warning:
 ;;;   \_/\_/ \___|_.__/      |_.__/ \___|\__,_|\__,_|\__|_|_|  \__, |
 ;;;                                                            |___/ 
 
-(require 'web-beautify)                 ; bind a key
+(require 'web-beautify)                 ; bind a key?
 
 
 ;;;  _           
@@ -592,6 +597,7 @@ There are two things you can do about this warning:
 ;;;       |_|    
 
 (require 'lsp)
+
 (defun efs/lsp-mode-setup ()
   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
   (lsp-headerline-breadcrumb-mode))
@@ -601,15 +607,45 @@ There are two things you can do about this warning:
 (setq lsp-keymap-prefix "s-q")
 (lsp-enable-which-key-integration t)
 
+(define-key lsp-mode-map "<tab>" 'company-indent-or-complete-common)
+
 (require 'lsp-ui)
 (add-hook 'lsp-mode-hook 'lsp-ui-mode)
 (setq lsp-ui-doc-position 'bottom)
 
 (require 'lsp-treemacs)
-(add-hook 'lsp-mode-hook 'lsp-treemacs)
+(lsp-treemacs-sync-mode 1)
 
 (require 'helm-lsp)
-(define-key lsp-mode-map [remap xref-find-apropos] #'helm-lsp-workspace-symbol)
+(define-key lsp-mode-map [remap xref-find-apropos] #'helm-lsp-workspace-symbol) ; C-M-.
+
+
+;;;                  _           _   _ _      
+;;;  _ __  _ __ ___ (_) ___  ___| |_(_) | ___ 
+;;; | '_ \| '__/ _ \| |/ _ \/ __| __| | |/ _ \
+;;; | |_) | | | (_) | |  __/ (__| |_| | |  __/
+;;; | .__/|_|  \___// |\___|\___|\__|_|_|\___|
+;;; |_|           |__/                        
+
+(require 'projectile)
+
+(projectile-mode +1)
+(define-key projectile-mode-map (kbd "s-w") 'projectile-command-map)
+
+(setq projectile-completion-system 'helm)
+
+(require 'helm-projectile)
+(helm-projectile-on)
+
+
+;;;            _       _                   
+;;;  _ __ __ _(_)_ __ | |__   _____      __
+;;; | '__/ _` | | '_ \| '_ \ / _ \ \ /\ / /
+;;; | | | (_| | | | | | |_) | (_) \ V  V / 
+;;; |_|  \__,_|_|_| |_|_.__/ \___/ \_/\_/  
+
+(require 'rainbow-delimiters)
+(add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 
 
 
@@ -744,6 +780,17 @@ There are two things you can do about this warning:
 ;;; Force save comint-input-ring upon killing emacs
 (add-hook 'kill-emacs-hook 'comint-write-input-ring)
 
+
+
+;;;                                    _        _ _     _   
+;;;   ___  _ __ __ _        __ _ _   _| |_ ___ | (_)___| |_ 
+;;;  / _ \| '__/ _` |_____ / _` | | | | __/ _ \| | / __| __|
+;;; | (_) | | | (_| |_____| (_| | |_| | || (_) | | \__ \ |_ 
+;;;  \___/|_|  \__, |      \__,_|\__,_|\__\___/|_|_|___/\__|
+;;;            |___/                                        
+
+(require 'org-autolist)
+(add-hook 'org-mode-hook (lambda () (org-autolist-mode)))
 
 
 ;;;   ___  ____   ____                       _      
