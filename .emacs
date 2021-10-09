@@ -611,6 +611,9 @@ There are two things you can do about this warning:
 
 (require 'lsp)
 
+;; Python server
+(require 'lsp-pyright)
+
 ;; Modes for which to enable lsp
 (dolist (mode '(html-mode-hook
                 c-mode-hook
