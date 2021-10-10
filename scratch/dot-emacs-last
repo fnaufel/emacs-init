@@ -82,7 +82,7 @@
  '(initial-major-mode (quote org-mode))
  '(initial-scratch-message nil)
  '(lsp-clients-deno-server "/home/fnaufel/.deno/bin/deno")
- '(lsp-keymap-prefix "s-q")
+ '(lsp-keymap-prefix "<s-kp-add>")
  '(max-lisp-eval-depth 1000)
  '(max-specpdl-size 3000)
  '(mc/mode-line (quote (" mc:" (:eval (format "%d" (mc/num-cursors))))))
@@ -192,6 +192,19 @@
  '(org-special-ctrl-a/e t)
  '(org-src-window-setup (quote current-window))
  '(org-startup-folded t)
+ '(org-structure-template-alist
+   (quote
+    (("a" . "export ascii")
+     ("c" . "center")
+     ("C" . "comment")
+     ("el" . "src emacs-lisp")
+     ("e" . "example")
+     ("E" . "export")
+     ("h" . "export html")
+     ("l" . "export latex")
+     ("q" . "quote")
+     ("s" . "src")
+     ("v" . "verse"))))
  '(org-superstar-cycle-headline-bullets nil)
  '(org-superstar-headline-bullets-list (quote ("✱")))
  '(org-superstar-prettify-item-bullets nil)
@@ -213,6 +226,7 @@
  '(package-selected-packages
    (quote
     (lsp-pyright rainbow-delimiters helm-projectile projectile company-box setup use-package helm-lsp lsp-treemacs lsp-ui which-key lsp-mode ac-js2 skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion cdlatex org-superstar org-journal yaml-mode all elm-mode elm-yasnippets auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl org-autolist typo web-beautify markdown-toc markdown-preview-mode markdown-mode magit lua-mode htmlize dash-functional multiple-cursors expand-region)))
+ '(python-indent-offset 2)
  '(python-shell-interpreter "python3")
  '(rcirc-authinfo (quote (("freenode" nickserv "SagAllesAb" "54g4ll354b"))))
  '(rcirc-default-full-name "Sag alles ab!")
@@ -833,6 +847,9 @@ There are two things you can do about this warning:
 ;; Auto numbering of headlines
 (add-hook 'org-mode-hook (lambda () (org-num-mode)))
 
+;; org-tempo
+(require 'org-tempo)
+
 ;; org-superstar
 (require 'org-superstar)
 (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
@@ -1078,10 +1095,10 @@ There are two things you can do about this warning:
 ;; (define-key elpy-mode-map (kbd "<C-tab>") 'elpy-company-backend)
 
 ;;; Code folding
-(global-set-key (kbd "s->") 'yafolding-show-all)
-(global-set-key (kbd "s-<") 'yafolding-hide-all)
-(global-set-key (kbd "s-.") 'yafolding-show-element)
-(global-set-key (kbd "s-,") 'yafolding-hide-element)
+;; (global-set-key (kbd "s->") 'yafolding-show-all)
+;; (global-set-key (kbd "s-<") 'yafolding-hide-all)
+;; (global-set-key (kbd "s-.") 'yafolding-show-element)
+;; (global-set-key (kbd "s-,") 'yafolding-hide-element)
 
 (add-to-list 'interpreter-mode-alist
              '("python3" . python-mode))
@@ -1780,8 +1797,8 @@ A prefix argument is handled like `move-to-window-line':
 (global-set-key (kbd "C-*") 'scroll-n-lines-ahead)
 (global-set-key (kbd "C-/") 'scroll-n-lines-behind)
 (global-set-key (kbd "C-x C-y") 'transpose-sentences)
-(global-set-key (kbd "s-<prior>") 'scroll-down)
-(global-set-key (kbd "s-<next>") 'scroll-up)
+;; (global-set-key (kbd "s-<prior>") 'scroll-down)
+;; (global-set-key (kbd "s-<next>") 'scroll-up)
 (global-set-key (kbd "C-c u") 'org-mark-ring-goto)
 
 (global-set-key (kbd "C-<insert>") 'kill-ring-save)
