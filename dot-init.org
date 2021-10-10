@@ -283,6 +283,24 @@
 
 * UI
 
+*** Super key + number generates digit arguments
+
+    #+begin_src emacs-lisp
+      (global-set-key (kbd "s-0") 'digit-argument)
+      (global-set-key (kbd "s-1") 'digit-argument)
+      (global-set-key (kbd "s-2") 'digit-argument)
+      (global-set-key (kbd "s-3") 'digit-argument)
+      (global-set-key (kbd "s-4") 'digit-argument)
+      (global-set-key (kbd "s-5") 'digit-argument)
+      (global-set-key (kbd "s-6") 'digit-argument)
+      (global-set-key (kbd "s-7") 'digit-argument)
+      (global-set-key (kbd "s-8") 'digit-argument)
+      (global-set-key (kbd "s-9") 'digit-argument)
+    #+end_src
+
+    #+RESULTS:
+    : digit-argument
+
 *** Menubar
 
     #+begin_src emacs-lisp
@@ -615,69 +633,81 @@
     
 *** Buffers and windows
 
-***** TODO Change ways of killing buffers (windows, frames)
-      :LOGBOOK:
-      - State "TODO"       from              [2021-10-10 Sun 15:12]
-      :END:
+    #+begin_src emacs-lisp
+      (global-set-key (kbd "C-x C-b") 'buffer-menu)
+      (global-set-key (kbd "s-<tab>") 'other-window)
+      (global-set-key (kbd "s-j") 'shrink-window-horizontally)
+      (global-set-key (kbd "s-l") 'enlarge-window-horizontally)
+      (global-set-key (kbd "s-i") 'enlarge-window)
+      (global-set-key (kbd "s-/") 'balance-windows)
 
-      #+begin_src emacs-lisp
-        (global-set-key (kbd "C-x C-b") 'buffer-menu)
-        (global-set-key (kbd "s-<tab>") 'other-window)
-        (global-set-key (kbd "s-j") 'shrink-window-horizontally)
-        (global-set-key (kbd "s-l") 'enlarge-window-horizontally)
-        (global-set-key (kbd "s-i") 'enlarge-window)
-        (global-set-key (kbd "s-/") 'balance-windows)
+      ;;; Maximize frame
+      (defun maximize-current-frame () 
+        (set-frame-parameter nil 'fullscreen 'maximized))
 
-        ;;; Maximize frame
-        (defun maximize-current-frame () 
-          (set-frame-parameter nil 'fullscreen 'maximized))
+      ;;; Set background of hl-line
+      (set-face-background hl-line-face "gray20")
 
-        ;;; Set background of hl-line
-        (set-face-background hl-line-face "gray20")
+      ;;; Killing buffers
+      (setq not-to-kill-buffer-list
+            '("*scratch*"
+              "#emacs"
+              "*Messages*"
+              "*shell*"
+              "*xonsh*"
+              "Sunrise Tree"
+              "Sunrise Tree<2>"))
 
-        ;;; Killing buffers
-        (defun close-and-kill-this-pane ()
-          "If there are multiple windows, then close this pane and kill the buffer in it also."
-          (interactive)
-          (kill-buffer-but-not-some)
-          (unless (one-window-p)
-              (delete-window)))
+      (defun kill-or-bury-current-buffer ()
+        (interactive)
+        (if (member (buffer-name (current-buffer)) not-to-kill-buffer-list)
+            (bury-buffer)
+          (kill-buffer (current-buffer))))
 
-        (defun close-and-kill-next-pane ()
-          "If there are multiple windows, then close the other pane and kill the buffer in it also."
-          (interactive)
-          (unless (one-window-p)
-            (save-excursion
-              (other-window 1)
-              (kill-buffer-but-not-some)
-              (delete-window))))
+      (defun kill-buffer-special (&optional arg)
+        "A function that you can use instead of kill-buffer, with some extra features:
 
-        (setq not-to-kill-buffer-list
-              '("*scratch*"
-                "#emacs"
-                "*Messages*"
-                "*shell*"
-                "*xonsh*"
-                "Sunrise Tree"
-                "Sunrise Tree<2>"))
+      1. It does not prompt you for the buffer to kill.
 
-        (defun kill-buffer-but-not-some (&optional arg)
-          "A function that you can use instead of kill-this-buffer, 
-        but which prevents some buffers to be killed by mistake.
+      2. It prevents some buffers from being killed (those in
+      not-to-kill-buffer-list). If the buffer is on the list, this
+      function only buries the buffer. If you want to kill one of the
+      buffers on the list, you must call kill-buffer instead.
 
-        When called with a universal prefix argument, delete the frame
-        too."
-          (interactive "P")
-          (if (member (buffer-name (current-buffer)) not-to-kill-buffer-list)
-              (bury-buffer)
-            (kill-buffer (current-buffer)))
-          (unless (null arg)
-              (delete-frame)))
+      3. When ARG is nil: the current buffer is killed/buried.
 
-        (global-set-key (kbd "C-x k") 'kill-buffer-but-not-some)
-        (global-set-key (kbd "s-k") 'close-and-kill-this-pane)
-        (global-set-key (kbd "s-o") 'close-and-kill-next-pane)
-      #+end_src
+      4. When ARG is 0: the current buffer is killed/buried. If it was
+      NOT the only window in the frame, the window it occupied is
+      deleted.
+
+      5. When ARG is 1: if there are at least 2 windows in the current
+      frame, the OTHER buffer (the one in other-window) is
+      killed/buried. Otherwise, nothing happens.
+
+      6. When ARG is 2: the current buffer is killed/buried and the
+      current frame is deleted, regardless of how many windows it had.
+      "
+        (interactive "P")
+
+        (if (null arg)
+            (kill-or-bury-current-buffer)
+          (case arg
+            (0
+             (kill-or-bury-current-buffer)
+             (unless (one-window-p)
+               (delete-window)))
+            (1
+             (unless (one-window-p)
+               (save-excursion
+                 (other-window 1)
+                 (kill-or-bury-current-buffer)
+                 (delete-window))))
+            (2
+             (kill-or-bury-current-buffer)
+             (delete-frame)))))
+
+      (global-set-key (kbd "s-k") 'kill-buffer-special)
+    #+end_src
     
 *** Misc
 
