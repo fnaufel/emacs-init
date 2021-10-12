@@ -1,3 +1,4 @@
+; -*- mode: Org; eval: (add-hook 'after-save-hook (lambda () (my/tangle-async)) nil t) -*-
 #+title: fnaufel emacs config
 #+PROPERTY: header-args:emacs-lisp :tangle ~/Stow/emacs/.emacs.d/init.el
 
@@ -37,6 +38,23 @@
                            gcs-done)))
     #+end_src
 
+* Tangle this init file
+
+  + The comment on the first line of this file sets a local
+    after-save-hook to call these functions.
+
+    #+begin_src emacs-lisp
+      (defun my/tangle-async ()
+          "Tangle asynchronously current file."
+          (let ((file (buffer-file-name)))
+            (async-start
+             `(lambda ()
+                (require 'org)
+                (org-babel-tangle-file ,file))
+             `(lambda (result)
+                (message (format "tangle-async finished for: %s" result))))))   
+    #+end_src
+
 * Save customize customizations in separate file
 
   #+begin_src emacs-lisp
@@ -73,9 +91,17 @@
     (add-to-list 'package-archives
                  '("gnu" . "http://elpa.gnu.org/packages/") t)
 
+    (add-to-list 'package-archives
+                 '("org" . "http://orgmode.org/elpa/") t)
+
     (package-initialize)
 
     (add-to-list 'load-path "/home/fnaufel/.emacs.d/lisp/")
+
+    (package-refresh-contents)
+
+    (require 'paradox)
+    (paradox-enable)
   #+end_src
   
 * Org mode
@@ -147,6 +173,12 @@
         (define-key org-mode-map (kbd "C-c g") 'helm-org-agenda-files-headings)
       #+end_src
     
+***** hydra and friends
+
+      #+begin_src emacs-lisp
+        (require 'pretty-hydra)
+      #+end_src
+
 *** Audio and video links
 
     #+begin_src emacs-lisp
@@ -286,6 +318,7 @@
 *** Super key + number generates digit arguments
 
     #+begin_src emacs-lisp
+      (global-set-key (kbd "s--") 'negative-argument)
       (global-set-key (kbd "s-0") 'digit-argument)
       (global-set-key (kbd "s-1") 'digit-argument)
       (global-set-key (kbd "s-2") 'digit-argument)
@@ -321,6 +354,12 @@
       (push 'fontify-frame after-make-frame-functions)
     #+end_src
     
+*** Icons
+
+    #+begin_src emacs-lisp
+      (require 'all-the-icons)
+    #+end_src
+
 *** which-key
 
     + When a prefix key is typed, show possible next keys.
@@ -516,24 +555,18 @@
             (setq i (1+ i)))))
     #+end_src
     
-*** eejump
+*** fnjump (using hydra)
 
     #+begin_src emacs-lisp
-      ;; eejump (M-j):
-      ;; with no argument or with an unrecognized argument jump to
-      ;; the definition of eejump in ~/.emacs; then we can see which
-      ;; numbers correspond to which actions (the source is the
-      ;; documentation!), and we can change the definition if needed -
-      ;; just run C-x C-e (eval-last-sexp) at the right place to make
-      ;; the changes apply.
-      ;;
-      (global-set-key (kbd "M-j") 'eejump)
-      (defun eejump (arg) (interactive "P")
-        (cond ((eq arg 1) (find-file "~/Documents/OrgFiles/mail.org"))
-              ((eq arg 2) (find-file "~/Stow/emacs/dot-init.org"))
-              ((eq arg 3) (dired "~/Documents/OrgFiles"))
-              ((eq arg 4) (ansi-term "/home/fnaufel/.local/bin/xonsh" "xonsh"))
-              (t (find-function 'eejump))))
+      (defhydra fnjump (:exit t)
+        "Jump to important things"
+        ("e" (find-file "~/Documents/OrgFiles/mail.org") "email")
+        ("i" (find-file "~/Stow/emacs/dot-init.org") "init")
+        ("x" (ansi-term "/home/fnaufel/.local/bin/xonsh" "xonsh") "xonsh")
+        ("q" nil "quit"))
+
+      (global-set-key (kbd "M-j") 'fnjump/body)
+      (global-set-key (kbd "s-j") 'fnjump/body)
     #+end_src
     
 *** Browse kill ring
@@ -633,81 +666,157 @@
     
 *** Buffers and windows
 
-    #+begin_src emacs-lisp
-      (global-set-key (kbd "C-x C-b") 'buffer-menu)
-      (global-set-key (kbd "s-<tab>") 'other-window)
-      (global-set-key (kbd "s-j") 'shrink-window-horizontally)
-      (global-set-key (kbd "s-l") 'enlarge-window-horizontally)
-      (global-set-key (kbd "s-i") 'enlarge-window)
-      (global-set-key (kbd "s-/") 'balance-windows)
+***** Misc
 
-      ;;; Maximize frame
-      (defun maximize-current-frame () 
-        (set-frame-parameter nil 'fullscreen 'maximized))
+      #+begin_src emacs-lisp
+        (global-set-key (kbd "C-x C-b") 'buffer-menu)
 
-      ;;; Set background of hl-line
-      (set-face-background hl-line-face "gray20")
+        ;;; Maximize frame
+        (defun maximize-current-frame () 
+          (set-frame-parameter nil 'fullscreen 'maximized))
 
-      ;;; Killing buffers
-      (setq not-to-kill-buffer-list
-            '("*scratch*"
-              "#emacs"
-              "*Messages*"
-              "*shell*"
-              "*xonsh*"
-              "Sunrise Tree"
-              "Sunrise Tree<2>"))
+        ;;; Set background of hl-line
+        (set-face-background hl-line-face "gray20")
+      #+end_src
 
-      (defun kill-or-bury-current-buffer ()
-        (interactive)
-        (if (member (buffer-name (current-buffer)) not-to-kill-buffer-list)
-            (bury-buffer)
-          (kill-buffer (current-buffer))))
+***** Kill buffers
 
-      (defun kill-buffer-special (&optional arg)
-        "A function that you can use instead of kill-buffer, with some extra features:
+      #+begin_src emacs-lisp
+        ;;; Killing buffers
 
-      1. It does not prompt you for the buffer to kill.
+        ;; Regexes for names of buffers that should not be killed by this function
+        (setq not-to-kill-buffer-list
+              '("\\*scratch\\*"
+                "#emacs"
+                "\\*Messages\\*"
+                "\\*shell\\*"
+                "\\*xonsh\\*"
+                "Sunrise Tree$"
+                "Sunrise Tree<2>$"
+                " (Sunrise)$"
+                "\\*Org Src"))
 
-      2. It prevents some buffers from being killed (those in
-      not-to-kill-buffer-list). If the buffer is on the list, this
-      function only buries the buffer. If you want to kill one of the
-      buffers on the list, you must call kill-buffer instead.
+        (defun kill-or-bury-current-buffer ()
+          (interactive)
+          (let ((case-fold-search nil))
+            (if (seq-some
+                 (lambda (x) (string-match-p x (buffer-name (current-buffer))))
+                 not-to-kill-buffer-list)
+                (bury-buffer)
+              (kill-buffer (current-buffer)))))
 
-      3. When ARG is nil: the current buffer is killed/buried.
+        (defun kill-buffer-special (&optional arg)
+          "A function that you can use instead of kill-buffer, with some extra features:
 
-      4. When ARG is 0: the current buffer is killed/buried. If it was
-      NOT the only window in the frame, the window it occupied is
-      deleted.
+        1. It does not prompt you for the buffer to kill.
 
-      5. When ARG is 1: if there are at least 2 windows in the current
-      frame, the OTHER buffer (the one in other-window) is
-      killed/buried. Otherwise, nothing happens.
+        2. It prevents some buffers from being killed (those in
+        not-to-kill-buffer-list). If the buffer is on the list, this
+        function only buries the buffer. If you want to kill one of the
+        buffers on the list, you must call kill-buffer instead.
 
-      6. When ARG is 2: the current buffer is killed/buried and the
-      current frame is deleted, regardless of how many windows it had.
-      "
-        (interactive "P")
+        3. When ARG is nil: the current buffer is killed/buried.
 
-        (if (null arg)
-            (kill-or-bury-current-buffer)
-          (case arg
-            (0
-             (kill-or-bury-current-buffer)
-             (unless (one-window-p)
-               (delete-window)))
-            (1
-             (unless (one-window-p)
-               (save-excursion
-                 (other-window 1)
-                 (kill-or-bury-current-buffer)
-                 (delete-window))))
-            (2
-             (kill-or-bury-current-buffer)
-             (delete-frame)))))
+        4. When ARG is 0: the current buffer is killed/buried. If it was
+        NOT the only window in the frame, the window it occupied is
+        deleted.
 
-      (global-set-key (kbd "s-k") 'kill-buffer-special)
-    #+end_src
+        5. When ARG is 1: if there are at least 2 windows in the current
+        frame, the OTHER buffer (the one in other-window) is
+        killed/buried. Otherwise, nothing happens.
+
+        6. When ARG is 2: the current buffer is killed/buried and the
+        current frame is deleted, regardless of how many windows it had.
+        "
+          (interactive "P")
+
+          (if (null arg)
+              (kill-or-bury-current-buffer)
+            (case arg
+              (0
+               (kill-or-bury-current-buffer)
+               (unless (one-window-p)
+                 (delete-window)))
+              (1
+               (unless (one-window-p)
+                 (save-excursion
+                   (other-window 1)
+                   (kill-or-bury-current-buffer)
+                   (delete-window))))
+              (2
+               (kill-or-bury-current-buffer)
+               (delete-frame)))))
+
+        (global-set-key (kbd "s-k") 'kill-buffer-special)
+      #+end_src
+
+***** Switch/resize window
+
+      #+begin_src emacs-lisp
+        (defun prev-window ()
+          (interactive)
+          (other-window -1))
+
+        (global-set-key (kbd "<s-tab>") 'other-window)
+        (global-set-key (kbd "<S-s-iso-lefttab>") 'prev-window)
+
+        (require 'windmove)
+
+        (defun hydra-move-splitter-left (arg)
+          "Move window splitter left."
+          (interactive "p")
+          (if (let ((windmove-wrap-around))
+                (windmove-find-other-window 'right))
+              (shrink-window-horizontally arg)
+            (enlarge-window-horizontally arg)))
+
+        (defun hydra-move-splitter-right (arg)
+          "Move window splitter right."
+          (interactive "p")
+          (if (let ((windmove-wrap-around))
+                (windmove-find-other-window 'right))
+              (enlarge-window-horizontally arg)
+            (shrink-window-horizontally arg)))
+
+        (defun hydra-move-splitter-up (arg)
+          "Move window splitter up."
+          (interactive "p")
+          (if (let ((windmove-wrap-around))
+                (windmove-find-other-window 'up))
+              (enlarge-window arg)
+            (shrink-window arg)))
+
+        (defun hydra-move-splitter-down (arg)
+          "Move window splitter down."
+          (interactive "p")
+          (if (let ((windmove-wrap-around))
+                (windmove-find-other-window 'up))
+              (shrink-window arg)
+            (enlarge-window arg)))
+
+        (require 'buffer-move)
+
+        (defhydra hydra-switch-resize-window ()
+            "Windows"
+            ("j" windmove-left "←")
+            ("m" windmove-down "↓")
+            ("i" windmove-up "↑")
+            ("l" windmove-right "→")
+            ("J" hydra-move-splitter-left "↤")
+            ("M" hydra-move-splitter-down "↧")
+            ("I" hydra-move-splitter-up "↥")
+            ("L" hydra-move-splitter-right "↤")
+            ("K" balance-windows "↹")
+            ("M-j" buf-move-left "↞")
+            ("M-m" buf-move-down "↡")
+            ("M-i" buf-move-up "↟")
+            ("M-l" buf-move-right "↠")
+            ("0" delete-window "🗙")
+            ("1" delete-other-windows "1")
+            ("q" nil "quit"))
+
+        (global-set-key (kbd "s-l") 'hydra-switch-resize-window/body)
+      #+end_src
     
 *** Misc
 
@@ -874,6 +983,12 @@
     
 * Completion
 
+*** Use hippie expansion
+
+    #+begin_src emacs-lisp
+      (global-set-key [remap dabbrev-expand] 'hippie-expand)
+    #+end_src
+
 *** company
 
     + Configure for emacs lisp, ielm and [[*lsp][lsp]]:
@@ -890,7 +1005,7 @@
         (define-key company-active-map (kbd "<tab>") 'company-complete-selection)
    
         (setq company-minimum-prefix-length 3)
-        (setq company-idle-delay 0.0)
+        (setq company-idle-delay 0.5)
       #+end_src
 
     + I tried to use company-box to beautify completion popups,
