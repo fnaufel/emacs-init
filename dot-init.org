@@ -753,7 +753,7 @@
 
         5. When ARG is 1: if there are at least 2 windows in the current
         frame, the OTHER buffer (the one in other-window) is
-        killed/buried. Otherwise, nothing happens.
+        killed/buried and its window deleted. Otherwise, nothing happens.
 
         6. When ARG is 2: the current buffer is killed/buried and the
         current frame is deleted, regardless of how many windows it had.
@@ -780,12 +780,7 @@
         (global-set-key (kbd "s-k") 'kill-buffer-special)
       #+end_src
 
-***** Switch/resize window
-
-******* TODO Enhance hydra to swap buffers etc.
-        :LOGBOOK:
-        - State "TODO"       from              [2021-10-12 Tue 18:41]
-        :END:
+***** Buffers, windows, frames
 
         #+begin_src emacs-lisp
           (defun prev-window ()
@@ -831,26 +826,53 @@
 
           (require 'buffer-move)
 
-          (defhydra hydra-switch-resize-window ()
-              "Windows"
-              ("j" windmove-left "←")
-              ("m" windmove-down "↓")
-              ("i" windmove-up "↑")
-              ("l" windmove-right "→")
-              ("J" hydra-move-splitter-left "↤")
-              ("M" hydra-move-splitter-down "↧")
-              ("I" hydra-move-splitter-up "↥")
-              ("L" hydra-move-splitter-right "↤")
-              ("K" balance-windows "↹")
-              ("M-j" buf-move-left "↞")
-              ("M-m" buf-move-down "↡")
-              ("M-i" buf-move-up "↟")
-              ("M-l" buf-move-right "↠")
-              ("0" delete-window "🗙")
-              ("1" delete-other-windows "1")
-              ("q" nil "quit"))
+          (setq hydra-window--title
+            (with-faicon "clone" "Buffers, windows, frames" 1 -0.05))
 
-          (global-set-key (kbd "s-l") 'hydra-switch-resize-window/body)
+          (pretty-hydra-define hydra-windows
+            (:quit-key "q" :title hydra-window--title :foreign-keys warn)
+              ("Go"
+               (("i" windmove-up "↑ ")
+                ("m" windmove-down "↓ ")
+                ("j" windmove-left "← ")
+                ("l" windmove-right "→ "))
+
+               "Resize"
+               (("I" hydra-move-splitter-up "↑ ")
+                ("M" hydra-move-splitter-down "↓ ")
+                ("J" hydra-move-splitter-left "← ")
+                ("L" hydra-move-splitter-right "→ ")
+                ("=" balance-windows "= "))
+
+               "Swap"
+               (("M-i" buf-move-up "↑ ")
+                ("M-m" buf-move-down "↓ ")
+                ("M-j" buf-move-left "← ")
+                ("M-l" buf-move-right "→ "))
+
+               "Kill"
+               (("k" kill-buffer-special "this buffer ")
+                ("K" (kill-buffer-special 0) "this buffer & window ")
+                ("M-k" (kill-buffer-special 2) "this buffer & frame " :exit t)
+                ("o" nil "other buffer ")
+                ("O" (kill-buffer-special 1) "other buffer & window "))
+
+               "Create"
+               (("w" (progn (split-window-below) (windmove-down)) "window ↑ ")
+                ("s" (split-window-below) "window ↓ ")
+                ("a" (progn (split-window-right) (windmove-right)) "window ← ")
+                ("d" (split-window-right) "window → ")
+                ("f" make-frame-command "frame " :exit t))
+
+               "Delete"
+               (("0" delete-window "this window ")
+                ("1" delete-other-windows "other windows " :exit t)
+                ("5" delete-frame "this frame " :exit t))
+
+               "Quit"
+               (("q" nil "quit "))))
+
+          (global-set-key (kbd "s-l") 'hydra-windows/body)
         #+end_src
     
 *** Misc
