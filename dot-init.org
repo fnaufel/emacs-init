@@ -752,71 +752,76 @@
 
 ***** Switch/resize window
 
-      #+begin_src emacs-lisp
-        (defun prev-window ()
-          (interactive)
-          (other-window -1))
+******* TODO Enhance hydra to swap buffers etc.
+        :LOGBOOK:
+        - State "TODO"       from              [2021-10-12 Tue 18:41]
+        :END:
 
-        (global-set-key (kbd "<s-tab>") 'other-window)
-        (global-set-key (kbd "<S-s-iso-lefttab>") 'prev-window)
+        #+begin_src emacs-lisp
+          (defun prev-window ()
+            (interactive)
+            (other-window -1))
 
-        (require 'windmove)
+          (global-set-key (kbd "<s-tab>") 'other-window)
+          (global-set-key (kbd "<S-s-iso-lefttab>") 'prev-window)
 
-        (defun hydra-move-splitter-left (arg)
-          "Move window splitter left."
-          (interactive "p")
-          (if (let ((windmove-wrap-around))
-                (windmove-find-other-window 'right))
-              (shrink-window-horizontally arg)
-            (enlarge-window-horizontally arg)))
+          (require 'windmove)
 
-        (defun hydra-move-splitter-right (arg)
-          "Move window splitter right."
-          (interactive "p")
-          (if (let ((windmove-wrap-around))
-                (windmove-find-other-window 'right))
-              (enlarge-window-horizontally arg)
-            (shrink-window-horizontally arg)))
+          (defun hydra-move-splitter-left (arg)
+            "Move window splitter left."
+            (interactive "p")
+            (if (let ((windmove-wrap-around))
+                  (windmove-find-other-window 'right))
+                (shrink-window-horizontally arg)
+              (enlarge-window-horizontally arg)))
 
-        (defun hydra-move-splitter-up (arg)
-          "Move window splitter up."
-          (interactive "p")
-          (if (let ((windmove-wrap-around))
-                (windmove-find-other-window 'up))
-              (enlarge-window arg)
-            (shrink-window arg)))
+          (defun hydra-move-splitter-right (arg)
+            "Move window splitter right."
+            (interactive "p")
+            (if (let ((windmove-wrap-around))
+                  (windmove-find-other-window 'right))
+                (enlarge-window-horizontally arg)
+              (shrink-window-horizontally arg)))
 
-        (defun hydra-move-splitter-down (arg)
-          "Move window splitter down."
-          (interactive "p")
-          (if (let ((windmove-wrap-around))
-                (windmove-find-other-window 'up))
-              (shrink-window arg)
-            (enlarge-window arg)))
+          (defun hydra-move-splitter-up (arg)
+            "Move window splitter up."
+            (interactive "p")
+            (if (let ((windmove-wrap-around))
+                  (windmove-find-other-window 'up))
+                (enlarge-window arg)
+              (shrink-window arg)))
 
-        (require 'buffer-move)
+          (defun hydra-move-splitter-down (arg)
+            "Move window splitter down."
+            (interactive "p")
+            (if (let ((windmove-wrap-around))
+                  (windmove-find-other-window 'up))
+                (shrink-window arg)
+              (enlarge-window arg)))
 
-        (defhydra hydra-switch-resize-window ()
-            "Windows"
-            ("j" windmove-left "←")
-            ("m" windmove-down "↓")
-            ("i" windmove-up "↑")
-            ("l" windmove-right "→")
-            ("J" hydra-move-splitter-left "↤")
-            ("M" hydra-move-splitter-down "↧")
-            ("I" hydra-move-splitter-up "↥")
-            ("L" hydra-move-splitter-right "↤")
-            ("K" balance-windows "↹")
-            ("M-j" buf-move-left "↞")
-            ("M-m" buf-move-down "↡")
-            ("M-i" buf-move-up "↟")
-            ("M-l" buf-move-right "↠")
-            ("0" delete-window "🗙")
-            ("1" delete-other-windows "1")
-            ("q" nil "quit"))
+          (require 'buffer-move)
 
-        (global-set-key (kbd "s-l") 'hydra-switch-resize-window/body)
-      #+end_src
+          (defhydra hydra-switch-resize-window ()
+              "Windows"
+              ("j" windmove-left "←")
+              ("m" windmove-down "↓")
+              ("i" windmove-up "↑")
+              ("l" windmove-right "→")
+              ("J" hydra-move-splitter-left "↤")
+              ("M" hydra-move-splitter-down "↧")
+              ("I" hydra-move-splitter-up "↥")
+              ("L" hydra-move-splitter-right "↤")
+              ("K" balance-windows "↹")
+              ("M-j" buf-move-left "↞")
+              ("M-m" buf-move-down "↡")
+              ("M-i" buf-move-up "↟")
+              ("M-l" buf-move-right "↠")
+              ("0" delete-window "🗙")
+              ("1" delete-other-windows "1")
+              ("q" nil "quit"))
+
+          (global-set-key (kbd "s-l") 'hydra-switch-resize-window/body)
+        #+end_src
     
 *** Misc
 
