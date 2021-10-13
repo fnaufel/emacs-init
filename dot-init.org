@@ -1030,15 +1030,16 @@
 
       #+begin_src emacs-lisp
         (require 'company)
-   
+
         ;; elisp
         (add-hook 'ielm-mode-hook 'company-mode)
         (add-hook 'emacs-lisp-mode-hook 'company-mode)
         (add-hook 'lsp-mode-hook 'company-mode)
-   
+
         (global-set-key (kbd "<s-return>") 'company-complete)
         (define-key company-active-map (kbd "<tab>") 'company-complete-selection)
-   
+        (define-key company-active-map (kbd "<ESC>") 'company-abort)
+
         (setq company-minimum-prefix-length 3)
         (setq company-idle-delay 0.5)
       #+end_src
