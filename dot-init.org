@@ -558,15 +558,20 @@
 *** fnjump (using hydra)
 
     #+begin_src emacs-lisp
-      (defhydra fnjump (:exit t)
-        "Jump to important things"
-        ("e" (find-file "~/Documents/OrgFiles/mail.org") "email")
-        ("i" (find-file "~/Stow/emacs/dot-init.org") "init")
-        ("x" (ansi-term "/home/fnaufel/.local/bin/xonsh" "xonsh") "xonsh")
-        ("q" nil "quit"))
+      (defvar hydra-fnjump--title
+        (with-faicon "map-signs" "Important places" 1 -0.05))
 
-      (global-set-key (kbd "M-j") 'fnjump/body)
-      (global-set-key (kbd "s-j") 'fnjump/body)
+      (pretty-hydra-define hydra-fnjump
+        (:quit-key "q" :title hydra-fnjump--title :foreign-keys warn :exit t)
+        ("Jump to"
+         (("e" (find-file "~/Documents/OrgFiles/mail.org") "email")
+          ("i" (find-file "~/Stow/emacs/dot-init.org") "init")
+          ("x" (ansi-term "/home/fnaufel/.local/bin/xonsh" "xonsh") "xonsh"))
+
+         "Quit"
+         (("q" nil "quit"))))
+
+      (global-set-key (kbd "s-j") 'hydra-fnjump/body)
     #+end_src
     
 *** Browse kill ring
