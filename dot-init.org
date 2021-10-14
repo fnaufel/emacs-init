@@ -583,18 +583,18 @@
 *** fnjump (using hydra)
 
     #+begin_src emacs-lisp
-      (defvar hydra-fnjump--title
+      (setq hydra-fnjump--title
         (with-faicon "map-signs" "Important places" 1 -0.05))
 
       (pretty-hydra-define hydra-fnjump
         (:quit-key "q" :title hydra-fnjump--title :foreign-keys warn :exit t)
         ("Jump to"
-         (("e" (find-file "~/Documents/OrgFiles/mail.org") "email")
-          ("i" (find-file "~/Stow/emacs/dot-init.org") "init")
-          ("x" (ansi-term "/home/fnaufel/.local/bin/xonsh" "xonsh") "xonsh"))
+         (("e" (find-file "~/Documents/OrgFiles/mail.org") "email ")
+          ("i" (find-file "~/Stow/emacs/dot-init.org") "init ")
+          ("x" (ansi-term "/home/fnaufel/.local/bin/xonsh" "xonsh") "new xonsh "))
 
          "Quit"
-         (("q" nil "quit"))))
+         (("q" nil "quit "))))
 
       (global-set-key (kbd "s-j") 'hydra-fnjump/body)
     #+end_src
@@ -709,77 +709,6 @@
         (set-face-background hl-line-face "gray20")
       #+end_src
 
-***** Kill buffers
-
-      #+begin_src emacs-lisp
-        ;;; Killing buffers
-
-        ;; Regexes for names of buffers that should not be killed by this function
-        (setq not-to-kill-buffer-list
-              '("\\*scratch\\*"
-                "#emacs"
-                "\\*Messages\\*"
-                "\\*shell\\*"
-                "\\*xonsh\\*"
-                "Sunrise Tree$"
-                "Sunrise Tree<2>$"
-                " (Sunrise)$"
-                "\\*Org Src"))
-
-        (defun kill-or-bury-current-buffer ()
-          (interactive)
-          (let ((case-fold-search nil))
-            (if (seq-some
-                 (lambda (x) (string-match-p x (buffer-name (current-buffer))))
-                 not-to-kill-buffer-list)
-                (bury-buffer)
-              (kill-buffer (current-buffer)))))
-
-        (defun kill-buffer-special (&optional arg)
-          "A function that you can use instead of kill-buffer, with some extra features:
-
-        1. It does not prompt you for the buffer to kill.
-
-        2. It prevents some buffers from being killed (those in
-        not-to-kill-buffer-list). If the buffer is on the list, this
-        function only buries the buffer. If you want to kill one of the
-        buffers on the list, you must call kill-buffer instead.
-
-        3. When ARG is nil: the current buffer is killed/buried.
-
-        4. When ARG is 0: the current buffer is killed/buried. If it was
-        NOT the only window in the frame, the window it occupied is
-        deleted.
-
-        5. When ARG is 1: if there are at least 2 windows in the current
-        frame, the OTHER buffer (the one in other-window) is
-        killed/buried and its window deleted. Otherwise, nothing happens.
-
-        6. When ARG is 2: the current buffer is killed/buried and the
-        current frame is deleted, regardless of how many windows it had.
-        "
-          (interactive "P")
-
-          (if (null arg)
-              (kill-or-bury-current-buffer)
-            (case arg
-              (0
-               (kill-or-bury-current-buffer)
-               (unless (one-window-p)
-                 (delete-window)))
-              (1
-               (unless (one-window-p)
-                 (save-excursion
-                   (other-window 1)
-                   (kill-or-bury-current-buffer)
-                   (delete-window))))
-              (2
-               (kill-or-bury-current-buffer)
-               (delete-frame)))))
-
-        (global-set-key (kbd "s-k") 'kill-buffer-special)
-      #+end_src
-
 ***** Buffers, windows, frames
 
         #+begin_src emacs-lisp
@@ -824,6 +753,63 @@
                 (shrink-window arg)
               (enlarge-window arg)))
 
+          ;; Regexes for names of buffers that should not be killed by this function
+          (setq not-to-kill-buffer-list
+                '("\\*scratch\\*"
+                  "#emacs"
+                  "\\*Messages\\*"
+                  "\\*shell\\*"
+                  "\\*xonsh\\*"
+                  "Sunrise Tree$"
+                  "Sunrise Tree<2>$"
+                  " (Sunrise)$"
+                  "\\*Org Src"))
+
+          (defun kill-or-bury-current-buffer ()
+            "If current buffer name is on not-to-kill-buffer-list, bury.
+          Otherwise, kill."
+            (interactive)
+            (let ((case-fold-search nil))
+              (if (seq-some
+                   (lambda (x) (string-match-p x (buffer-name (current-buffer))))
+                   not-to-kill-buffer-list)
+                  (bury-buffer)
+                (kill-buffer (current-buffer)))))
+
+          (defun kill-buffer-special-and-window ()
+            "If current buffer name is on not-to-kill-buffer-list, bury.
+          Otherwise, kill. Besides, if not sole window, delete current window."
+            (interactive)
+            (kill-or-bury-current-buffer)
+            (unless (one-window-p)
+              (delete-window)))
+
+          (defun kill-buffer-special-and-frame ()
+            "If current buffer name is on not-to-kill-buffer-list, bury.
+          Otherwise, kill. Besides, delete current frame."
+            (interactive)
+            (kill-or-bury-current-buffer)
+            (delete-frame))
+
+          (defun kill-other-buffer-special ()
+            "If other buffer name is on not-to-kill-buffer-list, bury.
+          Otherwise, kill."
+            (interactive)
+            (unless (one-window-p)
+              (save-excursion
+                (other-window 1)
+                (kill-or-bury-current-buffer))))
+
+          (defun kill-other-buffer-special-and-window ()
+            "If other buffer name is on not-to-kill-buffer-list, bury.
+          Otherwise, kill. Besides, delete window it occupied."
+            (interactive)
+            (unless (one-window-p)
+              (save-excursion
+                (other-window 1)
+                (kill-or-bury-current-buffer)
+                (delete-window))))
+
           (require 'buffer-move)
 
           (setq hydra-window--title
@@ -851,11 +837,11 @@
                 ("M-l" buf-move-right "→ "))
 
                "Kill"
-               (("k" kill-buffer-special "this buffer ")
-                ("K" (kill-buffer-special 0) "this buffer & window ")
-                ("M-k" (kill-buffer-special 2) "this buffer & frame " :exit t)
-                ("o" nil "other buffer ")
-                ("O" (kill-buffer-special 1) "other buffer & window "))
+               (("k" kill-or-bury-current-buffer "this buffer ")
+                ("K" kill-buffer-special-and-window "this buffer & window ")
+                ("M-k" kill-buffer-special-and-frame "this buffer & frame " :exit t)
+                ("o" kill-other-buffer-special "other buffer ")
+                ("O" kill-other-buffer-special-and-window "other buffer & window "))
 
                "Create"
                (("w" (progn (split-window-below) (windmove-down)) "window ↑ ")
@@ -866,13 +852,14 @@
 
                "Delete"
                (("0" delete-window "this window ")
-                ("1" delete-other-windows "other windows " :exit t)
+                ("1" delete-other-windows "other windows ")
                 ("5" delete-frame "this frame " :exit t))
 
                "Quit"
                (("q" nil "quit "))))
 
           (global-set-key (kbd "s-l") 'hydra-windows/body)
+          (global-set-key (kbd "s-k") 'kill-or-bury-current-buffer)
         #+end_src
     
 *** Misc
