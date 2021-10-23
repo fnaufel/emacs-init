@@ -1,4 +1,6 @@
-; -*- mode: Org; eval: (add-hook 'after-save-hook (lambda () (my/tangle-async)) nil t) -*-
+
+;;; -*- mode: Org; eval: (add-hook 'after-save-hook (lambda () (my/tangle-async)) nil t) -*-
+
 #+title: fnaufel emacs config
 #+PROPERTY: header-args:emacs-lisp :tangle ~/Stow/emacs/.emacs.d/init.el
 
@@ -24,7 +26,7 @@
 
 * Profile emacs init
 
-*** See https://github.com/daviwil/emacs-from-scratch
+** See https://github.com/daviwil/emacs-from-scratch
 
     #+begin_src emacs-lisp
       ;; The default is 800 kilobytes.  Measured in bytes.
@@ -106,19 +108,19 @@
   
 * Org mode
 
-*** autolist
+** autolist
 
     #+begin_src emacs-lisp
       (require 'org-autolist)
       (add-hook 'org-mode-hook (lambda () (org-autolist-mode)))
     #+end_src
     
-*** superstar
+** superstar (disabled)
 
     #+begin_src emacs-lisp
-      ;; org-superstar
-      (require 'org-superstar)
-      (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
+      ;; ;; org-superstar
+      ;; (require 'org-superstar)
+      ;; (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
 
       ;; set basic title font
       (set-face-attribute 'org-level-8 nil :weight 'bold :inherit 'default :foreground "dark orange")
@@ -133,7 +135,30 @@
       (set-face-attribute 'org-level-1 nil :inherit 'org-level-8 :height 1.15) 
     #+end_src
     
-*** calfw
+** org-bar
+
+    #+begin_src emacs-lisp
+      (require 'org-bars)
+      (add-hook 'org-mode-hook #'org-bars-mode)
+
+      ;; No ellipsis in headlines
+      (defun org-no-ellipsis-in-headlines ()
+        "Remove use of ellipsis in headlines.
+      See `buffer-invisibility-spec'."
+        (remove-from-invisibility-spec '(outline . t))
+        (add-to-invisibility-spec 'outline))
+
+      (add-hook 'org-mode-hook 'org-no-ellipsis-in-headlines)
+
+      ;; Fix this function to handle blank, non-empty entries
+      (defun org-bars-subtree-is-empty-p ()
+        "Return t if subtree at point is empty."
+        (let ((entry (org-get-entry)))
+          (set-text-properties 0 (length entry) nil entry)
+          (string-blank-p entry)))
+    #+end_src
+
+** calfw
 
     #+begin_src emacs-lisp
       (require 'calfw)
@@ -145,9 +170,9 @@
       (setq cfw:org-overwrite-default-keybinding t)
     #+end_src
     
-*** Key bindings
+** Key bindings
 
-***** General
+*** General
 
       #+begin_src emacs-lisp
         ;;; Shorter key bindings for next and previous link
@@ -163,7 +188,7 @@
         (define-key org-mode-map "\C-c\C-xi" 'org-insert-columns-dblock)
       #+end_src
     
-***** helm integration
+*** helm integration
 
       #+begin_src emacs-lisp
         ;;; helm-org
@@ -173,7 +198,7 @@
         (define-key org-mode-map (kbd "C-c g") 'helm-org-agenda-files-headings)
       #+end_src
     
-***** hydra and friends
+*** hydra and friends
 
       #+begin_src emacs-lisp
         (require 'hydra)
@@ -204,7 +229,7 @@
             (s-concat icon (if nospace "" " ") str)))
       #+end_src
 
-*** Audio and video links
+** Audio and video links
 
     #+begin_src emacs-lisp
       (defun convert-hhmmss-to-secs (time)
@@ -299,7 +324,7 @@
                                 file)))))
     #+end_src
     
-*** org-journal
+** org-journal
 
     #+begin_src emacs-lisp
       (require 'org-journal)
@@ -310,7 +335,7 @@
       (define-key org-mode-map (kbd "C-J") 'org-journal-new-entry)
     #+end_src
     
-*** Misc
+** Misc
 
     #+begin_src emacs-lisp
       ;; Turn on Auto Fill mode automatically in Org mode
@@ -340,7 +365,7 @@
 
 * UI
 
-*** Super key + number generates digit arguments
+** Super key + number generates digit arguments
 
     #+begin_src emacs-lisp
       (global-set-key (kbd "s--") 'negative-argument)
@@ -359,13 +384,13 @@
     #+RESULTS:
     : digit-argument
 
-*** Menubar
+** Menubar
 
     #+begin_src emacs-lisp
       (menu-bar-mode 0)
     #+end_src
 
-*** Fonts
+** Fonts
 
     #+begin_src emacs-lisp
       ;;; Set font
@@ -379,13 +404,13 @@
       (push 'fontify-frame after-make-frame-functions)
     #+end_src
     
-*** Icons
+** Icons
 
     #+begin_src emacs-lisp
       (require 'all-the-icons)
     #+end_src
 
-*** which-key
+** which-key
 
     + When a prefix key is typed, show possible next keys.
 
@@ -394,7 +419,7 @@
         (which-key-mode)
       #+end_src
 
-*** anzu
+** anzu
 
     + Show number of matches during isearch.
 
@@ -403,7 +428,7 @@
         (global-anzu-mode +1)
       #+end_src
 
-*** helpful
+** helpful
 
     #+begin_src emacs-lisp
       (require 'helpful) 
@@ -433,21 +458,21 @@
       (global-set-key (kbd "C-h C") #'helpful-command)
     #+end_src
 
-*** info-colors
+** info-colors
 
     #+begin_src emacs-lisp
       (require 'info-colors)
       (add-hook 'Info-selection-hook 'info-colors-fontify-node)
     #+end_src
 
-*** expand-region
+** expand-region
 
     #+begin_src emacs-lisp
       (require 'expand-region)
       (global-set-key (kbd "C-+") 'er/expand-region)
     #+end_src
     
-*** smart-parens
+** smart-parens
 
     #+begin_src emacs-lisp
       (require 'smartparens-config)
@@ -489,7 +514,7 @@
       (define-key smartparens-mode-map (kbd "C-}") 'sp-select-next-thing)
     #+end_src
     
-*** multiple-cursors
+** multiple-cursors
 
     #+begin_src emacs-lisp
       (require 'multiple-cursors)
@@ -514,7 +539,7 @@
       ;; `C-j`.
     #+end_src
     
-*** sml-modeline
+** sml-modeline
 
     #+begin_src emacs-lisp
       (if (require 'sml-modeline nil 'noerror)    ;; use sml-modeline if available
@@ -525,7 +550,7 @@
         (set-scroll-bar-mode 'right))             ;; ... on the right
     #+end_src
     
-*** Recent files
+** Recent files
 
     #+begin_src emacs-lisp
       ;; Enable recent files menu
@@ -536,7 +561,7 @@
       (global-set-key "\C-x\C-r" 'recentf-open-files)
     #+end_src
     
-*** Copy or duplicate line
+** Copy or duplicate line
 
     #+begin_src emacs-lisp
       ;;; Copy line at point
@@ -564,7 +589,7 @@
       (global-set-key (kbd "C-s-<down>") 'duplicate-line)
     #+end_src
     
-*** Generate numbered lines
+** Generate numbered lines
 
     #+begin_src emacs-lisp
       ;;; Generate numbered items (one per line) according to template 
@@ -580,7 +605,7 @@
             (setq i (1+ i)))))
     #+end_src
     
-*** fnjump (using hydra)
+** fnjump (using hydra)
 
     #+begin_src emacs-lisp
       (setq hydra-fnjump--title
@@ -599,7 +624,7 @@
       (global-set-key (kbd "s-j") 'hydra-fnjump/body)
     #+end_src
     
-*** Browse kill ring
+** Browse kill ring
 
     #+begin_src emacs-lisp
       (defadvice yank-pop (around kill-ring-browse-maybe (arg))
@@ -611,7 +636,7 @@
       (ad-activate 'yank-pop)
     #+end_src
     
-*** auto-fill
+** auto-fill
 
     #+begin_src emacs-lisp
       ;; Turn on Auto Fill mode automatically in Text mode and related modes
@@ -619,7 +644,7 @@
                 '(lambda () (turn-on-auto-fill)))
     #+end_src
     
-*** Non-ASCII keys
+** Non-ASCII keys
 
     #+begin_src emacs-lisp
       (require 'iso-transl)
@@ -634,7 +659,7 @@
       (global-set-key (kbd "C-;") 'insert-nbsp)
     #+end_src
     
-*** Movement
+** Movement
 
     #+begin_src emacs-lisp
       ;;; Position point at window center, top, bottom
@@ -685,7 +710,7 @@
       (global-set-key (kbd "C-/") 'scroll-n-lines-behind)
     #+end_src
     
-*** Marking etc.
+** Marking etc.
 
     #+begin_src emacs-lisp
       (global-set-key (kbd "C-c u") 'org-mark-ring-goto)
@@ -694,9 +719,9 @@
       (define-key org-mode-map (kbd "C-<return>") 'cua-rectangle-mark-mode)
     #+end_src
     
-*** Buffers and windows
+** Buffers and windows
 
-***** Misc
+*** Misc
 
       #+begin_src emacs-lisp
         (global-set-key (kbd "C-x C-b") 'buffer-menu)
@@ -709,7 +734,7 @@
         (set-face-background hl-line-face "gray20")
       #+end_src
 
-***** Buffers, windows, frames
+*** Buffers, windows, frames
 
         #+begin_src emacs-lisp
           (defun prev-window ()
@@ -862,18 +887,28 @@
           (global-set-key (kbd "s-k") 'kill-or-bury-current-buffer)
         #+end_src
     
-*** Misc
+** Misc
 
     #+begin_src emacs-lisp
       (global-set-key (kbd "C-x C-y") 'transpose-sentences)
       (global-set-key (kbd "C-z") 'undo)
     #+end_src
     
+** xah-fly keys
+
+    #+begin_src emacs-lisp
+      (setq xah-fly-use-meta-key nil)
+      (setq xah-fly-use-control-key nil)
+      (require 'xah-fly-keys)
+      (xah-fly-keys-set-layout "qwerty-abnt")
+      (xah-fly-keys 1)
+    #+end_src
+
 * Development environment
 
-*** web-beautify
+** web-beautify
 
-***** TODO Set up options and key bindings
+*** TODO Set up options and key bindings
       :LOGBOOK:
       - State "TODO"       from              [2021-10-10 Sun 13:46]
       :END:
@@ -884,14 +919,14 @@
           (require 'web-beautify)
         #+end_src
 
-*** rainbow delimiters
+** rainbow delimiters
 
     #+begin_src emacs-lisp
       (require 'rainbow-delimiters)
       (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
     #+end_src
     
-*** Line numbers
+** Line numbers
 
     #+begin_src emacs-lisp
       (global-display-line-numbers-mode t)
@@ -905,7 +940,7 @@
         (add-hook mode (lambda () (display-line-numbers-mode 0))))
     #+end_src
 
-***** TODO Disable line numbers in some buffers
+*** TODO Disable line numbers in some buffers
       :LOGBOOK:
       - State "TODO"       from              [2021-10-10 Sun 14:37]
       :END:
@@ -914,9 +949,9 @@
 
       + ???
     
-*** javascript
+** javascript
     
-***** js2-mode
+*** js2-mode
 
       #+begin_src emacs-lisp
         (require 'js2-mode)
@@ -924,7 +959,7 @@
         (add-to-list 'auto-mode-alist '("\\.ts\\'" . js2-mode))
       #+end_src
       
-***** skewer
+*** skewer
 
       + Drive browser from emacs using js
 
@@ -932,21 +967,21 @@
           (require 'skewer-mode)
         #+end_src
 
-*** python
+** python
 
     #+begin_src emacs-lisp
       (add-to-list 'interpreter-mode-alist
                    '("python3" . python-mode))
     #+end_src
     
-*** zeal
+** zeal
 
     #+begin_src emacs-lisp
       (require 'zeal-at-point)
       (global-set-key (kbd "s-h") 'zeal-at-point)
     #+end_src
     
-*** lsp
+** lsp
 
     #+begin_src emacs-lisp
       (require 'lsp)
@@ -988,7 +1023,7 @@
       (define-key lsp-mode-map [remap xref-find-apropos] #'helm-lsp-workspace-symbol)
     #+end_src
 
-*** projectile
+** projectile
 
     #+begin_src emacs-lisp
       (require 'projectile)
@@ -1005,7 +1040,7 @@
     
 * Document languages
 
-*** markdown
+** markdown
 
     #+begin_src emacs-lisp
       (require 'markdown-mode)
@@ -1015,7 +1050,7 @@
       (require 'markdown-toc)
     #+end_src
 
-*** yaml
+** yaml
 
     #+begin_src emacs-lisp
       (require 'yaml-mode)
@@ -1027,13 +1062,13 @@
     
 * Completion
 
-*** Use hippie expansion
+** Use hippie expansion
 
     #+begin_src emacs-lisp
       (global-set-key [remap dabbrev-expand] 'hippie-expand)
     #+end_src
 
-*** company
+** company
 
     + Configure for emacs lisp, ielm and [[*lsp][lsp]]:
 
@@ -1064,7 +1099,7 @@
       
     
     
-*** yasnippet
+** yasnippet
 
     #+begin_src emacs-lisp
       (require 'yasnippet)
@@ -1086,7 +1121,7 @@
     #+end_src
     
 
-*** helm
+** helm
 
     #+begin_src emacs-lisp
       (require 'helm-config)
@@ -1132,7 +1167,7 @@
               helm-use-undecorated-frame-option t)
     #+end_src
     
-*** bash
+** bash
 
     #+begin_src emacs-lisp
       (require 'bash-completion)
@@ -1141,7 +1176,7 @@
     
 * Shells
 
-*** shell-mode
+** shell-mode
 
     #+begin_src emacs-lisp
       ;;; Fix junk characters in shell mode
@@ -1153,7 +1188,7 @@
       (add-hook 'kill-emacs-hook 'comint-write-input-ring)
     #+end_src
 
-*** xonsh
+** xonsh
 
     #+begin_src emacs-lisp
       (require 'xonsh-mode)
@@ -1167,7 +1202,7 @@
            
 * LaTeX
 
-*** Help
+** Help
 
     #+begin_src emacs-lisp
       (load "ltx-help")
@@ -1195,7 +1230,7 @@
       (define-key help-map "\C-l" 'latex-help)
     #+end_src
 
-*** AucTeX
+** AucTeX
 
     #+begin_src emacs-lisp
       (add-hook 'LaTeX-mode-hook 'turn-on-auto-fill)
@@ -1277,7 +1312,7 @@
   
 * File browsers
 
-*** dired-x
+** dired-x
 
     #+begin_src emacs-lisp
       (require 'dired-x)
@@ -1298,7 +1333,7 @@
                    (define-key dired-mode-map [(meta up)] 'dired-up-directory)))
     #+end_src
     
-*** sunrise
+** sunrise
 
     #+begin_src emacs-lisp
       (require 'sunrise)
@@ -1373,7 +1408,7 @@
     
 * Misc
 
-*** figlet
+** figlet
 
     #+begin_src emacs-lisp
       ;;; figlet definitions for Emacs.  (C) Martin Giese
@@ -1444,9 +1479,9 @@
         (figlet s "banner"))
     #+end_src
 
-*** system-packages
+** system-packages
 
-***** TODO Check and learn this
+*** TODO Check and learn this
       :LOGBOOK:
       - State "TODO"       from              [2021-10-10 Sun 15:04]
       :END:
@@ -1500,3 +1535,4 @@
     ;; ;;; Go back to initial frame
     (other-frame -1)
   #+end_src
+
