@@ -1,6 +1,4 @@
-
-;;; -*- mode: Org; eval: (add-hook 'after-save-hook (lambda () (my/tangle-async)) nil t) -*-
-
+; -*- mode: Org; eval: (add-hook 'after-save-hook (lambda () (my/tangle-async)) nil t) -*-
 #+title: fnaufel emacs config
 #+PROPERTY: header-args:emacs-lisp :tangle ~/Stow/emacs/.emacs.d/init.el
 
@@ -115,17 +113,17 @@
       (add-hook 'org-mode-hook (lambda () (org-autolist-mode)))
     #+end_src
     
-** superstar (disabled)
+** superstar
 
     #+begin_src emacs-lisp
-      ;; ;; org-superstar
-      ;; (require 'org-superstar)
-      ;; (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
+      ;; org-superstar
+      (require 'org-superstar)
+      (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
 
       ;; set basic title font
       (set-face-attribute 'org-level-8 nil :weight 'bold :inherit 'default :foreground "dark orange")
 
-      ;; ;; ;; Low levels are unimportant => no scaling
+      ;; ;; Low levels are unimportant => no scaling
       (set-face-attribute 'org-level-7 nil :inherit 'org-level-8)
       (set-face-attribute 'org-level-6 nil :inherit 'org-level-8)
       (set-face-attribute 'org-level-5 nil :inherit 'org-level-8)
@@ -135,40 +133,40 @@
       (set-face-attribute 'org-level-1 nil :inherit 'org-level-8 :height 1.15) 
     #+end_src
     
-** org-bar
+** org-bars (disabled)
 
     #+begin_src emacs-lisp
-      (require 'org-bars)
-      (add-hook 'org-mode-hook #'org-bars-mode)
+      ;; (require 'org-bars)
+      ;; (add-hook 'org-mode-hook #'org-bars-mode)
 
-      ;; No ellipsis in headlines
-      (defun org-no-ellipsis-in-headlines ()
-        "Remove use of ellipsis in headlines.
-      See `buffer-invisibility-spec'."
-        (remove-from-invisibility-spec '(outline . t))
-        (add-to-invisibility-spec 'outline))
+      ;; ;; No ellipsis in headlines
+      ;; (defun org-no-ellipsis-in-headlines ()
+      ;;   "Remove use of ellipsis in headlines.
+      ;; See `buffer-invisibility-spec'."
+      ;;   (remove-from-invisibility-spec '(outline . t))
+      ;;   (add-to-invisibility-spec 'outline))
 
-      (add-hook 'org-mode-hook 'org-no-ellipsis-in-headlines)
+      ;; (add-hook 'org-mode-hook 'org-no-ellipsis-in-headlines)
 
       ;; Fix this function to handle blank, non-empty entries
-      (defun org-bars-subtree-is-empty-p ()
-        "Return t if subtree at point is empty."
-        (let ((entry (org-get-entry)))
-          (set-text-properties 0 (length entry) nil entry)
-          (string-blank-p entry)))
-    #+end_src
+      ;; (defun org-bars-subtree-is-empty-p ()
+        ;; "Return t if subtree at point is empty."
+        ;; (let ((entry (org-get-entry)))
+          ;; (set-text-properties 0 (length entry) nil entry)
+          ;; (string-blank-p entry)))
+     #+end_src
 
 ** calfw
 
-    #+begin_src emacs-lisp
-      (require 'calfw)
-      (require 'calfw-org)
+     #+begin_src emacs-lisp
+        (require 'calfw)
+        (require 'calfw-org)
 
-      (global-set-key (kbd "s-c") 'cfw:open-org-calendar)
+        (global-set-key (kbd "s-c") 'cfw:open-org-calendar)
 
-      ;; use org agenda buffer style keybinding.
-      (setq cfw:org-overwrite-default-keybinding t)
-    #+end_src
+        ;; use org agenda buffer style keybinding.
+        (setq cfw:org-overwrite-default-keybinding t) 
+     #+end_src
     
 ** Key bindings
 
