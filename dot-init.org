@@ -1036,6 +1036,24 @@
       (helm-projectile-on)
     #+end_src
     
+** R and ESS
+
+   #+begin_src emacs-lisp
+     (setq markdown-asymmetric-header t)
+     (setq markdown-enable-math t)
+     
+     (require 'polymode)
+     (require 'poly-markdown)
+     (require 'poly-R)
+     
+     ;; associate the new polymode to Rmd files:
+     (add-to-list 'auto-mode-alist
+                  '("\\.[rR]md\\'" . poly-gfm+r-mode))
+     
+     ;; uses braces around code block language strings:
+     (setq markdown-code-block-braces t)
+   #+end_src
+
 * Document languages
 
 ** markdown
@@ -1043,7 +1061,6 @@
     #+begin_src emacs-lisp
       (require 'markdown-mode)
       (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-      (add-to-list 'auto-mode-alist '("\\.Rmd\\'" . markdown-mode))
 
       (require 'markdown-toc)
     #+end_src
