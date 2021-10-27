@@ -754,15 +754,17 @@ Otherwise, kill. Besides, delete window it occupied."
                 yaml-mode-hook))
   (add-hook mode #'lsp))
 
+(define-key lsp-mode-map (kbd "<tab>") 'company-indent-or-complete-common)
+(define-key lsp-mode-map (kbd "<s-kp-add>") lsp-command-map)
+(setq lsp-keymap-prefix "<s-kp-add>")
+
 (defun efs/lsp-mode-setup ()
   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
   (lsp-headerline-breadcrumb-mode))
 
 (add-hook 'lsp-mode-hook 'efs/lsp-mode-setup)
 
-(lsp-enable-which-key-integration t)
-
-(define-key lsp-mode-map (kbd "<tab>") 'company-indent-or-complete-common)
+(lsp-enable-which-key-integration 1)
 
 (require 'lsp-ui)
 (add-hook 'lsp-mode-hook 'lsp-ui-mode)

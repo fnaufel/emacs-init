@@ -65,7 +65,7 @@
  '(initial-major-mode (quote org-mode))
  '(initial-scratch-message nil)
  '(lsp-clients-deno-server "/home/fnaufel/.deno/bin/deno")
- '(lsp-keymap-prefix "s-kp-add")
+ '(lsp-keymap-prefix "<s-kp-add>")
  '(max-lisp-eval-depth 1000)
  '(max-specpdl-size 3000)
  '(mc/mode-line (quote (" mc:" (:eval (format "%d" (mc/num-cursors))))))
