@@ -1540,12 +1540,12 @@
     (maximize-current-frame)
     (sunrise "/home/fnaufel" "/home/fnaufel/Documents")
     ;; Set tree view for left-hand pane...
-    (sunrise-tree-view)
+    ;; (sunrise-tree-view)
     ;; ...and for right-hand pane
-    (other-window 1)
-    (sunrise-tree-view)
+    ;; (other-window 1)
+    ;; (sunrise-tree-view)
     ;; go back to left-hand pane
-    (other-window 1)
+    ;; (other-window 1)
 
     ;; ;;; Go back to initial frame
     (other-frame -1)
