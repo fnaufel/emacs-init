@@ -983,39 +983,39 @@
 
     #+begin_src emacs-lisp
       (require 'lsp)
-
+      
       ;; Modes for which to enable lsp
       (dolist (mode '(html-mode-hook
                       c-mode-hook
                       c++-mode-hook
                       css-mode-hook
                       js-mode-hook
-                      sh-mode-hook
+                      ;; sh-mode-hook
                       java-mode-hook
                       python-mode-hook
-                      markdown-mode-hook
-                      ess-mode-hook
                       sgml-mode-hook
                       yaml-mode-hook))
         (add-hook mode #'lsp))
-
+      
+      (define-key lsp-mode-map (kbd "<tab>") 'company-indent-or-complete-common)
+      (define-key lsp-mode-map (kbd "<s-kp-add>") lsp-command-map)
+      (setq lsp-keymap-prefix "<s-kp-add>")
+      
       (defun efs/lsp-mode-setup ()
         (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
         (lsp-headerline-breadcrumb-mode))
-
+      
       (add-hook 'lsp-mode-hook 'efs/lsp-mode-setup)
-
-      (lsp-enable-which-key-integration t)
-
-      (define-key lsp-mode-map (kbd "<tab>") 'company-indent-or-complete-common)
-
+      
+      (lsp-enable-which-key-integration 1)
+      
       (require 'lsp-ui)
       (add-hook 'lsp-mode-hook 'lsp-ui-mode)
       (setq lsp-ui-doc-position 'bottom)
-
+      
       (require 'lsp-treemacs)
       (lsp-treemacs-sync-mode 1)
-
+      
       (require 'helm-lsp)
       ; C-M-.
       (define-key lsp-mode-map [remap xref-find-apropos] #'helm-lsp-workspace-symbol)
