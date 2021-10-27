@@ -1,0 +1,95 @@
+;;;; Emacs Bookmark Format Version 1 ;;;; -*- coding: utf-8-emacs -*- 
+;;; This format is meant to be slightly human-readable;
+;;; nevertheless, you probably don't want to edit it.
+;;; -*- End Of Bookmark File Format Version Stamp -*-
+(("emacs"
+ (filename . "Sunrise Checkpoint: ~/Stow/emacs/ | ~/Downloads/")
+ (sunrise-directories "~/Stow/emacs/" "~/Downloads/")
+ (handler . sunrise-checkpoint-handler))
+("org-return"
+ (sym . org-return)
+ (callable-p . t)
+ (position . 1)
+ (handler . helpful--bookmark-jump))
+("Ni"
+ (filename . "Sunrise Checkpoint: ~/Documents/Ni/ | ~/Downloads/")
+ (sunrise-directories "~/Documents/Ni/" "~/Downloads/")
+ (handler . sunrise-checkpoint-handler))
+("Video"
+ (filename . "Sunrise Checkpoint: /home/Video/ | ~/Downloads/")
+ (sunrise-directories "/home/Video/" "~/Downloads/")
+ (handler . sunrise-checkpoint-handler))
+("UFF"
+ (filename . "Sunrise Checkpoint: ~/Documents/UFF/ | ~/Downloads/")
+ (sunrise-directories "~/Documents/UFF/" "~/Downloads/")
+ (handler . sunrise-checkpoint-handler))
+("GA"
+ (filename . "Sunrise Checkpoint: ~/Documents/UFF/Ensino/Disciplinas/GA/ | ~/Downloads/")
+ (sunrise-directories "~/Documents/UFF/Ensino/Disciplinas/GA/" "~/Downloads/")
+ (handler . sunrise-checkpoint-handler))
+("DataAnalysis"
+ (filename . "Sunrise Checkpoint: ~/Documents/DataAnalysis/ | ~/Downloads/")
+ (sunrise-directories "~/Documents/DataAnalysis/" "~/Downloads/")
+ (handler . sunrise-checkpoint-handler))
+("home | downloads"
+ (filename . "Sunrise Checkpoint: ~/ | ~/Downloads/")
+ (sunrise-directories "~/" "~/Downloads/")
+ (handler . sunrise-checkpoint-handler))
+("site"
+ (filename . "Sunrise Checkpoint: ~/Documents/PersonalWebPage/Pessoal2020-blogdown-academic/site/ | ~/Downloads/")
+ (sunrise-directories "~/Documents/PersonalWebPage/Pessoal2020-blogdown-academic/site/" "~/Downloads/")
+ (handler . sunrise-checkpoint-handler))
+("Witten-Statistical-Learning"
+ (filename . "Sunrise Checkpoint: ~/Documents/Research/Statistics/Witten-Statistical-Learning/ | ~/Downloads/")
+ (sunrise-directories "~/Documents/Research/Statistics/Witten-Statistical-Learning/" "~/Downloads/")
+ (handler . sunrise-checkpoint-handler))
+("Tidytext-book"
+ (filename . "Sunrise Checkpoint: ~/Documents/Research/NLP/Tidytext-book/ | ~/Downloads/")
+ (sunrise-directories "~/Documents/Research/NLP/Tidytext-book/" "~/Downloads/")
+ (handler . sunrise-checkpoint-handler))
+("Dev"
+ (filename . "Sunrise Checkpoint: ~/Development/00-Present/ | ~/Downloads/")
+ (sunrise-directories "~/Development/00-Present/" "~/Downloads/")
+ (handler . sunrise-checkpoint-handler))
+("Personal"
+ (filename . "Sunrise Checkpoint: ~/Documents/Personal/ | ~/Downloads/")
+ (sunrise-directories "~/Documents/Personal/" "~/Downloads/")
+ (handler . sunrise-checkpoint-handler))
+("WMS-Mathematical-Stats"
+ (filename . "Sunrise Checkpoint: ~/Documents/Research/Statistics/WMS-Mathematical-Stats/ | ~/Downloads/")
+ (sunrise-directories "~/Documents/Research/Statistics/WMS-Mathematical-Stats/" "~/Downloads/")
+ (handler . sunrise-checkpoint-handler))
+("C3"
+ (filename . "Sunrise Checkpoint: ~/Documents/UFF/Ensino/Disciplinas/Calculo3-multivar/CEDERJ/ | ~/Downloads/")
+ (sunrise-directories "~/Documents/UFF/Ensino/Disciplinas/Calculo3-multivar/CEDERJ/" "~/Downloads/")
+ (handler . sunrise-checkpoint-handler))
+("Megasena"
+ (filename . "Sunrise Checkpoint: ~/Documents/DataAnalysis/Megasena/ | ~/Downloads/")
+ (sunrise-directories "~/Documents/DataAnalysis/Megasena/" "~/Downloads/")
+ (handler . sunrise-checkpoint-handler))
+("Research"
+ (filename . "Sunrise Checkpoint: ~/Documents/Research/ | ~/Downloads/")
+ (sunrise-directories "~/Documents/Research/" "~/Downloads/")
+ (handler . sunrise-checkpoint-handler))
+("audio"
+ (filename . "~/Documents/OrgFiles/ubuntu.org")
+ (front-context-string . "******* Current\n")
+ (rear-context-string . "udacity (post)\n\n")
+ (position . 450110))
+("Downloads | Coursera"
+ (filename . "Sunrise Checkpoint: ~/Downloads/ | ~/Documents/Research/Statistics/Bayes-coursera/")
+ (sunrise-directories "~/Downloads/" "~/Documents/Research/Statistics/Bayes-coursera/")
+ (handler . sunrise-checkpoint-handler))
+("AL | home"
+ (filename . "Sunrise Checkpoint: ~/Documents/UFF/Ensino/Disciplinas/AlgebraLinear/Videoaulas/ | ~/")
+ (sunrise-directories "~/Documents/UFF/Ensino/Disciplinas/AlgebraLinear/Videoaulas/" "~/")
+ (handler . sunrise-checkpoint-handler))
+("Probest | Downloads"
+ (filename . "Sunrise Checkpoint: ~/Documents/UFF/Ensino/Disciplinas/Probabilidade-e-estatistica/ | ~/Downloads/")
+ (sunrise-directories "~/Documents/UFF/Ensino/Disciplinas/Probabilidade-e-estatistica/" "~/Downloads/")
+ (handler . sunrise-checkpoint-handler))
+("Documents | home"
+ (filename . "Sunrise Checkpoint: ~/Documents/ | ~/")
+ (sunrise-directories "~/Documents/" "~/")
+ (handler . sunrise-checkpoint-handler))
+)

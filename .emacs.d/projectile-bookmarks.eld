@@ -1,0 +1,1 @@
+("~/Stow/emacs/" "~/Development/00-Present/RMarkDownTemplates/bookdowntemplate01/" "~/Documents/UFF/Ensino/Disciplinas/Probabilidade-e-estatistica/Bookdown/" "~/Stow/bash/" "~/Stow/keyboard/" "~/Development/00-Present/ggeditor/" "~/Development/00-Present/conicas/" "~/Stow/openbox/.config/openbox/")
