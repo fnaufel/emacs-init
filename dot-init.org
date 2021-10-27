@@ -892,14 +892,14 @@
       (global-set-key (kbd "C-z") 'undo)
     #+end_src
     
-** xah-fly keys
+** xah-fly keys (disabled)
 
     #+begin_src emacs-lisp
-      (setq xah-fly-use-meta-key nil)
-      (setq xah-fly-use-control-key nil)
-      (require 'xah-fly-keys)
-      (xah-fly-keys-set-layout "qwerty-abnt")
-      (xah-fly-keys 1)
+      ;; (setq xah-fly-use-meta-key nil)
+      ;; (setq xah-fly-use-control-key nil)
+      ;; (require 'xah-fly-keys)
+      ;; (xah-fly-keys-set-layout "qwerty-abnt")
+      ;; (xah-fly-keys 1)
     #+end_src
 
 * Development environment
