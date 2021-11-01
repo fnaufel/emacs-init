@@ -76,10 +76,6 @@
  (front-context-string . "******* Current\n")
  (rear-context-string . "udacity (post)\n\n")
  (position . 450110))
-("Downloads | Coursera"
- (filename . "Sunrise Checkpoint: ~/Downloads/ | ~/Documents/Research/Statistics/Bayes-coursera/")
- (sunrise-directories "~/Downloads/" "~/Documents/Research/Statistics/Bayes-coursera/")
- (handler . sunrise-checkpoint-handler))
 ("AL | home"
  (filename . "Sunrise Checkpoint: ~/Documents/UFF/Ensino/Disciplinas/AlgebraLinear/Videoaulas/ | ~/")
  (sunrise-directories "~/Documents/UFF/Ensino/Disciplinas/AlgebraLinear/Videoaulas/" "~/")
@@ -87,9 +83,5 @@
 ("Probest | Downloads"
  (filename . "Sunrise Checkpoint: ~/Documents/UFF/Ensino/Disciplinas/Probabilidade-e-estatistica/ | ~/Downloads/")
  (sunrise-directories "~/Documents/UFF/Ensino/Disciplinas/Probabilidade-e-estatistica/" "~/Downloads/")
- (handler . sunrise-checkpoint-handler))
-("Documents | home"
- (filename . "Sunrise Checkpoint: ~/Documents/ | ~/")
- (sunrise-directories "~/Documents/" "~/")
  (handler . sunrise-checkpoint-handler))
 )

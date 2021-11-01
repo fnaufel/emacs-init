@@ -462,6 +462,9 @@ There are two things you can do about this warning:
   (:quit-key "q" :title hydra-fnjump--title :foreign-keys warn :exit t)
   ("Jump to"
    (("e" (find-file "~/Documents/OrgFiles/mail.org") "email ")
+    ("b" (find-file "~/.bashrc") ".bashrc ")
+    ("p" (find-file "~/.profile") ".profile ")
+    ("s" (find-file "~/Stow") "Stow ")
     ("i" (find-file "~/Stow/emacs/dot-init.org") "init ")
     ("x" (ansi-term "/home/fnaufel/.local/bin/xonsh" "xonsh") "new xonsh "))
 
@@ -1190,7 +1193,7 @@ with leading and trailing spaces removed."
 (make-frame)
 (other-frame -1)
 (maximize-current-frame)
-(sunrise "/home/fnaufel" "/home/fnaufel/Documents")
+(sunrise "/home/fnaufel" "/home/fnaufel/Downloads")
 ;; Set tree view for left-hand pane...
 ;; (sunrise-tree-view)
 ;; ...and for right-hand pane
