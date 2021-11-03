@@ -279,6 +279,14 @@ There are two things you can do about this warning:
 (setq org-clock-persist t)
 (org-clock-persistence-insinuate)
 
+(defun update-clock-tables ()
+  "Visit todo.org, update all dynamic blocks there, and save."
+
+  (find-file "/home/fnaufel/Documents/OrgFiles/todo.org")
+  (org-show-all '(headings))
+  (org-update-all-dblocks)
+  (save-buffer))
+
 ;;; cdlatex mode
 (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
 
@@ -466,6 +474,7 @@ There are two things you can do about this warning:
     ("p" (find-file "~/.profile") ".profile ")
     ("s" (find-file "~/Stow") "Stow ")
     ("i" (find-file "~/Stow/emacs/dot-init.org") "init ")
+    ("t" (update-clock-tables) "clock tables ")
     ("x" (ansi-term "/home/fnaufel/.local/bin/xonsh" "xonsh") "new xonsh "))
 
    "Quit"
@@ -906,13 +915,13 @@ Otherwise, kill. Besides, delete window it occupied."
 ;;; Force save comint-input-ring upon killing emacs
 (add-hook 'kill-emacs-hook 'comint-write-input-ring)
 
-(require 'xonsh-mode)
+;; (require 'xonsh-mode)
 
-;;; Bind yank
-(eval-after-load "term"
-  '(progn 
-     (define-key term-raw-map (kbd "C-c C-y") 'term-paste)
-     (define-key term-raw-map (kbd "C-y") 'term-paste)))
+;; ;;; Bind yank
+;; (eval-after-load "term"
+;;   '(progn 
+;;      (define-key term-raw-map (kbd "C-c C-y") 'term-paste)
+;;      (define-key term-raw-map (kbd "C-y") 'term-paste)))
 
 (load "ltx-help")
 
@@ -1179,7 +1188,9 @@ with leading and trailing spaces removed."
 (make-frame)
 (other-frame -1)
 (maximize-current-frame)
-(ansi-term "/home/fnaufel/.local/bin/xonsh" "xonsh")
+
+;;; disabled
+;; (ansi-term "/home/fnaufel/.local/bin/xonsh" "xonsh")
 
 ;;; Bash shell (splits window automatically)
 (shell)

@@ -93,7 +93,7 @@
  '(org-agenda-span (quote week))
  '(org-agenda-start-on-weekday 0)
  '(org-agenda-start-with-follow-mode nil)
- '(org-agenda-text-search-extra-files (quote (agenda-archives)))
+ '(org-agenda-text-search-extra-files nil)
  '(org-agenda-todo-list-sublevels nil)
  '(org-agenda-window-setup (quote current-window))
  '(org-blank-before-new-entry (quote ((heading . t) (plain-list-item . t))))

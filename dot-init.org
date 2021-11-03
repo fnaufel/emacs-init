@@ -340,23 +340,31 @@
       (add-hook 'org-mode-hook
                 '(lambda ()
                    (turn-on-auto-fill)))
-
+      
       ;; Auto numbering of headlines
       (add-hook 'org-mode-hook (lambda () (org-num-mode)))
-
+      
       ;; org-tempo
       (require 'org-tempo)
-
+      
       ;;; Associate .org files to org mode
       (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
-
+      
       ;;; Associate claws-mail compose files to org mode
       (add-to-list 'auto-mode-alist '("\\.0x.*$" . org-mode))
-
+      
       ;;; Clock
       (setq org-clock-persist t)
       (org-clock-persistence-insinuate)
-
+      
+      (defun update-clock-tables ()
+        "Visit todo.org, update all dynamic blocks there, and save."
+      
+        (find-file "/home/fnaufel/Documents/OrgFiles/todo.org")
+        (org-show-all '(headings))
+        (org-update-all-dblocks)
+        (save-buffer))
+      
       ;;; cdlatex mode
       (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
    #+end_src
@@ -617,6 +625,7 @@
           ("p" (find-file "~/.profile") ".profile ")
           ("s" (find-file "~/Stow") "Stow ")
           ("i" (find-file "~/Stow/emacs/dot-init.org") "init ")
+          ("t" (update-clock-tables) "clock tables ")
           ("x" (ansi-term "/home/fnaufel/.local/bin/xonsh" "xonsh") "new xonsh "))
       
          "Quit"
@@ -1206,16 +1215,16 @@
       (add-hook 'kill-emacs-hook 'comint-write-input-ring)
     #+end_src
 
-** xonsh
+** xonsh (disabled)
 
     #+begin_src emacs-lisp
-      (require 'xonsh-mode)
-
-      ;;; Bind yank
-      (eval-after-load "term"
-        '(progn 
-           (define-key term-raw-map (kbd "C-c C-y") 'term-paste)
-           (define-key term-raw-map (kbd "C-y") 'term-paste)))
+      ;; (require 'xonsh-mode)
+      
+      ;; ;;; Bind yank
+      ;; (eval-after-load "term"
+      ;;   '(progn 
+      ;;      (define-key term-raw-map (kbd "C-c C-y") 'term-paste)
+      ;;      (define-key term-raw-map (kbd "C-y") 'term-paste)))
     #+end_src
            
 * LaTeX
@@ -1521,23 +1530,25 @@
     (split-window-horizontally)
     (find-file "~/Documents/OrgFiles/todo.org")
     (maximize-current-frame)
-
+    
     ;;; Second frame: shell and xonsh ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
+    
     (make-frame)
     (other-frame -1)
     (maximize-current-frame)
-    (ansi-term "/home/fnaufel/.local/bin/xonsh" "xonsh")
-
+    
+    ;;; disabled
+    ;; (ansi-term "/home/fnaufel/.local/bin/xonsh" "xonsh")
+    
     ;;; Bash shell (splits window automatically)
     (shell)
     (sleep-for 3)
     (comint-send-string (get-buffer-process (shell)) "cd /home/fnaufel/\n")
     (sleep-for 1)
     (dirs)
-
+    
     ;;; Third frame: sunrise ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
+    
     (make-frame)
     (other-frame -1)
     (maximize-current-frame)
@@ -1549,7 +1560,7 @@
     ;; (sunrise-tree-view)
     ;; go back to left-hand pane
     ;; (other-window 1)
-
+    
     ;; ;;; Go back to initial frame
     (other-frame -1)
   #+end_src
