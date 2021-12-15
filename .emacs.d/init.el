@@ -287,8 +287,8 @@ There are two things you can do about this warning:
   (org-update-all-dblocks)
   (save-buffer))
 
-;;; cdlatex mode
-(add-hook 'org-mode-hook 'turn-on-org-cdlatex)
+;;; cdlatex mode (disabled)
+;;; (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
 
 (global-set-key (kbd "s--") 'negative-argument)
 (global-set-key (kbd "s-0") 'digit-argument)
@@ -800,22 +800,23 @@ Otherwise, kill. Besides, delete window it occupied."
 (require 'helm-projectile)
 (helm-projectile-on)
 
-(setq markdown-asymmetric-header t)
-(setq markdown-enable-math t)
+;; (setq markdown-asymmetric-header t)
+;; (setq markdown-enable-math t)
 
-(require 'polymode)
-(require 'poly-markdown)
-(require 'poly-R)
+;; (require 'polymode)
+;; (require 'poly-markdown)
+;; (require 'poly-R)
 
-;; associate the new polymode to Rmd files:
-(add-to-list 'auto-mode-alist
-             '("\\.[rR]md\\'" . poly-gfm+r-mode))
+;; ;; associate the new polymode to Rmd files:
+;; (add-to-list 'auto-mode-alist
+;;              '("\\.[rR]md\\'" . poly-gfm+r-mode))
 
-;; uses braces around code block language strings:
-(setq markdown-code-block-braces t)
+;; ;; uses braces around code block language strings:
+;; (setq markdown-code-block-braces t)
 
 (require 'markdown-mode)
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.Rmd\\'" . markdown-mode))
 
 (require 'markdown-toc)
 
@@ -1198,6 +1199,7 @@ with leading and trailing spaces removed."
 (comint-send-string (get-buffer-process (shell)) "cd /home/fnaufel/\n")
 (sleep-for 1)
 (dirs)
+(delete-other-windows)
 
 ;;; Third frame: sunrise ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

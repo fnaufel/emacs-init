@@ -96,6 +96,7 @@
  '(org-agenda-text-search-extra-files nil)
  '(org-agenda-todo-list-sublevels nil)
  '(org-agenda-window-setup (quote current-window))
+ '(org-babel-load-languages (quote ((emacs-lisp . t) (shell . t))))
  '(org-blank-before-new-entry (quote ((heading . t) (plain-list-item . t))))
  '(org-catch-invisible-edits nil)
  '(org-clock-clocktable-default-properties
@@ -110,6 +111,7 @@
  '(org-cycle-separator-lines 1)
  '(org-deadline-warning-days 7)
  '(org-default-priority 66)
+ '(org-duration-format (quote ((special . h:mm))))
  '(org-ellipsis " 🡇")
  '(org-export-latex-packages-alist (quote (("" "minted" t))))
  '(org-file-apps
