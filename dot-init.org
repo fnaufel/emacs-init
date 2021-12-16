@@ -333,6 +333,28 @@
       (define-key org-mode-map (kbd "C-J") 'org-journal-new-entry)
     #+end_src
     
+** Export subtree as html fragment to clipboard
+   :LOGBOOK:
+   - State "DONE"       from "STARTED"    [2021-12-16 Thu 14:30]
+   - State "STARTED"    from              [2021-12-15 Wed 18:31]
+   :END:
+
+   #+begin_src emacs-lisp
+     (defun subtree-html-export-to-clipboard ()
+       "Export current subtree to html fragment and put in clipboard."
+       (interactive)
+       (let ((only-window (one-window-p)))
+         (org-html-export-as-html nil t t t)
+         (kill-ring-save (point-min) (point-max))
+         (kill-buffer (current-buffer))
+         (message "Subtree copied as HTML to clipboard.")
+         (if only-window
+             (delete-window)
+           (other-window -1))))
+     
+     (define-key org-mode-map (kbd "<f9>") 'subtree-html-export-to-clipboard)
+   #+end_src
+
 ** Misc
 
     #+begin_src emacs-lisp

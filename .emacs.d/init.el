@@ -258,6 +258,20 @@ There are two things you can do about this warning:
 (global-set-key (kbd "C-J") 'org-journal-new-entry)
 (define-key org-mode-map (kbd "C-J") 'org-journal-new-entry)
 
+(defun subtree-html-export-to-clipboard ()
+  "Export current subtree to html fragment and put in clipboard."
+  (interactive)
+  (let ((only-window (one-window-p)))
+    (org-html-export-as-html nil t t t)
+    (kill-ring-save (point-min) (point-max))
+    (kill-buffer (current-buffer))
+    (message "Subtree copied as HTML to clipboard.")
+    (if only-window
+        (delete-window)
+      (other-window -1))))
+
+(define-key org-mode-map (kbd "<f9>") 'subtree-html-export-to-clipboard)
+
 ;; Turn on Auto Fill mode automatically in Org mode
 (add-hook 'org-mode-hook
           '(lambda ()
