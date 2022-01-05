@@ -35,23 +35,21 @@
 (setq custom-file "~/Stow/emacs/.emacs.d/.emacs-custom.el")
 (load custom-file)
 
-(load-theme 'tangotango-fnaufel t)
-
 (server-start)
 
 (require 'package)
 
-(let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
-                    (not (gnutls-available-p))))
-       (proto (if no-ssl "http" "https")))
-  (when no-ssl (warn "\
-Your version of Emacs does not support SSL connections,
-which is unsafe because it allows man-in-the-middle attacks.
-There are two things you can do about this warning:
-1. Install an Emacs version that does support SSL and be safe.
-2. Remove this warning from your init file so you won't see it again."))
-(add-to-list 'package-archives
-             (cons "melpa" (concat proto "://melpa.org/packages/")) t))
+;; (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
+;;                     (not (gnutls-available-p))))
+;;        (proto (if no-ssl "http" "https")))
+;;   (when no-ssl (warn "\
+;; Your version of Emacs does not support SSL connections,
+;; which is unsafe because it allows man-in-the-middle attacks.
+;; There are two things you can do about this warning:
+;; 1. Install an Emacs version that does support SSL and be safe.
+;; 2. Remove this warning from your init file so you won't see it again."))
+;; (add-to-list 'package-archives
+;;              (cons "melpa" (concat proto "://melpa.org/packages/")) t))
 
 (add-to-list 'package-archives
              '("melpa-stable" . "http://stable.melpa.org/packages/") t)
@@ -59,8 +57,8 @@ There are two things you can do about this warning:
 (add-to-list 'package-archives
              '("gnu" . "http://elpa.gnu.org/packages/") t)
 
-(add-to-list 'package-archives
-             '("org" . "http://orgmode.org/elpa/") t)
+;; (add-to-list 'package-archives
+;;              '("org" . "http://orgmode.org/elpa/") t)
 
 (package-initialize)
 
@@ -274,6 +272,22 @@ There are two things you can do about this warning:
 
 (define-key org-mode-map (kbd "<f9>") 'subtree-html-export-to-clipboard)
 
+(require 'org-ref)
+(require 'helm-bibtex)
+(require 'bibtex)
+
+(setq bibtex-autokey-year-length 4
+      bibtex-autokey-name-year-separator "-"
+      bibtex-autokey-year-title-separator "-"
+      bibtex-autokey-titleword-separator "-"
+      bibtex-autokey-titlewords 2
+      bibtex-autokey-titlewords-stretch 1
+      bibtex-autokey-titleword-length 5)
+
+(define-key bibtex-mode-map (kbd "s-b") 'org-ref-bibtex-hydra/body)
+(define-key org-mode-map (kbd "C-c ]") 'org-ref-insert-link)
+(define-key org-mode-map (kbd "s-ç") 'org-ref-insert-link-hydra/body)
+
 ;; Turn on Auto Fill mode automatically in Org mode
 (add-hook 'org-mode-hook
           '(lambda ()
@@ -320,19 +334,22 @@ There are two things you can do about this warning:
 
 (menu-bar-mode 0)
 
-;; ;;; Set font
-;; (defun fontify-frame (frame)
-;;   (set-frame-parameter frame 'font "Jetbrains Mono-13"))
+;;; Set font
+(defun fontify-frame (frame)
+  (set-frame-parameter frame 'font "Jetbrains Mono-13")
+  (set-frame-parameter frame 'background-color "black")
+  (set-frame-parameter frame 'foreground-color "bisque")
+  )
 
-;; ;; ;; Fontify current frame
-;; (fontify-frame nil)
+;;; Fontify current frame
+(fontify-frame nil)
 
-;; ;; ;; Fontify any future frames
-;; (push 'fontify-frame after-make-frame-functions)
+;;; Fontify any future frames
+(push 'fontify-frame after-make-frame-functions)
 
 ;;; These are set in Customize
-;; (add-to-list 'default-frame-alist '(foreground-color . "bisque"))
-;; (add-to-list 'default-frame-alist '(background-color . "black"))
+;;; (add-to-list 'default-frame-alist '(foreground-color . "bisque"))
+;;; (add-to-list 'default-frame-alist '(background-color . "black"))
 
 (require 'all-the-icons)
 
@@ -1200,10 +1217,8 @@ with leading and trailing spaces removed."
 ;;; Update: I have changed variable org-agenda-window-setup so that
 ;;; the agenda opens in the current window, with no splitting.
 (org-agenda nil "i")
-(load-theme 'tangotango-fnaufel t)  
 (split-window-horizontally)
 (find-file "~/Documents/OrgFiles/todo.org")
-(load-theme 'tangotango-fnaufel t)  
 (maximize-current-frame)
 
 ;;; Second frame: shell and xonsh ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

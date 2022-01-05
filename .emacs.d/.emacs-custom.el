@@ -32,9 +32,6 @@
  '(company-tooltip-limit 30)
  '(cua-mode nil nil (cua-base))
  '(cua-remap-control-v nil)
- '(custom-safe-themes
-   (quote
-    ("db9a42b19156f41d0dd5e6a28e77dff7e7485953d5a008c0e1e38a5a030e9a8e" "b25aef515b3ced0579eaa32656cab0d72c4e24914ab1ece6d1d4c0444d11bdf4" "fc6697788f00629cd01f4d2cc23f1994d08edb3535e4c0facef6b7247b41f5c7" default)))
  '(delete-by-moving-to-trash t)
  '(delete-selection-mode t)
  '(describe-char-unidata-list
@@ -99,7 +96,7 @@
  '(org-agenda-text-search-extra-files nil)
  '(org-agenda-todo-list-sublevels nil)
  '(org-agenda-window-setup (quote current-window))
- '(org-babel-load-languages (quote ((emacs-lisp . t) (shell . t))))
+ '(org-babel-load-languages (quote ((emacs-lisp . t) (shell . t) (latex . t))))
  '(org-blank-before-new-entry (quote ((heading . t) (plain-list-item . t))))
  '(org-catch-invisible-edits nil)
  '(org-clock-clocktable-default-properties
@@ -214,7 +211,7 @@
  '(package-enable-at-startup nil)
  '(package-selected-packages
    (quote
-    (tangotango-theme poly-R polymode all-the-icons all-the-icons-dired all-the-icons-gnus treemacs-all-the-icons major-mode-hydra pretty-hydra paradox buffer-move lsp-pyright rainbow-delimiters helm-projectile projectile company-box setup use-package helm-lsp lsp-treemacs lsp-ui which-key lsp-mode ac-js2 skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion cdlatex org-superstar org-journal yaml-mode all elm-mode elm-yasnippets auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl org-autolist typo web-beautify markdown-toc markdown-preview-mode markdown-mode magit lua-mode htmlize dash-functional multiple-cursors expand-region)))
+    (org-journal org-superstar org-ref helm-bibtex poly-R polymode all-the-icons all-the-icons-dired all-the-icons-gnus treemacs-all-the-icons major-mode-hydra pretty-hydra paradox buffer-move lsp-pyright rainbow-delimiters helm-projectile projectile company-box setup use-package helm-lsp lsp-treemacs lsp-ui which-key lsp-mode ac-js2 skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion cdlatex yaml-mode all elm-mode elm-yasnippets auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl typo web-beautify markdown-toc markdown-preview-mode markdown-mode magit lua-mode htmlize dash-functional multiple-cursors expand-region)))
  '(paradox-execute-asynchronously t)
  '(paradox-github-token t)
  '(python-indent-offset 2)
@@ -288,12 +285,13 @@
  '(cfw:face-toolbar-button-off ((t (:foreground "dim gray" :weight bold))))
  '(cfw:face-toolbar-button-on ((t (:foreground "light gray" :weight bold))))
  '(highlight-indent-face ((t (:background "dark gray"))))
- '(org-date ((((class color) (background dark)) (:foreground "orange1" :underline t))))
  '(org-ellipsis ((t (:foreground "LightGoldenrod" :underline nil))))
  '(org-journal-calendar-entry-face ((t (:foreground "#bbbb00" :slant italic))))
  '(org-journal-calendar-scheduled-face ((t (:foreground "#ff0000" :slant italic))))
+ '(org-ref-cite-face ((t (:inherit org-link :foreground "pale green"))))
  '(paradox-mode-line-face ((t (:inherit (font-lock-keyword-face mode-line-buffer-id) :foreground "medium blue" :weight normal))))
  '(rainbow-delimiters-base-error-face ((t (:inherit rainbow-delimiters-base-face :foreground "red"))))
+ '(rainbow-delimiters-base-face ((t (:inherit default))))
  '(rainbow-delimiters-depth-1-face ((t (:inherit rainbow-delimiters-base-face :foreground "gray90"))))
  '(rainbow-delimiters-depth-2-face ((t (:inherit rainbow-delimiters-base-face :foreground "deep sky blue"))))
  '(rainbow-delimiters-depth-3-face ((t (:inherit rainbow-delimiters-base-face :foreground "lawn green"))))

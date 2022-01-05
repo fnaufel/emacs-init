@@ -1,5 +1,5 @@
 (deftheme tangotango-fnaufel
-  "Created 2022-01-04.")
+  "Created 2022-01-05.")
 
 (custom-theme-set-faces
  'tangotango-fnaufel
