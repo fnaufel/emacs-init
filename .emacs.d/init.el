@@ -35,6 +35,8 @@
 (setq custom-file "~/Stow/emacs/.emacs.d/.emacs-custom.el")
 (load custom-file)
 
+(load-theme 'tangotango-fnaufel t)
+
 (server-start)
 
 (require 'package)
@@ -64,7 +66,7 @@ There are two things you can do about this warning:
 
 (add-to-list 'load-path "/home/fnaufel/.emacs.d/lisp/")
 
-(package-refresh-contents)
+;; (package-refresh-contents)
 
 (require 'paradox)
 (paradox-enable)
@@ -318,15 +320,19 @@ There are two things you can do about this warning:
 
 (menu-bar-mode 0)
 
-;;; Set font
-(defun fontify-frame (frame)
-  (set-frame-parameter frame 'font "Jetbrains Mono-13"))
+;; ;;; Set font
+;; (defun fontify-frame (frame)
+;;   (set-frame-parameter frame 'font "Jetbrains Mono-13"))
 
-;; Fontify current frame
-(fontify-frame nil)
+;; ;; ;; Fontify current frame
+;; (fontify-frame nil)
 
-;; Fontify any future frames
-(push 'fontify-frame after-make-frame-functions)
+;; ;; ;; Fontify any future frames
+;; (push 'fontify-frame after-make-frame-functions)
+
+;;; These are set in Customize
+;; (add-to-list 'default-frame-alist '(foreground-color . "bisque"))
+;; (add-to-list 'default-frame-alist '(background-color . "black"))
 
 (require 'all-the-icons)
 
@@ -1194,8 +1200,10 @@ with leading and trailing spaces removed."
 ;;; Update: I have changed variable org-agenda-window-setup so that
 ;;; the agenda opens in the current window, with no splitting.
 (org-agenda nil "i")
+(load-theme 'tangotango-fnaufel t)  
 (split-window-horizontally)
 (find-file "~/Documents/OrgFiles/todo.org")
+(load-theme 'tangotango-fnaufel t)  
 (maximize-current-frame)
 
 ;;; Second frame: shell and xonsh ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

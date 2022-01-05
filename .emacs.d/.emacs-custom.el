@@ -32,6 +32,9 @@
  '(company-tooltip-limit 30)
  '(cua-mode nil nil (cua-base))
  '(cua-remap-control-v nil)
+ '(custom-safe-themes
+   (quote
+    ("db9a42b19156f41d0dd5e6a28e77dff7e7485953d5a008c0e1e38a5a030e9a8e" "b25aef515b3ced0579eaa32656cab0d72c4e24914ab1ece6d1d4c0444d11bdf4" "fc6697788f00629cd01f4d2cc23f1994d08edb3535e4c0facef6b7247b41f5c7" default)))
  '(delete-by-moving-to-trash t)
  '(delete-selection-mode t)
  '(describe-char-unidata-list
@@ -110,7 +113,7 @@
  '(org-cycle-level-faces nil)
  '(org-cycle-separator-lines 1)
  '(org-deadline-warning-days 7)
- '(org-default-priority 66)
+ '(org-default-priority 40)
  '(org-duration-format (quote ((special . h:mm))))
  '(org-ellipsis " 🡇")
  '(org-export-latex-packages-alist (quote (("" "minted" t))))
@@ -154,10 +157,10 @@
  '(org-link-shell-confirm-function (quote y-or-n-p))
  '(org-log-done (quote time))
  '(org-log-into-drawer t)
- '(org-lowest-priority 67)
+ '(org-lowest-priority 60)
  '(org-num-face (quote success))
  '(org-num-max-level 2)
- '(org-odd-levels-only nil)
+ '(org-odd-levels-only t)
  '(org-pretty-entities nil)
  '(org-priority-default 40)
  '(org-priority-highest 0)
@@ -211,7 +214,7 @@
  '(package-enable-at-startup nil)
  '(package-selected-packages
    (quote
-    (poly-R polymode all-the-icons all-the-icons-dired all-the-icons-gnus treemacs-all-the-icons major-mode-hydra pretty-hydra paradox buffer-move lsp-pyright rainbow-delimiters helm-projectile projectile company-box setup use-package helm-lsp lsp-treemacs lsp-ui which-key lsp-mode ac-js2 skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion cdlatex org-superstar org-journal yaml-mode all elm-mode elm-yasnippets auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl org-autolist typo web-beautify markdown-toc markdown-preview-mode markdown-mode magit lua-mode htmlize dash-functional multiple-cursors expand-region)))
+    (tangotango-theme poly-R polymode all-the-icons all-the-icons-dired all-the-icons-gnus treemacs-all-the-icons major-mode-hydra pretty-hydra paradox buffer-move lsp-pyright rainbow-delimiters helm-projectile projectile company-box setup use-package helm-lsp lsp-treemacs lsp-ui which-key lsp-mode ac-js2 skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion cdlatex org-superstar org-journal yaml-mode all elm-mode elm-yasnippets auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl org-autolist typo web-beautify markdown-toc markdown-preview-mode markdown-mode magit lua-mode htmlize dash-functional multiple-cursors expand-region)))
  '(paradox-execute-asynchronously t)
  '(paradox-github-token t)
  '(python-indent-offset 2)
@@ -243,7 +246,7 @@
  '(shell-file-name "/bin/bash")
  '(show-paren-mode t)
  '(size-indication-mode t)
- '(smartparens-global-mode nil)
+ '(smartparens-global-mode t)
  '(sml-modeline-borders nil)
  '(sml-modeline-mode t)
  '(sp-navigate-interactive-always-progress-point t)
@@ -279,7 +282,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "black" :foreground "white" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 113 :width normal :foundry "PfEd" :family "DejaVu Sans Mono"))))
  '(anzu-mode-line ((t (:foreground "blue" :weight bold))))
  '(calendar-today ((t (:inverse-video t :underline nil))))
  '(cfw:face-toolbar ((t (:background "black" :foreground "black"))))

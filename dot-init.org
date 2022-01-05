@@ -24,19 +24,19 @@
 
 * Profile emacs init
 
-** See https://github.com/daviwil/emacs-from-scratch
+*** See https://github.com/daviwil/emacs-from-scratch
 
-    #+begin_src emacs-lisp
-      ;; The default is 800 kilobytes.  Measured in bytes.
-      (setq gc-cons-threshold (* 100 1000 1000))
+     #+begin_src emacs-lisp
+       ;; The default is 800 kilobytes.  Measured in bytes.
+       (setq gc-cons-threshold (* 100 1000 1000))
 
-      ;; Profile emacs startup
-      (add-hook 'emacs-startup-hook
-                (lambda ()
-                  (message "*** Emacs loaded in %s with %d garbage collections."
-                           (emacs-init-time)
-                           gcs-done)))
-    #+end_src
+       ;; Profile emacs startup
+       (add-hook 'emacs-startup-hook
+                 (lambda ()
+                   (message "*** Emacs loaded in %s with %d garbage collections."
+                            (emacs-init-time)
+                            gcs-done)))
+     #+end_src
 
 * Tangle this init file
 
@@ -62,6 +62,12 @@
     (load custom-file)
   #+end_src
 
+* Theme
+
+  #+begin_src emacs-lisp
+    (load-theme 'tangotango-fnaufel t)  
+  #+end_src
+
 * Start server
 
   #+begin_src emacs-lisp
@@ -72,7 +78,7 @@
 
   #+begin_src emacs-lisp
     (require 'package)
-
+    
     (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
                         (not (gnutls-available-p))))
            (proto (if no-ssl "http" "https")))
@@ -84,1217 +90,1221 @@
     2. Remove this warning from your init file so you won't see it again."))
     (add-to-list 'package-archives
                  (cons "melpa" (concat proto "://melpa.org/packages/")) t))
-
+    
     (add-to-list 'package-archives
                  '("melpa-stable" . "http://stable.melpa.org/packages/") t)
-
+    
     (add-to-list 'package-archives
                  '("gnu" . "http://elpa.gnu.org/packages/") t)
-
+    
     (add-to-list 'package-archives
                  '("org" . "http://orgmode.org/elpa/") t)
-
+    
     (package-initialize)
-
+    
     (add-to-list 'load-path "/home/fnaufel/.emacs.d/lisp/")
-
-    (package-refresh-contents)
-
+    
+    ;; (package-refresh-contents)
+    
     (require 'paradox)
     (paradox-enable)
   #+end_src
   
 * Org mode
 
-** autolist
-
-    #+begin_src emacs-lisp
-      (require 'org-autolist)
-      (add-hook 'org-mode-hook (lambda () (org-autolist-mode)))
-    #+end_src
-    
-** superstar
-
-    #+begin_src emacs-lisp
-      ;; org-superstar
-      (require 'org-superstar)
-      (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
-
-      ;; set basic title font
-      (set-face-attribute 'org-level-8 nil :weight 'bold :inherit 'default :foreground "dark orange")
-
-      ;; ;; Low levels are unimportant => no scaling
-      (set-face-attribute 'org-level-7 nil :inherit 'org-level-8)
-      (set-face-attribute 'org-level-6 nil :inherit 'org-level-8)
-      (set-face-attribute 'org-level-5 nil :inherit 'org-level-8)
-      (set-face-attribute 'org-level-4 nil :inherit 'org-level-8)
-      (set-face-attribute 'org-level-3 nil :inherit 'org-level-8 :height 1.05) 
-      (set-face-attribute 'org-level-2 nil :inherit 'org-level-8 :height 1.1) 
-      (set-face-attribute 'org-level-1 nil :inherit 'org-level-8 :height 1.15) 
-    #+end_src
-    
-** org-bars (disabled)
-
-    #+begin_src emacs-lisp
-      ;; (require 'org-bars)
-      ;; (add-hook 'org-mode-hook #'org-bars-mode)
-
-      ;; ;; No ellipsis in headlines
-      ;; (defun org-no-ellipsis-in-headlines ()
-      ;;   "Remove use of ellipsis in headlines.
-      ;; See `buffer-invisibility-spec'."
-      ;;   (remove-from-invisibility-spec '(outline . t))
-      ;;   (add-to-invisibility-spec 'outline))
-
-      ;; (add-hook 'org-mode-hook 'org-no-ellipsis-in-headlines)
-
-      ;; Fix this function to handle blank, non-empty entries
-      ;; (defun org-bars-subtree-is-empty-p ()
-        ;; "Return t if subtree at point is empty."
-        ;; (let ((entry (org-get-entry)))
-          ;; (set-text-properties 0 (length entry) nil entry)
-          ;; (string-blank-p entry)))
-     #+end_src
-
-** calfw
+*** autolist
 
      #+begin_src emacs-lisp
-        (require 'calfw)
-        (require 'calfw-org)
-
-        (global-set-key (kbd "s-c") 'cfw:open-org-calendar)
-
-        ;; use org agenda buffer style keybinding.
-        (setq cfw:org-overwrite-default-keybinding t) 
+       (require 'org-autolist)
+       (add-hook 'org-mode-hook (lambda () (org-autolist-mode)))
      #+end_src
     
-** Key bindings
+*** superstar
 
-*** General
+     #+begin_src emacs-lisp
+       ;; org-superstar
+       (require 'org-superstar)
+       (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
+
+       ;; set basic title font
+       (set-face-attribute 'org-level-8 nil :weight 'bold :inherit 'default :foreground "dark orange")
+
+       ;; ;; Low levels are unimportant => no scaling
+       (set-face-attribute 'org-level-7 nil :inherit 'org-level-8)
+       (set-face-attribute 'org-level-6 nil :inherit 'org-level-8)
+       (set-face-attribute 'org-level-5 nil :inherit 'org-level-8)
+       (set-face-attribute 'org-level-4 nil :inherit 'org-level-8)
+       (set-face-attribute 'org-level-3 nil :inherit 'org-level-8 :height 1.05) 
+       (set-face-attribute 'org-level-2 nil :inherit 'org-level-8 :height 1.1) 
+       (set-face-attribute 'org-level-1 nil :inherit 'org-level-8 :height 1.15) 
+     #+end_src
+    
+*** org-bars (disabled)
+
+     #+begin_src emacs-lisp
+       ;; (require 'org-bars)
+       ;; (add-hook 'org-mode-hook #'org-bars-mode)
+
+       ;; ;; No ellipsis in headlines
+       ;; (defun org-no-ellipsis-in-headlines ()
+       ;;   "Remove use of ellipsis in headlines.
+       ;; See `buffer-invisibility-spec'."
+       ;;   (remove-from-invisibility-spec '(outline . t))
+       ;;   (add-to-invisibility-spec 'outline))
+
+       ;; (add-hook 'org-mode-hook 'org-no-ellipsis-in-headlines)
+
+       ;; Fix this function to handle blank, non-empty entries
+       ;; (defun org-bars-subtree-is-empty-p ()
+         ;; "Return t if subtree at point is empty."
+         ;; (let ((entry (org-get-entry)))
+           ;; (set-text-properties 0 (length entry) nil entry)
+           ;; (string-blank-p entry)))
+      #+end_src
+
+*** calfw
 
       #+begin_src emacs-lisp
-        ;;; Shorter key bindings for next and previous link
-        (add-hook 'org-load-hook
-                  (lambda ()
-                    (define-key org-mode-map (kbd "\C-n") 'org-next-link)
-                    (define-key org-mode-map (kbd "\C-p") 'org-previous-link)))
+         (require 'calfw)
+         (require 'calfw-org)
 
-        (global-set-key "\C-ck" 'org-store-link)
-        (global-set-key "\C-ca" 'org-agenda)
-        (define-key org-mode-map "\C-n" 'org-next-link)
-        (define-key org-mode-map "\C-p" 'org-previous-link)
-        (define-key org-mode-map "\C-c\C-xi" 'org-insert-columns-dblock)
+         (global-set-key (kbd "s-c") 'cfw:open-org-calendar)
+
+         ;; use org agenda buffer style keybinding.
+         (setq cfw:org-overwrite-default-keybinding t) 
       #+end_src
     
-*** helm integration
+*** Key bindings
 
-      #+begin_src emacs-lisp
-        ;;; helm-org
-        (define-key org-mode-map (kbd "C-c j") 'helm-org-in-buffer-headings)
-        (define-key org-mode-map (kbd "C-c C-j") 'helm-org-in-buffer-headings)
-        (define-key org-mode-map (kbd "C-c i") 'helm-org-parent-headings)
-        (define-key org-mode-map (kbd "C-c g") 'helm-org-agenda-files-headings)
-      #+end_src
+***** General
+
+        #+begin_src emacs-lisp
+          ;;; Shorter key bindings for next and previous link
+          (add-hook 'org-load-hook
+                    (lambda ()
+                      (define-key org-mode-map (kbd "\C-n") 'org-next-link)
+                      (define-key org-mode-map (kbd "\C-p") 'org-previous-link)))
+
+          (global-set-key "\C-ck" 'org-store-link)
+          (global-set-key "\C-ca" 'org-agenda)
+          (define-key org-mode-map "\C-n" 'org-next-link)
+          (define-key org-mode-map "\C-p" 'org-previous-link)
+          (define-key org-mode-map "\C-c\C-xi" 'org-insert-columns-dblock)
+        #+end_src
     
-*** hydra and friends
+***** helm integration
 
-      #+begin_src emacs-lisp
-        (require 'hydra)
-        (require 'major-mode-hydra)
-        (require 'pretty-hydra)
+        #+begin_src emacs-lisp
+          ;;; helm-org
+          (define-key org-mode-map (kbd "C-c j") 'helm-org-in-buffer-headings)
+          (define-key org-mode-map (kbd "C-c C-j") 'helm-org-in-buffer-headings)
+          (define-key org-mode-map (kbd "C-c i") 'helm-org-parent-headings)
+          (define-key org-mode-map (kbd "C-c g") 'helm-org-agenda-files-headings)
+        #+end_src
+    
+***** hydra and friends
 
-        (defun with-faicon (icon str &optional height v-adjust)
-          (s-concat (all-the-icons-faicon icon :v-adjust (or v-adjust 0) :height (or height 1)) " " str))
+        #+begin_src emacs-lisp
+          (require 'hydra)
+          (require 'major-mode-hydra)
+          (require 'pretty-hydra)
 
-        (defun with-fileicon (icon str &optional height v-adjust)
-          (s-concat (all-the-icons-fileicon icon :v-adjust (or v-adjust 0) :height (or height 1)) " " str))
+          (defun with-faicon (icon str &optional height v-adjust)
+            (s-concat (all-the-icons-faicon icon :v-adjust (or v-adjust 0) :height (or height 1)) " " str))
 
-        (defun with-octicon (icon str &optional height v-adjust)
-          (s-concat (all-the-icons-octicon icon :v-adjust (or v-adjust 0) :height (or height 1)) " " str))
+          (defun with-fileicon (icon str &optional height v-adjust)
+            (s-concat (all-the-icons-fileicon icon :v-adjust (or v-adjust 0) :height (or height 1)) " " str))
 
-        (defun with-material (icon str &optional height v-adjust)
-          (s-concat (all-the-icons-material icon :v-adjust (or v-adjust 0) :height (or height 1)) " " str))
+          (defun with-octicon (icon str &optional height v-adjust)
+            (s-concat (all-the-icons-octicon icon :v-adjust (or v-adjust 0) :height (or height 1)) " " str))
 
-        (defun with-mode-icon (mode str &optional height nospace face)
-          (let* ((v-adjust (if (eq major-mode 'emacs-lisp-mode) 0.0 0.05))
-                 (args     `(:height ,(or height 1) :v-adjust ,v-adjust))
-                 (_         (when face
-                              (lax-plist-put args :face face)))
-                 (icon     (apply #'all-the-icons-icon-for-mode mode args))
-                 (icon     (if (symbolp icon)
-                               (apply #'all-the-icons-octicon "file-text" args)
-                             icon)))
-            (s-concat icon (if nospace "" " ") str)))
-      #+end_src
+          (defun with-material (icon str &optional height v-adjust)
+            (s-concat (all-the-icons-material icon :v-adjust (or v-adjust 0) :height (or height 1)) " " str))
 
-** Audio and video links
+          (defun with-mode-icon (mode str &optional height nospace face)
+            (let* ((v-adjust (if (eq major-mode 'emacs-lisp-mode) 0.0 0.05))
+                   (args     `(:height ,(or height 1) :v-adjust ,v-adjust))
+                   (_         (when face
+                                (lax-plist-put args :face face)))
+                   (icon     (apply #'all-the-icons-icon-for-mode mode args))
+                   (icon     (if (symbolp icon)
+                                 (apply #'all-the-icons-octicon "file-text" args)
+                               icon)))
+              (s-concat icon (if nospace "" " ") str)))
+        #+end_src
 
-    #+begin_src emacs-lisp
-      (defun convert-hhmmss-to-secs (time)
-        "Receives a string of digits TIME of the form h...hhmmss and
-        returns the corresponding total number of seconds. If TIME is
-        nil, or the empty string, return nil." 
+*** Audio and video links
+
+     #+begin_src emacs-lisp
+       (defun convert-hhmmss-to-secs (time)
+         "Receives a string of digits TIME of the form h...hhmmss and
+         returns the corresponding total number of seconds. If TIME is
+         nil, or the empty string, return nil." 
   
-        (unless (or (null time)(string= time ""))
-          (let ((secs (string-to-int time))   ; if only secs, this is enough
-                (mins 0)
-                (hrs 0)
-                (l (length time)))
-            (when (> l 2)                     ; there are minutes!
-              (progn 
-                (setq secs (string-to-int (substring time -2)))     ; must correct secs
-                (setq mins (string-to-int (substring time 0 -2))))) ; if no hours, enough
-            (when (> l 4)                     ; there are hours!
-              (progn 
-                (setq mins (string-to-int (substring time -4 -2))) ; must correct minutes
-                (setq hrs (string-to-int (substring time 0 -4))))) ; get hours
-            (+ secs (* 60 mins) (* 3600 hrs)))))
+         (unless (or (null time)(string= time ""))
+           (let ((secs (string-to-int time))   ; if only secs, this is enough
+                 (mins 0)
+                 (hrs 0)
+                 (l (length time)))
+             (when (> l 2)                     ; there are minutes!
+               (progn 
+                 (setq secs (string-to-int (substring time -2)))     ; must correct secs
+                 (setq mins (string-to-int (substring time 0 -2))))) ; if no hours, enough
+             (when (> l 4)                     ; there are hours!
+               (progn 
+                 (setq mins (string-to-int (substring time -4 -2))) ; must correct minutes
+                 (setq hrs (string-to-int (substring time 0 -4))))) ; get hours
+             (+ secs (* 60 mins) (* 3600 hrs)))))
 
-      (defvar video-link-function 'gmplayer-seek 
-        "*Function used in org mode to open video links.")
+       (defvar video-link-function 'gmplayer-seek 
+         "*Function used in org mode to open video links.")
 
-      (defun gmplayer-seek (file &optional time1 time2)
-        "Start asynchronous instance of gnome-mplayer to play FILE,
-        optionally starting from time TIME1 and ending at time TIME2.
-        Both time arguments are of the form h...hhmmss (with no
-        separators). If fewer than 6 digits are present, those present
-        are the least significant; e.g., 123 = 1 minute and 23 seconds."
+       (defun gmplayer-seek (file &optional time1 time2)
+         "Start asynchronous instance of gnome-mplayer to play FILE,
+         optionally starting from time TIME1 and ending at time TIME2.
+         Both time arguments are of the form h...hhmmss (with no
+         separators). If fewer than 6 digits are present, those present
+         are the least significant; e.g., 123 = 1 minute and 23 seconds."
   
-        (let ((t1 (convert-hhmmss-to-secs time1))
-              (t2 (convert-hhmmss-to-secs time2))) 
-          (cond ((and t1 t2)                ; recall t2 is end time
-                 (setq t2 (- t2 t1))        ; make t2 duration of playback
-                 (message "Opening %s  (from %s to %s)" file time1 time2)
-                 (start-process "org-gmplayer"                     ; process name
-                                (concat file "::" time1 "-" time2) ; buffer name
-                                "/usr/bin/gnome-mplayer"           ; program
-                                "--ss"                             ; args
-                                (int-to-string t1)
-                                "--endpos" 
-                                (int-to-string t2)
-                                "-v"
-                                file))
-                (t1 
-                 (message "Opening %s  (from %s)" file time1)
-                 (start-process "org-gmplayer" 
-                                (concat file "::" time1) 
-                                "/usr/bin/gnome-mplayer"
-                                "--ss" 
-                                (int-to-string t1)
-                                "-v"
-                                file))
-                (t 
-                 (message "Opening %s" file)
-                 (start-process "org-gmplayer" 
-                                file 
-                                "/usr/bin/gnome-mplayer"
-                                "-v"
-                                file)))))
+         (let ((t1 (convert-hhmmss-to-secs time1))
+               (t2 (convert-hhmmss-to-secs time2))) 
+           (cond ((and t1 t2)                ; recall t2 is end time
+                  (setq t2 (- t2 t1))        ; make t2 duration of playback
+                  (message "Opening %s  (from %s to %s)" file time1 time2)
+                  (start-process "org-gmplayer"                     ; process name
+                                 (concat file "::" time1 "-" time2) ; buffer name
+                                 "/usr/bin/gnome-mplayer"           ; program
+                                 "--ss"                             ; args
+                                 (int-to-string t1)
+                                 "--endpos" 
+                                 (int-to-string t2)
+                                 "-v"
+                                 file))
+                 (t1 
+                  (message "Opening %s  (from %s)" file time1)
+                  (start-process "org-gmplayer" 
+                                 (concat file "::" time1) 
+                                 "/usr/bin/gnome-mplayer"
+                                 "--ss" 
+                                 (int-to-string t1)
+                                 "-v"
+                                 file))
+                 (t 
+                  (message "Opening %s" file)
+                  (start-process "org-gmplayer" 
+                                 file 
+                                 "/usr/bin/gnome-mplayer"
+                                 "-v"
+                                 file)))))
                     
-      (defvar audio-link-function 'audacious-seek 
-        "*Function used in org mode to open audio links.")
+       (defvar audio-link-function 'audacious-seek 
+         "*Function used in org mode to open audio links.")
 
-      (defun audacious-seek (file &optional time1)
-        "Start asynchronous instance of audacious to play FILE,
-        optionally starting from time TIME1. The TIME1 argument is of
-        the form h...hhmmss (with no separators). If fewer than 6
-        digits are present, those present are the least significant;
-        e.g., 123 = 1 minute and 23 seconds."
+       (defun audacious-seek (file &optional time1)
+         "Start asynchronous instance of audacious to play FILE,
+         optionally starting from time TIME1. The TIME1 argument is of
+         the form h...hhmmss (with no separators). If fewer than 6
+         digits are present, those present are the least significant;
+         e.g., 123 = 1 minute and 23 seconds."
   
-        (let ((t1 (convert-hhmmss-to-secs time1)))
-          (cond (t1 
-                 (message "Opening %s  (from %s)" file time1)
-                 (start-process "org-audacious" 
-                                (concat file "::" time1) 
-                                "/usr/bin/audacious"
-                                file)
-                 (sleep-for 0 500)
-                 (start-process "org-audtool" 
-                                (concat file "::" time1) 
-                                "/usr/bin/audtool"
-                                "playback-seek"
-                                (int-to-string t1)))
-                (t 
-                 (message "Opening %s" file)
-                 (start-process "org-audacious" 
-                                file 
-                                "/usr/bin/audacious"
-                                file)))))
-    #+end_src
+         (let ((t1 (convert-hhmmss-to-secs time1)))
+           (cond (t1 
+                  (message "Opening %s  (from %s)" file time1)
+                  (start-process "org-audacious" 
+                                 (concat file "::" time1) 
+                                 "/usr/bin/audacious"
+                                 file)
+                  (sleep-for 0 500)
+                  (start-process "org-audtool" 
+                                 (concat file "::" time1) 
+                                 "/usr/bin/audtool"
+                                 "playback-seek"
+                                 (int-to-string t1)))
+                 (t 
+                  (message "Opening %s" file)
+                  (start-process "org-audacious" 
+                                 file 
+                                 "/usr/bin/audacious"
+                                 file)))))
+     #+end_src
     
-** org-journal
+*** org-journal
+
+     #+begin_src emacs-lisp
+       (require 'org-journal)
+
+       (global-unset-key (kbd "C-c C-j"))
+       (global-set-key (kbd "C-c s") 'org-journal-search)
+       (global-set-key (kbd "C-J") 'org-journal-new-entry)
+       (define-key org-mode-map (kbd "C-J") 'org-journal-new-entry)
+     #+end_src
+    
+*** Export subtree as html fragment to clipboard
+    :LOGBOOK:
+    - State "DONE"       from "STARTED"    [2021-12-16 Thu 14:30]
+    - State "STARTED"    from              [2021-12-15 Wed 18:31]
+    :END:
 
     #+begin_src emacs-lisp
-      (require 'org-journal)
-
-      (global-unset-key (kbd "C-c C-j"))
-      (global-set-key (kbd "C-c s") 'org-journal-search)
-      (global-set-key (kbd "C-J") 'org-journal-new-entry)
-      (define-key org-mode-map (kbd "C-J") 'org-journal-new-entry)
-    #+end_src
-    
-** Export subtree as html fragment to clipboard
-   :LOGBOOK:
-   - State "DONE"       from "STARTED"    [2021-12-16 Thu 14:30]
-   - State "STARTED"    from              [2021-12-15 Wed 18:31]
-   :END:
-
-   #+begin_src emacs-lisp
-     (defun subtree-html-export-to-clipboard ()
-       "Export current subtree to html fragment and put in clipboard."
-       (interactive)
-       (let ((only-window (one-window-p)))
-         (org-html-export-as-html nil t t t)
-         (kill-ring-save (point-min) (point-max))
-         (kill-buffer (current-buffer))
-         (message "Subtree copied as HTML to clipboard.")
-         (if only-window
-             (delete-window)
-           (other-window -1))))
+      (defun subtree-html-export-to-clipboard ()
+        "Export current subtree to html fragment and put in clipboard."
+        (interactive)
+        (let ((only-window (one-window-p)))
+          (org-html-export-as-html nil t t t)
+          (kill-ring-save (point-min) (point-max))
+          (kill-buffer (current-buffer))
+          (message "Subtree copied as HTML to clipboard.")
+          (if only-window
+              (delete-window)
+            (other-window -1))))
      
-     (define-key org-mode-map (kbd "<f9>") 'subtree-html-export-to-clipboard)
-   #+end_src
-
-** Misc
-
-    #+begin_src emacs-lisp
-      ;; Turn on Auto Fill mode automatically in Org mode
-      (add-hook 'org-mode-hook
-                '(lambda ()
-                   (turn-on-auto-fill)))
-      
-      ;; Auto numbering of headlines
-      (add-hook 'org-mode-hook (lambda () (org-num-mode)))
-      
-      ;; org-tempo
-      (require 'org-tempo)
-      
-      ;;; Associate .org files to org mode
-      (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
-      
-      ;;; Associate claws-mail compose files to org mode
-      (add-to-list 'auto-mode-alist '("\\.0x.*$" . org-mode))
-      
-      ;;; Clock
-      (setq org-clock-persist t)
-      (org-clock-persistence-insinuate)
-      
-      (defun update-clock-tables ()
-        "Visit todo.org, update all dynamic blocks there, and save."
-      
-        (find-file "/home/fnaufel/Documents/OrgFiles/todo.org")
-        (org-show-all '(headings))
-        (org-update-all-dblocks)
-        (save-buffer))
-      
-      ;;; cdlatex mode (disabled)
-      ;;; (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
-   #+end_src
-
-* UI
-
-** Super key + number generates digit arguments
-
-    #+begin_src emacs-lisp
-      (global-set-key (kbd "s--") 'negative-argument)
-      (global-set-key (kbd "s-0") 'digit-argument)
-      (global-set-key (kbd "s-1") 'digit-argument)
-      (global-set-key (kbd "s-2") 'digit-argument)
-      (global-set-key (kbd "s-3") 'digit-argument)
-      (global-set-key (kbd "s-4") 'digit-argument)
-      (global-set-key (kbd "s-5") 'digit-argument)
-      (global-set-key (kbd "s-6") 'digit-argument)
-      (global-set-key (kbd "s-7") 'digit-argument)
-      (global-set-key (kbd "s-8") 'digit-argument)
-      (global-set-key (kbd "s-9") 'digit-argument)
+      (define-key org-mode-map (kbd "<f9>") 'subtree-html-export-to-clipboard)
     #+end_src
-
-    #+RESULTS:
-    : digit-argument
-
-** Menubar
-
-    #+begin_src emacs-lisp
-      (menu-bar-mode 0)
-    #+end_src
-
-** Fonts
-
-    #+begin_src emacs-lisp
-      ;;; Set font
-      (defun fontify-frame (frame)
-        (set-frame-parameter frame 'font "Jetbrains Mono-13"))
-
-      ;; Fontify current frame
-      (fontify-frame nil)
-
-      ;; Fontify any future frames
-      (push 'fontify-frame after-make-frame-functions)
-    #+end_src
-    
-** Icons
-
-    #+begin_src emacs-lisp
-      (require 'all-the-icons)
-    #+end_src
-
-** which-key
-
-    + When a prefix key is typed, show possible next keys.
-
-      #+begin_src emacs-lisp
-        (require 'which-key)
-        (which-key-mode)
-      #+end_src
-
-** anzu
-
-    + Show number of matches during isearch.
-
-      #+begin_src emacs-lisp
-        (require 'anzu)
-        (global-anzu-mode +1)
-      #+end_src
-
-** helpful
-
-    #+begin_src emacs-lisp
-      (require 'helpful) 
-
-      ;; Note that the built-in `describe-function' includes both functions
-      ;; and macros. `helpful-function' is functions only, so we provide
-      ;; `helpful-callable' as a drop-in replacement.
-      (global-set-key (kbd "C-h f") #'helpful-callable)
-      (global-set-key (kbd "C-h v") #'helpful-variable)
-      (global-set-key (kbd "C-h k") #'helpful-key)
-
-      ;; Lookup the current symbol at point. C-c C-d is a common keybinding
-      ;; for this in lisp modes.
-      (global-set-key (kbd "C-c C-d") #'helpful-at-point)
-
-      ;; Look up *F*unctions (excludes macros).
-      ;;
-      ;; By default, C-h F is bound to `Info-goto-emacs-command-node'. Helpful
-      ;; already links to the manual, if a function is referenced there.
-      (global-set-key (kbd "C-h F") #'helpful-function)
-
-      ;; Look up *C*ommands.
-      ;;
-      ;; By default, C-h C is bound to describe `describe-coding-system'. I
-      ;; don't find this very useful, but it's frequently useful to only
-      ;; look at interactive functions.
-      (global-set-key (kbd "C-h C") #'helpful-command)
-    #+end_src
-
-** info-colors
-
-    #+begin_src emacs-lisp
-      (require 'info-colors)
-      (add-hook 'Info-selection-hook 'info-colors-fontify-node)
-    #+end_src
-
-** expand-region
-
-    #+begin_src emacs-lisp
-      (require 'expand-region)
-      (global-set-key (kbd "C-+") 'er/expand-region)
-    #+end_src
-    
-** smart-parens
-
-    #+begin_src emacs-lisp
-      (require 'smartparens-config)
-      (smartparens-global-mode 1)
-      (show-smartparens-global-mode t)
-
-      ;;; markdown-mode etc
-      (sp-with-modes '(markdown-mode gfm-mode rst-mode org-mode)
-        (sp-local-pair "*" "*")
-        (sp-local-pair "/" "/")
-      ;  (sp-local-pair "_" "_")
-      )
-
-      (defun sp-select-up ()
-        (interactive)
-
-        (sp-backward-up-sexp)
-        (sp-select-next-thing)
-      )
-
-      (define-key smartparens-mode-map (kbd "C-M-b") 'sp-backward-sexp)
-      (define-key smartparens-mode-map (kbd "C-M-f") 'sp-forward-sexp)
-
-      (define-key smartparens-mode-map (kbd "C-S-p") 'sp-previous-sexp)
-      (define-key smartparens-mode-map (kbd "C-S-n") 'sp-next-sexp)
-
-      (define-key smartparens-mode-map (kbd "C-M-d") 'sp-down-sexp)
-      (define-key smartparens-mode-map (kbd "C-M-u") 'sp-backward-up-sexp)
-
-      (define-key smartparens-mode-map (kbd "C-S-a") 'sp-beginning-of-sexp)
-      (define-key smartparens-mode-map (kbd "C-S-e") 'sp-end-of-sexp)
-
-      (define-key smartparens-mode-map (kbd "C-M-t") 'sp-transpose-sexp)
-
-      (define-key smartparens-mode-map (kbd "C-M-k") 'sp-kill-sexp)
-      (define-key smartparens-mode-map (kbd "C-M-w") 'sp-copy-sexp)
-
-      (define-key smartparens-mode-map (kbd "C-]") 'sp-select-up)
-      (define-key smartparens-mode-map (kbd "C-}") 'sp-select-next-thing)
-    #+end_src
-    
-** multiple-cursors
-
-    #+begin_src emacs-lisp
-      (require 'multiple-cursors)
-
-      ;; When you have an active region that spans multiple lines, the
-      ;; following will add a cursor to each line:
-      (global-set-key (kbd "C-|") 'mc/edit-lines)
-
-      ;; When you want to add multiple cursors not based on continuous
-      ;; lines, but based on keywords in the buffer, use the keys below.
-      ;; First mark the word, then add more cursors.
-      (global-set-key (kbd "C->") 'mc/mark-next-like-this)
-      (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-      (global-set-key (kbd "C-?") 'mc/mark-all-like-this-dwim)
-      (global-set-key (kbd "C-.") 'mc/mark-sgml-tag-pair)
-
-      ;; To get out of multiple-cursors-mode, press `<return>` or `C-g`. The
-      ;; latter will first disable multiple regions before disabling
-      ;; multiple cursors.
-
-      ;; If you want to insert a newline in multiple-cursors-mode, use
-      ;; `C-j`.
-    #+end_src
-    
-** sml-modeline
-
-    #+begin_src emacs-lisp
-      (if (require 'sml-modeline nil 'noerror)    ;; use sml-modeline if available
-        (progn 
-          (sml-modeline-mode 1)                   ;; show buffer pos in the mode line
-          (scroll-bar-mode -1))                   ;; turn off the scrollbar
-        (scroll-bar-mode 1)                       ;; otherwise, show a scrollbar...
-        (set-scroll-bar-mode 'right))             ;; ... on the right
-    #+end_src
-    
-** Recent files
-
-    #+begin_src emacs-lisp
-      ;; Enable recent files menu
-      (recentf-mode)
-
-      ;; ffap-bindings binds C-x C-r to ffap-read-only.
-      ;; I prefer to have it bound to recentf-open-files.
-      (global-set-key "\C-x\C-r" 'recentf-open-files)
-    #+end_src
-    
-** Copy or duplicate line
-
-    #+begin_src emacs-lisp
-      ;;; Copy line at point
-      (defun copy-line ()
-        "Copy line at point."
-        (interactive)
-        (save-excursion
-          (setq text (thing-at-point 'line t))
-          (kill-new text)
-          (princ "Line copied to kill ring." t)))
-
-      (global-set-key (kbd "C-s-<up>") 'copy-line)
-
-      ;;; Duplicate line
-      (defun duplicate-line ()
-        "Duplicate line at point on a new line below. Point remains in original line."
-        (interactive)
-        (save-excursion
-          (setq text (thing-at-point 'line t))
-          (when (string-suffix-p "\n" text)
-            (setq text (substring text 0 -1)))
-          (move-end-of-line nil)
-          (insert (concat "\n" text))))
- 
-      (global-set-key (kbd "C-s-<down>") 'duplicate-line)
-    #+end_src
-    
-** Generate numbered lines
-
-    #+begin_src emacs-lisp
-      ;;; Generate numbered items (one per line) according to template 
-      (defun gen-numbered-items (first last template)
-        "Generate numbered items (one per line) according to template."
-
-        (interactive "*nFirst number: \nnLast number: \nMTemplate: ")
-  
-        (setq i first)
-        (while (not (> i last))
-          (progn
-            (insert (format template i) "\n")
-            (setq i (1+ i)))))
-    #+end_src
-    
-** fnjump (using hydra)
-
-    #+begin_src emacs-lisp
-      (setq hydra-fnjump--title
-        (with-faicon "map-signs" "Important places" 1 -0.05))
-      
-      (pretty-hydra-define hydra-fnjump
-        (:quit-key "q" :title hydra-fnjump--title :foreign-keys warn :exit t)
-        ("Jump to"
-         (("e" (find-file "~/Documents/OrgFiles/mail.org") "email ")
-          ("b" (find-file "~/.bashrc") ".bashrc ")
-          ("p" (find-file "~/.profile") ".profile ")
-          ("s" (find-file "~/Stow") "Stow ")
-          ("i" (find-file "~/Stow/emacs/dot-init.org") "init ")
-          ("t" (update-clock-tables) "clock tables ")
-          ("x" (ansi-term "/home/fnaufel/.local/bin/xonsh" "xonsh") "new xonsh "))
-      
-         "Quit"
-         (("q" nil "quit "))))
-      
-      (global-set-key (kbd "s-j") 'hydra-fnjump/body)
-    #+end_src
-    
-** Browse kill ring
-
-    #+begin_src emacs-lisp
-      (defadvice yank-pop (around kill-ring-browse-maybe (arg))
-        "If last action was not a yank, run `browse-kill-ring' instead."
-        (if (not (eq last-command 'yank))
-            (browse-kill-ring)
-          ad-do-it))
-
-      (ad-activate 'yank-pop)
-    #+end_src
-    
-** auto-fill
-
-    #+begin_src emacs-lisp
-      ;; Turn on Auto Fill mode automatically in Text mode and related modes
-      (add-hook 'text-mode-hook
-                '(lambda () (turn-on-auto-fill)))
-    #+end_src
-    
-** Non-ASCII keys
-
-    #+begin_src emacs-lisp
-      (require 'iso-transl)
-
-      ;;; Insert nobreakspace
-      (defun insert-nbsp ()
-        "Insert nobreakspace (code 160)"
-        (interactive)
-        (insert 160)
-      )
-
-      (global-set-key (kbd "C-;") 'insert-nbsp)
-    #+end_src
-    
-** Movement
-
-    #+begin_src emacs-lisp
-      ;;; Position point at window center, top, bottom
-      (defvar cycle-window-line-last-op 'middle
-        "Indicates the last cycle-window-line operation performed.
-      Possible values: `top', `middle', `bottom'.")
-
-      (defun cycle-window-line (&optional arg)
-        "Move point to window center, bottom, and top, successively.
-
-      A prefix argument is handled like `move-to-window-line':
-       With numeric prefix ARG, move point to window-line ARG."
-
-        (interactive "P")
-        (cond
-         (arg (move-to-window-line arg))                 ; Always respect ARG.
-         ((or (not (eq this-command last-command))
-          (eq cycle-window-line-last-op 'top))
-          (setq cycle-window-line-last-op 'middle)
-          (move-to-window-line nil))
-         (t
-          (cond ((eq cycle-window-line-last-op 'middle)
-                 (setq cycle-window-line-last-op 'bottom)
-                 (move-to-window-line -1))
-                ((eq cycle-window-line-last-op 'bottom)
-                 (setq cycle-window-line-last-op 'top)
-                 (move-to-window-line 0))))))
-
-      ;;; Scroll one line at a time. 
-      (defun scroll-n-lines-ahead (&optional n)
-        "Scroll ahead N lines (1 by default)."
-        (interactive "P")
-        (let ((save-scroll-preserve scroll-preserve-screen-position))
-          (setq scroll-preserve-screen-position nil)
-          (scroll-up (prefix-numeric-value n))
-          (setq scroll-preserve-screen-position save-scroll-preserve)))
-
-      (defun scroll-n-lines-behind (&optional n)
-        "Scroll behind N lines (1 by default)."
-        (interactive "P")
-        (let ((save-scroll-preserve scroll-preserve-screen-position))  
-          (setq scroll-preserve-screen-position nil)
-          (scroll-down (prefix-numeric-value n))
-          (setq scroll-preserve-screen-position save-scroll-preserve)))
-
-      (global-set-key "\M-r" 'cycle-window-line)
-      (global-set-key (kbd "C-*") 'scroll-n-lines-ahead)
-      (global-set-key (kbd "C-/") 'scroll-n-lines-behind)
-    #+end_src
-    
-** Marking etc.
-
-    #+begin_src emacs-lisp
-      (global-set-key (kbd "C-c u") 'org-mark-ring-goto)
-      (global-set-key (kbd "C-<insert>") 'kill-ring-save)
-      (global-set-key (kbd "C-<return>") 'cua-rectangle-mark-mode)
-      (define-key org-mode-map (kbd "C-<return>") 'cua-rectangle-mark-mode)
-    #+end_src
-    
-** Buffers and windows
 
 *** Misc
 
-      #+begin_src emacs-lisp
-        (global-set-key (kbd "C-x C-b") 'buffer-menu)
+     #+begin_src emacs-lisp
+       ;; Turn on Auto Fill mode automatically in Org mode
+       (add-hook 'org-mode-hook
+                 '(lambda ()
+                    (turn-on-auto-fill)))
+      
+       ;; Auto numbering of headlines
+       (add-hook 'org-mode-hook (lambda () (org-num-mode)))
+      
+       ;; org-tempo
+       (require 'org-tempo)
+      
+       ;;; Associate .org files to org mode
+       (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
+      
+       ;;; Associate claws-mail compose files to org mode
+       (add-to-list 'auto-mode-alist '("\\.0x.*$" . org-mode))
+      
+       ;;; Clock
+       (setq org-clock-persist t)
+       (org-clock-persistence-insinuate)
+      
+       (defun update-clock-tables ()
+         "Visit todo.org, update all dynamic blocks there, and save."
+      
+         (find-file "/home/fnaufel/Documents/OrgFiles/todo.org")
+         (org-show-all '(headings))
+         (org-update-all-dblocks)
+         (save-buffer))
+      
+       ;;; cdlatex mode (disabled)
+       ;;; (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
+    #+end_src
 
-        ;;; Maximize frame
-        (defun maximize-current-frame () 
-          (set-frame-parameter nil 'fullscreen 'maximized))
+* UI
 
-        ;;; Set background of hl-line
-        (set-face-background hl-line-face "gray20")
-      #+end_src
+*** Super key + number generates digit arguments
 
-*** Buffers, windows, frames
+     #+begin_src emacs-lisp
+       (global-set-key (kbd "s--") 'negative-argument)
+       (global-set-key (kbd "s-0") 'digit-argument)
+       (global-set-key (kbd "s-1") 'digit-argument)
+       (global-set-key (kbd "s-2") 'digit-argument)
+       (global-set-key (kbd "s-3") 'digit-argument)
+       (global-set-key (kbd "s-4") 'digit-argument)
+       (global-set-key (kbd "s-5") 'digit-argument)
+       (global-set-key (kbd "s-6") 'digit-argument)
+       (global-set-key (kbd "s-7") 'digit-argument)
+       (global-set-key (kbd "s-8") 'digit-argument)
+       (global-set-key (kbd "s-9") 'digit-argument)
+     #+end_src
+
+     #+RESULTS:
+     : digit-argument
+
+*** Menubar
+
+     #+begin_src emacs-lisp
+       (menu-bar-mode 0)
+     #+end_src
+
+*** Frame font
+
+     #+begin_src emacs-lisp
+       ;; ;;; Set font
+       ;; (defun fontify-frame (frame)
+       ;;   (set-frame-parameter frame 'font "Jetbrains Mono-13"))
+       
+       ;; ;; ;; Fontify current frame
+       ;; (fontify-frame nil)
+       
+       ;; ;; ;; Fontify any future frames
+       ;; (push 'fontify-frame after-make-frame-functions)
+       
+       ;;; These are set in Customize
+       ;; (add-to-list 'default-frame-alist '(foreground-color . "bisque"))
+       ;; (add-to-list 'default-frame-alist '(background-color . "black"))
+     #+end_src
+    
+*** Icons
+
+     #+begin_src emacs-lisp
+       (require 'all-the-icons)
+     #+end_src
+
+*** which-key
+
+     + When a prefix key is typed, show possible next keys.
+
+       #+begin_src emacs-lisp
+         (require 'which-key)
+         (which-key-mode)
+       #+end_src
+
+*** anzu
+
+     + Show number of matches during isearch.
+
+       #+begin_src emacs-lisp
+         (require 'anzu)
+         (global-anzu-mode +1)
+       #+end_src
+
+*** helpful
+
+     #+begin_src emacs-lisp
+       (require 'helpful) 
+
+       ;; Note that the built-in `describe-function' includes both functions
+       ;; and macros. `helpful-function' is functions only, so we provide
+       ;; `helpful-callable' as a drop-in replacement.
+       (global-set-key (kbd "C-h f") #'helpful-callable)
+       (global-set-key (kbd "C-h v") #'helpful-variable)
+       (global-set-key (kbd "C-h k") #'helpful-key)
+
+       ;; Lookup the current symbol at point. C-c C-d is a common keybinding
+       ;; for this in lisp modes.
+       (global-set-key (kbd "C-c C-d") #'helpful-at-point)
+
+       ;; Look up *F*unctions (excludes macros).
+       ;;
+       ;; By default, C-h F is bound to `Info-goto-emacs-command-node'. Helpful
+       ;; already links to the manual, if a function is referenced there.
+       (global-set-key (kbd "C-h F") #'helpful-function)
+
+       ;; Look up *C*ommands.
+       ;;
+       ;; By default, C-h C is bound to describe `describe-coding-system'. I
+       ;; don't find this very useful, but it's frequently useful to only
+       ;; look at interactive functions.
+       (global-set-key (kbd "C-h C") #'helpful-command)
+     #+end_src
+
+*** info-colors
+
+     #+begin_src emacs-lisp
+       (require 'info-colors)
+       (add-hook 'Info-selection-hook 'info-colors-fontify-node)
+     #+end_src
+
+*** expand-region
+
+     #+begin_src emacs-lisp
+       (require 'expand-region)
+       (global-set-key (kbd "C-+") 'er/expand-region)
+     #+end_src
+    
+*** smart-parens
+
+     #+begin_src emacs-lisp
+       (require 'smartparens-config)
+       (smartparens-global-mode 1)
+       (show-smartparens-global-mode t)
+
+       ;;; markdown-mode etc
+       (sp-with-modes '(markdown-mode gfm-mode rst-mode org-mode)
+         (sp-local-pair "*" "*")
+         (sp-local-pair "/" "/")
+       ;  (sp-local-pair "_" "_")
+       )
+
+       (defun sp-select-up ()
+         (interactive)
+
+         (sp-backward-up-sexp)
+         (sp-select-next-thing)
+       )
+
+       (define-key smartparens-mode-map (kbd "C-M-b") 'sp-backward-sexp)
+       (define-key smartparens-mode-map (kbd "C-M-f") 'sp-forward-sexp)
+
+       (define-key smartparens-mode-map (kbd "C-S-p") 'sp-previous-sexp)
+       (define-key smartparens-mode-map (kbd "C-S-n") 'sp-next-sexp)
+
+       (define-key smartparens-mode-map (kbd "C-M-d") 'sp-down-sexp)
+       (define-key smartparens-mode-map (kbd "C-M-u") 'sp-backward-up-sexp)
+
+       (define-key smartparens-mode-map (kbd "C-S-a") 'sp-beginning-of-sexp)
+       (define-key smartparens-mode-map (kbd "C-S-e") 'sp-end-of-sexp)
+
+       (define-key smartparens-mode-map (kbd "C-M-t") 'sp-transpose-sexp)
+
+       (define-key smartparens-mode-map (kbd "C-M-k") 'sp-kill-sexp)
+       (define-key smartparens-mode-map (kbd "C-M-w") 'sp-copy-sexp)
+
+       (define-key smartparens-mode-map (kbd "C-]") 'sp-select-up)
+       (define-key smartparens-mode-map (kbd "C-}") 'sp-select-next-thing)
+     #+end_src
+    
+*** multiple-cursors
+
+     #+begin_src emacs-lisp
+       (require 'multiple-cursors)
+
+       ;; When you have an active region that spans multiple lines, the
+       ;; following will add a cursor to each line:
+       (global-set-key (kbd "C-|") 'mc/edit-lines)
+
+       ;; When you want to add multiple cursors not based on continuous
+       ;; lines, but based on keywords in the buffer, use the keys below.
+       ;; First mark the word, then add more cursors.
+       (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+       (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+       (global-set-key (kbd "C-?") 'mc/mark-all-like-this-dwim)
+       (global-set-key (kbd "C-.") 'mc/mark-sgml-tag-pair)
+
+       ;; To get out of multiple-cursors-mode, press `<return>` or `C-g`. The
+       ;; latter will first disable multiple regions before disabling
+       ;; multiple cursors.
+
+       ;; If you want to insert a newline in multiple-cursors-mode, use
+       ;; `C-j`.
+     #+end_src
+    
+*** sml-modeline
+
+     #+begin_src emacs-lisp
+       (if (require 'sml-modeline nil 'noerror)    ;; use sml-modeline if available
+         (progn 
+           (sml-modeline-mode 1)                   ;; show buffer pos in the mode line
+           (scroll-bar-mode -1))                   ;; turn off the scrollbar
+         (scroll-bar-mode 1)                       ;; otherwise, show a scrollbar...
+         (set-scroll-bar-mode 'right))             ;; ... on the right
+     #+end_src
+    
+*** Recent files
+
+     #+begin_src emacs-lisp
+       ;; Enable recent files menu
+       (recentf-mode)
+
+       ;; ffap-bindings binds C-x C-r to ffap-read-only.
+       ;; I prefer to have it bound to recentf-open-files.
+       (global-set-key "\C-x\C-r" 'recentf-open-files)
+     #+end_src
+    
+*** Copy or duplicate line
+
+     #+begin_src emacs-lisp
+       ;;; Copy line at point
+       (defun copy-line ()
+         "Copy line at point."
+         (interactive)
+         (save-excursion
+           (setq text (thing-at-point 'line t))
+           (kill-new text)
+           (princ "Line copied to kill ring." t)))
+
+       (global-set-key (kbd "C-s-<up>") 'copy-line)
+
+       ;;; Duplicate line
+       (defun duplicate-line ()
+         "Duplicate line at point on a new line below. Point remains in original line."
+         (interactive)
+         (save-excursion
+           (setq text (thing-at-point 'line t))
+           (when (string-suffix-p "\n" text)
+             (setq text (substring text 0 -1)))
+           (move-end-of-line nil)
+           (insert (concat "\n" text))))
+ 
+       (global-set-key (kbd "C-s-<down>") 'duplicate-line)
+     #+end_src
+    
+*** Generate numbered lines
+
+     #+begin_src emacs-lisp
+       ;;; Generate numbered items (one per line) according to template 
+       (defun gen-numbered-items (first last template)
+         "Generate numbered items (one per line) according to template."
+
+         (interactive "*nFirst number: \nnLast number: \nMTemplate: ")
+  
+         (setq i first)
+         (while (not (> i last))
+           (progn
+             (insert (format template i) "\n")
+             (setq i (1+ i)))))
+     #+end_src
+    
+*** fnjump (using hydra)
+
+     #+begin_src emacs-lisp
+       (setq hydra-fnjump--title
+         (with-faicon "map-signs" "Important places" 1 -0.05))
+      
+       (pretty-hydra-define hydra-fnjump
+         (:quit-key "q" :title hydra-fnjump--title :foreign-keys warn :exit t)
+         ("Jump to"
+          (("e" (find-file "~/Documents/OrgFiles/mail.org") "email ")
+           ("b" (find-file "~/.bashrc") ".bashrc ")
+           ("p" (find-file "~/.profile") ".profile ")
+           ("s" (find-file "~/Stow") "Stow ")
+           ("i" (find-file "~/Stow/emacs/dot-init.org") "init ")
+           ("t" (update-clock-tables) "clock tables ")
+           ("x" (ansi-term "/home/fnaufel/.local/bin/xonsh" "xonsh") "new xonsh "))
+      
+          "Quit"
+          (("q" nil "quit "))))
+      
+       (global-set-key (kbd "s-j") 'hydra-fnjump/body)
+     #+end_src
+    
+*** Browse kill ring
+
+     #+begin_src emacs-lisp
+       (defadvice yank-pop (around kill-ring-browse-maybe (arg))
+         "If last action was not a yank, run `browse-kill-ring' instead."
+         (if (not (eq last-command 'yank))
+             (browse-kill-ring)
+           ad-do-it))
+
+       (ad-activate 'yank-pop)
+     #+end_src
+    
+*** auto-fill
+
+     #+begin_src emacs-lisp
+       ;; Turn on Auto Fill mode automatically in Text mode and related modes
+       (add-hook 'text-mode-hook
+                 '(lambda () (turn-on-auto-fill)))
+     #+end_src
+    
+*** Non-ASCII keys
+
+     #+begin_src emacs-lisp
+       (require 'iso-transl)
+
+       ;;; Insert nobreakspace
+       (defun insert-nbsp ()
+         "Insert nobreakspace (code 160)"
+         (interactive)
+         (insert 160)
+       )
+
+       (global-set-key (kbd "C-;") 'insert-nbsp)
+     #+end_src
+    
+*** Movement
+
+     #+begin_src emacs-lisp
+       ;;; Position point at window center, top, bottom
+       (defvar cycle-window-line-last-op 'middle
+         "Indicates the last cycle-window-line operation performed.
+       Possible values: `top', `middle', `bottom'.")
+
+       (defun cycle-window-line (&optional arg)
+         "Move point to window center, bottom, and top, successively.
+
+       A prefix argument is handled like `move-to-window-line':
+        With numeric prefix ARG, move point to window-line ARG."
+
+         (interactive "P")
+         (cond
+          (arg (move-to-window-line arg))                 ; Always respect ARG.
+          ((or (not (eq this-command last-command))
+           (eq cycle-window-line-last-op 'top))
+           (setq cycle-window-line-last-op 'middle)
+           (move-to-window-line nil))
+          (t
+           (cond ((eq cycle-window-line-last-op 'middle)
+                  (setq cycle-window-line-last-op 'bottom)
+                  (move-to-window-line -1))
+                 ((eq cycle-window-line-last-op 'bottom)
+                  (setq cycle-window-line-last-op 'top)
+                  (move-to-window-line 0))))))
+
+       ;;; Scroll one line at a time. 
+       (defun scroll-n-lines-ahead (&optional n)
+         "Scroll ahead N lines (1 by default)."
+         (interactive "P")
+         (let ((save-scroll-preserve scroll-preserve-screen-position))
+           (setq scroll-preserve-screen-position nil)
+           (scroll-up (prefix-numeric-value n))
+           (setq scroll-preserve-screen-position save-scroll-preserve)))
+
+       (defun scroll-n-lines-behind (&optional n)
+         "Scroll behind N lines (1 by default)."
+         (interactive "P")
+         (let ((save-scroll-preserve scroll-preserve-screen-position))  
+           (setq scroll-preserve-screen-position nil)
+           (scroll-down (prefix-numeric-value n))
+           (setq scroll-preserve-screen-position save-scroll-preserve)))
+
+       (global-set-key "\M-r" 'cycle-window-line)
+       (global-set-key (kbd "C-*") 'scroll-n-lines-ahead)
+       (global-set-key (kbd "C-/") 'scroll-n-lines-behind)
+     #+end_src
+    
+*** Marking etc.
+
+     #+begin_src emacs-lisp
+       (global-set-key (kbd "C-c u") 'org-mark-ring-goto)
+       (global-set-key (kbd "C-<insert>") 'kill-ring-save)
+       (global-set-key (kbd "C-<return>") 'cua-rectangle-mark-mode)
+       (define-key org-mode-map (kbd "C-<return>") 'cua-rectangle-mark-mode)
+     #+end_src
+    
+*** Buffers and windows
+
+***** Misc
 
         #+begin_src emacs-lisp
-          (defun prev-window ()
-            (interactive)
-            (other-window -1))
+          (global-set-key (kbd "C-x C-b") 'buffer-menu)
 
-          (global-set-key (kbd "<s-tab>") 'other-window)
-          (global-set-key (kbd "<S-s-iso-lefttab>") 'prev-window)
+          ;;; Maximize frame
+          (defun maximize-current-frame () 
+            (set-frame-parameter nil 'fullscreen 'maximized))
 
-          (require 'windmove)
-
-          (defun hydra-move-splitter-left (arg)
-            "Move window splitter left."
-            (interactive "p")
-            (if (let ((windmove-wrap-around))
-                  (windmove-find-other-window 'right))
-                (shrink-window-horizontally arg)
-              (enlarge-window-horizontally arg)))
-
-          (defun hydra-move-splitter-right (arg)
-            "Move window splitter right."
-            (interactive "p")
-            (if (let ((windmove-wrap-around))
-                  (windmove-find-other-window 'right))
-                (enlarge-window-horizontally arg)
-              (shrink-window-horizontally arg)))
-
-          (defun hydra-move-splitter-up (arg)
-            "Move window splitter up."
-            (interactive "p")
-            (if (let ((windmove-wrap-around))
-                  (windmove-find-other-window 'up))
-                (enlarge-window arg)
-              (shrink-window arg)))
-
-          (defun hydra-move-splitter-down (arg)
-            "Move window splitter down."
-            (interactive "p")
-            (if (let ((windmove-wrap-around))
-                  (windmove-find-other-window 'up))
-                (shrink-window arg)
-              (enlarge-window arg)))
-
-          ;; Regexes for names of buffers that should not be killed by this function
-          (setq not-to-kill-buffer-list
-                '("\\*scratch\\*"
-                  "#emacs"
-                  "\\*Messages\\*"
-                  "\\*shell\\*"
-                  "\\*xonsh\\*"
-                  "Sunrise Tree$"
-                  "Sunrise Tree<2>$"
-                  " (Sunrise)$"
-                  "\\*Org Src"))
-
-          (defun kill-or-bury-current-buffer ()
-            "If current buffer name is on not-to-kill-buffer-list, bury.
-          Otherwise, kill."
-            (interactive)
-            (let ((case-fold-search nil))
-              (if (seq-some
-                   (lambda (x) (string-match-p x (buffer-name (current-buffer))))
-                   not-to-kill-buffer-list)
-                  (bury-buffer)
-                (kill-buffer (current-buffer)))))
-
-          (defun kill-buffer-special-and-window ()
-            "If current buffer name is on not-to-kill-buffer-list, bury.
-          Otherwise, kill. Besides, if not sole window, delete current window."
-            (interactive)
-            (kill-or-bury-current-buffer)
-            (unless (one-window-p)
-              (delete-window)))
-
-          (defun kill-buffer-special-and-frame ()
-            "If current buffer name is on not-to-kill-buffer-list, bury.
-          Otherwise, kill. Besides, delete current frame."
-            (interactive)
-            (kill-or-bury-current-buffer)
-            (delete-frame))
-
-          (defun kill-other-buffer-special ()
-            "If other buffer name is on not-to-kill-buffer-list, bury.
-          Otherwise, kill."
-            (interactive)
-            (unless (one-window-p)
-              (save-excursion
-                (other-window 1)
-                (kill-or-bury-current-buffer))))
-
-          (defun kill-other-buffer-special-and-window ()
-            "If other buffer name is on not-to-kill-buffer-list, bury.
-          Otherwise, kill. Besides, delete window it occupied."
-            (interactive)
-            (unless (one-window-p)
-              (save-excursion
-                (other-window 1)
-                (kill-or-bury-current-buffer)
-                (delete-window))))
-
-          (require 'buffer-move)
-
-          (setq hydra-window--title
-            (with-faicon "clone" "Buffers, windows, frames" 1 -0.05))
-
-          (pretty-hydra-define hydra-windows
-            (:quit-key "q" :title hydra-window--title :foreign-keys warn)
-              ("Go"
-               (("i" windmove-up "↑ ")
-                ("m" windmove-down "↓ ")
-                ("j" windmove-left "← ")
-                ("l" windmove-right "→ "))
-
-               "Resize"
-               (("I" hydra-move-splitter-up "↑ ")
-                ("M" hydra-move-splitter-down "↓ ")
-                ("J" hydra-move-splitter-left "← ")
-                ("L" hydra-move-splitter-right "→ ")
-                ("=" balance-windows "= "))
-
-               "Swap"
-               (("M-i" buf-move-up "↑ ")
-                ("M-m" buf-move-down "↓ ")
-                ("M-j" buf-move-left "← ")
-                ("M-l" buf-move-right "→ "))
-
-               "Kill"
-               (("k" kill-or-bury-current-buffer "this buffer ")
-                ("K" kill-buffer-special-and-window "this buffer & window ")
-                ("M-k" kill-buffer-special-and-frame "this buffer & frame " :exit t)
-                ("o" kill-other-buffer-special "other buffer ")
-                ("O" kill-other-buffer-special-and-window "other buffer & window "))
-
-               "Create"
-               (("w" (progn (split-window-below) (windmove-down)) "window ↑ ")
-                ("s" (split-window-below) "window ↓ ")
-                ("a" (progn (split-window-right) (windmove-right)) "window ← ")
-                ("d" (split-window-right) "window → ")
-                ("f" make-frame-command "frame " :exit t))
-
-               "Delete"
-               (("0" delete-window "this window ")
-                ("1" delete-other-windows "other windows ")
-                ("5" delete-frame "this frame " :exit t))
-
-               "Quit"
-               (("q" nil "quit "))))
-
-          (global-set-key (kbd "s-l") 'hydra-windows/body)
-          (global-set-key (kbd "s-k") 'kill-or-bury-current-buffer)
+          ;;; Set background of hl-line
+          (set-face-background hl-line-face "gray20")
         #+end_src
-    
-** Misc
 
-    #+begin_src emacs-lisp
-      (global-set-key (kbd "C-x C-y") 'transpose-sentences)
-      (global-set-key (kbd "C-z") 'undo)
-    #+end_src
-    
-** xah-fly keys (disabled)
+***** Buffers, windows, frames
 
-    #+begin_src emacs-lisp
-      ;; (setq xah-fly-use-meta-key nil)
-      ;; (setq xah-fly-use-control-key nil)
-      ;; (require 'xah-fly-keys)
-      ;; (xah-fly-keys-set-layout "qwerty-abnt")
-      ;; (xah-fly-keys 1)
-    #+end_src
+          #+begin_src emacs-lisp
+            (defun prev-window ()
+              (interactive)
+              (other-window -1))
+
+            (global-set-key (kbd "<s-tab>") 'other-window)
+            (global-set-key (kbd "<S-s-iso-lefttab>") 'prev-window)
+
+            (require 'windmove)
+
+            (defun hydra-move-splitter-left (arg)
+              "Move window splitter left."
+              (interactive "p")
+              (if (let ((windmove-wrap-around))
+                    (windmove-find-other-window 'right))
+                  (shrink-window-horizontally arg)
+                (enlarge-window-horizontally arg)))
+
+            (defun hydra-move-splitter-right (arg)
+              "Move window splitter right."
+              (interactive "p")
+              (if (let ((windmove-wrap-around))
+                    (windmove-find-other-window 'right))
+                  (enlarge-window-horizontally arg)
+                (shrink-window-horizontally arg)))
+
+            (defun hydra-move-splitter-up (arg)
+              "Move window splitter up."
+              (interactive "p")
+              (if (let ((windmove-wrap-around))
+                    (windmove-find-other-window 'up))
+                  (enlarge-window arg)
+                (shrink-window arg)))
+
+            (defun hydra-move-splitter-down (arg)
+              "Move window splitter down."
+              (interactive "p")
+              (if (let ((windmove-wrap-around))
+                    (windmove-find-other-window 'up))
+                  (shrink-window arg)
+                (enlarge-window arg)))
+
+            ;; Regexes for names of buffers that should not be killed by this function
+            (setq not-to-kill-buffer-list
+                  '("\\*scratch\\*"
+                    "#emacs"
+                    "\\*Messages\\*"
+                    "\\*shell\\*"
+                    "\\*xonsh\\*"
+                    "Sunrise Tree$"
+                    "Sunrise Tree<2>$"
+                    " (Sunrise)$"
+                    "\\*Org Src"))
+
+            (defun kill-or-bury-current-buffer ()
+              "If current buffer name is on not-to-kill-buffer-list, bury.
+            Otherwise, kill."
+              (interactive)
+              (let ((case-fold-search nil))
+                (if (seq-some
+                     (lambda (x) (string-match-p x (buffer-name (current-buffer))))
+                     not-to-kill-buffer-list)
+                    (bury-buffer)
+                  (kill-buffer (current-buffer)))))
+
+            (defun kill-buffer-special-and-window ()
+              "If current buffer name is on not-to-kill-buffer-list, bury.
+            Otherwise, kill. Besides, if not sole window, delete current window."
+              (interactive)
+              (kill-or-bury-current-buffer)
+              (unless (one-window-p)
+                (delete-window)))
+
+            (defun kill-buffer-special-and-frame ()
+              "If current buffer name is on not-to-kill-buffer-list, bury.
+            Otherwise, kill. Besides, delete current frame."
+              (interactive)
+              (kill-or-bury-current-buffer)
+              (delete-frame))
+
+            (defun kill-other-buffer-special ()
+              "If other buffer name is on not-to-kill-buffer-list, bury.
+            Otherwise, kill."
+              (interactive)
+              (unless (one-window-p)
+                (save-excursion
+                  (other-window 1)
+                  (kill-or-bury-current-buffer))))
+
+            (defun kill-other-buffer-special-and-window ()
+              "If other buffer name is on not-to-kill-buffer-list, bury.
+            Otherwise, kill. Besides, delete window it occupied."
+              (interactive)
+              (unless (one-window-p)
+                (save-excursion
+                  (other-window 1)
+                  (kill-or-bury-current-buffer)
+                  (delete-window))))
+
+            (require 'buffer-move)
+
+            (setq hydra-window--title
+              (with-faicon "clone" "Buffers, windows, frames" 1 -0.05))
+
+            (pretty-hydra-define hydra-windows
+              (:quit-key "q" :title hydra-window--title :foreign-keys warn)
+                ("Go"
+                 (("i" windmove-up "↑ ")
+                  ("m" windmove-down "↓ ")
+                  ("j" windmove-left "← ")
+                  ("l" windmove-right "→ "))
+
+                 "Resize"
+                 (("I" hydra-move-splitter-up "↑ ")
+                  ("M" hydra-move-splitter-down "↓ ")
+                  ("J" hydra-move-splitter-left "← ")
+                  ("L" hydra-move-splitter-right "→ ")
+                  ("=" balance-windows "= "))
+
+                 "Swap"
+                 (("M-i" buf-move-up "↑ ")
+                  ("M-m" buf-move-down "↓ ")
+                  ("M-j" buf-move-left "← ")
+                  ("M-l" buf-move-right "→ "))
+
+                 "Kill"
+                 (("k" kill-or-bury-current-buffer "this buffer ")
+                  ("K" kill-buffer-special-and-window "this buffer & window ")
+                  ("M-k" kill-buffer-special-and-frame "this buffer & frame " :exit t)
+                  ("o" kill-other-buffer-special "other buffer ")
+                  ("O" kill-other-buffer-special-and-window "other buffer & window "))
+
+                 "Create"
+                 (("w" (progn (split-window-below) (windmove-down)) "window ↑ ")
+                  ("s" (split-window-below) "window ↓ ")
+                  ("a" (progn (split-window-right) (windmove-right)) "window ← ")
+                  ("d" (split-window-right) "window → ")
+                  ("f" make-frame-command "frame " :exit t))
+
+                 "Delete"
+                 (("0" delete-window "this window ")
+                  ("1" delete-other-windows "other windows ")
+                  ("5" delete-frame "this frame " :exit t))
+
+                 "Quit"
+                 (("q" nil "quit "))))
+
+            (global-set-key (kbd "s-l") 'hydra-windows/body)
+            (global-set-key (kbd "s-k") 'kill-or-bury-current-buffer)
+          #+end_src
+    
+*** Misc
+
+     #+begin_src emacs-lisp
+       (global-set-key (kbd "C-x C-y") 'transpose-sentences)
+       (global-set-key (kbd "C-z") 'undo)
+     #+end_src
+    
+*** xah-fly keys (disabled)
+
+     #+begin_src emacs-lisp
+       ;; (setq xah-fly-use-meta-key nil)
+       ;; (setq xah-fly-use-control-key nil)
+       ;; (require 'xah-fly-keys)
+       ;; (xah-fly-keys-set-layout "qwerty-abnt")
+       ;; (xah-fly-keys 1)
+     #+end_src
 
 * Development environment
 
-** web-beautify
+*** web-beautify
 
-*** TODO Set up options and key bindings
-      :LOGBOOK:
-      - State "TODO"       from              [2021-10-10 Sun 13:46]
-      :END:
+***** TODO Set up options and key bindings
+        :LOGBOOK:
+        - State "TODO"       from              [2021-10-10 Sun 13:46]
+        :END:
 
-      + See https://github.com/yasuyk/web-beautify
+        + See https://github.com/yasuyk/web-beautify
+
+          #+begin_src emacs-lisp
+            (require 'web-beautify)
+          #+end_src
+
+*** rainbow delimiters
+
+     #+begin_src emacs-lisp
+       (require 'rainbow-delimiters)
+       (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+     #+end_src
+    
+*** Line numbers
+
+     #+begin_src emacs-lisp
+       (global-display-line-numbers-mode t)
+
+       ;; Disable line numbers for some modes
+       (dolist (mode '(org-mode-hook
+                       term-mode-hook
+                       shell-mode-hook
+                       help-mode-hook
+                       treemacs-mode-hook))
+         (add-hook mode (lambda () (display-line-numbers-mode 0))))
+     #+end_src
+
+***** TODO Disable line numbers in some buffers
+        :LOGBOOK:
+        - State "TODO"       from              [2021-10-10 Sun 14:37]
+        :END:
+
+        + Helpful buffers
+
+        + ???
+    
+*** javascript
+    
+***** js2-mode
 
         #+begin_src emacs-lisp
-          (require 'web-beautify)
+          (require 'js2-mode)
+          (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+          (add-to-list 'auto-mode-alist '("\\.ts\\'" . js2-mode))
         #+end_src
+      
+***** skewer
 
-** rainbow delimiters
+        + Drive browser from emacs using js
+
+          #+begin_src emacs-lisp
+            (require 'skewer-mode)
+          #+end_src
+
+*** python
+
+     #+begin_src emacs-lisp
+       (add-to-list 'interpreter-mode-alist
+                    '("python3" . python-mode))
+     #+end_src
+    
+*** zeal
+
+     #+begin_src emacs-lisp
+       (require 'zeal-at-point)
+       (global-set-key (kbd "s-h") 'zeal-at-point)
+     #+end_src
+    
+*** lsp
+
+     #+begin_src emacs-lisp
+       (require 'lsp)
+      
+       ;; Modes for which to enable lsp
+       (dolist (mode '(html-mode-hook
+                       c-mode-hook
+                       c++-mode-hook
+                       css-mode-hook
+                       js-mode-hook
+                       ;; sh-mode-hook
+                       java-mode-hook
+                       python-mode-hook
+                       sgml-mode-hook
+                       yaml-mode-hook))
+         (add-hook mode #'lsp))
+      
+       (define-key lsp-mode-map (kbd "<tab>") 'company-indent-or-complete-common)
+       (define-key lsp-mode-map (kbd "<s-kp-add>") lsp-command-map)
+       (setq lsp-keymap-prefix "<s-kp-add>")
+      
+       (defun efs/lsp-mode-setup ()
+         (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
+         (lsp-headerline-breadcrumb-mode))
+      
+       (add-hook 'lsp-mode-hook 'efs/lsp-mode-setup)
+      
+       (lsp-enable-which-key-integration 1)
+      
+       (require 'lsp-ui)
+       (add-hook 'lsp-mode-hook 'lsp-ui-mode)
+       (setq lsp-ui-doc-position 'bottom)
+      
+       (require 'lsp-treemacs)
+       (lsp-treemacs-sync-mode 1)
+      
+       (require 'helm-lsp)
+       ; C-M-.
+       (define-key lsp-mode-map [remap xref-find-apropos] #'helm-lsp-workspace-symbol)
+     #+end_src
+
+*** projectile
+
+     #+begin_src emacs-lisp
+       (require 'projectile)
+
+       (projectile-mode +1)
+       (define-key projectile-mode-map (kbd "<s-kp-enter>") 'projectile-command-map)
+
+       (setq projectile-completion-system 'helm)
+       (setq projectile-project-search-path '("~/Development/00-Present"))
+
+       (require 'helm-projectile)
+       (helm-projectile-on)
+     #+end_src
+    
+*** R and ESS (disabled)
 
     #+begin_src emacs-lisp
-      (require 'rainbow-delimiters)
-      (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
-    #+end_src
-    
-** Line numbers
-
-    #+begin_src emacs-lisp
-      (global-display-line-numbers-mode t)
-
-      ;; Disable line numbers for some modes
-      (dolist (mode '(org-mode-hook
-                      term-mode-hook
-                      shell-mode-hook
-                      help-mode-hook
-                      treemacs-mode-hook))
-        (add-hook mode (lambda () (display-line-numbers-mode 0))))
-    #+end_src
-
-*** TODO Disable line numbers in some buffers
-      :LOGBOOK:
-      - State "TODO"       from              [2021-10-10 Sun 14:37]
-      :END:
-
-      + Helpful buffers
-
-      + ???
-    
-** javascript
-    
-*** js2-mode
-
-      #+begin_src emacs-lisp
-        (require 'js2-mode)
-        (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-        (add-to-list 'auto-mode-alist '("\\.ts\\'" . js2-mode))
-      #+end_src
-      
-*** skewer
-
-      + Drive browser from emacs using js
-
-        #+begin_src emacs-lisp
-          (require 'skewer-mode)
-        #+end_src
-
-** python
-
-    #+begin_src emacs-lisp
-      (add-to-list 'interpreter-mode-alist
-                   '("python3" . python-mode))
-    #+end_src
-    
-** zeal
-
-    #+begin_src emacs-lisp
-      (require 'zeal-at-point)
-      (global-set-key (kbd "s-h") 'zeal-at-point)
-    #+end_src
-    
-** lsp
-
-    #+begin_src emacs-lisp
-      (require 'lsp)
-      
-      ;; Modes for which to enable lsp
-      (dolist (mode '(html-mode-hook
-                      c-mode-hook
-                      c++-mode-hook
-                      css-mode-hook
-                      js-mode-hook
-                      ;; sh-mode-hook
-                      java-mode-hook
-                      python-mode-hook
-                      sgml-mode-hook
-                      yaml-mode-hook))
-        (add-hook mode #'lsp))
-      
-      (define-key lsp-mode-map (kbd "<tab>") 'company-indent-or-complete-common)
-      (define-key lsp-mode-map (kbd "<s-kp-add>") lsp-command-map)
-      (setq lsp-keymap-prefix "<s-kp-add>")
-      
-      (defun efs/lsp-mode-setup ()
-        (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
-        (lsp-headerline-breadcrumb-mode))
-      
-      (add-hook 'lsp-mode-hook 'efs/lsp-mode-setup)
-      
-      (lsp-enable-which-key-integration 1)
-      
-      (require 'lsp-ui)
-      (add-hook 'lsp-mode-hook 'lsp-ui-mode)
-      (setq lsp-ui-doc-position 'bottom)
-      
-      (require 'lsp-treemacs)
-      (lsp-treemacs-sync-mode 1)
-      
-      (require 'helm-lsp)
-      ; C-M-.
-      (define-key lsp-mode-map [remap xref-find-apropos] #'helm-lsp-workspace-symbol)
-    #+end_src
-
-** projectile
-
-    #+begin_src emacs-lisp
-      (require 'projectile)
-
-      (projectile-mode +1)
-      (define-key projectile-mode-map (kbd "<s-kp-enter>") 'projectile-command-map)
-
-      (setq projectile-completion-system 'helm)
-      (setq projectile-project-search-path '("~/Development/00-Present"))
-
-      (require 'helm-projectile)
-      (helm-projectile-on)
-    #+end_src
-    
-** R and ESS (disabled)
-
-   #+begin_src emacs-lisp
-     ;; (setq markdown-asymmetric-header t)
-     ;; (setq markdown-enable-math t)
+      ;; (setq markdown-asymmetric-header t)
+      ;; (setq markdown-enable-math t)
      
-     ;; (require 'polymode)
-     ;; (require 'poly-markdown)
-     ;; (require 'poly-R)
+      ;; (require 'polymode)
+      ;; (require 'poly-markdown)
+      ;; (require 'poly-R)
      
-     ;; ;; associate the new polymode to Rmd files:
-     ;; (add-to-list 'auto-mode-alist
-     ;;              '("\\.[rR]md\\'" . poly-gfm+r-mode))
+      ;; ;; associate the new polymode to Rmd files:
+      ;; (add-to-list 'auto-mode-alist
+      ;;              '("\\.[rR]md\\'" . poly-gfm+r-mode))
      
-     ;; ;; uses braces around code block language strings:
-     ;; (setq markdown-code-block-braces t)
-   #+end_src
+      ;; ;; uses braces around code block language strings:
+      ;; (setq markdown-code-block-braces t)
+    #+end_src
 
 * Document languages
 
-** markdown
+*** markdown
 
-    #+begin_src emacs-lisp
-      (require 'markdown-mode)
-      (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-      (add-to-list 'auto-mode-alist '("\\.Rmd\\'" . markdown-mode))
+     #+begin_src emacs-lisp
+       (require 'markdown-mode)
+       (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+       (add-to-list 'auto-mode-alist '("\\.Rmd\\'" . markdown-mode))
 
-      (require 'markdown-toc)
-    #+end_src
+       (require 'markdown-toc)
+     #+end_src
 
-** yaml
+*** yaml
 
-    #+begin_src emacs-lisp
-      (require 'yaml-mode)
-      (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
-      (add-hook 'yaml-mode-hook
-                '(lambda ()
-                   (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
-    #+end_src
+     #+begin_src emacs-lisp
+       (require 'yaml-mode)
+       (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
+       (add-hook 'yaml-mode-hook
+                 '(lambda ()
+                    (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
+     #+end_src
     
 * Completion
 
-** Use hippie expansion
+*** Use hippie expansion
 
-    #+begin_src emacs-lisp
-      (global-set-key [remap dabbrev-expand] 'hippie-expand)
-    #+end_src
+     #+begin_src emacs-lisp
+       (global-set-key [remap dabbrev-expand] 'hippie-expand)
+     #+end_src
 
-** company
+*** company
 
-    + Configure for emacs lisp, ielm and [[*lsp][lsp]]:
+     + Configure for emacs lisp, ielm and [[*lsp][lsp]]:
 
-      #+begin_src emacs-lisp
-        (require 'company)
+       #+begin_src emacs-lisp
+         (require 'company)
 
-        ;; elisp
-        (add-hook 'ielm-mode-hook 'company-mode)
-        (add-hook 'emacs-lisp-mode-hook 'company-mode)
-        (add-hook 'lsp-mode-hook 'company-mode)
+         ;; elisp
+         (add-hook 'ielm-mode-hook 'company-mode)
+         (add-hook 'emacs-lisp-mode-hook 'company-mode)
+         (add-hook 'lsp-mode-hook 'company-mode)
 
-        (global-set-key (kbd "<s-return>") 'company-complete)
-        (define-key company-active-map (kbd "<tab>") 'company-complete-selection)
-        (define-key company-active-map (kbd "<ESC>") 'company-abort)
+         (global-set-key (kbd "<s-return>") 'company-complete)
+         (define-key company-active-map (kbd "<tab>") 'company-complete-selection)
+         (define-key company-active-map (kbd "<ESC>") 'company-abort)
 
-        (setq company-minimum-prefix-length 3)
-        (setq company-idle-delay 0.5)
-      #+end_src
+         (setq company-minimum-prefix-length 3)
+         (setq company-idle-delay 0.5)
+       #+end_src
 
-    + I tried to use company-box to beautify completion popups,
-      but it did not work. Popups did not even show:
+     + I tried to use company-box to beautify completion popups,
+       but it did not work. Popups did not even show:
 
-      #+begin_src emacs-lisp
-        ;;; This apparently keeps company popups from showing
-        ;; (require 'company-box)
-        ;; (add-hook 'company-mode-hook 'company-box-mode)
-      #+end_src
+       #+begin_src emacs-lisp
+         ;;; This apparently keeps company popups from showing
+         ;; (require 'company-box)
+         ;; (add-hook 'company-mode-hook 'company-box-mode)
+       #+end_src
       
     
     
-** yasnippet
+*** yasnippet
 
-    #+begin_src emacs-lisp
-      (require 'yasnippet)
-      (yas-global-mode 1)
-      ;;; Turn off yasnippet for xonsh terminal
-      (add-hook 'term-mode-hook (lambda()
-                      (yas-minor-mode -1)))
+     #+begin_src emacs-lisp
+       (require 'yasnippet)
+       (yas-global-mode 1)
+       ;;; Turn off yasnippet for xonsh terminal
+       (add-hook 'term-mode-hook (lambda()
+                       (yas-minor-mode -1)))
 
-      ;;; https://orgmode.org/manual/Conflicts.html#Conflicts
-      (defun yas/org-very-safe-expand ()
-        (let ((yas/fallback-behavior 'return-nil)) (yas/expand)))
+       ;;; https://orgmode.org/manual/Conflicts.html#Conflicts
+       (defun yas/org-very-safe-expand ()
+         (let ((yas/fallback-behavior 'return-nil)) (yas/expand)))
 
-      (add-hook 'org-mode-hook
-                (lambda ()
-                  (make-variable-buffer-local 'yas/trigger-key)
-                  (setq yas/trigger-key [tab])
-                  (add-to-list 'org-tab-first-hook 'yas/org-very-safe-expand)
-                  (define-key yas/keymap [tab] 'yas/next-field)))
-    #+end_src
+       (add-hook 'org-mode-hook
+                 (lambda ()
+                   (make-variable-buffer-local 'yas/trigger-key)
+                   (setq yas/trigger-key [tab])
+                   (add-to-list 'org-tab-first-hook 'yas/org-very-safe-expand)
+                   (define-key yas/keymap [tab] 'yas/next-field)))
+     #+end_src
     
 
-** helm
+*** helm
 
-    #+begin_src emacs-lisp
-      (require 'helm-config)
+     #+begin_src emacs-lisp
+       (require 'helm-config)
 
-      ;; From http://tuhdo.github.io/helm-intro.html
-      ;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
-      ;; Changed to "C-c h". Note: We must set "C-c h" globally, because we
-      ;; cannot change `helm-command-prefix-key' once `helm-config' is loaded.
-      (global-set-key (kbd "C-c h") 'helm-command-prefix)
-      (global-unset-key (kbd "C-x c"))
-      (global-set-key (kbd "C-x b") 'helm-mini)
+       ;; From http://tuhdo.github.io/helm-intro.html
+       ;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
+       ;; Changed to "C-c h". Note: We must set "C-c h" globally, because we
+       ;; cannot change `helm-command-prefix-key' once `helm-config' is loaded.
+       (global-set-key (kbd "C-c h") 'helm-command-prefix)
+       (global-unset-key (kbd "C-x c"))
+       (global-set-key (kbd "C-x b") 'helm-mini)
 
-      (when (executable-find "curl")
-        (setq helm-google-suggest-use-curl-p t))
+       (when (executable-find "curl")
+         (setq helm-google-suggest-use-curl-p t))
 
-      (setq helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
-            helm-buffers-fuzzy-matching           t ; fuzzy matching buffer names when non--nil
-            helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
-            helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
-            helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
-            helm-ff-file-name-history-use-recentf t)
+       (setq helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
+             helm-buffers-fuzzy-matching           t ; fuzzy matching buffer names when non--nil
+             helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
+             helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
+             helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
+             helm-ff-file-name-history-use-recentf t)
 
-      (helm-mode 1)
-      (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
-      (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
-      (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
+       (helm-mode 1)
+       (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
+       (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
+       (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
 
-      (define-key helm-map (kbd "C-<left>")  'helm-previous-source) 
-      (define-key helm-map (kbd "C-<right>")  'helm-next-source) 
-      (define-key helm-map (kbd "<left>")  'backward-char) 
-      (define-key helm-map (kbd "<right>")  'forward-char) 
+       (define-key helm-map (kbd "C-<left>")  'helm-previous-source) 
+       (define-key helm-map (kbd "C-<right>")  'helm-next-source) 
+       (define-key helm-map (kbd "<left>")  'backward-char) 
+       (define-key helm-map (kbd "<right>")  'forward-char) 
 
-      (global-set-key (kbd "M-x") 'helm-M-x)
-      (global-set-key (kbd "C-x C-f") 'helm-find-files)
-      (global-set-key (kbd "C-c b") 'helm-buffers-list)
-      (add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
-      (global-set-key (kbd "C-c h o") 'helm-occur)
-      (global-set-key (kbd "C-h SPC") 'helm-all-mark-rings)
+       (global-set-key (kbd "M-x") 'helm-M-x)
+       (global-set-key (kbd "C-x C-f") 'helm-find-files)
+       (global-set-key (kbd "C-c b") 'helm-buffers-list)
+       (add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
+       (global-set-key (kbd "C-c h o") 'helm-occur)
+       (global-set-key (kbd "C-h SPC") 'helm-all-mark-rings)
 
-      ;;; Make helm use new frame instead of minibuffer
-      (setq helm-display-function 'helm-display-buffer-in-own-frame
-              helm-display-buffer-reuse-frame t
-              helm-use-undecorated-frame-option t)
-    #+end_src
+       ;;; Make helm use new frame instead of minibuffer
+       (setq helm-display-function 'helm-display-buffer-in-own-frame
+               helm-display-buffer-reuse-frame t
+               helm-use-undecorated-frame-option t)
+     #+end_src
     
-** bash
+*** bash
 
-    #+begin_src emacs-lisp
-      (require 'bash-completion)
-      (bash-completion-setup)
-    #+end_src
+     #+begin_src emacs-lisp
+       (require 'bash-completion)
+       (bash-completion-setup)
+     #+end_src
     
 * Shells
 
-** shell-mode
+*** shell-mode
 
-    #+begin_src emacs-lisp
-      ;;; Fix junk characters in shell mode
-      (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
-      (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
-      (add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
+     #+begin_src emacs-lisp
+       ;;; Fix junk characters in shell mode
+       (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
+       (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+       (add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
 
-      ;;; Force save comint-input-ring upon killing emacs
-      (add-hook 'kill-emacs-hook 'comint-write-input-ring)
-    #+end_src
+       ;;; Force save comint-input-ring upon killing emacs
+       (add-hook 'kill-emacs-hook 'comint-write-input-ring)
+     #+end_src
 
-** xonsh (disabled)
+*** xonsh (disabled)
 
-    #+begin_src emacs-lisp
-      ;; (require 'xonsh-mode)
+     #+begin_src emacs-lisp
+       ;; (require 'xonsh-mode)
       
-      ;; ;;; Bind yank
-      ;; (eval-after-load "term"
-      ;;   '(progn 
-      ;;      (define-key term-raw-map (kbd "C-c C-y") 'term-paste)
-      ;;      (define-key term-raw-map (kbd "C-y") 'term-paste)))
-    #+end_src
+       ;; ;;; Bind yank
+       ;; (eval-after-load "term"
+       ;;   '(progn 
+       ;;      (define-key term-raw-map (kbd "C-c C-y") 'term-paste)
+       ;;      (define-key term-raw-map (kbd "C-y") 'term-paste)))
+     #+end_src
            
 * LaTeX
 
-** Help
+*** Help
 
-    #+begin_src emacs-lisp
-      (load "ltx-help")
+     #+begin_src emacs-lisp
+       (load "ltx-help")
 
-      ;;; Corrected version. See http://www.emacswiki.org/emacs/AUCTeX#toc8
-      (defun latex-help-get-cmd-alist ()
-        "Scoop up the commands in the index of the latex info manual.
-                The values are saved in `latex-help-cmd-alist' for speed."
-        ;; mm, does it contain any cached entries
-        (if (not (assoc "\\begin" latex-help-cmd-alist))
-            (save-window-excursion
-              (setq latex-help-cmd-alist nil)
-              (Info-goto-node (concat latex-help-file "Command Index"))
-              (end-of-buffer)
-              (while (re-search-backward "^\\* \\(.+\\): *\\(.+\\)\\." nil t)
-                (setq key (ltxh-buffer-substring (match-beginning 1) (match-end 1)))
-                (setq value (ltxh-buffer-substring (match-beginning 2) (match-end 2)))
-                (setq latex-help-cmd-alist
-                      (cons (cons key value) latex-help-cmd-alist))))
-          )
-        latex-help-cmd-alist
-        ) 
+       ;;; Corrected version. See http://www.emacswiki.org/emacs/AUCTeX#toc8
+       (defun latex-help-get-cmd-alist ()
+         "Scoop up the commands in the index of the latex info manual.
+                 The values are saved in `latex-help-cmd-alist' for speed."
+         ;; mm, does it contain any cached entries
+         (if (not (assoc "\\begin" latex-help-cmd-alist))
+             (save-window-excursion
+               (setq latex-help-cmd-alist nil)
+               (Info-goto-node (concat latex-help-file "Command Index"))
+               (end-of-buffer)
+               (while (re-search-backward "^\\* \\(.+\\): *\\(.+\\)\\." nil t)
+                 (setq key (ltxh-buffer-substring (match-beginning 1) (match-end 1)))
+                 (setq value (ltxh-buffer-substring (match-beginning 2) (match-end 2)))
+                 (setq latex-help-cmd-alist
+                       (cons (cons key value) latex-help-cmd-alist))))
+           )
+         latex-help-cmd-alist
+         ) 
 
-      ;;; LaTeX help
-      (define-key help-map "\C-l" 'latex-help)
-    #+end_src
+       ;;; LaTeX help
+       (define-key help-map "\C-l" 'latex-help)
+     #+end_src
 
-** AucTeX
+*** AucTeX
 
-    #+begin_src emacs-lisp
-      (add-hook 'LaTeX-mode-hook 'turn-on-auto-fill)
-      (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
-      (add-hook 'LaTeX-mode-hook 
-                (function (lambda ()
-                            (define-key LaTeX-mode-map "\C-ci" 'latex-help))))
-      (setq reftex-plug-into-AUCTeX t)
-      (setq TeX-auto-save t)
-      (setq TeX-parse-self t)
-      (setq-default TeX-master nil)
+     #+begin_src emacs-lisp
+       (add-hook 'LaTeX-mode-hook 'turn-on-auto-fill)
+       (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+       (add-hook 'LaTeX-mode-hook 
+                 (function (lambda ()
+                             (define-key LaTeX-mode-map "\C-ci" 'latex-help))))
+       (setq reftex-plug-into-AUCTeX t)
+       (setq TeX-auto-save t)
+       (setq TeX-parse-self t)
+       (setq-default TeX-master nil)
 
-      ;; (require 'auto-complete-auctex)
-    #+end_src
+       ;; (require 'auto-complete-auctex)
+     #+end_src
     
 * Kupfer integration
 
@@ -1362,184 +1372,184 @@
   
 * File browsers
 
-** dired-x
+*** dired-x
 
-    #+begin_src emacs-lisp
-      (require 'dired-x)
-      (setq-default dired-omit-files-p t) ; Buffer-local variable
-      (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$"))
+     #+begin_src emacs-lisp
+       (require 'dired-x)
+       (setq-default dired-omit-files-p t) ; Buffer-local variable
+       (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$"))
 
-      (add-hook 'dired-load-hook
-                (lambda ()
-                  (load "dired-x")
-                  ;; Set dired-x global variables here.  For example:
-                  ;; (setq dired-guess-shell-gnutar "gtar")
-                  ;; (setq dired-x-hands-off-my-keys nil)
-                  ))
+       (add-hook 'dired-load-hook
+                 (lambda ()
+                   (load "dired-x")
+                   ;; Set dired-x global variables here.  For example:
+                   ;; (setq dired-guess-shell-gnutar "gtar")
+                   ;; (setq dired-x-hands-off-my-keys nil)
+                   ))
 
-      ;; Make M-up go to parent directory in dired mode
-      (add-hook 'dired-mode-hook
-                '(lambda ()
-                   (define-key dired-mode-map [(meta up)] 'dired-up-directory)))
-    #+end_src
+       ;; Make M-up go to parent directory in dired mode
+       (add-hook 'dired-mode-hook
+                 '(lambda ()
+                    (define-key dired-mode-map [(meta up)] 'dired-up-directory)))
+     #+end_src
     
-** sunrise
+*** sunrise
 
-    #+begin_src emacs-lisp
-      (require 'sunrise)
-      (require 'sunrise-modeline)
-      (require 'sunrise-checkpoint)
-      (require 'sunrise-popviewer)
-      (require 'sunrise-tree)
+     #+begin_src emacs-lisp
+       (require 'sunrise)
+       (require 'sunrise-modeline)
+       (require 'sunrise-checkpoint)
+       (require 'sunrise-popviewer)
+       (require 'sunrise-tree)
 
-      (add-to-list 'auto-mode-alist '("\\.srvm\\'" . sunrise-virtual-mode))
+       (add-to-list 'auto-mode-alist '("\\.srvm\\'" . sunrise-virtual-mode))
 
-      (setq sunrise-cursor-follows-mouse nil)
-      (define-key sunrise-mode-map [mouse-1]        nil)
-      (define-key sunrise-mode-map [mouse-movement] nil)
+       (setq sunrise-cursor-follows-mouse nil)
+       (define-key sunrise-mode-map [mouse-1]        nil)
+       (define-key sunrise-mode-map [mouse-movement] nil)
 
-      (define-key sunrise-mode-map [backtab] 'sunrise-change-window)
+       (define-key sunrise-mode-map [backtab] 'sunrise-change-window)
 
-      (defun sunrise-reset-panes ()
-            "Hard-reset SC panes."
-            (interactive)
-            (when sunrise-running (sunrise-setup-windows)))
+       (defun sunrise-reset-panes ()
+             "Hard-reset SC panes."
+             (interactive)
+             (when sunrise-running (sunrise-setup-windows)))
 
-      ;;; Modified to refrain from opening a new frame when browsing a (pdf,
-      ;;; html etc.) file
-      (defun sunrise-browse-file (&optional file)
-        "Display the selected file in the default web browser."
-        (interactive)
-        (unless (featurep 'browse-url)
-          (error "ERROR: Feature browse-url not available!"))
-        (setq file (or file (dired-get-filename)))
-        (sunrise-save-selected-window
-         ;; I don't want a viewer window or frame to open!
-         ;; (sunrise-select-viewer-window)
-         (let ((buff (current-buffer)))
-           (browse-url (concat "file://" file))
-           (unless (eq buff (current-buffer))
-             (sunrise-scrollable-viewer (current-buffer)))))
-        (message "Browsing \"%s\" in web browser" file))
+       ;;; Modified to refrain from opening a new frame when browsing a (pdf,
+       ;;; html etc.) file
+       (defun sunrise-browse-file (&optional file)
+         "Display the selected file in the default web browser."
+         (interactive)
+         (unless (featurep 'browse-url)
+           (error "ERROR: Feature browse-url not available!"))
+         (setq file (or file (dired-get-filename)))
+         (sunrise-save-selected-window
+          ;; I don't want a viewer window or frame to open!
+          ;; (sunrise-select-viewer-window)
+          (let ((buff (current-buffer)))
+            (browse-url (concat "file://" file))
+            (unless (eq buff (current-buffer))
+              (sunrise-scrollable-viewer (current-buffer)))))
+         (message "Browsing \"%s\" in web browser" file))
 
-      ;;; Modified to set `dired-directory' buffer-local variable
-      ;;; and thus prevent an error from ocurring in dired
-      (defun sunrise-tree-list (dir)
-        "Return the list of subdirectories in DIR."
-        (setq dired-directory dir)
-        (let ((entries (directory-files dir 'full)) dirs entry rel-entry)
-          (while entries
-            (setq entry (car entries)
-                  rel-entry (file-relative-name entry (concat entry "/.."))
-                  entries (cdr entries))
+       ;;; Modified to set `dired-directory' buffer-local variable
+       ;;; and thus prevent an error from ocurring in dired
+       (defun sunrise-tree-list (dir)
+         "Return the list of subdirectories in DIR."
+         (setq dired-directory dir)
+         (let ((entries (directory-files dir 'full)) dirs entry rel-entry)
+           (while entries
+             (setq entry (car entries)
+                   rel-entry (file-relative-name entry (concat entry "/.."))
+                   entries (cdr entries))
 
-            (cond ((eq ?. (string-to-char (substring entry -1)))
-                   (ignore))
+             (cond ((eq ?. (string-to-char (substring entry -1)))
+                    (ignore))
 
-                  ((and dired-omit-mode (eq ?. (string-to-char rel-entry)))
-                   (ignore))
+                   ((and dired-omit-mode (eq ?. (string-to-char rel-entry)))
+                    (ignore))
 
-                  ((file-directory-p entry)
-                   (setq dirs (cons entry dirs)))
+                   ((file-directory-p entry)
+                    (setq dirs (cons entry dirs)))
 
-                  ((and (not sunrise-tree-omit-archives) (sunrise-avfs-directory-p entry))
-                   (setq dirs (cons (sunrise-tree-avfs-dir entry) dirs)))
+                   ((and (not sunrise-tree-omit-archives) (sunrise-avfs-directory-p entry))
+                    (setq dirs (cons (sunrise-tree-avfs-dir entry) dirs)))
 
-                  (t (ignore))))
-          (nreverse dirs)))
+                   (t (ignore))))
+           (nreverse dirs)))
 
-      (defun open-dir-in-sunrise ()
-        (interactive)
-        (save-excursion
-          (sunrise-dired (ffap-guess-file-name-at-point))))
+       (defun open-dir-in-sunrise ()
+         (interactive)
+         (save-excursion
+           (sunrise-dired (ffap-guess-file-name-at-point))))
 
-      (global-set-key (kbd "C-x C-j") 'open-dir-in-sunrise)
-    #+end_src
+       (global-set-key (kbd "C-x C-j") 'open-dir-in-sunrise)
+     #+end_src
     
 * Misc
 
-** figlet
+*** figlet
 
-    #+begin_src emacs-lisp
-      ;;; figlet definitions for Emacs.  (C) Martin Giese
-      ;;;
-      ;;; Use this to separate sections in TeX files, Program source, etc.
-      ;;;
-      ;;; customize the figlet-font-dir variable below to point to your
-      ;;; figlet font directory.
-      ;;;
-      ;;; M-x figlet      to get a figlet comment in standard font.
-      ;;; C-u M-x figlet  to be asked for the font first.
-      ;;; M-x banner      for an old-fashioned banner font.
-      ;;;
-      ;;; These functions use comment-region to wrap the figlet output 
-      ;;; in comments.
-      ;;;
+     #+begin_src emacs-lisp
+       ;;; figlet definitions for Emacs.  (C) Martin Giese
+       ;;;
+       ;;; Use this to separate sections in TeX files, Program source, etc.
+       ;;;
+       ;;; customize the figlet-font-dir variable below to point to your
+       ;;; figlet font directory.
+       ;;;
+       ;;; M-x figlet      to get a figlet comment in standard font.
+       ;;; C-u M-x figlet  to be asked for the font first.
+       ;;; M-x banner      for an old-fashioned banner font.
+       ;;;
+       ;;; These functions use comment-region to wrap the figlet output 
+       ;;; in comments.
+       ;;;
 
-      (defconst figlet-font-dir "/usr/share/figlet")
-      (defconst figlet-font-file-regexp "\\.flf$")
-      (defconst figlet-match-font-name-regexp "^\\([^.]*\\)\\.flf$")
+       (defconst figlet-font-dir "/usr/share/figlet")
+       (defconst figlet-font-file-regexp "\\.flf$")
+       (defconst figlet-match-font-name-regexp "^\\([^.]*\\)\\.flf$")
 
-      (defun figlet-font-name-for-file (filename)
-        (string-match figlet-match-font-name-regexp filename)
-        (match-string 1 filename))
+       (defun figlet-font-name-for-file (filename)
+         (string-match figlet-match-font-name-regexp filename)
+         (match-string 1 filename))
 
-      (defun figlet-font-names ()
-        (mapcar 'figlet-font-name-for-file
-            (directory-files figlet-font-dir nil figlet-font-file-regexp)))
+       (defun figlet-font-names ()
+         (mapcar 'figlet-font-name-for-file
+             (directory-files figlet-font-dir nil figlet-font-file-regexp)))
 
-      (defun read-figlet-font (prompt)
-        (let* ((figlet-fonts (figlet-font-names))
-           (font-alist (mapcar (lambda (x) (list x)) figlet-fonts)))
-          (completing-read prompt font-alist)))
+       (defun read-figlet-font (prompt)
+         (let* ((figlet-fonts (figlet-font-names))
+            (font-alist (mapcar (lambda (x) (list x)) figlet-fonts)))
+           (completing-read prompt font-alist)))
 
-      (defun call-figlet (font string)
-        (push-mark)
-        (call-process "figlet" nil (current-buffer) nil
-              "-f" (if (null font) "standard" font)
-              string
-              )
-        (exchange-point-and-mark))
+       (defun call-figlet (font string)
+         (push-mark)
+         (call-process "figlet" nil (current-buffer) nil
+               "-f" (if (null font) "standard" font)
+               string
+               )
+         (exchange-point-and-mark))
 
-      (defun figlet-block-comment-region ()
-        (comment-region (region-beginning) (region-end)
-                (if (member major-mode 
-                        '(emacs-lisp-mode
-                      lisp-mode
-                      scheme-mode))
-                    3			; 3 semicolons for lisp
-                  nil)
-                ))
+       (defun figlet-block-comment-region ()
+         (comment-region (region-beginning) (region-end)
+                 (if (member major-mode 
+                         '(emacs-lisp-mode
+                       lisp-mode
+                       scheme-mode))
+                     3			; 3 semicolons for lisp
+                   nil)
+                 ))
 
-      (defun figlet (s &optional font)
-        (interactive 
-         (if current-prefix-arg
-             (let 
-             ((font (read-figlet-font "Font: "))
-              (text (read-string "FIGlet Text: ")))
-           (list text font))
-           (list (read-string "FIGlet Text: ") nil)))
-        (save-excursion
-          (call-figlet font s)
-          (figlet-block-comment-region)
-          ))
+       (defun figlet (s &optional font)
+         (interactive 
+          (if current-prefix-arg
+              (let 
+              ((font (read-figlet-font "Font: "))
+               (text (read-string "FIGlet Text: ")))
+            (list text font))
+            (list (read-string "FIGlet Text: ") nil)))
+         (save-excursion
+           (call-figlet font s)
+           (figlet-block-comment-region)
+           ))
 
-      (defun banner (s) 
-        (interactive "sBanner Text: ")
-        (figlet s "banner"))
-    #+end_src
+       (defun banner (s) 
+         (interactive "sBanner Text: ")
+         (figlet s "banner"))
+     #+end_src
 
-** system-packages
+*** system-packages
 
-*** TODO Check and learn this
-      :LOGBOOK:
-      - State "TODO"       from              [2021-10-10 Sun 15:04]
-      :END:
+***** TODO Check and learn this
+        :LOGBOOK:
+        - State "TODO"       from              [2021-10-10 Sun 15:04]
+        :END:
 
-      #+begin_src emacs-lisp
-        (require 'system-packages)
-        (setq system-packages-use-sudo t)
-      #+end_src
+        #+begin_src emacs-lisp
+          (require 'system-packages)
+          (setq system-packages-use-sudo t)
+        #+end_src
 
       
 * Create frames and visit files
@@ -1550,8 +1560,10 @@
     ;;; Update: I have changed variable org-agenda-window-setup so that
     ;;; the agenda opens in the current window, with no splitting.
     (org-agenda nil "i")
+    (load-theme 'tangotango-fnaufel t)  
     (split-window-horizontally)
     (find-file "~/Documents/OrgFiles/todo.org")
+    (load-theme 'tangotango-fnaufel t)  
     (maximize-current-frame)
     
     ;;; Second frame: shell and xonsh ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
