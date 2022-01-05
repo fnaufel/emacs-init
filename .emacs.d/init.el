@@ -286,7 +286,6 @@
 
 (define-key bibtex-mode-map (kbd "s-b") 'org-ref-bibtex-hydra/body)
 (define-key org-mode-map (kbd "C-c ]") 'org-ref-insert-link)
-(define-key org-mode-map (kbd "s-ç") 'org-ref-insert-link-hydra/body)
 
 ;; Turn on Auto Fill mode automatically in Org mode
 (add-hook 'org-mode-hook
