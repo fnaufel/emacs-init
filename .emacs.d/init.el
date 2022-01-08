@@ -745,7 +745,7 @@ Otherwise, kill. Besides, delete window it occupied."
       ("K" kill-buffer-special-and-window "this buffer & window " :exit t)
       ("M-k" kill-buffer-special-and-frame "this buffer & frame " :exit t)
       ("o" kill-other-buffer-special "other buffer " :exit t)
-      ("O" kill-other-buffer-special-and-window "other buffer & window ") :exit t)
+      ("O" kill-other-buffer-special-and-window "other buffer & window " :exit t))
 
      "Create"
      (("w" (progn (split-window-below) (windmove-down)) "window ↑ " :exit t)
