@@ -39,26 +39,14 @@
 
 (require 'package)
 
-;; (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
-;;                     (not (gnutls-available-p))))
-;;        (proto (if no-ssl "http" "https")))
-;;   (when no-ssl (warn "\
-;; Your version of Emacs does not support SSL connections,
-;; which is unsafe because it allows man-in-the-middle attacks.
-;; There are two things you can do about this warning:
-;; 1. Install an Emacs version that does support SSL and be safe.
-;; 2. Remove this warning from your init file so you won't see it again."))
-;; (add-to-list 'package-archives
-;;              (cons "melpa" (concat proto "://melpa.org/packages/")) t))
-
-(add-to-list 'package-archives
-             '("melpa-stable" . "http://stable.melpa.org/packages/") t)
-
-(add-to-list 'package-archives
-             '("gnu" . "http://elpa.gnu.org/packages/") t)
-
-;; (add-to-list 'package-archives
-;;              '("org" . "http://orgmode.org/elpa/") t)
+(setq package-archives
+      '(("GNU ELPA"     . "https://elpa.gnu.org/packages/")
+        ("MELPA Stable" . "https://stable.melpa.org/packages/")
+        ("MELPA"        . "https://melpa.org/packages/"))
+      package-archive-priorities
+      '(("MELPA Stable" . 0)
+        ("GNU ELPA"     . 5)
+        ("MELPA"        . 10)))
 
 (package-initialize)
 
@@ -272,9 +260,24 @@
 
 (define-key org-mode-map (kbd "<f9>") 'subtree-html-export-to-clipboard)
 
-(require 'org-ref)
 (require 'helm-bibtex)
 (require 'bibtex)
+
+(setq
+ bibtex-completion-bibliography '("/home/fnaufel/Documents/OrgFiles/bibliography.bib")
+ bibtex-completion-library-path '("/home/BooksAndArticles/org-ref-library/")
+ bibtex-completion-notes-path nil
+ bibtex-completion-notes-template-multiple-files "* ${author-or-editor}, ${title}, ${journal}, (${year}) :${=type=}: \n\nSee [[cite:&${=key=}]]\n"
+ bibtex-completion-additional-search-fields '(keywords)
+ bibtex-completion-display-formats
+ '((article       . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${journal:40}")
+   (inbook        . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} Chapter ${chapter:32}")
+   (incollection  . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
+   (inproceedings . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
+   (t             . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*}"))
+ bibtex-completion-pdf-open-function
+ (lambda (fpath)
+   (call-process "open" nil 0 nil fpath)))
 
 (setq bibtex-autokey-year-length 4
       bibtex-autokey-name-year-separator "-"
@@ -284,8 +287,19 @@
       bibtex-autokey-titlewords-stretch 1
       bibtex-autokey-titleword-length 5)
 
+(require 'org-ref-helm)
+(setq org-ref-insert-link-function 'org-ref-insert-link-hydra/body
+      org-ref-insert-cite-function 'org-ref-cite-insert-helm
+      org-ref-insert-label-function 'org-ref-insert-label-link
+      org-ref-insert-ref-function 'org-ref-insert-ref-link
+      org-ref-cite-onclick-function (lambda (_) (org-ref-citation-hydra/body)))
+
 (define-key bibtex-mode-map (kbd "s-b") 'org-ref-bibtex-hydra/body)
-(define-key org-mode-map (kbd "C-c ]") 'org-ref-insert-link)
+(define-key org-mode-map (kbd "C-c ]") 'org-ref-insert-link-hydra)
+
+(require 'org-ref)
+
+(setq org-latex-pdf-process (list "latexmk -shell-escape -bibtex -f -pdf %f"))
 
 ;; Turn on Auto Fill mode automatically in Org mode
 (add-hook 'org-mode-hook
@@ -727,22 +741,22 @@ Otherwise, kill. Besides, delete window it occupied."
       ("M-l" buf-move-right "→ "))
 
      "Kill"
-     (("k" kill-or-bury-current-buffer "this buffer ")
-      ("K" kill-buffer-special-and-window "this buffer & window ")
+     (("k" kill-or-bury-current-buffer "this buffer " :exit t)
+      ("K" kill-buffer-special-and-window "this buffer & window " :exit t)
       ("M-k" kill-buffer-special-and-frame "this buffer & frame " :exit t)
-      ("o" kill-other-buffer-special "other buffer ")
-      ("O" kill-other-buffer-special-and-window "other buffer & window "))
+      ("o" kill-other-buffer-special "other buffer " :exit t)
+      ("O" kill-other-buffer-special-and-window "other buffer & window ") :exit t)
 
      "Create"
-     (("w" (progn (split-window-below) (windmove-down)) "window ↑ ")
-      ("s" (split-window-below) "window ↓ ")
-      ("a" (progn (split-window-right) (windmove-right)) "window ← ")
-      ("d" (split-window-right) "window → ")
+     (("w" (progn (split-window-below) (windmove-down)) "window ↑ " :exit t)
+      ("s" (split-window-below) "window ↓ " :exit t)
+      ("a" (progn (split-window-right) (windmove-right)) "window ← " :exit t)
+      ("d" (split-window-right) "window → " :exit t)
       ("f" make-frame-command "frame " :exit t))
 
      "Delete"
-     (("0" delete-window "this window ")
-      ("1" delete-other-windows "other windows ")
+     (("0" delete-window "this window " :exit t)
+      ("1" delete-other-windows "other windows " :exit t)
       ("5" delete-frame "this frame " :exit t))
 
      "Quit"
