@@ -138,7 +138,9 @@
    (quote
     (:foreground default :background default :scale 1.5 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
                  ("begin" "$1" "$" "$$" "\\(" "\\["))))
+ '(org-hide-emphasis-markers t)
  '(org-hide-leading-stars t)
+ '(org-html-htmlize-output-type (quote css))
  '(org-indent-mode-turns-off-org-adapt-indentation nil)
  '(org-journal-date-format "[%Y-%m-%d %A]")
  '(org-journal-date-prefix "* ")
