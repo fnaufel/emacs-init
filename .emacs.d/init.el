@@ -249,6 +249,7 @@
 (defun subtree-html-export-to-clipboard ()
   "Export current subtree to html fragment and put in clipboard."
   (interactive)
+
   (let ((only-window (one-window-p)))
     (org-html-export-as-html nil t t t)
     (kill-ring-save (point-min) (point-max))
@@ -295,6 +296,7 @@
       org-ref-cite-onclick-function (lambda (_) (org-ref-citation-hydra/body)))
 
 (define-key bibtex-mode-map (kbd "s-b") 'org-ref-bibtex-hydra/body)
+(define-key org-mode-map (kbd "s-b") 'org-ref-bibtex-hydra/body)
 (define-key org-mode-map (kbd "C-c ]") 'org-ref-insert-link-hydra)
 
 (require 'org-ref)
@@ -349,10 +351,9 @@
 
 ;;; Set font
 (defun fontify-frame (frame)
-  (set-frame-parameter frame 'font "Jetbrains Mono-13")
+  (set-frame-parameter frame 'font "Cousine-13")
   (set-frame-parameter frame 'background-color "black")
-  (set-frame-parameter frame 'foreground-color "bisque")
-  )
+  (set-frame-parameter frame 'foreground-color "bisque"))
 
 ;;; Fontify current frame
 (fontify-frame nil)
