@@ -2,7 +2,11 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("emacs"
+(("Blitzstein"
+ (filename . "Sunrise Checkpoint: ~/Documents/Research/Probability/Blitzstein/ | ~/Downloads/")
+ (sunrise-directories "~/Documents/Research/Probability/Blitzstein/" "~/Downloads/")
+ (handler . sunrise-checkpoint-handler))
+("emacs"
  (filename . "Sunrise Checkpoint: ~/Stow/emacs/ | ~/Downloads/")
  (sunrise-directories "~/Stow/emacs/" "~/Downloads/")
  (handler . sunrise-checkpoint-handler))

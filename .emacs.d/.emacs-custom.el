@@ -12,6 +12,7 @@
  '(ansi-color-faces-vector
    [default bold default italic underline success warning error])
  '(bar-cursor-mode nil)
+ '(bibtex-parse-keys-fast nil)
  '(browse-kill-ring-quit-action (quote kill-and-delete-window))
  '(browse-url-browser-function (quote browse-url-default-browser))
  '(browse-url-firefox-program "brave-browser")
@@ -138,7 +139,7 @@
    (quote
     (:foreground default :background default :scale 1.5 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
                  ("begin" "$1" "$" "$$" "\\(" "\\["))))
- '(org-hide-emphasis-markers t)
+ '(org-hide-emphasis-markers nil)
  '(org-hide-leading-stars t)
  '(org-html-htmlize-output-type (quote css))
  '(org-indent-mode-turns-off-org-adapt-indentation nil)
@@ -213,7 +214,7 @@
  '(package-enable-at-startup nil)
  '(package-selected-packages
    (quote
-    (org-ref org-journal org-superstar helm-bibtex poly-R polymode all-the-icons all-the-icons-dired all-the-icons-gnus treemacs-all-the-icons major-mode-hydra pretty-hydra paradox buffer-move lsp-pyright rainbow-delimiters helm-projectile projectile company-box setup use-package helm-lsp lsp-treemacs lsp-ui which-key lsp-mode ac-js2 skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion cdlatex yaml-mode all elm-mode elm-yasnippets auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl typo web-beautify markdown-toc markdown-preview-mode markdown-mode magit lua-mode htmlize dash-functional multiple-cursors expand-region)))
+    (visual-fill-column adaptive-wrap org-ref org-journal org-superstar helm-bibtex poly-R polymode all-the-icons all-the-icons-dired all-the-icons-gnus treemacs-all-the-icons major-mode-hydra pretty-hydra paradox buffer-move lsp-pyright rainbow-delimiters helm-projectile projectile company-box setup use-package helm-lsp lsp-treemacs lsp-ui which-key lsp-mode ac-js2 skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion cdlatex yaml-mode all elm-mode elm-yasnippets auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl typo web-beautify markdown-toc markdown-preview-mode markdown-mode magit lua-mode htmlize dash-functional multiple-cursors expand-region)))
  '(paradox-execute-asynchronously t)
  '(paradox-github-token t)
  '(python-indent-offset 2)
@@ -274,6 +275,7 @@
  '(tool-bar-mode nil)
  '(user-full-name "")
  '(vc-follow-symlinks t)
+ '(visual-fill-column-enable-sensible-window-split nil)
  '(woman-use-own-frame nil)
  '(xterm-color-use-bold-for-bright t))
 (custom-set-faces
@@ -287,6 +289,8 @@
  '(cfw:face-toolbar-button-off ((t (:foreground "dim gray" :weight bold))))
  '(cfw:face-toolbar-button-on ((t (:foreground "light gray" :weight bold))))
  '(highlight-indent-face ((t (:background "dark gray"))))
+ '(org-block ((t (:background "gray15"))))
+ '(org-block-begin-line ((t (:inherit org-meta-line :background "#103030"))))
  '(org-ellipsis ((t (:foreground "LightGoldenrod" :underline nil))))
  '(org-journal-calendar-entry-face ((t (:foreground "#bbbb00" :slant italic))))
  '(org-journal-calendar-scheduled-face ((t (:foreground "#ff0000" :slant italic))))

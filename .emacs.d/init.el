@@ -297,7 +297,7 @@
 
 (define-key bibtex-mode-map (kbd "s-b") 'org-ref-bibtex-hydra/body)
 (define-key org-mode-map (kbd "s-b") 'org-ref-bibtex-hydra/body)
-(define-key org-mode-map (kbd "C-c ]") 'org-ref-insert-link-hydra)
+(define-key org-mode-map (kbd "C-c ]") 'org-ref-insert-link-hydra/body)
 
 (require 'org-ref)
 
@@ -334,6 +334,13 @@
 
 ;;; cdlatex mode (disabled)
 ;;; (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
+
+;; (add-hook 'org-mode-hook 'turn-on-visual-line-mode)
+;; (add-hook 'visual-line-mode-hook #'visual-fill-column-mode)
+;; (add-hook 'visual-line-mode-hook #'adaptive-wrap-prefix-mode)
+;; (setq visual-fill-column-enable-sensible-window-split t)
+;; (setq-default visual-fill-column-width 69)
+;; ;;(setq-default visual-fill-column-center-text t)
 
 (global-set-key (kbd "s--") 'negative-argument)
 (global-set-key (kbd "s-0") 'digit-argument)
@@ -1231,11 +1238,11 @@ with leading and trailing spaces removed."
 ;;; Update: I have changed variable org-agenda-window-setup so that
 ;;; the agenda opens in the current window, with no splitting.
 (org-agenda nil "i")
-(split-window-horizontally)
-(find-file "~/Documents/OrgFiles/todo.org")
+;(split-window-horizontally)
+;(find-file "~/Documents/OrgFiles/todo.org")
 (maximize-current-frame)
 
-;;; Second frame: shell and xonsh ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Second frame: shell ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (make-frame)
 (other-frame -1)
