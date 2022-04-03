@@ -114,6 +114,7 @@
 (define-key org-mode-map "\C-n" 'org-next-link)
 (define-key org-mode-map "\C-p" 'org-previous-link)
 (define-key org-mode-map "\C-c\C-xi" 'org-insert-columns-dblock)
+(define-key org-mode-map (kbd "C-M-<return>") 'org-insert-heading-respect-content)
 
 ;;; helm-org
 (define-key org-mode-map (kbd "C-c j") 'helm-org-in-buffer-headings)
@@ -782,6 +783,8 @@ Otherwise, kill. Besides, delete window it occupied."
 ;; (xah-fly-keys-set-layout "qwerty-abnt")
 ;; (xah-fly-keys 1)
 
+(add-hook 'after-init-hook #'global-flycheck-mode)
+
 (require 'web-beautify)
 
 (require 'rainbow-delimiters)
@@ -803,11 +806,78 @@ Otherwise, kill. Besides, delete window it occupied."
 
 (require 'skewer-mode)
 
+(add-hook 'json-mode-hook #'flycheck-mode)
+
 (add-to-list 'interpreter-mode-alist
              '("python3" . python-mode))
 
+(require 'pyvenv)
+
+;; Set correct Python interpreter
+(setq pyvenv-post-activate-hooks
+      (list (lambda ()
+              (setq python-shell-interpreter (concat pyvenv-virtual-env "bin/python3")))))
+
+(setq pyvenv-post-deactivate-hooks
+      (list (lambda ()
+              (setq python-shell-interpreter "python3"))))
+
+(require 'flycheck-pyflakes)
+(add-hook 'python-mode-hook 'flycheck-mode)
+;; (add-to-list 'flycheck-disabled-checkers 'python-flake8)
+;; (add-to-list 'flycheck-disabled-checkers 'python-pylint)
+
 (require 'zeal-at-point)
 (global-set-key (kbd "s-h") 'zeal-at-point)
+
+(require 'origami)
+
+(add-hook 'prog-mode-hook 'origami-mode)
+
+(setq hydra-origami--title
+      (with-faicon "map" "Origami" 1 -0.05))
+
+(pretty-hydra-define hydra-origami
+  (:quit-key "q" :title hydra-origami--title :foreign-keys warn)
+    ("Open"
+     (("N" origami-open-node "node ")
+      ("R" origami-open-node-recursively "node recursively ")
+      ("P" origami-show-node "node and parents ")
+      ("A" origami-open-all-nodes "all nodes "))
+
+     "Close"
+     (("n" origami-close-node "node ")
+      ("r" origami-close-node-recursively "node recursively ")
+      ("o" origami-show-only-node "others ")
+      ("a" origami-close-all-nodes "all nodes "))
+
+     "Toggle"
+     (("SPC" origami-toggle-node "node ")
+      ("C-SPC" origami-toggle-all-nodes "all ")
+      ("C-<right>" origami-forward-toggle-node "→ "))
+
+     "Move to nodes"
+     (("<up>" origami-previous-fold "↑ ")
+      ("<down>" origami-forward-fold "↓ ")
+      ("<right>" origami-forward-fold-same-level "→ same level ")
+      ("<left>" origami-backward-fold-same-level "← same level "))
+
+     "Move in buffer"
+     (("RET" recenter-top-bottom "recenter")
+      ("<prior>" scroll-down-command "PgUP")
+      ("<next>" scroll-up-command "PgDn")
+      ("<home>" beginning-of-buffer "bob ")
+      ("<end>" end-of-buffer "eob "))
+
+     "Misc"
+     (("z" origami-undo "undo ")
+      ("y" origami-redo "redo ")
+      ("0" origami-reset "reset "))
+
+     "Quit"
+     (("q" nil "quit "))))
+
+(global-set-key (kbd "s-o") 'hydra-origami/body)
 
 (require 'lsp)
 
@@ -846,6 +916,9 @@ Otherwise, kill. Besides, delete window it occupied."
 (require 'helm-lsp)
 ; C-M-.
 (define-key lsp-mode-map [remap xref-find-apropos] #'helm-lsp-workspace-symbol)
+
+(require 'lsp-origami)
+(add-hook 'lsp-after-open-hook #'lsp-origami-try-enable)
 
 (require 'projectile)
 

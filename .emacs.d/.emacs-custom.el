@@ -45,10 +45,12 @@
  '(enable-recursive-minibuffers nil)
  '(ess-history-directory ".")
  '(find-directory-functions (quote (sunrise-dired cvs-dired-noselect dired-noselect)))
+ '(flycheck-global-modes nil)
  '(flymake-fringe-indicator-position (quote left-fringe))
  '(flymake-gui-warnings-enabled nil)
  '(fringe-mode nil nil (fringe))
  '(global-hl-line-mode t)
+ '(global-origami-mode nil)
  '(helm-autoresize-mode t)
  '(helm-man-or-woman-function (quote woman))
  '(helm-prevent-escaping-from-minibuffer nil)
@@ -72,6 +74,7 @@
  '(mc/mode-line (quote (" mc:" (:eval (format "%d" (mc/num-cursors))))))
  '(menu-bar-mode nil)
  '(minibuffer-auto-raise nil)
+ '(org-M-RET-may-split-line (quote ((default . t))))
  '(org-adapt-indentation t)
  '(org-agenda-custom-commands
    (quote
@@ -139,6 +142,7 @@
    (quote
     (:foreground default :background default :scale 1.5 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
                  ("begin" "$1" "$" "$$" "\\(" "\\["))))
+ '(org-hide-block-startup nil)
  '(org-hide-emphasis-markers nil)
  '(org-hide-leading-stars t)
  '(org-html-htmlize-output-type (quote css))
@@ -158,6 +162,9 @@
  '(org-log-done (quote time))
  '(org-log-into-drawer t)
  '(org-lowest-priority 60)
+ '(org-modules
+   (quote
+    (ol-bbdb ol-bibtex ol-docview ol-doi ol-eww ol-gnus ol-info org-inlinetask ol-irc ol-mhe ol-rmail ol-w3m org-collector)))
  '(org-num-face (quote success))
  '(org-num-max-level 2)
  '(org-odd-levels-only t)
@@ -209,12 +216,39 @@
  '(org-table-convert-region-max-lines 99999)
  '(org-todo-keywords
    (quote
-    ((sequence "STARTED(s!)" "NEXT(n!)" "TODO(t!)" "|" "CANCELED(c!)" "DONE(d!)"))))
+    ((sequence "TODO(t!)" "NEXT(n!)" "STARTED(s!)" "|" "CANCELED(c!)" "DONE(d!)"))))
  '(org-use-speed-commands t)
+ '(origami-parser-alist
+   (quote
+    ((java-mode . origami-java-parser)
+     (c-mode . origami-c-parser)
+     (c++-mode . origami-c-style-parser)
+     (perl-mode . origami-c-style-parser)
+     (cperl-mode . origami-c-style-parser)
+     (js-mode . origami-c-style-parser)
+     (js2-mode . origami-c-style-parser)
+     (js3-mode . origami-c-style-parser)
+     (go-mode . origami-c-style-parser)
+     (php-mode . origami-c-style-parser)
+     (python-mode . origami-python-parser)
+     (emacs-lisp-mode . origami-elisp-parser)
+     (lisp-interaction-mode . origami-elisp-parser)
+     (clojure-mode . origami-clj-parser)
+     (triple-braces .
+                    #[257 "\303\304\305\306\307\300\301\302$\310\"\311\312%\207"
+                          ["{{{" "}}}" "\\(?:\\(?:{{{\\|}}}\\)\\)" make-byte-code 257 "\304\302\"\305\303\300\301$\207" vconcat vector
+                           [origami-get-positions origami-build-pair-tree]
+                           7 "
+
+(fn CONTENT)"]
+                          10 "
+
+(fn CREATE)"]))))
+ '(origami-show-fold-header nil)
  '(package-enable-at-startup nil)
  '(package-selected-packages
    (quote
-    (visual-fill-column adaptive-wrap org-ref org-journal org-superstar helm-bibtex poly-R polymode all-the-icons all-the-icons-dired all-the-icons-gnus treemacs-all-the-icons major-mode-hydra pretty-hydra paradox buffer-move lsp-pyright rainbow-delimiters helm-projectile projectile company-box setup use-package helm-lsp lsp-treemacs lsp-ui which-key lsp-mode ac-js2 skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion cdlatex yaml-mode all elm-mode elm-yasnippets auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl typo web-beautify markdown-toc markdown-preview-mode markdown-mode magit lua-mode htmlize dash-functional multiple-cursors expand-region)))
+    (lsp-origami origami json-mode flycheck-pyflakes org-clock-csv visual-fill-column adaptive-wrap org-ref org-journal org-superstar helm-bibtex poly-R polymode all-the-icons all-the-icons-dired all-the-icons-gnus treemacs-all-the-icons major-mode-hydra pretty-hydra paradox buffer-move lsp-pyright rainbow-delimiters helm-projectile projectile company-box setup use-package helm-lsp lsp-treemacs lsp-ui which-key lsp-mode ac-js2 skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion cdlatex yaml-mode all elm-mode elm-yasnippets auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl typo web-beautify markdown-toc markdown-preview-mode markdown-mode magit lua-mode htmlize dash-functional multiple-cursors expand-region)))
  '(paradox-execute-asynchronously t)
  '(paradox-github-token t)
  '(python-indent-offset 2)
