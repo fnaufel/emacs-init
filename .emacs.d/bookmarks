@@ -2,7 +2,12 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("fnaufelRmd"
+(("webex.js"
+ (filename . "~/Development/00-Present/R-Tests/exercises/test1.html")
+ (front-context-string . "</script>\n</div>")
+ (rear-context-string . "rect\";\n  }\n}\n\n\n\n")
+ (position . 1122398))
+("fnaufelRmd"
  (filename . "Sunrise Checkpoint: ~/Development/00-Present/RMarkDownTemplates/fnaufelRmd/ | ~/Downloads/")
  (sunrise-directories "~/Development/00-Present/RMarkDownTemplates/fnaufelRmd/" "~/Downloads/")
  (handler . sunrise-checkpoint-handler))

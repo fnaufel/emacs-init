@@ -43,6 +43,7 @@
  '(eldoc-idle-delay 0)
  '(eldoc-minor-mode-string nil)
  '(enable-recursive-minibuffers nil)
+ '(ess-default-style (quote RStudio))
  '(ess-history-directory ".")
  '(find-directory-functions (quote (sunrise-dired cvs-dired-noselect dired-noselect)))
  '(flycheck-global-modes nil)
@@ -186,7 +187,7 @@
  '(org-reveal-transition "none")
  '(org-reverse-note-order t)
  '(org-special-ctrl-a/e t)
- '(org-src-window-setup (quote current-window))
+ '(org-src-window-setup (quote reorganize-frame))
  '(org-startup-folded t)
  '(org-structure-template-alist
    (quote
@@ -200,7 +201,8 @@
      ("l" . "export latex")
      ("q" . "quote")
      ("s" . "src")
-     ("v" . "verse"))))
+     ("v" . "verse")
+     ("b" . "src bibtex"))))
  '(org-superstar-cycle-headline-bullets nil)
  '(org-superstar-headline-bullets-list (quote ("✱")))
  '(org-superstar-prettify-item-bullets nil)
