@@ -461,6 +461,33 @@
        ;;; (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
     #+end_src
 
+* IPython and jupyter
+
+  #+begin_src emacs-lisp
+    (defun ipython-qtconsole ()
+      (interactive)
+      (async-shell-command
+       (concat
+        "/ssd/miniconda/envs/r-reticulate/bin/jupyter qtconsole "
+        "--ConsoleWidget.font_family=\"JetBrains Mono\" --ConsoleWidget.font_size=14 "
+        "--JupyterWidget.editor=\"emacscli\" --paging=hsplit "
+        "--gui-completion=droplist --style=monokai "
+       )
+       "jupyter-qt-output"))
+
+    (defun ipython-notebook-int ()
+      (interactive)
+      (let ((df (read-file-name "Notebook dir or file: ")))
+        (ipython-notebook df)))
+
+    (defun ipython-notebook (df)
+      (interactive)
+      (async-shell-command 
+       (concat "/ssd/miniconda/envs/r-reticulate/bin/jupyter notebook "
+               "--notebook-dir=" df)
+       "jupyter-notebook-output"))
+  #+end_src
+  
 * UI
 
 *** Visual line mode (disabled)
@@ -726,8 +753,8 @@
 
      #+begin_src emacs-lisp
        (setq hydra-fnjump--title
-         (with-faicon "map-signs" "Important places" 1 -0.05))
-      
+             (with-faicon "map-signs" "Important places" 1 -0.05))
+
        (pretty-hydra-define hydra-fnjump
          (:quit-key "q" :title hydra-fnjump--title :foreign-keys warn :exit t)
          ("Jump to"
@@ -737,11 +764,13 @@
            ("s" (find-file "~/Stow") "Stow ")
            ("i" (find-file "~/Stow/emacs/dot-init.org") "init ")
            ("t" (update-clock-tables) "clock tables ")
-           ("x" (ansi-term "/home/fnaufel/.local/bin/xonsh" "xonsh") "new xonsh "))
-      
+           ("x" (ansi-term "/home/fnaufel/.local/bin/xonsh" "xonsh") "new xonsh ")
+           ("j" (ipython-notebook-int) "jupyter")
+           ("y" (ipython-qtconsole) "ipYthon"))
+   
           "Quit"
           (("q" nil "quit "))))
-      
+
        (global-set-key (kbd "s-j") 'hydra-fnjump/body)
      #+end_src
     

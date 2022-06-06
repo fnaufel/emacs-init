@@ -364,6 +364,29 @@
 ;;; cdlatex mode (disabled)
 ;;; (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
 
+(defun ipython-qtconsole ()
+  (interactive)
+  (async-shell-command
+   (concat
+    "/ssd/miniconda/envs/r-reticulate/bin/jupyter qtconsole "
+    "--ConsoleWidget.font_family=\"JetBrains Mono\" --ConsoleWidget.font_size=14 "
+    "--JupyterWidget.editor=\"emacscli\" --paging=hsplit "
+    "--gui-completion=droplist --style=monokai "
+   )
+   "jupyter-qt-output"))
+
+(defun ipython-notebook-int ()
+  (interactive)
+  (let ((df (read-file-name "Notebook dir or file: ")))
+    (ipython-notebook df)))
+
+(defun ipython-notebook (df)
+  (interactive)
+  (async-shell-command 
+   (concat "/ssd/miniconda/envs/r-reticulate/bin/jupyter notebook "
+           "--notebook-dir=" df)
+   "jupyter-notebook-output"))
+
 ;; (add-hook 'org-mode-hook 'turn-on-visual-line-mode)
 ;; (add-hook 'visual-line-mode-hook #'visual-fill-column-mode)
 ;; (add-hook 'visual-line-mode-hook #'adaptive-wrap-prefix-mode)
@@ -551,7 +574,7 @@
       (setq i (1+ i)))))
 
 (setq hydra-fnjump--title
-  (with-faicon "map-signs" "Important places" 1 -0.05))
+      (with-faicon "map-signs" "Important places" 1 -0.05))
 
 (pretty-hydra-define hydra-fnjump
   (:quit-key "q" :title hydra-fnjump--title :foreign-keys warn :exit t)
@@ -562,7 +585,9 @@
     ("s" (find-file "~/Stow") "Stow ")
     ("i" (find-file "~/Stow/emacs/dot-init.org") "init ")
     ("t" (update-clock-tables) "clock tables ")
-    ("x" (ansi-term "/home/fnaufel/.local/bin/xonsh" "xonsh") "new xonsh "))
+    ("x" (ansi-term "/home/fnaufel/.local/bin/xonsh" "xonsh") "new xonsh ")
+    ("j" (ipython-notebook-int) "jupyter")
+    ("y" (ipython-qtconsole) "ipYthon"))
 
    "Quit"
    (("q" nil "quit "))))
