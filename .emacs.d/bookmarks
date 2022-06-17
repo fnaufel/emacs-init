@@ -2,7 +2,15 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("webex.js"
+(("ssd"
+ (filename . "Sunrise Checkpoint: ~/ssd/ | ~/Downloads/")
+ (sunrise-directories "~/ssd/" "~/Downloads/")
+ (handler . sunrise-checkpoint-handler))
+(".local"
+ (filename . "Sunrise Checkpoint: ~/.local/ | ~/Downloads/")
+ (sunrise-directories "~/.local/" "~/Downloads/")
+ (handler . sunrise-checkpoint-handler))
+("webex.js"
  (filename . "~/Development/00-Present/R-Tests/exercises/test1.html")
  (front-context-string . "</script>\n</div>")
  (rear-context-string . "rect\";\n  }\n}\n\n\n\n")

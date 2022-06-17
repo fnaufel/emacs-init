@@ -471,7 +471,7 @@
         "/ssd/miniconda/envs/r-reticulate/bin/jupyter qtconsole "
         "--ConsoleWidget.font_family=\"JetBrains Mono\" --ConsoleWidget.font_size=14 "
         "--JupyterWidget.editor=\"emacscli\" --paging=hsplit "
-        "--gui-completion=droplist --style=monokai "
+        "--gui-completion=droplist --style=monokai"
        )
        "jupyter-qt-output"))
 
@@ -766,7 +766,7 @@
            ("t" (update-clock-tables) "clock tables ")
            ("x" (ansi-term "/home/fnaufel/.local/bin/xonsh" "xonsh") "new xonsh ")
            ("j" (ipython-notebook-int) "jupyter")
-           ("y" (ipython-qtconsole) "ipYthon"))
+           ("y" (ipython-qtconsole) "ipython"))
    
           "Quit"
           (("q" nil "quit "))))
