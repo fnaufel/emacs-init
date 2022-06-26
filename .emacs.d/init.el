@@ -340,6 +340,9 @@
 ;; Auto numbering of headlines
 (add-hook 'org-mode-hook (lambda () (org-num-mode)))
 
+;; org-zotxt
+(add-hook 'org-mode-hook (lambda () (org-zotxt-mode)))
+
 ;; org-tempo
 (require 'org-tempo)
 
@@ -363,6 +366,21 @@
 
 ;;; cdlatex mode (disabled)
 ;;; (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
+
+(setq hydra-zot--title
+      (with-faicon "book" "Zotero" 1 -0.05))
+
+(pretty-hydra-define hydra-zot
+  (:quit-key "q" :title hydra-zot--title :foreign-keys warn :exit t)
+  (""
+   (("i" (org-zotxt-insert-reference-link) "Insert link ")
+    ("u" (org-zotxt-update-reference-link-at-point) "Update link ")
+    ("a" (org-zotxt-open-attachment) "Open attachment "))
+
+   "Quit"
+   (("q" nil "quit "))))
+
+(global-set-key (kbd "s-z") 'hydra-zot/body)
 
 (defun ipython-qtconsole ()
   (interactive)
