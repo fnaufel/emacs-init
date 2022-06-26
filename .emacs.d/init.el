@@ -850,6 +850,7 @@ Otherwise, kill. Besides, delete window it occupied."
                 term-mode-hook
                 shell-mode-hook
                 help-mode-hook
+                pdf-view-mode-hook
                 treemacs-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
