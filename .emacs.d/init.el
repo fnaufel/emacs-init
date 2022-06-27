@@ -314,7 +314,7 @@
    (incollection  . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
    (inproceedings . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
    (t             . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*}"))
- bibtex-completion-pdf-open-function 'pdf-view-mode)
+ bibtex-completion-pdf-open-function 'find-file-other-frame)
 
 (setq bibtex-autokey-year-length 4
       bibtex-autokey-name-year-separator "-"
@@ -1249,49 +1249,7 @@ with leading and trailing spaces removed."
 (require 'pdf-annot)
 (require 'pdf-sync)
 
-;;; Code:
 (pdf-tools-install)
-
-;; midnite mode hook
-;; automatically turns on midnight-mode for pdfs
-(add-hook 'pdf-view-mode-hook
-          (lambda () (pdf-view-midnight-minor-mode -1)))
-
-;; set the green profile as default (see below)
-(setq pdf-view-midnight-colors '("#00B800" . "#000000" ))
-
-(defun pdf-no-filter ()
-  "View pdf without colour filter."
-  (interactive)
-  (pdf-view-midnight-minor-mode -1))
-
-;; change midnite mode colours functions
-(defun pdf-midnite-original ()
-  "Set pdf-view-midnight-colors to original colours."
-  (interactive)
-  (setq pdf-view-midnight-colors '("#839496" . "#002b36" )) ; original values
-  (pdf-view-midnight-minor-mode))
-
-(defun pdf-midnite-amber ()
-  "Set pdf-view-midnight-colors to amber on dark slate blue."
-  (interactive)
-  (setq pdf-view-midnight-colors '("#ff9900" . "#0a0a12" )) ; amber
-  (pdf-view-midnight-minor-mode))
-
-(defun pdf-midnite-green ()
-  "Set pdf-view-midnight-colors to green on black."
-  (interactive)
-  (setq pdf-view-midnight-colors '("#00B800" . "#000000" )) ; green
-  (pdf-view-midnight-minor-mode))
-
-(defun pdf-midnite-colour-schemes ()
-  "Midnight mode colour schemes bound to keys"
-  (local-set-key (kbd "!") (quote pdf-no-filter))
-  (local-set-key (kbd "@") (quote pdf-midnite-amber))
-  (local-set-key (kbd "#") (quote pdf-midnite-green))
-  (local-set-key (kbd "$") (quote pdf-midnite-original)))
-
-(add-hook 'pdf-view-mode-hook 'pdf-midnite-colour-schemes)
 
 (require 'dired-x)
 (setq-default dired-omit-files-p t) ; Buffer-local variable
