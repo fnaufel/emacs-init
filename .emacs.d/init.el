@@ -324,31 +324,30 @@
       bibtex-autokey-titlewords-stretch 1
       bibtex-autokey-titleword-length 5)
 
-;;; Key bindings
 (require 'helm-config)
 
+;;; Add action to open pdf in Okular
+(defun bibtex-completion-open-pdf-external (keys &optional fallback-action)
+
+  (let ((bibtex-completion-pdf-open-function
+         (lambda (fpath) (start-process "okular" "*helm-bibtex-okular*" "/usr/bin/okular" fpath))))
+    (bibtex-completion-open-pdf keys fallback-action)))
+
+(helm-bibtex-helmify-action bibtex-completion-open-pdf-external helm-bibtex-open-pdf-external)
+
+(helm-add-action-to-source
+ "Open file in Okular"
+ 'helm-bibtex-open-pdf-external
+ helm-source-bibtex
+ 1)
+
+;;; Key bindings
 (global-set-key (kbd "s-b") 'helm-command-prefix)
 
 (define-key helm-command-map "b" 'helm-bibtex)
 (define-key helm-command-map "B" 'helm-bibtex-with-local-bibliography)
 (define-key helm-command-map "n" 'helm-bibtex-with-notes)
 (define-key helm-command-map (kbd "s-b") 'helm-resume)
-
-;; Disabled org-ref
-
-;; (require 'org-ref-helm)
-;; (setq org-ref-insert-link-function 'org-ref-insert-link-hydra/body
-;;       org-ref-insert-cite-function 'org-ref-cite-insert-helm
-;;       org-ref-insert-label-function 'org-ref-insert-label-link
-;;       org-ref-insert-ref-function 'org-ref-insert-ref-link
-;;       org-ref-cite-onclick-function (lambda (_) (org-ref-citation-hydra/body)))
-
-;; (define-key bibtex-mode-map (kbd "s-b") 'org-ref-bibtex-hydra/body)
-;; (define-key org-mode-map (kbd "s-b") 'org-ref-bibtex-hydra/body)
-;; (define-key org-mode-map (kbd "C-c ]") 'org-ref-insert-link-hydra/body)
-
-;; (require 'org-ref)
-;; (setq org-latex-pdf-process (list "latexmk -shell-escape -bibtex -f -pdf %f"))
 
 ;; Turn on Auto Fill mode automatically in Org mode
 (add-hook 'org-mode-hook
@@ -1090,24 +1089,22 @@ Otherwise, kill. Besides, delete window it occupied."
 ;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
 ;; Changed to "C-c h". Note: We must set "C-c h" globally, because we
 ;; cannot change `helm-command-prefix-key' once `helm-config' is loaded.
-(global-set-key (kbd "C-c h") 'helm-command-prefix)
+;; (global-set-key (kbd "C-c h") 'helm-command-prefix)
 (global-unset-key (kbd "C-x c"))
 (global-set-key (kbd "C-x b") 'helm-mini)
 
 (when (executable-find "curl")
   (setq helm-google-suggest-use-curl-p t))
 
-(setq helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
-      helm-buffers-fuzzy-matching           t ; fuzzy matching buffer names when non--nil
+(setq helm-buffers-fuzzy-matching           t ; fuzzy matching buffer names when non--nil
       helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
       helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
       helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
       helm-ff-file-name-history-use-recentf t)
 
 (helm-mode 1)
-(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
-(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
-(define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
+(define-key helm-map (kbd "C-SPC") 'helm-execute-persistent-action) ; 
+(define-key helm-map (kbd "<tab>")  'helm-select-action) ; list actions
 
 (define-key helm-map (kbd "C-<left>")  'helm-previous-source) 
 (define-key helm-map (kbd "C-<right>")  'helm-next-source) 
@@ -1123,8 +1120,10 @@ Otherwise, kill. Besides, delete window it occupied."
 
 ;;; Make helm use new frame instead of minibuffer
 (setq helm-display-function 'helm-display-buffer-in-own-frame
-        helm-display-buffer-reuse-frame t
-        helm-use-undecorated-frame-option t)
+      helm-display-buffer-reuse-frame nil
+      helm-use-undecorated-frame-option t)
+
+(helm-autoresize-mode t)
 
 (require 'bash-completion)
 (bash-completion-setup)
