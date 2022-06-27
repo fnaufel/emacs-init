@@ -57,6 +57,8 @@
 (require 'paradox)
 (paradox-enable)
 
+(require 'all-the-icons)
+
 (require 'org-autolist)
 (add-hook 'org-mode-hook (lambda () (org-autolist-mode)))
 

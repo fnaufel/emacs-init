@@ -92,6 +92,12 @@
     (paradox-enable)
   #+end_src
   
+* Icons
+
+  #+begin_src emacs-lisp
+    (require 'all-the-icons)
+  #+end_src
+
 * Org mode
 
 *** autolist
