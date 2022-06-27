@@ -296,9 +296,16 @@
 (require 'bibtex)
 
 (setq
+ ;; If bibtex-completion-pdf-field is non-nil, bibtex-completion will
+ ;; first try to retrieve the file specified in this field. If the
+ ;; field is not set for an entry or if the specified file does not
+ ;; exists, bibtex-completion falls back to the method described above
+ ;; (searching for key + .pdf in the directories listed in
+ ;; bibtex-completion-library-path).
+ bibtex-completion-pdf-field "file"
  bibtex-completion-bibliography '("/home/fnaufel/Documents/OrgFiles/bibliography.bib")
- bibtex-completion-library-path '("/home/BooksAndArticles/org-ref-library/")
- bibtex-completion-notes-path nil
+ bibtex-completion-library-path '("/home/BooksAndArticles/")
+ bibtex-completion-notes-path "/home/fnaufel/Documents/OrgFiles/bibnotes.org"
  bibtex-completion-notes-template-multiple-files "* ${author-or-editor}, ${title}, ${journal}, (${year}) :${=type=}: \n\nSee [[cite:&${=key=}]]\n"
  bibtex-completion-additional-search-fields '(keywords)
  bibtex-completion-display-formats
@@ -307,9 +314,7 @@
    (incollection  . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
    (inproceedings . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
    (t             . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*}"))
- bibtex-completion-pdf-open-function
- (lambda (fpath)
-   (call-process "open" nil 0 nil fpath)))
+ bibtex-completion-pdf-open-function 'pdf-view-mode)
 
 (setq bibtex-autokey-year-length 4
       bibtex-autokey-name-year-separator "-"
@@ -319,20 +324,31 @@
       bibtex-autokey-titlewords-stretch 1
       bibtex-autokey-titleword-length 5)
 
-(require 'org-ref-helm)
-(setq org-ref-insert-link-function 'org-ref-insert-link-hydra/body
-      org-ref-insert-cite-function 'org-ref-cite-insert-helm
-      org-ref-insert-label-function 'org-ref-insert-label-link
-      org-ref-insert-ref-function 'org-ref-insert-ref-link
-      org-ref-cite-onclick-function (lambda (_) (org-ref-citation-hydra/body)))
+;;; Key bindings
+(require 'helm-config)
 
-(define-key bibtex-mode-map (kbd "s-b") 'org-ref-bibtex-hydra/body)
-(define-key org-mode-map (kbd "s-b") 'org-ref-bibtex-hydra/body)
-(define-key org-mode-map (kbd "C-c ]") 'org-ref-insert-link-hydra/body)
+(global-set-key (kbd "s-b") 'helm-command-prefix)
 
-(require 'org-ref)
+(define-key helm-command-map "b" 'helm-bibtex)
+(define-key helm-command-map "B" 'helm-bibtex-with-local-bibliography)
+(define-key helm-command-map "n" 'helm-bibtex-with-notes)
+(define-key helm-command-map (kbd "s-b") 'helm-resume)
 
-(setq org-latex-pdf-process (list "latexmk -shell-escape -bibtex -f -pdf %f"))
+;; Disabled org-ref
+
+;; (require 'org-ref-helm)
+;; (setq org-ref-insert-link-function 'org-ref-insert-link-hydra/body
+;;       org-ref-insert-cite-function 'org-ref-cite-insert-helm
+;;       org-ref-insert-label-function 'org-ref-insert-label-link
+;;       org-ref-insert-ref-function 'org-ref-insert-ref-link
+;;       org-ref-cite-onclick-function (lambda (_) (org-ref-citation-hydra/body)))
+
+;; (define-key bibtex-mode-map (kbd "s-b") 'org-ref-bibtex-hydra/body)
+;; (define-key org-mode-map (kbd "s-b") 'org-ref-bibtex-hydra/body)
+;; (define-key org-mode-map (kbd "C-c ]") 'org-ref-insert-link-hydra/body)
+
+;; (require 'org-ref)
+;; (setq org-latex-pdf-process (list "latexmk -shell-escape -bibtex -f -pdf %f"))
 
 ;; Turn on Auto Fill mode automatically in Org mode
 (add-hook 'org-mode-hook
@@ -1223,6 +1239,59 @@ with leading and trailing spaces removed."
 (global-set-key "\C-cl" 'line-to-kupfer) 
 (global-set-key "\C-cw" 'region-to-kupfer) 
 (global-set-key "\C-cq" 'buffer-file-to-kupfer)
+
+;;; Require
+(require 'pdf-tools)
+(require 'pdf-occur)
+(require 'pdf-history)
+(require 'pdf-links)
+(require 'pdf-outline)
+(require 'pdf-annot)
+(require 'pdf-sync)
+
+;;; Code:
+(pdf-tools-install)
+
+;; midnite mode hook
+;; automatically turns on midnight-mode for pdfs
+(add-hook 'pdf-view-mode-hook
+          (lambda () (pdf-view-midnight-minor-mode -1)))
+
+;; set the green profile as default (see below)
+(setq pdf-view-midnight-colors '("#00B800" . "#000000" ))
+
+(defun pdf-no-filter ()
+  "View pdf without colour filter."
+  (interactive)
+  (pdf-view-midnight-minor-mode -1))
+
+;; change midnite mode colours functions
+(defun pdf-midnite-original ()
+  "Set pdf-view-midnight-colors to original colours."
+  (interactive)
+  (setq pdf-view-midnight-colors '("#839496" . "#002b36" )) ; original values
+  (pdf-view-midnight-minor-mode))
+
+(defun pdf-midnite-amber ()
+  "Set pdf-view-midnight-colors to amber on dark slate blue."
+  (interactive)
+  (setq pdf-view-midnight-colors '("#ff9900" . "#0a0a12" )) ; amber
+  (pdf-view-midnight-minor-mode))
+
+(defun pdf-midnite-green ()
+  "Set pdf-view-midnight-colors to green on black."
+  (interactive)
+  (setq pdf-view-midnight-colors '("#00B800" . "#000000" )) ; green
+  (pdf-view-midnight-minor-mode))
+
+(defun pdf-midnite-colour-schemes ()
+  "Midnight mode colour schemes bound to keys"
+  (local-set-key (kbd "!") (quote pdf-no-filter))
+  (local-set-key (kbd "@") (quote pdf-midnite-amber))
+  (local-set-key (kbd "#") (quote pdf-midnite-green))
+  (local-set-key (kbd "$") (quote pdf-midnite-original)))
+
+(add-hook 'pdf-view-mode-hook 'pdf-midnite-colour-schemes)
 
 (require 'dired-x)
 (setq-default dired-omit-files-p t) ; Buffer-local variable

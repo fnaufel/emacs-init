@@ -253,6 +253,10 @@
     (zotxt org-noter org-noter-pdftools lsp-origami origami json-mode flycheck-pyflakes org-clock-csv visual-fill-column adaptive-wrap org-ref org-journal org-superstar helm-bibtex poly-R polymode all-the-icons all-the-icons-dired all-the-icons-gnus treemacs-all-the-icons major-mode-hydra pretty-hydra paradox buffer-move lsp-pyright rainbow-delimiters helm-projectile projectile company-box setup use-package helm-lsp lsp-treemacs lsp-ui which-key lsp-mode ac-js2 skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion cdlatex yaml-mode all elm-mode elm-yasnippets auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl typo web-beautify markdown-toc markdown-preview-mode markdown-mode magit lua-mode htmlize dash-functional multiple-cursors expand-region)))
  '(paradox-execute-asynchronously t)
  '(paradox-github-token t)
+ '(pdf-tools-enabled-modes
+   (quote
+    (pdf-history-minor-mode pdf-isearch-minor-mode pdf-links-minor-mode pdf-misc-minor-mode pdf-outline-minor-mode pdf-misc-size-indication-minor-mode pdf-misc-menu-bar-minor-mode pdf-annot-minor-mode pdf-sync-minor-mode pdf-misc-context-menu-minor-mode pdf-cache-prefetch-minor-mode pdf-view-auto-slice-minor-mode pdf-occur-global-minor-mode)))
+ '(pdf-view-display-size (quote fit-page))
  '(python-indent-offset 2)
  '(python-shell-interpreter "python3")
  '(rcirc-authinfo (quote (("freenode" nickserv "SagAllesAb" "54g4ll354b"))))
