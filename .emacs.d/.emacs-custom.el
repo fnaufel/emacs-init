@@ -147,6 +147,7 @@
  '(org-hide-emphasis-markers nil)
  '(org-hide-leading-stars t)
  '(org-html-htmlize-output-type (quote css))
+ '(org-id-link-to-org-use-id (quote create-if-interactive-and-no-custom-id))
  '(org-indent-mode-turns-off-org-adapt-indentation nil)
  '(org-journal-date-format "[%Y-%m-%d %A]")
  '(org-journal-date-prefix "* ")

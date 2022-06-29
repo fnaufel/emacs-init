@@ -105,16 +105,21 @@
 ;; use org agenda buffer style keybinding.
 (setq cfw:org-overwrite-default-keybinding t)
 
-;;; Shorter key bindings for next and previous link
 (add-hook 'org-load-hook
           (lambda ()
             (define-key org-mode-map (kbd "C-c C-x i") 'org-insert-columns-dblock)
             (define-key org-mode-map (kbd "C-M-<return>") 'org-insert-heading-respect-content)))
 
+;;; Shorter key bindings for next and previous link
 (define-key org-mode-map (kbd "C-n") 'org-next-link)
 (define-key org-mode-map (kbd "C-p") 'org-previous-link)
-(define-key org-mode-map (kbd "C-c C-k") 'org-id-copy)
-(define-key org-mode-map (kbd "C-c k") 'org-id-copy)
+
+(require 'org-id)
+(define-key org-mode-map (kbd "C-c C-k") 'org-store-link)
+(define-key org-mode-map (kbd "C-c k") 'org-store-link)
+(global-set-key (kbd "C-c C-k") 'org-store-link)
+(global-set-key (kbd "C-c k") 'org-store-link)
+
 (global-set-key "\C-ca" 'org-agenda)
 
 ;;; helm-org
