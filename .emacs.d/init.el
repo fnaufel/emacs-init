@@ -62,6 +62,10 @@
 (require 'org-autolist)
 (add-hook 'org-mode-hook (lambda () (org-autolist-mode)))
 
+(require 'org-modern)
+
+(global-org-modern-mode)
+
 ;; org-superstar
 (require 'org-superstar)
 (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
@@ -108,6 +112,7 @@
 (add-hook 'org-load-hook
           (lambda ()
             (define-key org-mode-map (kbd "C-c C-x i") 'org-insert-columns-dblock)
+            (define-key org-mode-map (kbd "C-<return>") nil)
             (define-key org-mode-map (kbd "C-M-<return>") 'org-insert-heading-respect-content)))
 
 ;;; Shorter key bindings for next and previous link
@@ -299,6 +304,7 @@
 
 (require 'helm-bibtex)
 (require 'bibtex)
+(require 'org-zotxt-noter)
 
 (setq
  ;; If bibtex-completion-pdf-field is non-nil, bibtex-completion will
@@ -623,6 +629,7 @@
     ("b" (find-file "~/.bashrc") ".bashrc ")
     ("p" (find-file "~/.profile") ".profile ")
     ("s" (find-file "~/Stow") "Stow ")
+    ("c" (find-file "~/Stow/emacs/.emacs.d/.emacs-custom.el") "custom.el ")
     ("i" (find-file "~/Stow/emacs/dot-init.org") "init ")
     ("t" (update-clock-tables) "clock tables ")
     ("x" (ansi-term "/home/fnaufel/.local/bin/xonsh" "xonsh") "new xonsh ")

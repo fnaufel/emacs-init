@@ -107,6 +107,14 @@
        (add-hook 'org-mode-hook (lambda () (org-autolist-mode)))
      #+end_src
     
+*** org-modern
+
+    #+begin_src emacs-lisp
+      (require 'org-modern)
+
+      (global-org-modern-mode)
+    #+end_src
+
 *** superstar
 
      #+begin_src emacs-lisp
@@ -170,6 +178,7 @@
           (add-hook 'org-load-hook
                     (lambda ()
                       (define-key org-mode-map (kbd "C-c C-x i") 'org-insert-columns-dblock)
+                      (define-key org-mode-map (kbd "C-<return>") nil)
                       (define-key org-mode-map (kbd "C-M-<return>") 'org-insert-heading-respect-content)))
 
           ;;; Shorter key bindings for next and previous link
@@ -398,6 +407,7 @@
     #+begin_src emacs-lisp
       (require 'helm-bibtex)
       (require 'bibtex)
+      (require 'org-zotxt-noter)
 
       (setq
        ;; If bibtex-completion-pdf-field is non-nil, bibtex-completion will
@@ -454,7 +464,7 @@
       (define-key helm-command-map (kbd "s-b") 'helm-resume)
     #+end_src
 
-*** Misc
+*** Misc (incl. hooks)
 
      #+begin_src emacs-lisp
        ;; Turn on Auto Fill mode automatically in Org mode
@@ -800,7 +810,7 @@
              (setq i (1+ i)))))
      #+end_src
     
-*** fnjump (using hydra)
+*** Jump (using hydra)
 
      #+begin_src emacs-lisp
        (setq hydra-fnjump--title
@@ -813,12 +823,13 @@
            ("b" (find-file "~/.bashrc") ".bashrc ")
            ("p" (find-file "~/.profile") ".profile ")
            ("s" (find-file "~/Stow") "Stow ")
+           ("c" (find-file "~/Stow/emacs/.emacs.d/.emacs-custom.el") "custom.el ")
            ("i" (find-file "~/Stow/emacs/dot-init.org") "init ")
            ("t" (update-clock-tables) "clock tables ")
            ("x" (ansi-term "/home/fnaufel/.local/bin/xonsh" "xonsh") "new xonsh ")
            ("j" (ipython-notebook-int) "jupyter")
            ("y" (ipython-qtconsole) "ipython"))
-   
+
           "Quit"
           (("q" nil "quit "))))
 

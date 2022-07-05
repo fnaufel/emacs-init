@@ -68,6 +68,7 @@
  '(initial-buffer-choice nil)
  '(initial-major-mode (quote org-mode))
  '(initial-scratch-message nil)
+ '(line-spacing 0.1)
  '(lsp-clients-deno-server "/home/fnaufel/.deno/bin/deno")
  '(lsp-keymap-prefix "<s-kp-add>")
  '(max-lisp-eval-depth 1000)
@@ -164,9 +165,18 @@
  '(org-log-done (quote time))
  '(org-log-into-drawer t)
  '(org-lowest-priority 60)
+ '(org-modern-hide-stars nil)
+ '(org-modern-list nil)
+ '(org-modern-priority nil)
+ '(org-modern-star nil)
+ '(org-modern-timestamp nil)
+ '(org-modern-todo nil)
  '(org-modules
    (quote
     (ol-bbdb ol-bibtex ol-docview ol-doi ol-eww ol-gnus ol-info org-inlinetask ol-irc ol-mhe ol-rmail ol-w3m org-collector)))
+ '(org-noter-doc-property-in-notes t)
+ '(org-noter-hide-other nil)
+ '(org-noter-separate-notes-from-heading t)
  '(org-num-face (quote success))
  '(org-num-max-level 2)
  '(org-odd-levels-only t)
@@ -254,6 +264,10 @@
     (zotxt org-noter org-noter-pdftools lsp-origami origami json-mode flycheck-pyflakes org-clock-csv visual-fill-column adaptive-wrap org-ref org-journal org-superstar helm-bibtex poly-R polymode all-the-icons all-the-icons-dired all-the-icons-gnus treemacs-all-the-icons major-mode-hydra pretty-hydra paradox buffer-move lsp-pyright rainbow-delimiters helm-projectile projectile company-box setup use-package helm-lsp lsp-treemacs lsp-ui which-key lsp-mode ac-js2 skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion cdlatex yaml-mode all elm-mode elm-yasnippets auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl typo web-beautify markdown-toc markdown-preview-mode markdown-mode magit lua-mode htmlize dash-functional multiple-cursors expand-region)))
  '(paradox-execute-asynchronously t)
  '(paradox-github-token t)
+ '(pdf-annot-activate-created-annotations t)
+ '(pdf-annot-list-listed-types
+   (quote
+    (file free-text highlight popup squiggly strike-out text underline unknown)))
  '(pdf-tools-enabled-modes
    (quote
     (pdf-history-minor-mode pdf-isearch-minor-mode pdf-links-minor-mode pdf-misc-minor-mode pdf-outline-minor-mode pdf-misc-size-indication-minor-mode pdf-annot-minor-mode pdf-sync-minor-mode pdf-misc-context-menu-minor-mode pdf-cache-prefetch-minor-mode pdf-occur-global-minor-mode)))
@@ -334,6 +348,11 @@
  '(org-ellipsis ((t (:foreground "LightGoldenrod" :underline nil))))
  '(org-journal-calendar-entry-face ((t (:foreground "#bbbb00" :slant italic))))
  '(org-journal-calendar-scheduled-face ((t (:foreground "#ff0000" :slant italic))))
+ '(org-modern-block-keyword ((t (:weight light :height 0.9))))
+ '(org-modern-label ((t (:inherit variable-pitch :box (:line-width -3 :color "black") :underline nil :weight regular :height 1.0 :width condensed))))
+ '(org-modern-symbol ((t (:height 1.1 :family "Hack"))) t)
+ '(org-noter-no-notes-exist-face ((t (:foreground "blue" :weight bold))))
+ '(org-noter-notes-exist-face ((t (:foreground "tomato4" :weight bold))))
  '(org-ref-cite-face ((t (:inherit org-link :foreground "pale green"))))
  '(paradox-mode-line-face ((t (:inherit (font-lock-keyword-face mode-line-buffer-id) :foreground "medium blue" :weight normal))))
  '(rainbow-delimiters-base-error-face ((t (:inherit rainbow-delimiters-base-face :foreground "red"))))

@@ -2,7 +2,16 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("ssd"
+(("Zotfile"
+ (filename . "Sunrise Checkpoint: ~/grive/Zotfile/ | ~/Downloads/")
+ (sunrise-directories "~/grive/Zotfile/" "~/Downloads/")
+ (handler . sunrise-checkpoint-handler))
+("org-refile-last-stored"
+ (filename . "~/Documents/OrgFiles/bibnotes.org")
+ (front-context-string . "* Brooks, F. P. ")
+ (rear-context-string)
+ (position . 2))
+("ssd"
  (filename . "Sunrise Checkpoint: ~/ssd/ | ~/Downloads/")
  (sunrise-directories "~/ssd/" "~/Downloads/")
  (handler . sunrise-checkpoint-handler))
