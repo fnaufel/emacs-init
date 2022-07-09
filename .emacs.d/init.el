@@ -1348,6 +1348,74 @@ with leading and trailing spaces removed."
 
 (global-set-key (kbd "C-x C-j") 'open-dir-in-sunrise)
 
+(require 'telega)
+(require 'ol-telega)
+
+(require 'telega-url-shorten)
+(global-telega-url-shorten-mode 1)
+
+;;; (require 'telega-dired-dwim) 
+(require 'telega-mnz)
+(add-hook 'telega-load-hook 'global-telega-mnz-mode)
+(setq telega-mnz-use-language-detection 30)
+
+(add-hook 'telega-load-hook 'telega-notifications-mode)
+
+(add-hook 'telega-load-hook 'telega-mode-line-mode)
+
+(add-hook 'telega-chat-mode-hook
+          (lambda ()
+            (telega-mnz-mode 1)
+            (setq line-spacing 0.0)
+            (setq telega-chat-input-markups '("markdown2" nil "org" "html"))))
+
+(add-hook 'telega-root-mode-hook
+          (lambda ()
+            (setq line-spacing 0.0)
+            (telega-root-auto-fill-mode 1)))
+
+;; company setup
+(setq telega-emoji-company-backend 'telega-company-emoji)
+
+(defun my-telega-chat-mode ()
+  (set (make-local-variable 'company-backends)
+       (append (list telega-emoji-company-backend
+                     'telega-company-username
+                     'telega-company-hashtag)
+               (when (telega-chat-bot-p telega-chatbuf--chat)
+                 '(telega-company-botcmd))))
+  (company-mode 1))
+
+(add-hook 'telega-chat-mode-hook 'my-telega-chat-mode)
+
+;; Copied from telega-dired-dwim and changed to detect chat buffers in
+;; all frames
+(defun telega-dwim-chatbuf ()
+  (get-window-with-predicate
+   (lambda (window)
+     (with-current-buffer (window-buffer window)
+       (eq major-mode 'telega-chat-mode)))
+   nil t))
+
+;; Attach files that are marked in sunrise
+(defun sunrise-telega-copy ()
+  (interactive)
+  (when-let*
+      ((files (seq-filter #'file-regular-p (sunrise-get-marked-files)))
+       (chatbuf (telega-dwim-chatbuf)))
+    (select-window chatbuf)
+    (mapc #'telega-chatbuf-attach-file files)))
+
+(define-key sunrise-mode-map (kbd "a") 'sunrise-telega-copy)
+
+(setq telega-chat--display-buffer-action '((display-buffer-reuse-window display-buffer-pop-up-window)))
+(setq telega-chat-button-width 30) ; Size of contacts column on root buffer.
+(setq telega-dired-dwim-target t)
+(setq telega-chat-input-markups '("markdown2" nil "org" "html"))
+(setq telega-msg-edit-markup-spec '(telega--fmt-text-markdown2 . "markdown2"))
+
+(define-key global-map (kbd "s-t") telega-prefix-map)
+
 ;;; figlet definitions for Emacs.  (C) Martin Giese
 ;;;
 ;;; Use this to separate sections in TeX files, Program source, etc.
@@ -1445,7 +1513,6 @@ with leading and trailing spaces removed."
 (delete-other-windows)
 
 ;;; Third frame: sunrise ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 (make-frame)
 (other-frame -1)
 (maximize-current-frame)
@@ -1457,6 +1524,14 @@ with leading and trailing spaces removed."
 ;; (sunrise-tree-view)
 ;; go back to left-hand pane
 ;; (other-window 1)
+
+;;; Fourth frame: telega ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(make-frame)
+(other-frame -1)
+(maximize-current-frame)
+(telega)
+(sleep-for 3)
+(telega-root-buffer-auto-fill)
 
 ;; ;;; Go back to initial frame
 (other-frame -1)
