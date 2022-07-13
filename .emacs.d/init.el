@@ -1413,6 +1413,7 @@ with leading and trailing spaces removed."
 (setq telega-dired-dwim-target t)
 (setq telega-chat-input-markups '("markdown2" nil "org" "html"))
 (setq telega-msg-edit-markup-spec '(telega--fmt-text-markdown2 . "markdown2"))
+(setq telega-open-file-function 'org-open-file)
 
 (define-key global-map (kbd "s-t") telega-prefix-map)
 
