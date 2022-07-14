@@ -501,6 +501,10 @@
 
        ;;; cdlatex mode (disabled)
        ;;; (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
+
+       ;;; Images
+       (setq org-startup-with-inline-images t)
+       (setq org-image-actual-width 600)
     #+end_src
 
 *** Zotero hydra

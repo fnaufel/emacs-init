@@ -395,6 +395,10 @@
 ;;; cdlatex mode (disabled)
 ;;; (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
 
+;;; Images
+(setq org-startup-with-inline-images t)
+(setq org-image-actual-width 600)
+
 (setq hydra-zot--title
       (with-faicon "book" "Zotero" 1 -0.05))
 
