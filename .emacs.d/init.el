@@ -302,6 +302,78 @@
     (message "Exporting to JSON: %s" (car command-line-args-left))
     (org-export-json)))
 
+(require 'ebib)
+
+;; Bib file
+(setq ebib-preload-bib-files '("/home/fnaufel/Documents/OrgFiles/bibliography.bib"))
+
+;; Use biblatex instead of BibTeX
+(setq ebib-bibtex-dialect 'biblatex)
+
+;; Use timestamps
+(setq ebib-use-timestamp t)
+
+;; Handle ebib links in org
+(require 'org-ebib)
+
+;; Store filename in link
+(setq org-ebib-link-type 'key+filepath)
+
+;; Use biblio
+(require 'ebib-biblio)
+(define-key biblio-selection-mode-map (kbd "e") #'ebib-biblio-selection-import)
+
+;; Programs to open files
+(setq ebib-file-associations
+      '(("pdf" . find-file-other-frame)))
+
+;; Use full paths in file field
+(setq ebib-truncate-file-names nil)
+
+;; Dir for pdfs and files
+(setq ebib-file-search-dirs '("/home/BooksAndArticles/ebib-files"))
+
+;; Dir for notes files
+(setq ebib-notes-directory "/home/fnaufel/Documents/OrgFiles/ebib-notes")
+
+;; Function to insert path to pdf file to be inserted in notes file as a property
+(defun ebib-create-org-noter-file-property (key db)
+  "Create a property :NOTER_DOCUMENT: for org-noter to find the pdf file.
+The file is taken from the \"file\" filed in the entry designated
+by KEY in the current database.  If that field contains more than
+one file name, the user is asked to select one.  If
+the \"file\" field is empty, return the empty string."
+  (let ((files (ebib-get-field-value "file" key db 'noerror 'unbraced 'xref)))
+    (if files
+        (let* ((absolute-path (ebib--expand-file-name (ebib--select-file files nil key)))
+               (relative-path (file-relative-name absolute-path default-directory))
+               (abbreviate-path (abbreviate-file-name absolute-path))
+               (final-path
+                (cl-case ebib-link-file-path-type
+                  (relative relative-path)
+                  (adaptive (if (string-match (concat "^" (regexp-quote default-directory))
+                                              absolute-path)
+                                relative-path
+                              abbreviate-path))
+                  (otherwise absolute-path))))
+          (format ":NOTER_DOCUMENT: %s" final-path))
+      "")))
+
+;; Add specifier
+(setq ebib-notes-template-specifiers
+      '((75 . ebib-create-org-identifier)
+       (84 . ebib-create-org-description)
+       (88 . ebib-create-org-title)
+       (67 . ebib-create-org-cite)
+       (76 . ebib-create-org-link)
+       (70 . ebib-create-org-file-link)
+       (68 . ebib-create-org-doi-link)
+       (85 . ebib-create-org-url-link)
+       (102 . ebib-create-org-noter-file-property)))
+
+;; Add :NOTER_DOCUMENT: property to note
+(setq ebib-notes-template "* %T\n:PROPERTIES:\n%K\n%f\n:END:\n%%?\n")
+
 (require 'helm-bibtex)
 (require 'bibtex)
 (require 'org-zotxt-noter)
@@ -360,6 +432,21 @@
 (define-key helm-command-map "n" 'helm-bibtex-with-notes)
 (define-key helm-command-map (kbd "s-b") 'helm-resume)
 
+(setq hydra-zot--title
+      (with-faicon "book" "Zotero" 1 -0.05))
+
+(pretty-hydra-define hydra-zot
+  (:quit-key "q" :title hydra-zot--title :foreign-keys warn :exit t)
+  (""
+   (("i" (org-zotxt-insert-reference-link) "Insert link ")
+    ("u" (org-zotxt-update-reference-link-at-point) "Update link ")
+    ("a" (org-zotxt-open-attachment) "Open attachment "))
+
+   "Quit"
+   (("q" nil "quit "))))
+
+(global-set-key (kbd "s-z") 'hydra-zot/body)
+
 ;; Turn on Auto Fill mode automatically in Org mode
 (add-hook 'org-mode-hook
           '(lambda ()
@@ -398,21 +485,6 @@
 ;;; Images
 (setq org-startup-with-inline-images t)
 (setq org-image-actual-width 600)
-
-(setq hydra-zot--title
-      (with-faicon "book" "Zotero" 1 -0.05))
-
-(pretty-hydra-define hydra-zot
-  (:quit-key "q" :title hydra-zot--title :foreign-keys warn :exit t)
-  (""
-   (("i" (org-zotxt-insert-reference-link) "Insert link ")
-    ("u" (org-zotxt-update-reference-link-at-point) "Update link ")
-    ("a" (org-zotxt-open-attachment) "Open attachment "))
-
-   "Quit"
-   (("q" nil "quit "))))
-
-(global-set-key (kbd "s-z") 'hydra-zot/body)
 
 (defun ipython-qtconsole ()
   (interactive)

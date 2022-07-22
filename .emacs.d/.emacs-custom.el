@@ -40,6 +40,9 @@
     (name old-name general-category decomposition iso-10646-comment)))
  '(dired-listing-switches
    "--time-style=+[%Y-%m-%d-%H:%M] --group-directories-first -alDhG")
+ '(ebib-keywords
+   (quote
+    ("survey" "markov models" "psychology" "hidden markov models" "statistics" "evolution" "biology" "textbook" "sums" "elliptic curves" "mathematical models" "evolutionary biology" "math" "linguistics" "historical linguistics" "dreams" "combinatorics" "nlp" "talkativeness" "sex" "curves" "conics" "analytic geometry" "chaos" "matrices" "linear algebra" "Science / Life Sciences / Evolution" "Science / Life Sciences / Biophysics" "Science / Life Sciences / Biochemistry" "Mathematics / Applied" "R" "coincidences" "pascal" "letters" "history" "fermat" "arithmetic" "_tablet" "software engineering" "stochastic processes" "queues" "monte carlo" "markov chains" "gibbs fields" "probability" "inference" "confidence interval" "binomial")))
  '(eldoc-idle-delay 0)
  '(eldoc-minor-mode-string nil)
  '(enable-recursive-minibuffers nil)
@@ -259,9 +262,10 @@
 (fn CREATE)"]))))
  '(origami-show-fold-header nil)
  '(package-enable-at-startup nil)
+ '(package-pinned-packages (quote ((telega . "MELPA Stable"))))
  '(package-selected-packages
    (quote
-    (language-detection telega zotxt org-noter org-noter-pdftools lsp-origami origami json-mode flycheck-pyflakes org-clock-csv visual-fill-column adaptive-wrap org-ref org-journal org-superstar helm-bibtex poly-R polymode all-the-icons all-the-icons-dired all-the-icons-gnus treemacs-all-the-icons major-mode-hydra pretty-hydra paradox buffer-move lsp-pyright rainbow-delimiters helm-projectile projectile company-box setup use-package helm-lsp lsp-treemacs lsp-ui which-key lsp-mode ac-js2 skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion cdlatex yaml-mode all elm-mode elm-yasnippets auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl typo web-beautify markdown-toc markdown-preview-mode markdown-mode magit lua-mode htmlize dash-functional multiple-cursors expand-region)))
+    (ebib language-detection telega zotxt org-noter org-noter-pdftools lsp-origami origami json-mode flycheck-pyflakes org-clock-csv visual-fill-column adaptive-wrap org-ref org-journal org-superstar helm-bibtex poly-R polymode all-the-icons all-the-icons-dired all-the-icons-gnus treemacs-all-the-icons major-mode-hydra pretty-hydra paradox buffer-move lsp-pyright rainbow-delimiters helm-projectile projectile company-box setup use-package helm-lsp lsp-treemacs lsp-ui which-key lsp-mode ac-js2 skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion cdlatex yaml-mode all elm-mode elm-yasnippets auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl typo web-beautify markdown-toc markdown-preview-mode markdown-mode magit lua-mode htmlize dash-functional multiple-cursors expand-region)))
  '(paradox-execute-asynchronously t)
  '(paradox-github-token t)
  '(pdf-annot-activate-created-annotations t)
