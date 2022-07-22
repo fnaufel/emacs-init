@@ -59,6 +59,33 @@
 
 (require 'all-the-icons)
 
+(require 'hydra)
+(require 'major-mode-hydra)
+(require 'pretty-hydra)
+
+(defun with-faicon (icon str &optional height v-adjust)
+  (s-concat (all-the-icons-faicon icon :v-adjust (or v-adjust 0) :height (or height 1)) " " str))
+
+(defun with-fileicon (icon str &optional height v-adjust)
+  (s-concat (all-the-icons-fileicon icon :v-adjust (or v-adjust 0) :height (or height 1)) " " str))
+
+(defun with-octicon (icon str &optional height v-adjust)
+  (s-concat (all-the-icons-octicon icon :v-adjust (or v-adjust 0) :height (or height 1)) " " str))
+
+(defun with-material (icon str &optional height v-adjust)
+  (s-concat (all-the-icons-material icon :v-adjust (or v-adjust 0) :height (or height 1)) " " str))
+
+(defun with-mode-icon (mode str &optional height nospace face)
+  (let* ((v-adjust (if (eq major-mode 'emacs-lisp-mode) 0.0 0.05))
+         (args     `(:height ,(or height 1) :v-adjust ,v-adjust))
+         (_         (when face
+                      (lax-plist-put args :face face)))
+         (icon     (apply #'all-the-icons-icon-for-mode mode args))
+         (icon     (if (symbolp icon)
+                       (apply #'all-the-icons-octicon "file-text" args)
+                     icon)))
+    (s-concat icon (if nospace "" " ") str)))
+
 (require 'org-autolist)
 (add-hook 'org-mode-hook (lambda () (org-autolist-mode)))
 
@@ -81,25 +108,6 @@
 (set-face-attribute 'org-level-3 nil :inherit 'org-level-8 :height 1.05) 
 (set-face-attribute 'org-level-2 nil :inherit 'org-level-8 :height 1.1) 
 (set-face-attribute 'org-level-1 nil :inherit 'org-level-8 :height 1.15)
-
-;; (require 'org-bars)
-;; (add-hook 'org-mode-hook #'org-bars-mode)
-
-;; ;; No ellipsis in headlines
-;; (defun org-no-ellipsis-in-headlines ()
-;;   "Remove use of ellipsis in headlines.
-;; See `buffer-invisibility-spec'."
-;;   (remove-from-invisibility-spec '(outline . t))
-;;   (add-to-invisibility-spec 'outline))
-
-;; (add-hook 'org-mode-hook 'org-no-ellipsis-in-headlines)
-
-;; Fix this function to handle blank, non-empty entries
-;; (defun org-bars-subtree-is-empty-p ()
-  ;; "Return t if subtree at point is empty."
-  ;; (let ((entry (org-get-entry)))
-    ;; (set-text-properties 0 (length entry) nil entry)
-    ;; (string-blank-p entry)))
 
 (require 'calfw)
 (require 'calfw-org)
@@ -132,33 +140,6 @@
 (define-key org-mode-map (kbd "C-c C-j") 'helm-org-in-buffer-headings)
 (define-key org-mode-map (kbd "C-c i") 'helm-org-parent-headings)
 (define-key org-mode-map (kbd "C-c g") 'helm-org-agenda-files-headings)
-
-(require 'hydra)
-(require 'major-mode-hydra)
-(require 'pretty-hydra)
-
-(defun with-faicon (icon str &optional height v-adjust)
-  (s-concat (all-the-icons-faicon icon :v-adjust (or v-adjust 0) :height (or height 1)) " " str))
-
-(defun with-fileicon (icon str &optional height v-adjust)
-  (s-concat (all-the-icons-fileicon icon :v-adjust (or v-adjust 0) :height (or height 1)) " " str))
-
-(defun with-octicon (icon str &optional height v-adjust)
-  (s-concat (all-the-icons-octicon icon :v-adjust (or v-adjust 0) :height (or height 1)) " " str))
-
-(defun with-material (icon str &optional height v-adjust)
-  (s-concat (all-the-icons-material icon :v-adjust (or v-adjust 0) :height (or height 1)) " " str))
-
-(defun with-mode-icon (mode str &optional height nospace face)
-  (let* ((v-adjust (if (eq major-mode 'emacs-lisp-mode) 0.0 0.05))
-         (args     `(:height ,(or height 1) :v-adjust ,v-adjust))
-         (_         (when face
-                      (lax-plist-put args :face face)))
-         (icon     (apply #'all-the-icons-icon-for-mode mode args))
-         (icon     (if (symbolp icon)
-                       (apply #'all-the-icons-octicon "file-text" args)
-                     icon)))
-    (s-concat icon (if nospace "" " ") str)))
 
 (defun convert-hhmmss-to-secs (time)
   "Receives a string of digits TIME of the form h...hhmmss and
@@ -251,12 +232,12 @@
                           "/usr/bin/audacious"
                           file)))))
 
-(require 'org-journal)
+;; (require 'org-journal)
 
-(global-unset-key (kbd "C-c C-j"))
-(global-set-key (kbd "C-c s") 'org-journal-search)
-(global-set-key (kbd "C-J") 'org-journal-new-entry)
-(define-key org-mode-map (kbd "C-J") 'org-journal-new-entry)
+;; (global-unset-key (kbd "C-c C-j"))
+;; (global-set-key (kbd "C-c s") 'org-journal-search)
+;; (global-set-key (kbd "C-J") 'org-journal-new-entry)
+;; (define-key org-mode-map (kbd "C-J") 'org-journal-new-entry)
 
 (defun subtree-html-export-to-clipboard ()
   "Export current subtree to html fragment and put in clipboard."
@@ -303,9 +284,17 @@
     (org-export-json)))
 
 (require 'ebib)
+(require 'helm-bibtex)
+(require 'bibtex)
 
 ;; Bib file
 (setq ebib-preload-bib-files '("/home/fnaufel/Documents/OrgFiles/bibliography.bib"))
+
+;; Dir for pdfs and files
+(setq ebib-file-search-dirs '("/home/BooksAndArticles/ebib-files"))
+
+;; Dir for notes files
+(setq ebib-notes-directory "/home/fnaufel/Documents/OrgFiles/ebib-notes")
 
 ;; Use biblatex instead of BibTeX
 (setq ebib-bibtex-dialect 'biblatex)
@@ -320,6 +309,7 @@
 (setq org-ebib-link-type 'key+filepath)
 
 ;; Use biblio
+(require 'biblio)
 (require 'ebib-biblio)
 (define-key biblio-selection-mode-map (kbd "e") #'ebib-biblio-selection-import)
 
@@ -329,12 +319,6 @@
 
 ;; Use full paths in file field
 (setq ebib-truncate-file-names nil)
-
-;; Dir for pdfs and files
-(setq ebib-file-search-dirs '("/home/BooksAndArticles/ebib-files"))
-
-;; Dir for notes files
-(setq ebib-notes-directory "/home/fnaufel/Documents/OrgFiles/ebib-notes")
 
 ;; Function to insert path to pdf file to be inserted in notes file as a property
 (defun ebib-create-org-noter-file-property (key db)
@@ -371,81 +355,149 @@ the \"file\" field is empty, return the empty string."
        (85 . ebib-create-org-url-link)
        (102 . ebib-create-org-noter-file-property)))
 
-;; Add :NOTER_DOCUMENT: property to note
+;; Add :NOTER_DOCUMENT: property to note template
 (setq ebib-notes-template "* %T\n:PROPERTIES:\n%K\n%f\n:END:\n%%?\n")
 
-(require 'helm-bibtex)
-(require 'bibtex)
-(require 'org-zotxt-noter)
+;; From https://ogbe.net/emacs/references.html ;;;;;;;;;
 
-(setq
- ;; If bibtex-completion-pdf-field is non-nil, bibtex-completion will
- ;; first try to retrieve the file specified in this field. If the
- ;; field is not set for an entry or if the specified file does not
- ;; exists, bibtex-completion falls back to the method described above
- ;; (searching for key + .pdf in the directories listed in
- ;; bibtex-completion-library-path).
- bibtex-completion-pdf-field "file"
- bibtex-completion-bibliography '("/home/fnaufel/Documents/OrgFiles/bibliography.bib")
- bibtex-completion-library-path '("/home/BooksAndArticles/")
- bibtex-completion-notes-path "/home/fnaufel/Documents/OrgFiles/bibnotes.org"
- bibtex-completion-notes-template-multiple-files "* ${author-or-editor}, ${title}, ${journal}, (${year}) :${=type=}: \n\nSee [[cite:&${=key=}]]\n"
- bibtex-completion-additional-search-fields '(keywords)
- bibtex-completion-display-formats
- '((article       . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${journal:40}")
-   (inbook        . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} Chapter ${chapter:32}")
-   (incollection  . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
-   (inproceedings . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
-   (t             . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*}"))
- bibtex-completion-pdf-open-function 'find-file-other-frame)
+;; bibtex config
+(setq bibtex-autokey-year-length 4)
+(setq bibtex-autokey-titleword-separator "-")
+(setq bibtex-autokey-name-year-separator "-")
+(setq bibtex-autokey-year-title-separator "-")
+(setq bibtex-autokey-titleword-length 8)
+(setq bibtex-autokey-titlewords 3)
+(setq bibtex-autokey-titleword-ignore
+      '("O" "Os" "A" "As" "Um" "Uma" "An" "The" "Eine?" "Der" "Die" "Das" "[^[:upper:]].*" ".*[^[:upper:][:lower:]0-9].*"))
 
-(setq bibtex-autokey-year-length 4
-      bibtex-autokey-name-year-separator "-"
-      bibtex-autokey-year-title-separator "-"
-      bibtex-autokey-titleword-separator "-"
-      bibtex-autokey-titlewords 2
-      bibtex-autokey-titlewords-stretch 1
-      bibtex-autokey-titleword-length 5)
+;; a small convenience function to import into ebib from the clipboard
+(defun do.refs/ebib-import-from-clipboard ()
+  "Attempt to import the contents in the kill ring/clipboard into `ebib'."
+  (interactive)
+  (with-temp-buffer
+    (yank)
+    (ebib-import)
+    (call-interactively #'ebib)))
 
-(require 'helm-config)
+(defvar do.refs/pdf-download-dir "/home/fnaufel/Downloads/"
+  "The path to the temporary directory to which we download PDF
+  files.")
 
-;;; Add action to open pdf in Okular
-(defun bibtex-completion-open-pdf-external (keys &optional fallback-action)
+;; another convenience function to add the most recently downloaded PDF file
+;; from the ~/Downloads folder to the current entry
+(defun do.refs/ebib-add-newest-from-downloads (&optional file-extension)
+  "Add the most recent file from `do.refs/pdf-download-dir' to the ebib entry at point."
+  (interactive)
+  ;; pull out the most recent file from ~/Downloads with the .pdf extension.
+  (let ((newest-file (let ((dir-files (directory-files-and-attributes do.refs/pdf-download-dir)))
+                       (caar (sort
+                              (if (not file-extension)
+                                  ;; the newest file from the download directory
+                                  (mapcan (lambda (x)
+                                            (let ((file-name (concat (file-name-as-directory do.refs/pdf-download-dir) (car x))))
+                                              (when (file-regular-p file-name) (cons x nil))))
+                                          dir-files)
+                                ;; all files with a certain extension
+                                (mapcan (lambda (x) (when (string-equal (file-name-extension (nth 0 x)) file-extension) (cons x nil)))
+                                        dir-files))
+                              ;; sort by date
+                              (lambda (x y) (not (time-less-p (nth 6 x) (nth 6 y)))))))))
+    (if newest-file
+        ;; https://nullprogram.com/blog/2017/10/27/
+        ;; need to override `read-file-name' because ebib normally prompts us for the file to import
+        (let ((fpath (concat (file-name-as-directory do.refs/pdf-download-dir) newest-file))
+              (bibkey (ebib--get-key-at-point)))
+          (cl-letf (((symbol-function 'read-file-name) (lambda (&rest _) fpath)))
+            (let ((current-prefix-arg '(4))) ;; C-u (to keep from removing original file)
+              (call-interactively #'ebib-import-file)))
+          (message "[Ebib] Imported %s for %s" fpath bibkey))
+      (message "[Ebib] No files from %s imported." do.refs/pdf-download-dir))))
 
-  (let ((bibtex-completion-pdf-open-function
-         (lambda (fpath) (start-process "okular" "*helm-bibtex-okular*" "/usr/bin/okular" fpath))))
-    (bibtex-completion-open-pdf keys fallback-action)))
+;; helm-bibtex config
+(setq bibtex-completion-bibliography ebib-preload-bib-files)
+(setq bibtex-completion-library-path ebib-bib-search-dirs)
+(setq bibtex-completion-notes-path ebib-notes-directory)
+(setq bibtex-completion-notes-extension ".org")
+(setq bibtex-completion-pdf-field "file")
+(setq bibtex-completion-additional-search-fields '(keywords))
+(setq bibtex-completion-pdf-open-function 'find-file-other-frame)
 
-(helm-bibtex-helmify-action bibtex-completion-open-pdf-external helm-bibtex-open-pdf-external)
+;; what is the default citation style?
+(setq bibtex-completion-cite-default-command "cite")
+(setq bibtex-completion-cite-default-as-initial-input t)
 
-(helm-add-action-to-source
- "Open file in Okular"
- 'helm-bibtex-open-pdf-external
- helm-source-bibtex
- 1)
+;; (require 'helm-bibtex)
+;; (require 'bibtex)
+;; (require 'org-zotxt-noter)
 
-;;; Key bindings
-(global-set-key (kbd "s-b") 'helm-command-prefix)
+;; (setq
+;;  ;; If bibtex-completion-pdf-field is non-nil, bibtex-completion will
+;;  ;; first try to retrieve the file specified in this field. If the
+;;  ;; field is not set for an entry or if the specified file does not
+;;  ;; exists, bibtex-completion falls back to the method described above
+;;  ;; (searching for key + .pdf in the directories listed in
+;;  ;; bibtex-completion-library-path).
+;;  bibtex-completion-pdf-field "file"
+;;  bibtex-completion-bibliography '("/home/fnaufel/Documents/OrgFiles/bibliography.bib")
+;;  bibtex-completion-library-path '("/home/BooksAndArticles/")
+;;  bibtex-completion-notes-path "/home/fnaufel/Documents/OrgFiles/bibnotes.org"
+;;  bibtex-completion-notes-template-multiple-files "* ${author-or-editor}, ${title}, ${journal}, (${year}) :${=type=}: \n\nSee [[cite:&${=key=}]]\n"
+;;  bibtex-completion-additional-search-fields '(keywords)
+;;  bibtex-completion-display-formats
+;;  '((article       . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${journal:40}")
+;;    (inbook        . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} Chapter ${chapter:32}")
+;;    (incollection  . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
+;;    (inproceedings . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
+;;    (t             . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*}"))
+;;  bibtex-completion-pdf-open-function 'find-file-other-frame)
 
-(define-key helm-command-map "b" 'helm-bibtex)
-(define-key helm-command-map "B" 'helm-bibtex-with-local-bibliography)
-(define-key helm-command-map "n" 'helm-bibtex-with-notes)
-(define-key helm-command-map (kbd "s-b") 'helm-resume)
+;; (setq bibtex-autokey-year-length 4
+;;       bibtex-autokey-name-year-separator "-"
+;;       bibtex-autokey-year-title-separator "-"
+;;       bibtex-autokey-titleword-separator "-"
+;;       bibtex-autokey-titlewords 2
+;;       bibtex-autokey-titlewords-stretch 1
+;;       bibtex-autokey-titleword-length 5)
 
-(setq hydra-zot--title
-      (with-faicon "book" "Zotero" 1 -0.05))
+;; (require 'helm-config)
 
-(pretty-hydra-define hydra-zot
-  (:quit-key "q" :title hydra-zot--title :foreign-keys warn :exit t)
-  (""
-   (("i" (org-zotxt-insert-reference-link) "Insert link ")
-    ("u" (org-zotxt-update-reference-link-at-point) "Update link ")
-    ("a" (org-zotxt-open-attachment) "Open attachment "))
+;; ;;; Add action to open pdf in Okular
+;; (defun bibtex-completion-open-pdf-external (keys &optional fallback-action)
 
-   "Quit"
-   (("q" nil "quit "))))
+;;   (let ((bibtex-completion-pdf-open-function
+;;          (lambda (fpath) (start-process "okular" "*helm-bibtex-okular*" "/usr/bin/okular" fpath))))
+;;     (bibtex-completion-open-pdf keys fallback-action)))
 
-(global-set-key (kbd "s-z") 'hydra-zot/body)
+;; (helm-bibtex-helmify-action bibtex-completion-open-pdf-external helm-bibtex-open-pdf-external)
+
+;; (helm-add-action-to-source
+;;  "Open file in Okular"
+;;  'helm-bibtex-open-pdf-external
+;;  helm-source-bibtex
+;;  1)
+
+;; ;;; Key bindings
+;; (global-set-key (kbd "s-b") 'helm-command-prefix)
+
+;; (define-key helm-command-map "b" 'helm-bibtex)
+;; (define-key helm-command-map "B" 'helm-bibtex-with-local-bibliography)
+;; (define-key helm-command-map "n" 'helm-bibtex-with-notes)
+;; (define-key helm-command-map (kbd "s-b") 'helm-resume)
+
+;; (setq hydra-zot--title
+;;       (with-faicon "book" "Zotero" 1 -0.05))
+
+;; (pretty-hydra-define hydra-zot
+;;   (:quit-key "q" :title hydra-zot--title :foreign-keys warn :exit t)
+;;   (""
+;;    (("i" (org-zotxt-insert-reference-link) "Insert link ")
+;;     ("u" (org-zotxt-update-reference-link-at-point) "Update link ")
+;;     ("a" (org-zotxt-open-attachment) "Open attachment "))
+
+;;    "Quit"
+;;    (("q" nil "quit "))))
+
+;; (global-set-key (kbd "s-z") 'hydra-zot/body)
 
 ;; Turn on Auto Fill mode automatically in Org mode
 (add-hook 'org-mode-hook
@@ -455,10 +507,21 @@ the \"file\" field is empty, return the empty string."
 ;; Auto numbering of headlines
 (add-hook 'org-mode-hook (lambda () (org-num-mode)))
 
-;; org-zotxt
-(add-hook 'org-mode-hook (lambda () (org-zotxt-mode)))
+;; org-zotxt (disabled)
+;; (add-hook 'org-mode-hook (lambda () (org-zotxt-mode)))
 
-;; org-tempo
+;; Org Tempo reimplements completions of structure template before
+;; point like `org-try-structure-completion' in Org v9.1 and earlier.
+;; For example, strings like "<e" at the beginning of the line will be
+;; expanded to an example block.
+;;
+;; All blocks defined in `org-structure-template-alist' are added as
+;; Org Tempo shortcuts, in addition to keywords defined in
+;; `org-tempo-keywords-alist'.
+;;
+;; `tempo' can also be used to define more sophisticated keywords
+;; completions.  See the section "Additional keywords" below for
+;; additional details.
 (require 'org-tempo)
 
 ;;; Associate .org files to org mode
@@ -508,13 +571,6 @@ the \"file\" field is empty, return the empty string."
    (concat "/ssd/miniconda/envs/r-reticulate/bin/jupyter notebook "
            "--notebook-dir=" df)
    "jupyter-notebook-output"))
-
-;; (add-hook 'org-mode-hook 'turn-on-visual-line-mode)
-;; (add-hook 'visual-line-mode-hook #'visual-fill-column-mode)
-;; (add-hook 'visual-line-mode-hook #'adaptive-wrap-prefix-mode)
-;; (setq visual-fill-column-enable-sensible-window-split t)
-;; (setq-default visual-fill-column-width 69)
-;; ;;(setq-default visual-fill-column-center-text t)
 
 (global-set-key (kbd "s--") 'negative-argument)
 (global-set-key (kbd "s-0") 'digit-argument)
@@ -953,12 +1009,6 @@ Otherwise, kill. Besides, delete window it occupied."
 (global-set-key (kbd "C-x C-y") 'transpose-sentences)
 (global-set-key (kbd "C-z") 'undo)
 
-;; (setq xah-fly-use-meta-key nil)
-;; (setq xah-fly-use-control-key nil)
-;; (require 'xah-fly-keys)
-;; (xah-fly-keys-set-layout "qwerty-abnt")
-;; (xah-fly-keys 1)
-
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
 (require 'web-beautify)
@@ -1175,9 +1225,9 @@ Otherwise, kill. Besides, delete window it occupied."
 
 ;; From http://tuhdo.github.io/helm-intro.html
 ;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
-;; Changed to "C-c h". Note: We must set "C-c h" globally, because we
+;; Changed to "C-c C-h". Note: We must set "C-c C-h" globally, because we
 ;; cannot change `helm-command-prefix-key' once `helm-config' is loaded.
-;; (global-set-key (kbd "C-c h") 'helm-command-prefix)
+(global-set-key (kbd "C-c C-h") 'helm-command-prefix)
 (global-unset-key (kbd "C-x c"))
 (global-set-key (kbd "C-x b") 'helm-mini)
 
@@ -1191,8 +1241,8 @@ Otherwise, kill. Besides, delete window it occupied."
       helm-ff-file-name-history-use-recentf t)
 
 (helm-mode 1)
-(define-key helm-map (kbd "C-SPC") 'helm-execute-persistent-action) ; 
-(define-key helm-map (kbd "<tab>")  'helm-select-action) ; list actions
+(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
+(define-key helm-map (kbd "C-j")  'helm-select-action)
 
 (define-key helm-map (kbd "C-<left>")  'helm-previous-source) 
 (define-key helm-map (kbd "C-<right>")  'helm-next-source) 
@@ -1203,7 +1253,6 @@ Otherwise, kill. Besides, delete window it occupied."
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
 (global-set-key (kbd "C-c b") 'helm-buffers-list)
 (add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
-(global-set-key (kbd "C-c h o") 'helm-occur)
 (global-set-key (kbd "C-h SPC") 'helm-all-mark-rings)
 
 ;;; Make helm use new frame instead of minibuffer
