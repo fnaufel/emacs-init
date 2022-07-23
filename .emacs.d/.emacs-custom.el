@@ -12,6 +12,7 @@
  '(ansi-color-faces-vector
    [default bold default italic underline success warning error])
  '(bar-cursor-mode nil)
+ '(biblio-crossref-user-email-address "jln.neuer@gmail.com")
  '(bibtex-parse-keys-fast nil)
  '(browse-kill-ring-quit-action (quote kill-and-delete-window))
  '(browse-url-browser-function (quote browse-url-default-browser))

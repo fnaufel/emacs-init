@@ -283,9 +283,14 @@
     (message "Exporting to JSON: %s" (car command-line-args-left))
     (org-export-json)))
 
+;; Based on  https://ogbe.net/emacs/references.html
+
 (require 'ebib)
-(require 'helm-bibtex)
 (require 'bibtex)
+;; (require 'helm-bibtex)
+
+;; Show cursor
+(setq ebib-hide-cursor nil)
 
 ;; Bib file
 (setq ebib-preload-bib-files '("/home/fnaufel/Documents/OrgFiles/bibliography.bib"))
@@ -340,7 +345,7 @@ the \"file\" field is empty, return the empty string."
                                 relative-path
                               abbreviate-path))
                   (otherwise absolute-path))))
-          (format ":NOTER_DOCUMENT: %s" final-path))
+          (format "%s" final-path))
       "")))
 
 ;; Add specifier
@@ -356,28 +361,7 @@ the \"file\" field is empty, return the empty string."
        (102 . ebib-create-org-noter-file-property)))
 
 ;; Add :NOTER_DOCUMENT: property to note template
-(setq ebib-notes-template "* %T\n:PROPERTIES:\n%K\n%f\n:END:\n%%?\n")
-
-;; From https://ogbe.net/emacs/references.html ;;;;;;;;;
-
-;; bibtex config
-(setq bibtex-autokey-year-length 4)
-(setq bibtex-autokey-titleword-separator "-")
-(setq bibtex-autokey-name-year-separator "-")
-(setq bibtex-autokey-year-title-separator "-")
-(setq bibtex-autokey-titleword-length 8)
-(setq bibtex-autokey-titlewords 3)
-(setq bibtex-autokey-titleword-ignore
-      '("O" "Os" "A" "As" "Um" "Uma" "An" "The" "Eine?" "Der" "Die" "Das" "[^[:upper:]].*" ".*[^[:upper:][:lower:]0-9].*"))
-
-;; a small convenience function to import into ebib from the clipboard
-(defun do.refs/ebib-import-from-clipboard ()
-  "Attempt to import the contents in the kill ring/clipboard into `ebib'."
-  (interactive)
-  (with-temp-buffer
-    (yank)
-    (ebib-import)
-    (call-interactively #'ebib)))
+(setq ebib-notes-template "* %T\n:PROPERTIES:\n%K\n:NOTER_DOCUMENT: %f\n:END:\n%%?\n")
 
 (defvar do.refs/pdf-download-dir "/home/fnaufel/Downloads/"
   "The path to the temporary directory to which we download PDF
@@ -413,18 +397,38 @@ the \"file\" field is empty, return the empty string."
           (message "[Ebib] Imported %s for %s" fpath bibkey))
       (message "[Ebib] No files from %s imported." do.refs/pdf-download-dir))))
 
-;; helm-bibtex config
-(setq bibtex-completion-bibliography ebib-preload-bib-files)
-(setq bibtex-completion-library-path ebib-bib-search-dirs)
-(setq bibtex-completion-notes-path ebib-notes-directory)
-(setq bibtex-completion-notes-extension ".org")
-(setq bibtex-completion-pdf-field "file")
-(setq bibtex-completion-additional-search-fields '(keywords))
-(setq bibtex-completion-pdf-open-function 'find-file-other-frame)
+;; Call biblio-lookup with author and/or title of current entry in kill ring
+(defun lookup-entry ()
+  "Put author and title of current entry in kill ring and call biblio-lookup."
+  (interactive)
+  (let* ((key (ebib--get-key-at-point))
+         (author (ebib-get-field-value
+                  "author" key ebib--cur-db 'noerror 'unbraced))
+         (title (ebib-get-field-value
+                 "title" key ebib--cur-db 'noerror 'unbraced))
+         (query (concat author " " title)))
+    (kill-new query)
+    (biblio-lookup nil nil)))
 
-;; what is the default citation style?
-(setq bibtex-completion-cite-default-command "cite")
-(setq bibtex-completion-cite-default-as-initial-input t)
+;; Bibliography hydra
+(setq hydra-bib--title
+      (with-faicon "book" "Bibliography" 1 -0.05))
+
+(pretty-hydra-define hydra-bib
+  (:quit-key "q" :title hydra-bib--title :foreign-keys warn :exit t)
+  (""
+   (("e" (ebib) "[E]bib " :exit t)
+    ("b" (lookup-entry) "[B]iblio (yank for current entry) " :exit t)
+    ("c" (ebib-insert-citation) "[C]ite current entry " :exit t)
+    ("f" (ebib-import-file) "[F]ile for current entry " :exit t)
+    ("u" (ebib-download-url nil) "[U]rl download for current entry " :exit t)
+    ("o" (org-noter) "[O]pen pdf from note " :exit t)
+    ("n" (do.refs/ebib-add-newest-from-downloads) "[N]ewest file for current entry " :exit t))
+
+   ""
+   (("q" nil "quit "))))
+
+(global-set-key (kbd "s-z") 'hydra-bib/body)
 
 ;; (require 'helm-bibtex)
 ;; (require 'bibtex)
@@ -1658,6 +1662,10 @@ with leading and trailing spaces removed."
 (telega)
 (sleep-for 3)
 (telega-root-buffer-auto-fill)
+
+;;; Call ebib and bury it, making the frame as before
+(ebib)
+(ebib-leave-ebib-windows)
 
 ;; ;;; Go back to initial frame
 (other-frame -1)
