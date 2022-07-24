@@ -760,17 +760,23 @@ the \"file\" field is empty, return the empty string."
 
 (pretty-hydra-define hydra-fnjump
   (:quit-key "q" :title hydra-fnjump--title :foreign-keys warn :exit t)
-  ("Jump to"
+
+  ("Files"
    (("e" (find-file "~/Documents/OrgFiles/mail.org") "email ")
     ("b" (find-file "~/.bashrc") ".bashrc ")
     ("p" (find-file "~/.profile") ".profile ")
     ("s" (find-file "~/Stow") "Stow ")
     ("c" (find-file "~/Stow/emacs/.emacs.d/.emacs-custom.el") "custom.el ")
-    ("i" (find-file "~/Stow/emacs/dot-init.org") "init ")
-    ("t" (update-clock-tables) "clock tables ")
-    ("x" (ansi-term "/home/fnaufel/.local/bin/xonsh" "xonsh") "new xonsh ")
-    ("j" (ipython-notebook-int) "jupyter")
-    ("y" (ipython-qtconsole) "ipython"))
+    ("i" (find-file "~/Stow/emacs/dot-init.org") "init "))
+
+   "Python"
+   (("j" (ipython-notebook-int) "jupyter")
+    ("y" (ipython-qtconsole) "ipython")
+    ;; ("x" (ansi-term "/home/fnaufel/.local/bin/xonsh" "xonsh") "new xonsh "))
+    ("x" (message "xonsh disabled for now") "new xonsh "))
+
+   "Clock"
+   (("t" (update-clock-tables) "clock tables "))
 
    "Quit"
    (("q" nil "quit "))))
@@ -870,37 +876,40 @@ A prefix argument is handled like `move-to-window-line':
 
 (require 'windmove)
 
+(setq column-delta 5)
+(setq line-delta 5)
+
 (defun hydra-move-splitter-left (arg)
   "Move window splitter left."
   (interactive "p")
   (if (let ((windmove-wrap-around))
         (windmove-find-other-window 'right))
-      (shrink-window-horizontally arg)
-    (enlarge-window-horizontally arg)))
+      (shrink-window-horizontally column-delta)
+    (enlarge-window-horizontally column-delta)))
 
 (defun hydra-move-splitter-right (arg)
   "Move window splitter right."
   (interactive "p")
   (if (let ((windmove-wrap-around))
         (windmove-find-other-window 'right))
-      (enlarge-window-horizontally arg)
-    (shrink-window-horizontally arg)))
+      (enlarge-window-horizontally column-delta)
+    (shrink-window-horizontally column-delta)))
 
 (defun hydra-move-splitter-up (arg)
   "Move window splitter up."
   (interactive "p")
   (if (let ((windmove-wrap-around))
         (windmove-find-other-window 'up))
-      (enlarge-window arg)
-    (shrink-window arg)))
+      (enlarge-window line-delta)
+    (shrink-window line-delta)))
 
 (defun hydra-move-splitter-down (arg)
   "Move window splitter down."
   (interactive "p")
   (if (let ((windmove-wrap-around))
         (windmove-find-other-window 'up))
-      (shrink-window arg)
-    (enlarge-window arg)))
+      (shrink-window line-delta)
+    (enlarge-window line-delta)))
 
 ;; Regexes for names of buffers that should not be killed by this function
 (setq not-to-kill-buffer-list
@@ -967,16 +976,16 @@ Otherwise, kill. Besides, delete window it occupied."
 (pretty-hydra-define hydra-windows
   (:quit-key "q" :title hydra-window--title :foreign-keys warn)
     ("Go"
-     (("i" windmove-up "↑ ")
-      ("m" windmove-down "↓ ")
-      ("j" windmove-left "← ")
-      ("l" windmove-right "→ "))
+     (("I" windmove-up "↑ ")
+      ("M" windmove-down "↓ ")
+      ("J" windmove-left "← ")
+      ("L" windmove-right "→ "))
 
      "Resize"
-     (("I" hydra-move-splitter-up "↑ ")
-      ("M" hydra-move-splitter-down "↓ ")
-      ("J" hydra-move-splitter-left "← ")
-      ("L" hydra-move-splitter-right "→ ")
+     (("i" hydra-move-splitter-up "↑ ")
+      ("m" hydra-move-splitter-down "↓ ")
+      ("j" hydra-move-splitter-left "← ")
+      ("l" hydra-move-splitter-right "→ ")
       ("=" balance-windows "= "))
 
      "Swap"
