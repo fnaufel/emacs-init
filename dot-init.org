@@ -1891,6 +1891,10 @@
            (sunrise-dired (ffap-guess-file-name-at-point))))
 
        (global-set-key (kbd "C-x C-j") 'open-dir-in-sunrise)
+
+       ;;; Flatten dir and subdirs
+       (define-key sunrise-mode-map (kbd "C-c b") nil)
+       (define-key sunrise-mode-map (kbd "f") #'sunrise-flatten-branch)
      #+end_src
     
 * telega
