@@ -976,48 +976,63 @@ Otherwise, kill. Besides, delete window it occupied."
 (pretty-hydra-define hydra-windows
   (:quit-key "q" :title hydra-window--title :foreign-keys warn)
     ("Go"
-     (("I" windmove-up "↑ ")
-      ("M" windmove-down "↓ ")
-      ("J" windmove-left "← ")
-      ("L" windmove-right "→ "))
+     (("<up>" windmove-up "↑ ")
+      ("<down>" windmove-down "↓ ")
+      ("<left>" windmove-left "← ")
+      ("<right>" windmove-right "→ ")
+      ("w" windmove-up "↑ ")
+      ("s" windmove-down "↓ ")
+      ("a" windmove-left "← ")
+      ("d" windmove-right "→ "))
 
      "Resize"
-     (("i" hydra-move-splitter-up "↑ ")
-      ("m" hydra-move-splitter-down "↓ ")
-      ("j" hydra-move-splitter-left "← ")
-      ("l" hydra-move-splitter-right "→ ")
+     (("{" hydra-move-splitter-up "↑ ")
+      ("}" hydra-move-splitter-down "↓ ")
+      ("[" hydra-move-splitter-left "← ")
+      ("]" hydra-move-splitter-right "→ ")
       ("=" balance-windows "= "))
 
      "Swap"
-     (("M-i" buf-move-up "↑ ")
-      ("M-m" buf-move-down "↓ ")
-      ("M-j" buf-move-left "← ")
-      ("M-l" buf-move-right "→ "))
-
-     "Kill"
-     (("k" kill-or-bury-current-buffer "this buffer " :exit t)
-      ("K" kill-buffer-special-and-window "this buffer & window " :exit t)
-      ("M-k" kill-buffer-special-and-frame "this buffer & frame " :exit t)
-      ("o" kill-other-buffer-special "other buffer " :exit t)
-      ("O" kill-other-buffer-special-and-window "other buffer & window " :exit t))
+     (("<prior>" buf-move-up "↑ ")
+      ("<next>"  buf-move-down "↓ ")
+      ("<home>"  buf-move-left "← ")
+      ("<end>"   buf-move-right "→ "))
 
      "Create"
-     (("w" (progn (split-window-below) (windmove-down)) "window ↑ " :exit t)
-      ("s" (split-window-below) "window ↓ " :exit t)
-      ("a" (progn (split-window-right) (windmove-right)) "window ← " :exit t)
-      ("d" (split-window-right) "window → " :exit t)
+     (("i" (progn (split-window-below) (windmove-down)) "window ↑ ")
+      ("k" (split-window-below) "window ↓ ")
+      ("j" (progn (split-window-right) (windmove-right)) "window ← ")
+      ("l" (split-window-right) "window → ")
       ("f" make-frame-command "frame " :exit t))
 
      "Delete"
-     (("0" delete-window "this window " :exit t)
-      ("1" delete-other-windows "other windows " :exit t)
+     (("0" delete-window "this window ")
+      ("1" delete-other-windows "other windows ")
       ("5" delete-frame "this frame " :exit t))
 
      "Quit"
-     (("q" nil "quit "))))
+     (("q" nil "quit ")
+      ("<SPC>" nil "quit "))))
 
 (global-set-key (kbd "s-l") 'hydra-windows/body)
-(global-set-key (kbd "s-k") 'kill-or-bury-current-buffer)
+
+(setq hydra-kill--title
+  (with-faicon "times" "Kill" 1 -0.05))
+
+(pretty-hydra-define hydra-kill
+  (:quit-key "q" :title hydra-kill--title :foreign-keys warn)
+    ("Kill"
+     (("k" kill-or-bury-current-buffer "this buffer " :exit t)
+      ("0" kill-buffer-special-and-window "this buffer & window " :exit t)
+      ("5" kill-buffer-special-and-frame "this buffer & frame " :exit t)
+      ("o" kill-other-buffer-special "other buffer " :exit t)
+      ("1" kill-other-buffer-special-and-window "other buffer & window " :exit t))
+
+     "Quit"
+     (("q" nil "quit ")
+      ("<SPC>" nil "quit "))))
+
+(global-set-key (kbd "s-k") 'hydra-kill/body)
 
 (global-set-key (kbd "C-x C-y") 'transpose-sentences)
 (global-set-key (kbd "C-z") 'undo)
