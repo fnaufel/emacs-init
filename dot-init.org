@@ -216,6 +216,27 @@
           (define-key org-mode-map (kbd "C-c g") 'helm-org-agenda-files-headings)
         #+end_src
     
+*** Org File Apps
+
+    #+begin_src emacs-lisp
+      (setq org-file-apps
+            '((auto-mode . emacs)
+              ("\\.mm\\'" . default)
+              ("\\.x?html?\\'" . default)
+              ("\\(?:xhtml\\|html\\)\\'" . default)
+              ("\\.pdf::[[:digit:]]+\\'" . find-file-other-frame)
+              ("\\.pdf\\'" . find-file-other-frame)
+              ("\\.\\(?:flac\\|mp3\\|m4a\\)\\(?:::\\([[:digit:]]+\\)\\)?\\'" .
+               (funcall audio-link-function file (match-string 1 link)))
+              ("\\.\\(?:avi\\|flv\\|wmv\\|mp4\\|ra\\)\\(?:::\\([[:digit:]]+\\)\\(?:-\\([[:digit:]]+\\)\\)?\\)?\\'" .
+               (funcall video-link-function file (match-string 1 link) (match-string 2 link)))
+              ("\\(?:mobi\\|epub\\|azw\\)" . "ebook-viewer %s")
+              ("\\.Rproj\\'" . "rstudio %s")
+              ("\\.png\\'" . "gwenview %s")
+              ("\\.jpe?g\\'" . "gwenview %s")
+              ("\\.gif\\'" . "gwenview %s")))
+    #+end_src
+
 *** Audio and video links
     
 ***** TODO Change from gmplayer to vlc?

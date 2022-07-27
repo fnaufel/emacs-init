@@ -141,6 +141,23 @@
 (define-key org-mode-map (kbd "C-c i") 'helm-org-parent-headings)
 (define-key org-mode-map (kbd "C-c g") 'helm-org-agenda-files-headings)
 
+(setq org-file-apps
+      '((auto-mode . emacs)
+        ("\\.mm\\'" . default)
+        ("\\.x?html?\\'" . default)
+        ("\\(?:xhtml\\|html\\)\\'" . default)
+        ("\\.pdf::[[:digit:]]+\\'" . find-file-other-frame)
+        ("\\.pdf\\'" . find-file-other-frame)
+        ("\\.\\(?:flac\\|mp3\\|m4a\\)\\(?:::\\([[:digit:]]+\\)\\)?\\'" .
+         (funcall audio-link-function file (match-string 1 link)))
+        ("\\.\\(?:avi\\|flv\\|wmv\\|mp4\\|ra\\)\\(?:::\\([[:digit:]]+\\)\\(?:-\\([[:digit:]]+\\)\\)?\\)?\\'" .
+         (funcall video-link-function file (match-string 1 link) (match-string 2 link)))
+        ("\\(?:mobi\\|epub\\|azw\\)" . "ebook-viewer %s")
+        ("\\.Rproj\\'" . "rstudio %s")
+        ("\\.png\\'" . "gwenview %s")
+        ("\\.jpe?g\\'" . "gwenview %s")
+        ("\\.gif\\'" . "gwenview %s")))
+
 (defun convert-hhmmss-to-secs (time)
   "Receives a string of digits TIME of the form h...hhmmss and
   returns the corresponding total number of seconds. If TIME is
@@ -779,7 +796,8 @@ the \"file\" field is empty, return the empty string."
    (("t" (update-clock-tables) "clock tables "))
 
    "Quit"
-   (("q" nil "quit "))))
+   (("q" nil "quit ")
+    ("<SPC>" nil "quit "))))
 
 (global-set-key (kbd "s-j") 'hydra-fnjump/body)
 
@@ -1023,6 +1041,7 @@ Otherwise, kill. Besides, delete window it occupied."
   (:quit-key "q" :title hydra-kill--title :foreign-keys warn)
     ("Kill"
      (("k" kill-or-bury-current-buffer "this buffer " :exit t)
+      ("s-k" kill-or-bury-current-buffer "this buffer " :exit t)
       ("0" kill-buffer-special-and-window "this buffer & window " :exit t)
       ("5" kill-buffer-special-and-frame "this buffer & frame " :exit t)
       ("o" kill-other-buffer-special "other buffer " :exit t)
@@ -1500,6 +1519,10 @@ with leading and trailing spaces removed."
     (sunrise-dired (ffap-guess-file-name-at-point))))
 
 (global-set-key (kbd "C-x C-j") 'open-dir-in-sunrise)
+
+;;; Flatten dir and subdirs
+(define-key sunrise-mode-map (kbd "C-c b") nil)
+(define-key sunrise-mode-map (kbd "f") #'sunrise-flatten-branch)
 
 (require 'telega)
 (require 'ol-telega)

@@ -124,24 +124,6 @@
  '(org-duration-format (quote ((special . h:mm))))
  '(org-ellipsis " 🡇")
  '(org-export-latex-packages-alist (quote (("" "minted" t))))
- '(org-file-apps
-   (quote
-    ((auto-mode . emacs)
-     ("\\.mm\\'" . default)
-     ("\\.x?html?\\'" . default)
-     ("\\(?:xhtml\\|html\\)\\'" . default)
-     ("\\.pdf::\\([[:digit:]]+\\)\\'" . "okular -p %1 %s")
-     ("\\.pdf\\'" . "okular %s")
-     ("\\.\\(?:flac\\|mp3\\|m4a\\)\\(?:::\\([[:digit:]]+\\)\\)?\\'" funcall audio-link-function file
-      (match-string 1 link))
-     ("\\.\\(?:avi\\|flv\\|wmv\\|mp4\\|ra\\)\\(?:::\\([[:digit:]]+\\)\\(?:-\\([[:digit:]]+\\)\\)?\\)?\\'" funcall video-link-function file
-      (match-string 1 link)
-      (match-string 2 link))
-     ("\\(?:mobi\\|epub\\|azw\\)" . "ebook-viewer %s")
-     ("\\.Rproj\\'" . "rstudio %s")
-     ("\\.png\\'" . "gwenview %s")
-     ("\\.jpe?g\\'" . "gwenview %s")
-     ("\\.gif\\'" . "gwenview %s"))))
  '(org-footnote-auto-label (quote confirm))
  '(org-footnote-section nil)
  '(org-format-latex-options
