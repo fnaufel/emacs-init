@@ -1577,7 +1577,9 @@ with leading and trailing spaces removed."
 (defun sunrise-telega-copy ()
   (interactive)
   (when-let*
-      ((files (seq-filter #'file-regular-p (sunrise-get-marked-files)))
+      ; Changed from sunrise- to dired-get-marked-files below, because
+      ; sunrise- was returning the relative path, but I need the absolute path
+      ((files (seq-filter #'file-regular-p (dired-get-marked-files)))
        (chatbuf (telega-dwim-chatbuf)))
     (select-window chatbuf)
     (mapc #'telega-chatbuf-attach-file files)))
