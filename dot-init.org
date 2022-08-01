@@ -1333,6 +1333,12 @@
                        shell-mode-hook
                        help-mode-hook
                        pdf-view-mode-hook
+                       mu4e-main-mode-hook
+                       mu4e-headers-mode-hook
+                       mu4e-compose-mode-hook
+                       mu4e-org-mode-hook
+                       mu4e-view-mode-hook
+                       mu4e-update-mail-mode-hook
                        treemacs-mode-hook))
          (add-hook mode (lambda () (display-line-numbers-mode 0))))
      #+end_src
@@ -1918,6 +1924,151 @@
        (define-key sunrise-mode-map (kbd "f") #'sunrise-flatten-branch)
      #+end_src
     
+* mu4e
+
+  #+begin_src emacs-lisp
+    (require 'org-mime)
+
+    (add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
+
+    (require 'mu4e)
+
+    (setq mu4e-maildir (expand-file-name "~/Maildir"))
+
+    ; get mail
+    (setq mu4e-get-mail-command "mbsync -c ~/.emacs.d/mu4e/.mbsyncrc -a"
+      ;; mu4e-html2text-command "w3m -T text/html" ;;using the default mu4e-shr2text
+      mu4e-view-prefer-html nil
+      mu4e-update-interval (* 60 60)  ; seconds
+      mu4e-headers-auto-update t
+      mu4e-compose-signature-auto-include t
+      mu4e-compose-format-flowed t)
+
+    ;; If you’re using a dark theme, and the messages are hard to read, it
+    ;; can help to change the luminosity, e.g.:
+    (setq shr-color-visible-luminance-min 80)
+
+    ;; Actions
+    (setq mu4e-view-actions
+          '(("capture message" . mu4e-action-capture-message)
+           ("show this thread" . mu4e-action-show-thread)
+           ("viewInBrowser" . mu4e-action-view-in-browser)))
+
+    ;; enable inline images
+    (setq mu4e-view-show-images t)
+    ;; use imagemagick, if available
+    (when (fboundp 'imagemagick-register-types)
+      (imagemagick-register-types))
+
+    ;; every new email composition gets its own frame!
+    (setq mu4e-compose-in-new-frame t)
+
+    ;; don't save message to Sent Messages, IMAP takes care of this
+    (setq mu4e-sent-messages-behavior 'delete)
+
+    (add-hook 'mu4e-view-mode-hook #'visual-line-mode)
+
+    ;; <tab> to navigate to links, <RET> to open them in browser
+    (add-hook 'mu4e-view-mode-hook
+      (lambda()
+    ;; try to emulate some of the eww key-bindings
+    (local-set-key (kbd "<RET>") 'mu4e~view-browse-url-from-binding)
+    (local-set-key (kbd "<tab>") 'shr-next-link)
+    (local-set-key (kbd "<backtab>") 'shr-previous-link)))
+
+    ;; from https://www.reddit.com/r/emacs/comments/bfsck6/mu4e_for_dummies/elgoumx
+    (add-hook 'mu4e-headers-mode-hook
+          (defun my/mu4e-change-headers ()
+        (interactive)
+        (setq mu4e-headers-fields
+              `((:date . 30) ;; alternatively, use :date
+            (:flags . 6)
+            (:from . 22)
+            (:thread-subject . ,(- (window-body-width) 72)) ;; alternatively, use :subject
+            (:size . 7)))))
+
+    ;; if you use date instead of human-date in the above, use this setting
+    ;; give me ISO(ish) format date-time stamps in the header list
+    (setq mu4e-headers-date-format "%Y-%m-%d (%a) %H:%M")
+
+    ;; spell check (disable)
+    ;; (add-hook 'mu4e-compose-mode-hook
+    ;;     (defun my-do-compose-stuff ()
+    ;;        "My settings for message composition."
+    ;;        (visual-line-mode)
+    ;;        (org-mu4e-compose-org-mode)
+    ;;            (use-hard-newlines -1)
+    ;;        (flyspell-mode)))
+
+    (require 'smtpmail)
+
+    ;;rename files when moving
+    ;;NEEDED FOR MBSYNC
+    (setq mu4e-change-filenames-when-moving t)
+
+    ;;set up queue for offline email
+    ;;use mu mkdir  ~/Maildir/acc/queue to set up first
+    (setq smtpmail-queue-mail nil)  ;; start in normal mode
+
+    ;;from the info manual
+    (setq mu4e-attachment-dir  "~/Downloads")
+
+    (setq message-kill-buffer-on-exit t)
+    (setq mu4e-compose-dont-reply-to-self t)
+
+    ;; disable for now
+    ;; (require 'org-mu4e)
+
+    ;; convert org mode to HTML automatically
+    ;; (setq org-mu4e-convert-to-html t)
+
+    ;;from vxlabs config
+    ;; show full addresses in view message (instead of just names)
+    ;; toggle per name with M-RET
+    (setq mu4e-view-show-addresses 't)
+
+    ;; don't ask when quitting
+    (setq mu4e-confirm-quit nil)
+
+    ;; mu4e-context
+    (setq mu4e-context-policy 'pick-first)
+    (setq mu4e-compose-context-policy 'always-ask)
+    (setq mu4e-contexts
+          (list
+           (make-mu4e-context
+            :name "sesquipedalian" ;;for acc1-gmail
+            :enter-func (lambda () (mu4e-message "Entering context sesquipedalian"))
+            :leave-func (lambda () (mu4e-message "Leaving context sesquipedalian"))
+            :match-func (lambda (msg)
+                          (when msg
+                            (mu4e-message-contact-field-matches
+                             msg '(:from :to :cc :bcc) "sesquipedalian.overtones@gmail.com")))
+            :vars '((user-mail-address . "sesquipedalian.overtones@gmail.com")
+                    (user-full-name . "Sesquipedalian Overtones")
+                    (mu4e-sent-folder . "/sesquipedalian-gmail/[sesquipedalian].Sent Mail")
+                    (mu4e-drafts-folder . "/sesquipedalian-gmail/[sesquipedalian].drafts")
+                    (mu4e-trash-folder . "/sesquipedalian-gmail/[sesquipedalian].Trash")
+                    (mu4e-compose-signature . (concat "Sesquipedalian Overtones\n" "Emacs 25, org-mode 9, mu4e 1.0\n"))
+                    (mu4e-compose-format-flowed . t)
+                    (smtpmail-queue-dir . "~/Maildir/sesquipedalian-gmail/queue/cur")
+                    (message-send-mail-function . smtpmail-send-it)
+                    (smtpmail-smtp-user . "sesquipedalian.overtones")
+                    (smtpmail-starttls-credentials . (("smtp.gmail.com" 587 nil nil)))
+                    (smtpmail-auth-credentials . (expand-file-name "~/.authinfo-sesq.gpg"))
+                    (smtpmail-default-smtp-server . "smtp.gmail.com")
+                    (smtpmail-smtp-server . "smtp.gmail.com")
+                    (smtpmail-smtp-service . 587)
+                    (smtpmail-debug-info . t)
+                    (smtpmail-debug-verbose . t)
+                    (mu4e-maildir-shortcuts . ( ("/sesquipedalian-gmail/INBOX"            . ?i)
+                                                ("/sesquipedalian-gmail/[sesquipedalian].Sent Mail" . ?s)
+                                                ("/sesquipedalian-gmail/[sesquipedalian].Trash"     . ?t)
+                                                ("/sesquipedalian-gmail/[sesquipedalian].All Mail"  . ?a)
+                                                ("/sesquipedalian-gmail/[sesquipedalian].Starred"   . ?r)
+                                                ("/sesquipedalian-gmail/[sesquipedalian].drafts"    . ?d)
+                                                ))))))
+  #+end_src
+
 * telega
 
   Pinned to MELPA stable. See [[file:.emacs.d/.emacs-custom.el::'(package-pinned-packages (quote ((telega . "MELPA Stable"))))][.emacs-custom.el]]
