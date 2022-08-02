@@ -1017,15 +1017,15 @@ Otherwise, kill. Besides, delete window it occupied."
       ("<end>"   buf-move-right "→ "))
 
      "Create"
-     (("i" (progn (split-window-below) (windmove-down)) "window ↑ ")
-      ("k" (split-window-below) "window ↓ ")
-      ("j" (progn (split-window-right) (windmove-right)) "window ← ")
-      ("l" (split-window-right) "window → ")
+     (("i" (progn (split-window-below) (windmove-down)) "window ↑ " :exit t)
+      ("k" (split-window-below) "window ↓ " :exit t)
+      ("j" (progn (split-window-right) (windmove-right)) "window ← " :exit t)
+      ("l" (split-window-right) "window → " :exit t)
       ("f" make-frame-command "frame " :exit t))
 
      "Delete"
-     (("0" delete-window "this window ")
-      ("1" delete-other-windows "other windows ")
+     (("0" delete-window "this window " :exit t)
+      ("1" delete-other-windows "other windows " :exit t)
       ("5" delete-frame "this frame " :exit t))
 
      "Quit"
@@ -1538,24 +1538,22 @@ with leading and trailing spaces removed."
 
 (setq mu4e-maildir (expand-file-name "~/Maildir"))
 
-; get mail
-(setq mu4e-get-mail-command "mbsync -c ~/.emacs.d/mu4e/.mbsyncrc -a"
-  ;; mu4e-html2text-command "w3m -T text/html" ;;using the default mu4e-shr2text
-  mu4e-view-prefer-html nil
-  mu4e-update-interval (* 60 60)  ; seconds
-  mu4e-headers-auto-update t
-  mu4e-compose-signature-auto-include t
-  mu4e-compose-format-flowed t)
+(setq mu4e-get-mail-command "offlineimap"
+      mu4e-html2text-command "w3m -T text/html"
+      mu4e-view-prefer-html nil
+      mu4e-update-interval (* 60 60)  ; seconds
+      mu4e-headers-auto-update t
+      mu4e-compose-signature-auto-include t
+      mu4e-compose-format-flowed t)
 
-;; If you’re using a dark theme, and the messages are hard to read, it
-;; can help to change the luminosity, e.g.:
-(setq shr-color-visible-luminance-min 80)
+;; Use unicode chars for marks?
+(setq mu4e-use-fancy-chars nil)
 
 ;; Actions
 (setq mu4e-view-actions
       '(("capture message" . mu4e-action-capture-message)
-       ("show this thread" . mu4e-action-show-thread)
-       ("viewInBrowser" . mu4e-action-view-in-browser)))
+        ("show this thread" . mu4e-action-show-thread)
+        ("viewInBrowser" . mu4e-action-view-in-browser)))
 
 ;; enable inline images
 (setq mu4e-view-show-images t)
@@ -1573,35 +1571,25 @@ with leading and trailing spaces removed."
 
 ;; <tab> to navigate to links, <RET> to open them in browser
 (add-hook 'mu4e-view-mode-hook
-  (lambda()
-;; try to emulate some of the eww key-bindings
-(local-set-key (kbd "<RET>") 'mu4e~view-browse-url-from-binding)
-(local-set-key (kbd "<tab>") 'shr-next-link)
-(local-set-key (kbd "<backtab>") 'shr-previous-link)))
+          (lambda()
+            (local-set-key (kbd "<RET>") 'mu4e~view-browse-url-from-binding)
+            (local-set-key (kbd "<tab>") 'org-next-link)
+            (local-set-key (kbd "<backtab>") 'org-previous-link)))
 
 ;; from https://www.reddit.com/r/emacs/comments/bfsck6/mu4e_for_dummies/elgoumx
 (add-hook 'mu4e-headers-mode-hook
-      (defun my/mu4e-change-headers ()
-    (interactive)
-    (setq mu4e-headers-fields
-          `((:date . 30) ;; alternatively, use :date
-        (:flags . 6)
-        (:from . 22)
-        (:thread-subject . ,(- (window-body-width) 72)) ;; alternatively, use :subject
-        (:size . 7)))))
+          (defun my/mu4e-change-headers ()
+            (interactive)
+            (setq mu4e-headers-fields
+                  `((:date . 30) 
+                    (:flags . 6)
+                    (:from . 22)
+                    (:thread-subject . ,(- (window-body-width) 72)) ;; alternatively, use :subject
+                    (:size . 7)))))
 
 ;; if you use date instead of human-date in the above, use this setting
 ;; give me ISO(ish) format date-time stamps in the header list
 (setq mu4e-headers-date-format "%Y-%m-%d (%a) %H:%M")
-
-;; spell check (disable)
-;; (add-hook 'mu4e-compose-mode-hook
-;;     (defun my-do-compose-stuff ()
-;;        "My settings for message composition."
-;;        (visual-line-mode)
-;;        (org-mu4e-compose-org-mode)
-;;            (use-hard-newlines -1)
-;;        (flyspell-mode)))
 
 (require 'smtpmail)
 
@@ -1639,7 +1627,7 @@ with leading and trailing spaces removed."
 (setq mu4e-contexts
       (list
        (make-mu4e-context
-        :name "sesquipedalian" ;;for acc1-gmail
+        :name "sesquipedalian"
         :enter-func (lambda () (mu4e-message "Entering context sesquipedalian"))
         :leave-func (lambda () (mu4e-message "Leaving context sesquipedalian"))
         :match-func (lambda (msg)
@@ -1648,9 +1636,9 @@ with leading and trailing spaces removed."
                          msg '(:from :to :cc :bcc) "sesquipedalian.overtones@gmail.com")))
         :vars '((user-mail-address . "sesquipedalian.overtones@gmail.com")
                 (user-full-name . "Sesquipedalian Overtones")
-                (mu4e-sent-folder . "/sesquipedalian-gmail/[sesquipedalian].Sent Mail")
-                (mu4e-drafts-folder . "/sesquipedalian-gmail/[sesquipedalian].drafts")
-                (mu4e-trash-folder . "/sesquipedalian-gmail/[sesquipedalian].Trash")
+                (mu4e-sent-folder . "/sesquipedalian-gmail/[Gmail].Sent Mail")
+                (mu4e-drafts-folder . "/sesquipedalian-gmail/[Gmail].Drafts")
+                (mu4e-trash-folder . "/sesquipedalian-gmail/[Gmail].Trash")
                 (mu4e-compose-signature . (concat "Sesquipedalian Overtones\n" "Emacs 25, org-mode 9, mu4e 1.0\n"))
                 (mu4e-compose-format-flowed . t)
                 (smtpmail-queue-dir . "~/Maildir/sesquipedalian-gmail/queue/cur")
@@ -1663,13 +1651,13 @@ with leading and trailing spaces removed."
                 (smtpmail-smtp-service . 587)
                 (smtpmail-debug-info . t)
                 (smtpmail-debug-verbose . t)
-                (mu4e-maildir-shortcuts . ( ("/sesquipedalian-gmail/INBOX"            . ?i)
-                                            ("/sesquipedalian-gmail/[sesquipedalian].Sent Mail" . ?s)
-                                            ("/sesquipedalian-gmail/[sesquipedalian].Trash"     . ?t)
-                                            ("/sesquipedalian-gmail/[sesquipedalian].All Mail"  . ?a)
-                                            ("/sesquipedalian-gmail/[sesquipedalian].Starred"   . ?r)
-                                            ("/sesquipedalian-gmail/[sesquipedalian].drafts"    . ?d)
-                                            ))))))
+                (mu4e-maildir-shortcuts . (
+                                        ;                                           ("/sesquipedalian-gmail/INBOX"            . ?i)
+                                           ("/sesquipedalian-gmail/[Gmail].Sent Mail" . ?s)
+                                           ("/sesquipedalian-gmail/[Gmail].Trash"     . ?t)
+                                           ("/sesquipedalian-gmail/[Gmail].All Mail"  . ?a)
+                                           ("/sesquipedalian-gmail/[Gmail].Starred"   . ?r)
+                                           ("/sesquipedalian-gmail/[Gmail].Drafts"    . ?d)))))))
 
 (require 'telega)
 (require 'ol-telega)
