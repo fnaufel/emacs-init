@@ -1250,15 +1250,15 @@
                   ("<end>"   buf-move-right "→ "))
 
                  "Create"
-                 (("i" (progn (split-window-below) (windmove-down)) "window ↑ ")
-                  ("k" (split-window-below) "window ↓ ")
-                  ("j" (progn (split-window-right) (windmove-right)) "window ← ")
-                  ("l" (split-window-right) "window → ")
+                 (("i" (progn (split-window-below) (windmove-down)) "window ↑ " :exit t)
+                  ("k" (split-window-below) "window ↓ " :exit t)
+                  ("j" (progn (split-window-right) (windmove-right)) "window ← " :exit t)
+                  ("l" (split-window-right) "window → " :exit t)
                   ("f" make-frame-command "frame " :exit t))
 
                  "Delete"
-                 (("0" delete-window "this window ")
-                  ("1" delete-other-windows "other windows ")
+                 (("0" delete-window "this window " :exit t)
+                  ("1" delete-other-windows "other windows " :exit t)
                   ("5" delete-frame "this frame " :exit t))
 
                  "Quit"
