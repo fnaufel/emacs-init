@@ -1011,10 +1011,10 @@ Otherwise, kill. Besides, delete window it occupied."
       ("=" balance-windows "= "))
 
      "Swap"
-     (("<prior>" buf-move-up "↑ ")
-      ("<next>"  buf-move-down "↓ ")
-      ("<home>"  buf-move-left "← ")
-      ("<end>"   buf-move-right "→ "))
+     (("<prior>" buf-move-up "↑ " :exit t)
+      ("<next>"  buf-move-down "↓ " :exit t)
+      ("<home>"  buf-move-left "← " :exit t)
+      ("<end>"   buf-move-right "→ " :exit t))
 
      "Create"
      (("i" (progn (split-window-below) (windmove-down)) "window ↑ " :exit t)
@@ -1536,6 +1536,9 @@ with leading and trailing spaces removed."
 
 (require 'mu4e)
 
+;; use mu4e for e-mail in emacs
+(setq mail-user-agent 'mu4e-user-agent)
+
 (setq mu4e-maildir (expand-file-name "~/Maildir"))
 
 (setq mu4e-get-mail-command "offlineimap"
@@ -1564,7 +1567,7 @@ with leading and trailing spaces removed."
 ;; every new email composition gets its own frame!
 (setq mu4e-compose-in-new-frame t)
 
-;; don't save message to Sent Messages, IMAP takes care of this
+;; Don't save message to Sent Messages, IMAP takes care of this
 (setq mu4e-sent-messages-behavior 'delete)
 
 (add-hook 'mu4e-view-mode-hook #'visual-line-mode)
@@ -1594,16 +1597,14 @@ with leading and trailing spaces removed."
 (require 'smtpmail)
 
 ;;rename files when moving
-;;NEEDED FOR MBSYNC
-(setq mu4e-change-filenames-when-moving t)
+;;NEEDED FOR MBSYNC, disabled for offlinemap
+;;(setq mu4e-change-filenames-when-moving t)
 
 ;;set up queue for offline email
 ;;use mu mkdir  ~/Maildir/acc/queue to set up first
 (setq smtpmail-queue-mail nil)  ;; start in normal mode
 
-;;from the info manual
 (setq mu4e-attachment-dir  "~/Downloads")
-
 (setq message-kill-buffer-on-exit t)
 (setq mu4e-compose-dont-reply-to-self t)
 
@@ -1621,6 +1622,24 @@ with leading and trailing spaces removed."
 ;; don't ask when quitting
 (setq mu4e-confirm-quit nil)
 
+;; bookmarks
+(setq mu4e-bookmarks `(
+                       ("x:\\\\Inbox" "Inbox" ?i)
+                       (,(concat "flag:unread AND "
+                                 "NOT flag:trashed AND "
+                                 "NOT maildir:/Spam$/ AND "
+                                 "NOT maildir:/Trash$/") "Unread messages" ?u)
+                       ("date:today..now" "Today's messages" ?t)
+                       ("date:7d..now" "Last 7 days" ?w)
+                       ("mime:image/*" "Messages with images" ?p)
+                       ("flag:flagged" "Flagged messages" ?f)))
+
+;; Upon refiling and trashing, remove Inbox tag
+(add-hook 'mu4e-mark-execute-pre-hook
+          (lambda (mark msg)
+            (when (member mark '(refile trash))
+              (mu4e-action-retag-message msg "-\\Inbox"))))
+
 ;; mu4e-context
 (setq mu4e-context-policy 'pick-first)
 (setq mu4e-compose-context-policy 'always-ask)
@@ -1636,9 +1655,10 @@ with leading and trailing spaces removed."
                          msg '(:from :to :cc :bcc) "sesquipedalian.overtones@gmail.com")))
         :vars '((user-mail-address . "sesquipedalian.overtones@gmail.com")
                 (user-full-name . "Sesquipedalian Overtones")
-                (mu4e-sent-folder . "/sesquipedalian-gmail/[Gmail].Sent Mail")
+                (mu4e-sent-folder . "/sesquipedalian-gmail/[Gmail].All Mail")
                 (mu4e-drafts-folder . "/sesquipedalian-gmail/[Gmail].Drafts")
                 (mu4e-trash-folder . "/sesquipedalian-gmail/[Gmail].Trash")
+                (mu4e-refile-folder . "/sesquipedalian-gmail/[Gmail].All Mail")
                 (mu4e-compose-signature . (concat "Sesquipedalian Overtones\n" "Emacs 25, org-mode 9, mu4e 1.0\n"))
                 (mu4e-compose-format-flowed . t)
                 (smtpmail-queue-dir . "~/Maildir/sesquipedalian-gmail/queue/cur")
@@ -1652,11 +1672,9 @@ with leading and trailing spaces removed."
                 (smtpmail-debug-info . t)
                 (smtpmail-debug-verbose . t)
                 (mu4e-maildir-shortcuts . (
-                                        ;                                           ("/sesquipedalian-gmail/INBOX"            . ?i)
-                                           ("/sesquipedalian-gmail/[Gmail].Sent Mail" . ?s)
+;                                           ("/sesquipedalian-gmail/INBOX"             . ?i)
                                            ("/sesquipedalian-gmail/[Gmail].Trash"     . ?t)
                                            ("/sesquipedalian-gmail/[Gmail].All Mail"  . ?a)
-                                           ("/sesquipedalian-gmail/[Gmail].Starred"   . ?r)
                                            ("/sesquipedalian-gmail/[Gmail].Drafts"    . ?d)))))))
 
 (require 'telega)
