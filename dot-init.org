@@ -1244,10 +1244,10 @@
                   ("=" balance-windows "= "))
 
                  "Swap"
-                 (("<prior>" buf-move-up "↑ ")
-                  ("<next>"  buf-move-down "↓ ")
-                  ("<home>"  buf-move-left "← ")
-                  ("<end>"   buf-move-right "→ "))
+                 (("<prior>" buf-move-up "↑ " :exit t)
+                  ("<next>"  buf-move-down "↓ " :exit t)
+                  ("<home>"  buf-move-left "← " :exit t)
+                  ("<end>"   buf-move-right "→ " :exit t))
 
                  "Create"
                  (("i" (progn (split-window-below) (windmove-down)) "window ↑ " :exit t)
