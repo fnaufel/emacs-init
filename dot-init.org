@@ -2154,6 +2154,15 @@
 
 * Misc
 
+*** Pretty print sexps
+
+    #+begin_src emacs-lisp
+      (require 'pp+)
+
+      (global-set-key [remap eval-expression] 'pp-eval-expression)
+      (global-set-key [remap eval-last-sexp] 'pp-eval-last-sexp)
+    #+end_src
+
 *** figlet
 
      #+begin_src emacs-lisp
