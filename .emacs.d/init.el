@@ -1544,7 +1544,7 @@ with leading and trailing spaces removed."
 (setq mu4e-get-mail-command "offlineimap"
       mu4e-html2text-command "w3m -T text/html"
       mu4e-view-prefer-html nil
-      mu4e-update-interval (* 60 60)  ; seconds
+      mu4e-update-interval nil ; do not update automatically
       mu4e-headers-auto-update t
       mu4e-compose-signature-auto-include t
       mu4e-compose-format-flowed t)
@@ -1552,9 +1552,17 @@ with leading and trailing spaces removed."
 ;; Use unicode chars for marks?
 (setq mu4e-use-fancy-chars nil)
 
-;; Actions
+;; Actions: view
 (setq mu4e-view-actions
       '(("capture message" . mu4e-action-capture-message)
+        ("labels" . mu4e-action-retag-message)
+        ("show this thread" . mu4e-action-show-thread)
+        ("viewInBrowser" . mu4e-action-view-in-browser)))
+
+;; Actions: headers
+(setq mu4e-headers-actions
+      '(("capture message" . mu4e-action-capture-message)
+        ("labels" . mu4e-action-retag-message)
         ("show this thread" . mu4e-action-show-thread)
         ("viewInBrowser" . mu4e-action-view-in-browser)))
 
@@ -1645,37 +1653,101 @@ with leading and trailing spaces removed."
 (setq mu4e-compose-context-policy 'always-ask)
 (setq mu4e-contexts
       (list
+
        (make-mu4e-context
-        :name "sesquipedalian"
-        :enter-func (lambda () (mu4e-message "Entering context sesquipedalian"))
-        :leave-func (lambda () (mu4e-message "Leaving context sesquipedalian"))
+        :name "fnaufel"
+        :enter-func (lambda () (mu4e-message "Entering context fnaufel"))
+        :leave-func (lambda () (mu4e-message "Leaving context fnaufel"))
         :match-func (lambda (msg)
                       (when msg
                         (mu4e-message-contact-field-matches
-                         msg '(:from :to :cc :bcc) "sesquipedalian.overtones@gmail.com")))
-        :vars '((user-mail-address . "sesquipedalian.overtones@gmail.com")
-                (user-full-name . "Sesquipedalian Overtones")
-                (mu4e-sent-folder . "/sesquipedalian-gmail/[Gmail].All Mail")
-                (mu4e-drafts-folder . "/sesquipedalian-gmail/[Gmail].Drafts")
-                (mu4e-trash-folder . "/sesquipedalian-gmail/[Gmail].Trash")
-                (mu4e-refile-folder . "/sesquipedalian-gmail/[Gmail].All Mail")
-                (mu4e-compose-signature . (concat "Sesquipedalian Overtones\n" "Emacs 25, org-mode 9, mu4e 1.0\n"))
+                         msg '(:from :to :cc :bcc) "fnaufel@gmail.com")))
+        :vars '((user-mail-address . "fnaufel@gmail.com")
+                (user-full-name . "Fernando Náufel")
+                (mu4e-sent-folder . "/fnaufel-gmail/[Gmail].All Mail")
+                (mu4e-drafts-folder . "/fnaufel-gmail/[Gmail].Drafts")
+                (mu4e-trash-folder . "/fnaufel-gmail/[Gmail].Trash")
+                (mu4e-refile-folder . "/fnaufel-gmail/[Gmail].All Mail")
+                (mu4e-compose-signature . (concat "Fernando Náufel\n" "Emacs 25, org-mode 9, mu4e 1.0\n"))
                 (mu4e-compose-format-flowed . t)
-                (smtpmail-queue-dir . "~/Maildir/sesquipedalian-gmail/queue/cur")
+                (smtpmail-queue-dir . "~/Maildir/fnaufel-gmail/queue/cur")
                 (message-send-mail-function . smtpmail-send-it)
-                (smtpmail-smtp-user . "sesquipedalian.overtones")
+                (smtpmail-smtp-user . "fnaufel")
                 (smtpmail-starttls-credentials . (("smtp.gmail.com" 587 nil nil)))
-                (smtpmail-auth-credentials . (expand-file-name "~/.authinfo-sesq.gpg"))
+                (smtpmail-auth-credentials . (expand-file-name "~/.authinfo-fnaufel.gpg"))
                 (smtpmail-default-smtp-server . "smtp.gmail.com")
                 (smtpmail-smtp-server . "smtp.gmail.com")
                 (smtpmail-smtp-service . 587)
                 (smtpmail-debug-info . t)
                 (smtpmail-debug-verbose . t)
                 (mu4e-maildir-shortcuts . (
-;                                           ("/sesquipedalian-gmail/INBOX"             . ?i)
-                                           ("/sesquipedalian-gmail/[Gmail].Trash"     . ?t)
-                                           ("/sesquipedalian-gmail/[Gmail].All Mail"  . ?a)
-                                           ("/sesquipedalian-gmail/[Gmail].Drafts"    . ?d)))))))
+                                           ("/fnaufel-gmail/[Gmail].Trash"     . ?t)
+                                           ("/fnaufel-gmail/[Gmail].All Mail"  . ?a)
+                                           ("/fnaufel-gmail/[Gmail].Drafts"    . ?d)))))
+
+       (make-mu4e-context
+        :name "jneuer"
+        :enter-func (lambda () (mu4e-message "Entering context jneuer"))
+        :leave-func (lambda () (mu4e-message "Leaving context jneuer"))
+        :match-func (lambda (msg)
+                      (when msg
+                        (mu4e-message-contact-field-matches
+                         msg '(:from :to :cc :bcc) "jln.neuer@gmail.com")))
+        :vars '((user-mail-address . "jln.neuer@gmail.com")
+                (user-full-name . "Julian Neuer")
+                (mu4e-sent-folder . "/jneuer-gmail/[Gmail].All Mail")
+                (mu4e-drafts-folder . "/jneuer-gmail/[Gmail].Drafts")
+                (mu4e-trash-folder . "/jneuer-gmail/[Gmail].Trash")
+                (mu4e-refile-folder . "/jneuer-gmail/[Gmail].All Mail")
+                (mu4e-compose-signature . (concat "Julian Neuer\n" "Emacs 25, org-mode 9, mu4e 1.0\n"))
+                (mu4e-compose-format-flowed . t)
+                (smtpmail-queue-dir . "~/Maildir/jneuer-gmail/queue/cur")
+                (message-send-mail-function . smtpmail-send-it)
+                (smtpmail-smtp-user . "jln.neuer")
+                (smtpmail-starttls-credentials . (("smtp.gmail.com" 587 nil nil)))
+                (smtpmail-auth-credentials . (expand-file-name "~/.authinfo-jneuer.gpg"))
+                (smtpmail-default-smtp-server . "smtp.gmail.com")
+                (smtpmail-smtp-server . "smtp.gmail.com")
+                (smtpmail-smtp-service . 587)
+                (smtpmail-debug-info . t)
+                (smtpmail-debug-verbose . t)
+                (mu4e-maildir-shortcuts . (
+                                           ("/jneuer-gmail/[Gmail].Trash"     . ?t)
+                                           ("/jneuer-gmail/[Gmail].All Mail"  . ?a)
+                                           ("/jneuer-gmail/[Gmail].Drafts"    . ?d)))))
+
+       ;; (make-mu4e-context
+       ;;  :name "sesquipedalian"
+       ;;  :enter-func (lambda () (mu4e-message "Entering context sesquipedalian"))
+       ;;  :leave-func (lambda () (mu4e-message "Leaving context sesquipedalian"))
+       ;;  :match-func (lambda (msg)
+       ;;                (when msg
+       ;;                  (mu4e-message-contact-field-matches
+       ;;                   msg '(:from :to :cc :bcc) "sesquipedalian.overtones@gmail.com")))
+       ;;  :vars '((user-mail-address . "sesquipedalian.overtones@gmail.com")
+       ;;          (user-full-name . "Sesquipedalian Overtones")
+       ;;          (mu4e-sent-folder . "/sesquipedalian-gmail/[Gmail].All Mail")
+       ;;          (mu4e-drafts-folder . "/sesquipedalian-gmail/[Gmail].Drafts")
+       ;;          (mu4e-trash-folder . "/sesquipedalian-gmail/[Gmail].Trash")
+       ;;          (mu4e-refile-folder . "/sesquipedalian-gmail/[Gmail].All Mail")
+       ;;          (mu4e-compose-signature . (concat "Sesquipedalian Overtones\n" "Emacs 25, org-mode 9, mu4e 1.0\n"))
+       ;;          (mu4e-compose-format-flowed . t)
+       ;;          (smtpmail-queue-dir . "~/Maildir/sesquipedalian-gmail/queue/cur")
+       ;;          (message-send-mail-function . smtpmail-send-it)
+       ;;          (smtpmail-smtp-user . "sesquipedalian.overtones")
+       ;;          (smtpmail-starttls-credentials . (("smtp.gmail.com" 587 nil nil)))
+       ;;          (smtpmail-auth-credentials . (expand-file-name "~/.authinfo-sesq.gpg"))
+       ;;          (smtpmail-default-smtp-server . "smtp.gmail.com")
+       ;;          (smtpmail-smtp-server . "smtp.gmail.com")
+       ;;          (smtpmail-smtp-service . 587)
+       ;;          (smtpmail-debug-info . t)
+       ;;          (smtpmail-debug-verbose . t)
+       ;;          (mu4e-maildir-shortcuts . (
+       ;;                                     ("/sesquipedalian-gmail/[Gmail].Trash"     . ?t)
+       ;;                                     ("/sesquipedalian-gmail/[Gmail].All Mail"  . ?a)
+       ;;                                     ("/sesquipedalian-gmail/[Gmail].Drafts"    . ?d)))))
+
+       ))
 
 (require 'telega)
 (require 'ol-telega)
@@ -1747,6 +1819,11 @@ with leading and trailing spaces removed."
 (setq telega-open-file-function 'org-open-file)
 
 (define-key global-map (kbd "s-t") telega-prefix-map)
+
+(require 'pp+)
+
+(global-set-key [remap eval-expression] 'pp-eval-expression)
+(global-set-key [remap eval-last-sexp] 'pp-eval-last-sexp)
 
 ;;; figlet definitions for Emacs.  (C) Martin Giese
 ;;;

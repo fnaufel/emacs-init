@@ -330,6 +330,8 @@
  '(cfw:face-toolbar-button-off ((t (:foreground "dim gray" :weight bold))))
  '(cfw:face-toolbar-button-on ((t (:foreground "light gray" :weight bold))))
  '(highlight-indent-face ((t (:background "dark gray"))))
+ '(mu4e-context-face ((t (:background "RoyalBlue3" :foreground "white smoke" :weight bold))))
+ '(mu4e-modeline-face ((t (:background "maroon" :foreground "white smoke" :weight bold))))
  '(org-block ((t (:background "gray15"))))
  '(org-block-begin-line ((t (:inherit org-meta-line :background "#103030"))))
  '(org-ellipsis ((t (:foreground "LightGoldenrod" :underline nil))))
