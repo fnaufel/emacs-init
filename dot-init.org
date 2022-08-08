@@ -406,6 +406,12 @@
             (org-export-json)))
       #+end_src
 
+*** Parsing
+
+    #+begin_src emacs-lisp
+      (require 'orgba)
+    #+end_src
+
 *** Bibliographies
     :PROPERTIES:
     :ID:       3a6ade3c-860d-435a-8b39-d68a25f2b5c7
