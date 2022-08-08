@@ -300,6 +300,8 @@
     (message "Exporting to JSON: %s" (car command-line-args-left))
     (org-export-json)))
 
+(require 'orgba)
+
 ;; Based on  https://ogbe.net/emacs/references.html
 
 (require 'ebib)
@@ -1110,6 +1112,13 @@ Otherwise, kill. Besides, delete window it occupied."
 (require 'zeal-at-point)
 (global-set-key (kbd "s-h") 'zeal-at-point)
 
+(require 'yafolding)
+
+(global-set-key (kbd "s->") 'yafolding-show-all)
+(global-set-key (kbd "s-<") 'yafolding-hide-all)
+(global-set-key (kbd "s-.") 'yafolding-show-element)
+(global-set-key (kbd "s-,") 'yafolding-hide-element)
+
 ;; (require 'origami)
 
 (add-hook 'prog-mode-hook 'origami-mode)
@@ -1668,7 +1677,10 @@ with leading and trailing spaces removed."
                 (mu4e-drafts-folder . "/fnaufel-gmail/[Gmail].Drafts")
                 (mu4e-trash-folder . "/fnaufel-gmail/[Gmail].Trash")
                 (mu4e-refile-folder . "/fnaufel-gmail/[Gmail].All Mail")
-                (mu4e-compose-signature . (concat "Fernando Náufel\n" "Emacs 25, org-mode 9, mu4e 1.0\n"))
+                (mu4e-compose-signature . (concat
+                                           "Fernando Náufel\n"
+                                           "  fnaufel@gmail.com\n"
+                                           "  https://fnaufel.github.io/site\n"))
                 (mu4e-compose-format-flowed . t)
                 (smtpmail-queue-dir . "~/Maildir/fnaufel-gmail/queue/cur")
                 (message-send-mail-function . smtpmail-send-it)

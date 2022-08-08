@@ -94,6 +94,12 @@
  '(org-agenda-files "~/.agenda_files")
  '(org-agenda-include-diary t)
  '(org-agenda-loop-over-headlines-in-active-region nil)
+ '(org-agenda-prefix-format
+   (quote
+    ((agenda . " %i %-12:c%?-12t% s")
+     (todo . " %+15:c  ")
+     (tags . " %i %-12:c")
+     (search . " %i %-12:c"))))
  '(org-agenda-sorting-strategy
    (quote
     ((agenda habit-down time-up priority-down category-keep)
@@ -248,7 +254,7 @@
  '(package-pinned-packages (quote ((telega . "MELPA Stable"))))
  '(package-selected-packages
    (quote
-    (org-mime ebib language-detection telega zotxt org-noter org-noter-pdftools lsp-origami origami json-mode flycheck-pyflakes org-clock-csv visual-fill-column adaptive-wrap org-ref org-journal org-superstar helm-bibtex poly-R polymode all-the-icons all-the-icons-dired all-the-icons-gnus treemacs-all-the-icons major-mode-hydra pretty-hydra paradox buffer-move lsp-pyright rainbow-delimiters helm-projectile projectile company-box setup use-package helm-lsp lsp-treemacs lsp-ui which-key lsp-mode ac-js2 skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion cdlatex yaml-mode all elm-mode elm-yasnippets auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl typo web-beautify markdown-toc markdown-preview-mode markdown-mode magit lua-mode htmlize dash-functional multiple-cursors expand-region)))
+    (yafolding org-mime ebib language-detection telega zotxt org-noter org-noter-pdftools lsp-origami origami json-mode flycheck-pyflakes org-clock-csv visual-fill-column adaptive-wrap org-ref org-journal org-superstar helm-bibtex poly-R polymode all-the-icons all-the-icons-dired all-the-icons-gnus treemacs-all-the-icons major-mode-hydra pretty-hydra paradox buffer-move lsp-pyright rainbow-delimiters helm-projectile projectile company-box setup use-package helm-lsp lsp-treemacs lsp-ui which-key lsp-mode ac-js2 skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion cdlatex yaml-mode all elm-mode elm-yasnippets auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl typo web-beautify markdown-toc markdown-preview-mode markdown-mode magit lua-mode htmlize dash-functional multiple-cursors expand-region)))
  '(paradox-execute-asynchronously t)
  '(paradox-github-token t)
  '(pdf-annot-activate-created-annotations t)
