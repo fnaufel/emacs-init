@@ -1416,6 +1416,17 @@
     
 *** Code folding
 
+***** yafolding
+
+      #+begin_src emacs-lisp
+        (require 'yafolding)
+
+        (global-set-key (kbd "s->") 'yafolding-show-all)
+        (global-set-key (kbd "s-<") 'yafolding-hide-all)
+        (global-set-key (kbd "s-.") 'yafolding-show-element)
+        (global-set-key (kbd "s-,") 'yafolding-hide-element)
+      #+end_src
+
 ***** Origami
 
       #+begin_src emacs-lisp
