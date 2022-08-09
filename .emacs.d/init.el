@@ -1558,6 +1558,8 @@ with leading and trailing spaces removed."
       mu4e-compose-signature-auto-include t
       mu4e-compose-format-flowed t)
 
+(setq mu4e-completing-read-function 'helm-completing-read-default-2)
+
 ;; Use unicode chars for marks?
 (setq mu4e-use-fancy-chars nil)
 
@@ -1574,6 +1576,27 @@ with leading and trailing spaces removed."
         ("labels" . mu4e-action-retag-message)
         ("show this thread" . mu4e-action-show-thread)
         ("viewInBrowser" . mu4e-action-view-in-browser)))
+
+;; Retagging in bulk
+;; For some weird reason, it's asking me for the tags after I mark
+;; each message!
+;; If I mark with * and then resolve, then ok.
+(add-to-list 'mu4e-marks
+  '(tag
+     :char       "l"
+     :prompt     "labels"
+     :ask-target (lambda ()
+                   (completing-read
+                    "Tags: "
+                    mu4e-action-tags-completion-list))
+     :action      (lambda (docid msg target)
+                    (mu4e-action-retag-message msg target))))
+
+(mu4e~headers-defun-mark-for tag)
+(define-key mu4e-headers-mode-map (kbd "l") 'mu4e-headers-mark-for-tag)
+
+(mu4e~view-defun-mark-for tag)
+(define-key mu4e-view-mode-map (kbd "l") 'mu4e-view-mark-for-tag)
 
 ;; enable inline images
 (setq mu4e-view-show-images t)
@@ -1601,11 +1624,11 @@ with leading and trailing spaces removed."
           (defun my/mu4e-change-headers ()
             (interactive)
             (setq mu4e-headers-fields
-                  `((:date . 30) 
+                  `((:date . 25) 
                     (:flags . 6)
                     (:from . 22)
-                    (:thread-subject . ,(- (window-body-width) 72)) ;; alternatively, use :subject
-                    (:size . 7)))))
+                    (:thread-subject . ,(- (window-body-width) 90)) ;; alternatively, use :subject
+                    (:tags . nil)))))
 
 ;; if you use date instead of human-date in the above, use this setting
 ;; give me ISO(ish) format date-time stamps in the header list
@@ -1658,7 +1681,247 @@ with leading and trailing spaces removed."
             (when (member mark '(refile trash))
               (mu4e-action-retag-message msg "-\\Inbox"))))
 
-;; mu4e-context
+;; Labels for fnaufel
+(setq fnaufel-tags-raw
+      '("\\Important"
+        "\\Inbox"
+        "\\Muted"
+        "\\Sent"
+        "\\Starred"
+        "\\Draft"
+        "1-Agir"
+        "2-Ver"
+        "4-Interessante"
+        "7-Pagar"
+        "Bancos"
+        "Books"
+        "Carros"
+        "Comics"
+        "Imoveis/AptoJB"
+        "Imoveis/CasaCostaAzul"
+        "Imoveis/CasaGarrido"
+        "Imoveis/CasaIriri"
+        "Imoveis/CasaPiaui"
+        "Imoveis/CasaRioBonito"
+        "Movies"
+        "Multiplus"
+        "Music"
+        "Ni"
+        "Nihongo"
+        "Pesquisa"
+        "Pesquisa/Android"
+        "Pesquisa/Causality"
+        "Pesquisa/Deutsch"
+        "Pesquisa/Emacs"
+        "Pesquisa/Espa&APE-ol"
+        "Pesquisa/Estatistica"
+        "Pesquisa/GNULinux"
+        "Pesquisa/Graphs"
+        "Pesquisa/Latin"
+        "Pesquisa/Linguistics"
+        "Pesquisa/NLP"
+        "Pesquisa/Postdoc"
+        "Pesquisa/Py"
+        "Pessoas"
+        "Pessoas/Bruno"
+        "Pessoas/CarlosAugusto"
+        "Pessoas/Cesar"
+        "Pessoas/Ex"
+        "Pessoas/Fatima"
+        "Pessoas/Flavio"
+        "Pessoas/Guizzardi"
+        "Pessoas/JulianNeuer"
+        "Pessoas/Julio"
+        "Pessoas/MFelix"
+        "Pessoas/Nanda"
+        "Pessoas/Ni"
+        "Pessoas/Romulo"
+        "Pessoas/Sagallesab!"
+        "Pessoas/Sesquip"
+        "Pessoas/Vaston"
+        "Pessoas/Vitor"
+        "Serenitas50"
+        "Travel"
+        "Travel/Cruzeiro2020"
+        "UFF"
+        "UFF/Deptos/RCN"
+        "UFF/Deptos/RFM"
+        "UFF/DesAcademico"
+        "UFF/Disciplinas"
+        "UFF/Disciplinas/Combinatoria"
+        "UFF/Disciplinas/EstatisticaPsi"
+        "UFF/Disciplinas/GA"
+        "UFF/Disciplinas/MD-PURO"
+        "UFF/Disciplinas/ProbEstatistica"
+        "UFF/Extensao/NovosTalentos"
+        "UFF/LLaRC"
+        "UFF/Monitoria"
+        "UFF/Politica"
+        "UFF/RCNPos"
+        "UFF/Sindicancia"
+        "UFF/TCC/Yasmin"
+        "WordPress"
+        "Writing"
+        "YouTube"
+        "ZZZ-Old/Acer"
+        "ZZZ-Old/CasaCostaAzul"
+        "ZZZ-Old/Concursos/Oxford"
+        "ZZZ-Old/Concursos/UFRGS"
+        "ZZZ-Old/Concursos/UFRN"
+        "ZZZ-Old/Concursos/ZZ-UFSCar2010"
+        "ZZZ-Old/Congressos"
+        "ZZZ-Old/Congressos/ALIO2010"
+        "ZZZ-Old/Congressos/EKAW2010"
+        "ZZZ-Old/Congressos/ESWC2010"
+        "ZZZ-Old/Congressos/HTEM2013"
+        "ZZZ-Old/Congressos/OntoBras"
+        "ZZZ-Old/Congressos/RR2010"
+        "ZZZ-Old/Congressos/VORTE2010"
+        "ZZZ-Old/Congressos/ZZ-DL2008"
+        "ZZZ-Old/Congressos/ZZ-ERMAC2008"
+        "ZZZ-Old/Congressos/ZZ-Most2009"
+        "ZZZ-Old/Congressos/ZZ-SBGames2009"
+        "ZZZ-Old/Congressos/ZZ-SemOnto2008"
+        "ZZZ-Old/Congressos/ZZ-SemOnto2009"
+        "ZZZ-Old/Congressos/ZZ-SemOnto2010"
+        "ZZZ-Old/Congressos/ZZ-TIL2008"
+        "ZZZ-Old/Congressos/ZZ-VJ2009"
+        "ZZZ-Old/Contas"
+        "ZZZ-Old/Diaspora"
+        "ZZZ-Old/Kindle"
+        "ZZZ-Old/Listas/Ceia-l"
+        "ZZZ-Old/Listas/DLList"
+        "ZZZ-Old/Listas/EFF"
+        "ZZZ-Old/Listas/FSF"
+        "ZZZ-Old/Listas/HPR"
+        "ZZZ-Old/Listas/Kupfer"
+        "ZZZ-Old/Listas/Logica-l"
+        "ZZZ-Old/Listas/NLTK"
+        "ZZZ-Old/Listas/NuSMV"
+        "ZZZ-Old/Listas/OpenVizList"
+        "ZZZ-Old/Listas/Orgmode"
+        "ZZZ-Old/Listas/PVS"
+        "ZZZ-Old/Listas/Prefuse"
+        "ZZZ-Old/Listas/Protege"
+        "ZZZ-Old/Listas/SMW-list"
+        "ZZZ-Old/Listas/Sbc-l"
+        "ZZZ-Old/Listas/TED"
+        "ZZZ-Old/Listas/TecConv"
+        "ZZZ-Old/Listas/WN-Users"
+        "ZZZ-Old/Listas/ZZ-CMapTools"
+        "ZZZ-Old/Listas/ZZ-Jena-dev"
+        "ZZZ-Old/Listas/ZZ-Pellet-users"
+        "ZZZ-Old/Listas/eev"
+        "ZZZ-Old/Moodle"
+        "ZZZ-Old/Pesquisa"
+        "ZZZ-Old/Pesquisa/Chisel"
+        "ZZZ-Old/Pesquisa/Git"
+        "ZZZ-Old/Pesquisa/InfoExtraction"
+        "ZZZ-Old/Pesquisa/JGraph"
+        "ZZZ-Old/Pesquisa/Javascript"
+        "ZZZ-Old/Pesquisa/LaTeX"
+        "ZZZ-Old/Pesquisa/NEMO"
+        "ZZZ-Old/Pesquisa/Pibic2011"
+        "ZZZ-Old/Pesquisa/Python"
+        "ZZZ-Old/Pesquisa/SMWBook"
+        "ZZZ-Old/Pesquisa/SMWQueries"
+        "ZZZ-Old/Pesquisa/SWJ"
+        "ZZZ-Old/Pesquisa/Ubuntu"
+        "ZZZ-Old/Pesquisa/Usability"
+        "ZZZ-Old/Pesquisa/VOQL"
+        "ZZZ-Old/Pesquisa/ZZ-ADDLabs"
+        "ZZZ-Old/Pesquisa/ZZ-Anubis"
+        "ZZZ-Old/Pesquisa/ZZ-CAP-PROPP"
+        "ZZZ-Old/Pesquisa/ZZ-Israel"
+        "ZZZ-Old/Pesquisa/ZZ-JPesq2008"
+        "ZZZ-Old/Pesquisa/ZZ-JPesqUFF2009"
+        "ZZZ-Old/Pesquisa/ZZ-LivrosAPQ1"
+        "ZZZ-Old/Pesquisa/ZZ-Petrucio"
+        "ZZZ-Old/Pesquisa/emacs"
+        "ZZZ-Old/ZZ-AluguelRuaRJ"
+        "ZZZ-Old/ZZ-AptoInga"
+        "ZZZ-Old/ZZ-Facebook"
+        "ZZZ-Old/ZZ-FlyingBlue"
+        "ZZZ-Old/ZZ-Gamela2010"
+        "ZZZ-Old/ZZ-Mac"
+        "ZZZ-Old/ZZ-UERJ"
+        "ZZZ-Old/ZZ-UFF-Old"
+        "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/BCC"
+        "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/Capacitacao"
+        "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/ChefiaRCT"
+        "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/EstProbatorio"
+        "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/Horario2010.2"
+        "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/ICT"
+        "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/IdUFF"
+        "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/LabCC"
+        "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/RAD"
+        "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/RCC"
+        "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/RCT"
+        "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/ReconhecimentoCC"
+        "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/SemanaCT2011"
+        "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/ZZ-Inscr2009"
+        "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/ZZ-SemanaCT2008"
+        "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/ZZ-SemanaCT2009"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/CompSoc"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/LFTC-PURO"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/Logica-PURO"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ProgsDisciplinasRCT"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-ACTN2006.2"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-Compila2008.1"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-Compila2008.2"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-Compila2009.2"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-IA2006.2"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-IA2007.2"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-Java2007.1"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-LFTC2006.2"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-LFTC2007.1"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-LFTC2007.2"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-LFTC2008.1"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-LFTC2009.1"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-Logica2007.1"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-Logica2007.2"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-Logica2008.2"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-Logica2009.1"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-Logica2009.2"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-T&APM-picosDL2009.1"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-TComp2008.1"
+        "ZZZ-Old/ZZ-UFF-Old/Estagios/Est&AOE-gios2011"
+        "ZZZ-Old/ZZ-UFF-Old/Estagios/Est&AOE-gios2012"
+        "ZZZ-Old/ZZ-UFF-Old/Estagios/ZZ-Est&AOE-gios2009"
+        "ZZZ-Old/ZZ-UFF-Old/Extensao/TraducaoELegendas"
+        "ZZZ-Old/ZZ-UFF-Old/Extensao/ZZ-CursoLaTeX"
+        "ZZZ-Old/ZZ-UFF-Old/LLaRC"
+        "ZZZ-Old/ZZ-UFF-Old/LLaRC/DCTR2008"
+        "ZZZ-Old/ZZ-UFF-Old/Monitoria/Monitoria2011"
+        "ZZZ-Old/ZZ-UFF-Old/Monitoria/ZZ-Monitoria2009"
+        "ZZZ-Old/ZZ-UFF-Old/Monitoria/ZZ-Monitoria2010"
+        "ZZZ-Old/ZZ-UFF-Old/P&APM-sIC"
+        "ZZZ-Old/ZZ-UFF-Old/Politica"
+        "ZZZ-Old/ZZ-UFF-Old/Politica/Consulta2010"
+        "ZZZ-Old/ZZ-UFF-Old/Politica/Consulta2011"
+        "ZZZ-Old/ZZ-UFF-Old/Politica/Consulta2013"
+        "ZZZ-Old/ZZ-UFF-Old/Politica/Greve2012"
+        "ZZZ-Old/ZZ-UFF-Old/Politica/PUROLeaks"
+        "ZZZ-Old/ZZ-UFF-Old/Politica/Ramiro"
+        "ZZZ-Old/ZZ-UFF-Old/ZZ-Concursos/ZZ-ConcursoGestao2009"
+        "ZZZ-Old/ZZ-UFF-Old/ZZ-Concursos/ZZ-ConcursoL&APM-gica2009"
+        "ZZZ-Old/ZZ-UFF-Old/ZZ-Concursos/ZZ-Concursos2008"
+        "ZZZ-Old/ZZ-UFF-Old/ZZ-Concursos/ZZ-Concursos2009"
+        "ZZZ-Old/ZZ-UFF-Old/ZZ-Concursos/ZZ-Concursos2012"
+        "ZZZ-Old/ZZ-UFF-Old/ZZ-Concursos/ZZ-FilasDeEspera"
+        "ZZZ-Old/ZZ-UFF-Old/ZZ-P&APM-sRCT"
+        "ZZZ-Old/ZZ-UFF-Old/ZZ-TCC/AnselmoPURO"
+        "ZZZ-Old/ZZ-UFF-Old/ZZ-TCC/ECG"
+        "ZZZ-Old/ZZ-UFF-Old/ZZ-TCC/Projeto1CC"
+        "ZZZ-Old/ZZ-UFF-Old/ZZ-TCC/TCCs"))
+
+(setq fnaufel-tags-plus-and-minus
+      (cl-mapcan
+       (lambda (s1 s2) (list (concat "-" s1) s2))
+       fnaufel-tags-raw
+       fnaufel-tags-raw))
+
+;; mu4e1-context
 (setq mu4e-context-policy 'pick-first)
 (setq mu4e-compose-context-policy 'always-ask)
 (setq mu4e-contexts
@@ -1672,7 +1935,7 @@ with leading and trailing spaces removed."
                       (when msg
                         (mu4e-message-contact-field-matches
                          msg '(:from :to :cc :bcc) "fnaufel@gmail.com")))
-        :vars '((user-mail-address . "fnaufel@gmail.com")
+        :vars `((user-mail-address . "fnaufel@gmail.com")
                 (user-full-name . "Fernando Náufel")
                 (mu4e-sent-folder . "/fnaufel-gmail/[Gmail].All Mail")
                 (mu4e-drafts-folder . "/fnaufel-gmail/[Gmail].Drafts")
@@ -1696,7 +1959,8 @@ with leading and trailing spaces removed."
                 (mu4e-maildir-shortcuts . (
                                            ("/fnaufel-gmail/[Gmail].Trash"     . ?t)
                                            ("/fnaufel-gmail/[Gmail].All Mail"  . ?a)
-                                           ("/fnaufel-gmail/[Gmail].Drafts"    . ?d)))))
+                                           ("/fnaufel-gmail/[Gmail].Drafts"    . ?d)))
+                (mu4e-action-tags-completion-list . ,fnaufel-tags-plus-and-minus)))
 
        (make-mu4e-context
         :name "jneuer"
@@ -1706,7 +1970,7 @@ with leading and trailing spaces removed."
                       (when msg
                         (mu4e-message-contact-field-matches
                          msg '(:from :to :cc :bcc) "jln.neuer@gmail.com")))
-        :vars '((user-mail-address . "jln.neuer@gmail.com")
+        :vars `((user-mail-address . "jln.neuer@gmail.com")
                 (user-full-name . "Julian Neuer")
                 (mu4e-sent-folder . "/jneuer-gmail/[Gmail].All Mail")
                 (mu4e-drafts-folder . "/jneuer-gmail/[Gmail].Drafts")
