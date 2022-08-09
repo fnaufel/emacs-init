@@ -1924,6 +1924,64 @@ with leading and trailing spaces removed."
        fnaufel-tags-raw
        fnaufel-tags-raw))
 
+;;; Labels for jln.neuer
+(setq jln.neuer-tags-raw
+      '(
+        "\\Important"
+        "\\Inbox"
+        "\\Muted"
+        "\\Sent"
+        "\\Starred"
+        "\\Draft"
+        "4-Interesting"
+        "ALISON"
+        "AskFM"
+        "CorianderPause"
+        "DeviantArt"
+        "Diaspora"
+        "Diaspora1"
+        "DouglasSmith"
+        "Evernote"
+        "Facebook"
+        "GitHub"
+        "Goodreads"
+        "Gotham"
+        "HPR"
+        "IFTTT"
+        "Images"
+        "Magazines"
+        "Magazines/AESciFi"
+        "Magazines/Apex"
+        "Magazines/BlueMondayReview"
+        "Magazines/Hypnos"
+        "Magazines/IGMS"
+        "Magazines/Nature"
+        "Magazines/Nightmare"
+        "Magazines/Orthogonal"
+        "Magazines/Pedestal"
+        "Magazines/Rattle"
+        "Magazines/Shimmer"
+        "Magazines/Storyteller"
+        "Magazines/TheDark"
+        "Magazines/UFOSeries"
+        "Music"
+        "Nihongo"
+        "Personatus50"
+        "Photography"
+        "Reviews"
+        "RobinSloan"
+        "Smashwords"
+        "Spotify"
+        "Viriditas50"
+        "Vonnegut"
+        "WordpressFollowed"))
+
+(setq jln.neuer-tags-plus-and-minus
+      (cl-mapcan
+       (lambda (s1 s2) (list (concat "-" s1) s2))
+       jln.neuer-tags-raw
+       jln.neuer-tags-raw))
+
 ;; mu4e1-context
 (setq mu4e-context-policy 'pick-first)
 (setq mu4e-compose-context-policy 'always-ask)
@@ -1994,7 +2052,8 @@ with leading and trailing spaces removed."
                 (mu4e-maildir-shortcuts . (
                                            ("/jneuer-gmail/[Gmail].Trash"     . ?t)
                                            ("/jneuer-gmail/[Gmail].All Mail"  . ?a)
-                                           ("/jneuer-gmail/[Gmail].Drafts"    . ?d)))))
+                                           ("/jneuer-gmail/[Gmail].Drafts"    . ?d)))
+                (mu4e-action-tags-completion-list . ,jln.neuer-tags-plus-and-minus)))
 
        ;; (make-mu4e-context
        ;;  :name "sesquipedalian"
