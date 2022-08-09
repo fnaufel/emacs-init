@@ -2080,11 +2080,14 @@
                            ("mime:image/*" "Messages with images" ?p)
                            ("flag:flagged" "Flagged messages" ?f)))
 
-    ;; Upon refiling and trashing, remove Inbox tag
+    ;; Upon refiling and trashing, remove Inbox and unread tag
     (add-hook 'mu4e-mark-execute-pre-hook
               (lambda (mark msg)
                 (when (member mark '(refile trash))
-                  (mu4e-action-retag-message msg "-\\Inbox"))))
+                  (mu4e-action-retag-message msg "-\\Inbox")
+                  (let ((docid (mu4e-message-field msg :docid)))
+                    ;; Mark as seen and read
+                    (mu4e~proc-move docid nil "+S-u")))))
 
     ;; Labels for fnaufel
     (setq fnaufel-tags-raw
