@@ -1556,8 +1556,18 @@ with leading and trailing spaces removed."
       mu4e-view-prefer-html nil
       mu4e-update-interval nil ; do not update automatically
       mu4e-headers-auto-update t
-      mu4e-compose-signature-auto-include t
+      mu4e-compose-signature-auto-include nil
+      message-fill-column nil
       mu4e-compose-format-flowed t)
+
+;; (add-hook 'mu4e-compose-pre-hook
+;;           (lambda () (auto-fill-mode -1)
+;;             (visual-line-mode 1)))
+
+(add-hook 'mu4e-compose-mode-hook
+          (lambda () (auto-fill-mode -1)
+            (visual-line-mode 1)
+            (visual-fill-column-mode 1)))
 
 (setq mu4e-completing-read-function 'helm-completing-read-default-2)
 
@@ -1609,8 +1619,12 @@ with leading and trailing spaces removed."
 ;; every new email composition gets its own frame!
 (setq mu4e-compose-in-new-frame t)
 
-;; Don't save message to Sent Messages, IMAP takes care of this
-(setq mu4e-sent-messages-behavior 'delete)
+;; Note, when using GMail/IMAP, you should set this to either trash or
+;; delete, since GMail already takes care of keeping copies in the
+;; sent folder.
+;;
+;; But I am not syncing the sent folder, so I'll try this here:
+(setq mu4e-sent-messages-behavior 'sent)
 
 (add-hook 'mu4e-view-mode-hook #'visual-line-mode)
 
@@ -1685,6 +1699,57 @@ with leading and trailing spaces removed."
               (let ((docid (mu4e-message-field msg :docid)))
                 ;; Mark as seen and read
                 (mu4e~proc-move docid nil "+S-u")))))
+
+
+;; I want to insert signature where I am in the buffer
+(defun fna/message-insert-signature (&optional force)
+  "Insert a signature.  See documentation for variable `message-signature'."
+  (interactive (list 0))
+  (let* ((signature
+      (cond
+       ((and (null message-signature)
+         (eq force 0))
+        (save-excursion
+          (goto-char (point-max))
+          (not (re-search-backward message-signature-separator nil t))))
+       ((and (null message-signature)
+         force)
+        t)
+       ((functionp message-signature)
+        (funcall message-signature))
+       ((listp message-signature)
+        (eval message-signature))
+       (t message-signature)))
+     signature-file)
+    (setq signature
+      (cond ((stringp signature)
+         signature)
+        ((and (eq t signature) message-signature-file)
+         (setq signature-file
+               (if (and message-signature-directory
+                ;; don't actually use the signature directory
+                ;; if message-signature-file contains a path.
+                (not (file-name-directory
+                      message-signature-file)))
+               (expand-file-name message-signature-file
+                         message-signature-directory)
+             message-signature-file))
+         (file-exists-p signature-file))))
+    (when signature
+      ;; Insert the signature.
+      (unless (bolp)
+    (newline))
+      (when message-signature-insert-empty-line
+    (newline))
+      (insert "-- ")
+      (newline)
+      (if (eq signature t)
+      (insert-file-contents signature-file)
+    (insert signature))
+      (or (bolp) (newline)))))
+
+(global-set-key [remap message-insert-signature] 'fna/message-insert-signature)
+
 
 ;; Labels for fnaufel
 (setq fnaufel-tags-raw
@@ -1986,7 +2051,7 @@ with leading and trailing spaces removed."
 
 ;; mu4e1-context
 (setq mu4e-context-policy 'pick-first)
-(setq mu4e-compose-context-policy 'always-ask)
+(setq mu4e-compose-context-policy 'ask-if-none)
 (setq mu4e-contexts
       (list
 

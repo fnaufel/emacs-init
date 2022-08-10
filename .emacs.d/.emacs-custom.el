@@ -49,6 +49,7 @@
  '(enable-recursive-minibuffers nil)
  '(ess-default-style (quote RStudio))
  '(ess-history-directory ".")
+ '(fill-column 80)
  '(find-directory-functions (quote (sunrise-dired cvs-dired-noselect dired-noselect)))
  '(flycheck-global-modes nil)
  '(flymake-fringe-indicator-position (quote left-fringe))
