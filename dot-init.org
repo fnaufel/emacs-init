@@ -1661,7 +1661,6 @@
              helm-ff-file-name-history-use-recentf t)
 
        (helm-mode 1)
-       (setq completion-styles '(helm-flex)) 
 
        (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
        (define-key helm-map (kbd "C-j")  'helm-select-action)
@@ -1982,21 +1981,23 @@
             ("show this thread" . mu4e-action-show-thread)
             ("viewInBrowser" . mu4e-action-view-in-browser)))
 
+
     ;; Retagging in bulk
     ;; For some weird reason, it's asking me for the tags after I mark
     ;; each message!
     ;; If I mark with * and then resolve, then ok.
+    ;; Or select a region before marking.
     (add-to-list 'mu4e-marks
-      '(tag
-         :char       "l"
-         :prompt     "labels"
-         :ask-target (lambda ()
-                       (completing-read-multiple
-                        "Tags: "
-                        mu4e-action-tags-completion-list))
-         :action      (lambda (docid msg target)
-                        (let ((tags (s-join "," target)))
-                        (mu4e-action-retag-message msg tags)))))
+                 '(tag
+                   :char       "l"
+                   :prompt     "labels"
+                   :ask-target (lambda ()
+                                 (completing-read-multiple
+                                  "Tags: "
+                                  mu4e-action-tags-completion-list))
+                   :action      (lambda (docid msg target)
+                                  (setq tags (s-join "," target))
+                                  (mu4e-action-retag-message msg tags))))
 
     (mu4e~headers-defun-mark-for tag)
     (define-key mu4e-headers-mode-map (kbd "l") 'mu4e-headers-mark-for-tag)
