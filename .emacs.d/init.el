@@ -1303,6 +1303,8 @@ Otherwise, kill. Besides, delete window it occupied."
       helm-ff-file-name-history-use-recentf t)
 
 (helm-mode 1)
+(setq completion-styles '(helm-flex)) 
+
 (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
 (define-key helm-map (kbd "C-j")  'helm-select-action)
 
@@ -1566,14 +1568,12 @@ with leading and trailing spaces removed."
 ;; Actions: view
 (setq mu4e-view-actions
       '(("capture message" . mu4e-action-capture-message)
-        ("labels" . mu4e-action-retag-message)
         ("show this thread" . mu4e-action-show-thread)
         ("viewInBrowser" . mu4e-action-view-in-browser)))
 
 ;; Actions: headers
 (setq mu4e-headers-actions
       '(("capture message" . mu4e-action-capture-message)
-        ("labels" . mu4e-action-retag-message)
         ("show this thread" . mu4e-action-show-thread)
         ("viewInBrowser" . mu4e-action-view-in-browser)))
 
@@ -1586,11 +1586,12 @@ with leading and trailing spaces removed."
      :char       "l"
      :prompt     "labels"
      :ask-target (lambda ()
-                   (completing-read
+                   (completing-read-multiple
                     "Tags: "
                     mu4e-action-tags-completion-list))
      :action      (lambda (docid msg target)
-                    (mu4e-action-retag-message msg target))))
+                    (let ((tags (s-join "," target)))
+                    (mu4e-action-retag-message msg tags)))))
 
 (mu4e~headers-defun-mark-for tag)
 (define-key mu4e-headers-mode-map (kbd "l") 'mu4e-headers-mark-for-tag)
