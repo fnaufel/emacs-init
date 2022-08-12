@@ -1557,20 +1557,20 @@ with leading and trailing spaces removed."
       mu4e-update-interval nil ; do not update automatically
       mu4e-headers-auto-update t
       mu4e-compose-signature-auto-include nil
-      message-fill-column nil
-      mu4e-compose-format-flowed t)
+      message-fill-column 55
+      mu4e-compose-format-flowed nil)
 
-(add-hook 'mu4e-compose-pre-hook
-          (lambda () (auto-fill-mode -1)
-            (visual-line-mode 1)
-            (setq visual-fill-column-width 69)
-            (visual-fill-column-mode 1)))
+;; (add-hook 'mu4e-compose-pre-hook
+;;           (lambda () (auto-fill-mode -1)
+;;             (visual-line-mode 1)
+;;             (setq visual-fill-column-width 69)
+;;             (visual-fill-column-mode 1)))
 
-(add-hook 'mu4e-compose-mode-hook
-          (lambda () (auto-fill-mode -1)
-            (visual-line-mode 1)
-            (setq visual-fill-column-width 69)
-            (visual-fill-column-mode 1)))
+;; (add-hook 'mu4e-compose-mode-hook
+;;           (lambda () (auto-fill-mode -1)
+;;             (visual-line-mode 1)
+;;             (setq visual-fill-column-width 69)
+;;             (visual-fill-column-mode 1)))
 
 (setq mu4e-completing-read-function 'helm-completing-read-default-2)
 
