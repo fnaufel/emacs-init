@@ -1685,8 +1685,8 @@ with leading and trailing spaces removed."
 
 ;; bookmarks
 (setq mu4e-bookmarks `(
-                       ("x:\\\\Inbox AND to:fnaufel" "Inbox fnaufel" ?i)
-                       ("x:\\\\Inbox AND to:jln.neuer" "Inbox jln.neuer" ?j)
+                       ("x:\\\\Inbox AND to:/fnaufel/" "Inbox fnaufel" ?i)
+                       ("x:\\\\Inbox AND to:/jln.neuer/" "Inbox jln.neuer" ?j)
                        (,(concat "flag:unread AND "
                                  "NOT flag:trashed AND "
                                  "NOT maildir:/Spam$/ AND "
