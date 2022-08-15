@@ -1079,6 +1079,8 @@ Otherwise, kill. Besides, delete window it occupied."
                 mu4e-org-mode-hook
                 mu4e-view-mode-hook
                 mu4e-update-mail-mode-hook
+                telega-chat-mode-hook
+                telega-root-mode-hook
                 treemacs-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
