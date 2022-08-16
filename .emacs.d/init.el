@@ -1556,7 +1556,7 @@ with leading and trailing spaces removed."
 (setq mu4e-get-mail-command "offlineimap"
       mu4e-html2text-command "w3m -T text/html"
       mu4e-view-prefer-html nil
-      mu4e-update-interval nil ; do not update automatically
+      mu4e-update-interval 3600
       mu4e-headers-auto-update t
       mu4e-compose-signature-auto-include nil
       message-fill-column 55
