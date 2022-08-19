@@ -1965,12 +1965,12 @@
           mu4e-update-interval 3600
           mu4e-headers-auto-update t
           mu4e-compose-signature-auto-include nil
-          message-fill-column 55
+          message-fill-column 60
           mu4e-compose-format-flowed nil)
 
     (setq mu4e-completing-read-function 'helm-completing-read-default-2)
 
-    ;; Use unicode chars for marks?
+    ;; Use unicode chars for marks? No
     (setq mu4e-use-fancy-chars nil)
 
     ;; Actions: view
@@ -2017,6 +2017,8 @@
 
     ;; every new email composition gets its own frame!
     (setq mu4e-compose-in-new-frame t)
+    ;; use hard line breaks in compose
+    (setq use-hard-newlines t)
 
     ;; Note, when using GMail/IMAP, you should set this to either trash or
     ;; delete, since GMail already takes care of keeping copies in the
@@ -2026,7 +2028,6 @@
     (setq mu4e-sent-messages-behavior 'sent)
 
     (add-hook 'mu4e-view-mode-hook #'visual-line-mode)
-    (setq use-hard-newlines t)
 
     ;; <tab> to navigate to links, <RET> to open them in browser
     (add-hook 'mu4e-view-mode-hook
