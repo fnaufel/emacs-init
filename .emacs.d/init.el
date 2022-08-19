@@ -134,6 +134,7 @@
 (global-set-key (kbd "C-c k") 'org-store-link)
 
 (global-set-key "\C-ca" 'org-agenda)
+(global-set-key (kbd "C-c c") #'org-capture)
 
 ;;; helm-org
 (define-key org-mode-map (kbd "C-c j") 'helm-org-in-buffer-headings)
@@ -1562,18 +1563,6 @@ with leading and trailing spaces removed."
       message-fill-column 55
       mu4e-compose-format-flowed nil)
 
-;; (add-hook 'mu4e-compose-pre-hook
-;;           (lambda () (auto-fill-mode -1)
-;;             (visual-line-mode 1)
-;;             (setq visual-fill-column-width 69)
-;;             (visual-fill-column-mode 1)))
-
-;; (add-hook 'mu4e-compose-mode-hook
-;;           (lambda () (auto-fill-mode -1)
-;;             (visual-line-mode 1)
-;;             (setq visual-fill-column-width 69)
-;;             (visual-fill-column-mode 1)))
-
 (setq mu4e-completing-read-function 'helm-completing-read-default-2)
 
 ;; Use unicode chars for marks?
@@ -1632,6 +1621,7 @@ with leading and trailing spaces removed."
 (setq mu4e-sent-messages-behavior 'sent)
 
 (add-hook 'mu4e-view-mode-hook #'visual-line-mode)
+(setq use-hard-newlines t)
 
 ;; <tab> to navigate to links, <RET> to open them in browser
 (add-hook 'mu4e-view-mode-hook
@@ -1669,8 +1659,24 @@ with leading and trailing spaces removed."
 (setq message-kill-buffer-on-exit t)
 (setq mu4e-compose-dont-reply-to-self t)
 
-;; disable for now
-;; (require 'org-mu4e)
+;; use org structures and tables in message mode
+(require 'org-mu4e)
+(add-hook 'message-mode-hook 'turn-on-orgtbl)
+(add-hook 'message-mode-hook 'turn-on-orgstruct++)
+
+;;store link to message if in header view, not to header query
+(setq org-mu4e-link-query-in-headers-mode nil)
+
+(setq org-capture-templates
+      (append 
+       '(("t"
+          "todo"
+          entry
+          (file+headline "/home/fnaufel/Documents/OrgFiles/email.org" "Tasks")
+          "* TODO [#20] %?\n\n  %a\n"
+          :empty-lines-before 1
+          :unnarrowed t))
+       org-capture-templates))
 
 ;; convert org mode to HTML automatically
 ;; (setq org-mu4e-convert-to-html t)

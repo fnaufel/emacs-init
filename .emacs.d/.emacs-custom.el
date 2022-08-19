@@ -59,6 +59,7 @@
  '(global-origami-mode nil)
  '(helm-autoresize-mode t)
  '(helm-man-or-woman-function (quote woman))
+ '(helm-org-format-outline-path t)
  '(helm-prevent-escaping-from-minibuffer nil)
  '(hl-line-sticky-flag nil)
  '(html-mode-hook
@@ -128,6 +129,7 @@
  '(org-cycle-separator-lines 1)
  '(org-deadline-warning-days 7)
  '(org-default-priority 40)
+ '(org-directory "/home/fnaufel/Documents/OrgFiles/")
  '(org-duration-format (quote ((special . h:mm))))
  '(org-ellipsis " 🡇")
  '(org-export-latex-packages-alist (quote (("" "minted" t))))
@@ -173,6 +175,7 @@
  '(org-num-face (quote success))
  '(org-num-max-level 2)
  '(org-odd-levels-only t)
+ '(org-outline-path-complete-in-steps nil)
  '(org-pretty-entities nil)
  '(org-priority-default 40)
  '(org-priority-highest 1)
@@ -255,7 +258,7 @@
  '(package-pinned-packages (quote ((telega . "MELPA Stable"))))
  '(package-selected-packages
    (quote
-    (yafolding org-mime ebib language-detection telega zotxt org-noter org-noter-pdftools lsp-origami origami json-mode flycheck-pyflakes org-clock-csv visual-fill-column adaptive-wrap org-ref org-journal org-superstar helm-bibtex poly-R polymode all-the-icons all-the-icons-dired all-the-icons-gnus treemacs-all-the-icons major-mode-hydra pretty-hydra paradox buffer-move lsp-pyright rainbow-delimiters helm-projectile projectile company-box setup use-package helm-lsp lsp-treemacs lsp-ui which-key lsp-mode ac-js2 skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion cdlatex yaml-mode all elm-mode elm-yasnippets auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl typo web-beautify markdown-toc markdown-preview-mode markdown-mode magit lua-mode htmlize dash-functional multiple-cursors expand-region)))
+    (go-mode yafolding org-mime ebib language-detection telega zotxt org-noter org-noter-pdftools lsp-origami origami json-mode flycheck-pyflakes org-clock-csv visual-fill-column adaptive-wrap org-ref org-journal org-superstar helm-bibtex poly-R polymode all-the-icons all-the-icons-dired all-the-icons-gnus treemacs-all-the-icons major-mode-hydra pretty-hydra paradox buffer-move lsp-pyright rainbow-delimiters helm-projectile projectile company-box setup use-package helm-lsp lsp-treemacs lsp-ui which-key lsp-mode ac-js2 skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion cdlatex yaml-mode all elm-mode elm-yasnippets auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl typo web-beautify markdown-toc markdown-preview-mode markdown-mode magit lua-mode htmlize dash-functional multiple-cursors expand-region)))
  '(paradox-execute-asynchronously t)
  '(paradox-github-token t)
  '(pdf-annot-activate-created-annotations t)
