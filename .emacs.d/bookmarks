@@ -4,9 +4,9 @@
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
 (("org-capture-last-stored"
  (filename . "~/Documents/OrgFiles/email.org")
- (front-context-string . "*** TODO [#20] U")
- (rear-context-string . "AMEL L.T.D.A]]\n\n")
- (position . 305))
+ (front-context-string . "*** TODO Fix gri")
+ (rear-context-string . "r \"zitat.py\"]]\n\n")
+ (position . 137))
 ("maildir"
  (filename . "Sunrise Checkpoint: ~/Maildir/ | ~/Downloads/")
  (sunrise-directories "~/Maildir/" "~/Downloads/")
