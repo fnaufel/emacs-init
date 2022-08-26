@@ -2,11 +2,16 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("org-capture-last-stored"
+(("org-capture-last-stored-marker"
+ (filename . "~/Documents/OrgFiles/rcn-rfm.org")
+ (front-context-string . "* TODO [#20] Mar")
+ (rear-context-string)
+ (position . 2))
+("org-capture-last-stored"
  (filename . "~/Documents/OrgFiles/email.org")
- (front-context-string . "*** TODO Fix gri")
- (rear-context-string . "r \"zitat.py\"]]\n\n")
- (position . 137))
+ (front-context-string . "*** TODO [#20] M")
+ (rear-context-string . "ober 3, 2022]]\n\n")
+ (position . 394))
 ("maildir"
  (filename . "Sunrise Checkpoint: ~/Maildir/ | ~/Downloads/")
  (sunrise-directories "~/Maildir/" "~/Downloads/")
@@ -24,10 +29,10 @@
  (sunrise-directories "~/grive/Zotfile/" "~/Downloads/")
  (handler . sunrise-checkpoint-handler))
 ("org-refile-last-stored"
- (filename . "~/Documents/OrgFiles/personal.org")
- (front-context-string . "*** CANCELED [#5")
- (rear-context-string . "27710162\n\n* Ni\n\n")
- (position . 403690))
+ (filename . "~/Documents/OrgFiles/rcn-rfm.org")
+ (front-context-string . "* TODO [#20] Mar")
+ (rear-context-string)
+ (position . 2))
 ("ssd"
  (filename . "Sunrise Checkpoint: ~/ssd/ | ~/Downloads/")
  (sunrise-directories "~/ssd/" "~/Downloads/")
