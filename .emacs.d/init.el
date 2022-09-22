@@ -1127,52 +1127,52 @@ Otherwise, kill. Besides, delete window it occupied."
 
 ;; (require 'origami)
 
-(add-hook 'prog-mode-hook 'origami-mode)
+;; (add-hook 'prog-mode-hook 'origami-mode)
 
-(setq hydra-origami--title
-      (with-faicon "map" "Origami" 1 -0.05))
+;; (setq hydra-origami--title
+;;       (with-faicon "map" "Origami" 1 -0.05))
 
-(pretty-hydra-define hydra-origami
-  (:quit-key "q" :title hydra-origami--title :foreign-keys warn)
-    ("Open"
-     (("N" origami-open-node "node ")
-      ("R" origami-open-node-recursively "node recursively ")
-      ("P" origami-show-node "node and parents ")
-      ("A" origami-open-all-nodes "all nodes "))
+;; (pretty-hydra-define hydra-origami
+;;   (:quit-key "q" :title hydra-origami--title :foreign-keys warn)
+;;     ("Open"
+;;      (("N" origami-open-node "node ")
+;;       ("R" origami-open-node-recursively "node recursively ")
+;;       ("P" origami-show-node "node and parents ")
+;;       ("A" origami-open-all-nodes "all nodes "))
 
-     "Close"
-     (("n" origami-close-node "node ")
-      ("r" origami-close-node-recursively "node recursively ")
-      ("o" origami-show-only-node "others ")
-      ("a" origami-close-all-nodes "all nodes "))
+;;      "Close"
+;;      (("n" origami-close-node "node ")
+;;       ("r" origami-close-node-recursively "node recursively ")
+;;       ("o" origami-show-only-node "others ")
+;;       ("a" origami-close-all-nodes "all nodes "))
 
-     "Toggle"
-     (("SPC" origami-toggle-node "node ")
-      ("C-SPC" origami-toggle-all-nodes "all ")
-      ("C-<right>" origami-forward-toggle-node "→ "))
+;;      "Toggle"
+;;      (("SPC" origami-toggle-node "node ")
+;;       ("C-SPC" origami-toggle-all-nodes "all ")
+;;       ("C-<right>" origami-forward-toggle-node "→ "))
 
-     "Move to nodes"
-     (("<up>" origami-previous-fold "↑ ")
-      ("<down>" origami-forward-fold "↓ ")
-      ("<right>" origami-forward-fold-same-level "→ same level ")
-      ("<left>" origami-backward-fold-same-level "← same level "))
+;;      "Move to nodes"
+;;      (("<up>" origami-previous-fold "↑ ")
+;;       ("<down>" origami-forward-fold "↓ ")
+;;       ("<right>" origami-forward-fold-same-level "→ same level ")
+;;       ("<left>" origami-backward-fold-same-level "← same level "))
 
-     "Move in buffer"
-     (("C-l" recenter-top-bottom "recenter")
-      ("<prior>" scroll-down-command "PgUP")
-      ("<next>" scroll-up-command "PgDn")
-      ("<home>" beginning-of-buffer "bob ")
-      ("<end>" end-of-buffer "eob "))
+;;      "Move in buffer"
+;;      (("C-l" recenter-top-bottom "recenter")
+;;       ("<prior>" scroll-down-command "PgUP")
+;;       ("<next>" scroll-up-command "PgDn")
+;;       ("<home>" beginning-of-buffer "bob ")
+;;       ("<end>" end-of-buffer "eob "))
 
-     "Misc"
-     (("z" origami-undo "undo ")
-      ("y" origami-redo "redo ")
-      ("0" origami-reset "reset "))
+;;      "Misc"
+;;      (("z" origami-undo "undo ")
+;;       ("y" origami-redo "redo ")
+;;       ("0" origami-reset "reset "))
 
-     "Quit"
-     (("q" nil "quit "))))
+;;      "Quit"
+;;      (("q" nil "quit "))))
 
-(global-set-key (kbd "s-o") 'hydra-origami/body)
+;; (global-set-key (kbd "s-o") 'hydra-origami/body)
 
 (require 'lsp)
 
@@ -1215,16 +1215,16 @@ Otherwise, kill. Besides, delete window it occupied."
 (require 'lsp-origami)
 (add-hook 'lsp-after-open-hook #'lsp-origami-try-enable)
 
-(require 'projectile)
+;; (require 'projectile)
 
-(projectile-mode +1)
-(define-key projectile-mode-map (kbd "<s-kp-enter>") 'projectile-command-map)
+;; (projectile-mode +1)
+;; (define-key projectile-mode-map (kbd "<s-kp-enter>") 'projectile-command-map)
 
-(setq projectile-completion-system 'helm)
-(setq projectile-project-search-path '("~/Development/00-Present"))
+;; (setq projectile-completion-system 'helm)
+;; (setq projectile-project-search-path '("~/Development/00-Present"))
 
-(require 'helm-projectile)
-(helm-projectile-on)
+;; (require 'helm-projectile)
+;; (helm-projectile-on)
 
 ;; (setq markdown-asymmetric-header t)
 ;; (setq markdown-enable-math t)
@@ -1703,15 +1703,16 @@ with leading and trailing spaces removed."
 
 ;; bookmarks
 (setq mu4e-bookmarks `(
-                       ("x:\\\\Inbox AND to:/fnaufel/" "Inbox fnaufel" ?i)
-                       ("x:\\\\Inbox AND to:/jln.neuer/" "Inbox jln.neuer" ?j)
+                       ("x:\\\\Inbox AND recip:/fnaufel/" "Inbox fnaufel" ?i)
+                       ("x:\\\\Inbox AND recip:/jln.neuer/" "Inbox jln.neuer" ?j)
                        (,(concat "flag:unread AND "
                                  "NOT flag:trashed AND "
                                  "NOT maildir:/Spam$/ AND "
                                  "NOT maildir:/Trash$/") "Unread messages" ?u)
                        ("date:today..now" "Today's messages" ?t)
                        ("date:7d..now" "Last 7 days" ?w)
-                       ("mime:image/*" "Messages with images" ?p)
+                       ("x:UFF/Disciplinas/GA" "GA" ?g)
+                       ("x:UFF/Disciplinas/ProbEstatistica" "ProbEst" ?p)
                        ("flag:flagged" "Flagged messages" ?f)))
 
 ;; Upon refiling and trashing, remove Inbox and unread tag
@@ -2058,6 +2059,7 @@ with leading and trailing spaces removed."
         "Nihongo"
         "Personatus50"
         "Photography"
+        "Piano"
         "Reviews"
         "RobinSloan"
         "Smashwords"
@@ -2198,7 +2200,7 @@ with leading and trailing spaces removed."
 
 (add-hook 'telega-root-mode-hook
           (lambda ()
-            (setq line-spacing 0.0)
+            (setq line-spacing .5)
             (telega-root-auto-fill-mode 1)))
 
 ;; company setup
