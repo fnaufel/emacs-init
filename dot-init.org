@@ -979,37 +979,37 @@
              (setq i (1+ i)))))
      #+end_src
     
-*** Jump hydra
+*** Important places hydra
 
      #+begin_src emacs-lisp
-              (setq hydra-fnjump--title
-                    (with-faicon "map-signs" "Important places" 1 -0.05))
+       (setq hydra-fnjump--title
+             (with-faicon "map-signs" "Important places" 1 -0.05))
 
-              (pretty-hydra-define hydra-fnjump
-                (:quit-key "q" :title hydra-fnjump--title :foreign-keys warn :exit t)
+       (pretty-hydra-define hydra-fnjump
+         (:quit-key "q" :title hydra-fnjump--title :foreign-keys warn :exit t)
 
-                ("Files"
-                 (("e" (find-file "~/Documents/OrgFiles/mail.org") "email ")
-                  ("b" (find-file "~/.bashrc") ".bashrc ")
-                  ("p" (find-file "~/.profile") ".profile ")
-                  ("s" (find-file "~/Stow") "Stow ")
-                  ("c" (find-file "~/Stow/emacs/.emacs.d/.emacs-custom.el") "custom.el ")
-                  ("i" (find-file "~/Stow/emacs/dot-init.org") "init "))
+         ("Files"
+          (("e" (find-file "~/Documents/OrgFiles/mail.org") "email ")
+           ("b" (find-file "~/.bashrc") ".bashrc ")
+           ("p" (find-file "~/.profile") ".profile ")
+           ("s" (find-file "~/Stow") "Stow ")
+           ("c" (find-file "~/Stow/emacs/.emacs.d/.emacs-custom.el") "custom.el ")
+           ("i" (find-file "~/Stow/emacs/dot-init.org") "init "))
 
-                 "Python"
-                 (("j" (ipython-notebook-int) "jupyter")
-                  ("y" (ipython-qtconsole) "ipython")
-                  ;; ("x" (ansi-term "/home/fnaufel/.local/bin/xonsh" "xonsh") "new xonsh "))
-                  ("x" (message "xonsh disabled for now") "new xonsh "))
+          "Python"
+          (("j" (ipython-notebook-int) "jupyter")
+           ("y" (ipython-qtconsole) "ipython")
+           ;; ("x" (ansi-term "/home/fnaufel/.local/bin/xonsh" "xonsh") "new xonsh "))
+           ("x" (message "xonsh disabled for now") "new xonsh "))
 
-                 "Clock"
-                 (("t" (update-clock-tables) "clock tables "))
+          "Clock"
+          (("t" (update-clock-tables) "clock tables "))
 
-                 "Quit"
-                 (("q" nil "quit ")
-                  ("<SPC>" nil "quit "))))
+          "Quit"
+          (("q" nil "quit ")
+           ("<SPC>" nil "quit "))))
 
-              (global-set-key (kbd "s-j") 'hydra-fnjump/body)
+       (global-set-key (kbd "s-j") 'hydra-fnjump/body)
      #+end_src
     
 *** Browse kill ring
@@ -2082,7 +2082,8 @@
               entry
               (file+headline "/home/fnaufel/Documents/OrgFiles/email.org" "Tasks")
               "* TODO [#20] %?\n\n  %a\n"
-              :empty-lines-before 1
+              :jump-to-captured t
+              :empty-lines 1
               :unnarrowed t))
            org-capture-templates))
 
@@ -2747,6 +2748,27 @@
         #+end_src
 
       
+* Deutsch
+
+*** Tagebuch capture template
+
+    #+begin_src emacs-lisp
+      (setq org-capture-templates
+            (append 
+             '(("b"
+                "Tagebuch"
+                entry
+                (file+olp+datetree "/home/fnaufel/Documents/OrgFiles/deutsch.org" "Tagebuch")
+                "* %?"
+                :prepend nil
+                :jump-to-captured t
+                :empty-lines 1
+                :clock-in t
+                :clock-resume t
+                :unnarrowed t))
+             org-capture-templates))
+    #+end_src
+
 * Create frames and visit files
 
   #+begin_src emacs-lisp

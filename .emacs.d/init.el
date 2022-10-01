@@ -1686,7 +1686,8 @@ with leading and trailing spaces removed."
           entry
           (file+headline "/home/fnaufel/Documents/OrgFiles/email.org" "Tasks")
           "* TODO [#20] %?\n\n  %a\n"
-          :empty-lines-before 1
+          :jump-to-captured t
+          :empty-lines 1
           :unnarrowed t))
        org-capture-templates))
 
@@ -2322,6 +2323,21 @@ with leading and trailing spaces removed."
 
 (require 'system-packages)
 (setq system-packages-use-sudo t)
+
+(setq org-capture-templates
+      (append 
+       '(("b"
+          "Tagebuch"
+          entry
+          (file+olp+datetree "/home/fnaufel/Documents/OrgFiles/deutsch.org" "Tagebuch")
+          "* %?"
+          :prepend nil
+          :jump-to-captured t
+          :empty-lines 1
+          :clock-in t
+          :clock-resume t
+          :unnarrowed t))
+       org-capture-templates))
 
 ;;; Open custom agenda (see variable org-agenda-custom-commands). This
 ;;; splits window vertically, which is ugly. We'll fix this below.
