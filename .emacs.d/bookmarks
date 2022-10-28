@@ -9,9 +9,9 @@
  (position . 16775))
 ("org-capture-last-stored"
  (filename . "~/Documents/OrgFiles/email.org")
- (front-context-string . "*** TODO [#20] E")
+ (front-context-string . "*** TODO [#20] A")
  (rear-context-string . "o das Ostras]]\n\n")
- (position . 898))
+ (position . 1110))
 ("maildir"
  (filename . "Sunrise Checkpoint: ~/Maildir/ | ~/Downloads/")
  (sunrise-directories "~/Maildir/" "~/Downloads/")
@@ -29,10 +29,10 @@
  (sunrise-directories "~/grive/Zotfile/" "~/Downloads/")
  (handler . sunrise-checkpoint-handler))
 ("org-refile-last-stored"
- (filename . "~/Documents/OrgFiles/ga.org")
- (front-context-string . "********* TODO [")
- (rear-context-string . "\n        :END:\n\n")
- (position . 16775))
+ (filename . "~/Documents/OrgFiles/personal.org")
+ (front-context-string . "***** TODO [#20]")
+ (rear-context-string . "elho 2015/2016\n\n")
+ (position . 12114))
 ("ssd"
  (filename . "Sunrise Checkpoint: ~/ssd/ | ~/Downloads/")
  (sunrise-directories "~/ssd/" "~/Downloads/")

@@ -1522,19 +1522,19 @@
        (add-hook 'lsp-after-open-hook #'lsp-origami-try-enable)
      #+end_src
 
-*** projectile (disabled)
+*** projectile
 
      #+begin_src emacs-lisp
-       ;; (require 'projectile)
+       (require 'projectile)
 
-       ;; (projectile-mode +1)
-       ;; (define-key projectile-mode-map (kbd "<s-kp-enter>") 'projectile-command-map)
+       (projectile-mode +1)
+       (define-key projectile-mode-map (kbd "<s-kp-enter>") 'projectile-command-map)
 
-       ;; (setq projectile-completion-system 'helm)
-       ;; (setq projectile-project-search-path '("~/Development/00-Present"))
+       (setq projectile-completion-system 'helm)
+       (setq projectile-project-search-path '("~/Development/00-Present"))
 
-       ;; (require 'helm-projectile)
-       ;; (helm-projectile-on)
+       (require 'helm-projectile)
+       (helm-projectile-on)
      #+end_src
     
 *** R and ESS (disabled)
@@ -2765,7 +2765,7 @@
                 :empty-lines 1
                 :clock-in t
                 :clock-resume t
-                :unnarrowed t))
+                :unnarrowed nil))
              org-capture-templates))
     #+end_src
 

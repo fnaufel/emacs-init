@@ -61,6 +61,7 @@
  '(helm-man-or-woman-function (quote woman))
  '(helm-org-format-outline-path t)
  '(helm-prevent-escaping-from-minibuffer nil)
+ '(help-window-select t)
  '(hl-line-sticky-flag nil)
  '(html-mode-hook
    (quote
@@ -208,6 +209,7 @@
      ("l" . "export latex")
      ("q" . "quote")
      ("s" . "src")
+     ("sp" . "src python")
      ("v" . "verse")
      ("b" . "src bibtex"))))
  '(org-superstar-cycle-headline-bullets nil)
