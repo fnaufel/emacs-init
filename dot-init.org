@@ -1484,6 +1484,7 @@
 
        ;; Modes for which to enable lsp
        (dolist (mode '(html-mode-hook
+                       cc-mode-hook
                        c-mode-hook
                        c++-mode-hook
                        css-mode-hook
@@ -1518,23 +1519,23 @@
        ; C-M-.
        (define-key lsp-mode-map [remap xref-find-apropos] #'helm-lsp-workspace-symbol)
 
-       (require 'lsp-origami)
-       (add-hook 'lsp-after-open-hook #'lsp-origami-try-enable)
+       ;; (require 'lsp-origami)
+       ;; (add-hook 'lsp-after-open-hook #'lsp-origami-try-enable)
      #+end_src
 
-*** projectile
+*** projectile (disabled)
 
      #+begin_src emacs-lisp
-       (require 'projectile)
+       ;; (require 'projectile)
 
-       (projectile-mode +1)
-       (define-key projectile-mode-map (kbd "<s-kp-enter>") 'projectile-command-map)
+       ;; (projectile-mode +1)
+       ;; (define-key projectile-mode-map (kbd "<s-kp-enter>") 'projectile-command-map)
 
-       (setq projectile-completion-system 'helm)
-       (setq projectile-project-search-path '("~/Development/00-Present"))
+       ;; (setq projectile-completion-system 'helm)
+       ;; (setq projectile-project-search-path '("~/Development/00-Present"))
 
-       (require 'helm-projectile)
-       (helm-projectile-on)
+       ;; (require 'helm-projectile)
+       ;; (helm-projectile-on)
      #+end_src
     
 *** R and ESS (disabled)

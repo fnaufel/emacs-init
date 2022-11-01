@@ -1178,6 +1178,7 @@ Otherwise, kill. Besides, delete window it occupied."
 
 ;; Modes for which to enable lsp
 (dolist (mode '(html-mode-hook
+                cc-mode-hook
                 c-mode-hook
                 c++-mode-hook
                 css-mode-hook
@@ -1212,19 +1213,19 @@ Otherwise, kill. Besides, delete window it occupied."
 ; C-M-.
 (define-key lsp-mode-map [remap xref-find-apropos] #'helm-lsp-workspace-symbol)
 
-(require 'lsp-origami)
-(add-hook 'lsp-after-open-hook #'lsp-origami-try-enable)
+;; (require 'lsp-origami)
+;; (add-hook 'lsp-after-open-hook #'lsp-origami-try-enable)
 
-(require 'projectile)
+;; (require 'projectile)
 
-(projectile-mode +1)
-(define-key projectile-mode-map (kbd "<s-kp-enter>") 'projectile-command-map)
+;; (projectile-mode +1)
+;; (define-key projectile-mode-map (kbd "<s-kp-enter>") 'projectile-command-map)
 
-(setq projectile-completion-system 'helm)
-(setq projectile-project-search-path '("~/Development/00-Present"))
+;; (setq projectile-completion-system 'helm)
+;; (setq projectile-project-search-path '("~/Development/00-Present"))
 
-(require 'helm-projectile)
-(helm-projectile-on)
+;; (require 'helm-projectile)
+;; (helm-projectile-on)
 
 ;; (setq markdown-asymmetric-header t)
 ;; (setq markdown-enable-math t)

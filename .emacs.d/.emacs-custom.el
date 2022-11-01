@@ -271,6 +271,7 @@
    (quote
     (pdf-history-minor-mode pdf-isearch-minor-mode pdf-links-minor-mode pdf-misc-minor-mode pdf-outline-minor-mode pdf-misc-size-indication-minor-mode pdf-annot-minor-mode pdf-sync-minor-mode pdf-misc-context-menu-minor-mode pdf-cache-prefetch-minor-mode pdf-occur-global-minor-mode)))
  '(pdf-view-continuous nil)
+ '(projectile-track-known-projects-automatically nil)
  '(python-indent-offset 2)
  '(python-shell-interpreter "python3")
  '(rcirc-authinfo (quote (("freenode" nickserv "SagAllesAb" "54g4ll354b"))))
