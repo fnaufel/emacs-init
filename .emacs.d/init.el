@@ -1115,8 +1115,8 @@ Otherwise, kill. Besides, delete window it occupied."
 ;; (add-to-list 'flycheck-disabled-checkers 'python-flake8)
 ;; (add-to-list 'flycheck-disabled-checkers 'python-pylint)
 
-(require 'zeal-at-point)
-(global-set-key (kbd "s-h") 'zeal-at-point)
+;; (require 'zeal-at-point)
+;; (global-set-key (kbd "s-h") 'zeal-at-point)
 
 (require 'yafolding)
 
@@ -1178,9 +1178,7 @@ Otherwise, kill. Besides, delete window it occupied."
 
 ;; Modes for which to enable lsp
 (dolist (mode '(html-mode-hook
-                cc-mode-hook
-                c-mode-hook
-                c++-mode-hook
+                c-mode-common-hook
                 css-mode-hook
                 js-mode-hook
                 ;; sh-mode-hook
@@ -1191,8 +1189,8 @@ Otherwise, kill. Besides, delete window it occupied."
   (add-hook mode #'lsp))
 
 (define-key lsp-mode-map (kbd "<tab>") 'company-indent-or-complete-common)
-(define-key lsp-mode-map (kbd "<s-kp-add>") lsp-command-map)
-(setq lsp-keymap-prefix "<s-kp-add>")
+(define-key lsp-mode-map (kbd "<s-i>") lsp-command-map)
+(setq lsp-keymap-prefix "<s-i>")
 
 (defun efs/lsp-mode-setup ()
   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
@@ -1213,19 +1211,16 @@ Otherwise, kill. Besides, delete window it occupied."
 ; C-M-.
 (define-key lsp-mode-map [remap xref-find-apropos] #'helm-lsp-workspace-symbol)
 
-;; (require 'lsp-origami)
-;; (add-hook 'lsp-after-open-hook #'lsp-origami-try-enable)
+(require 'projectile)
 
-;; (require 'projectile)
+(projectile-mode +1)
+(define-key projectile-mode-map (kbd "<s-o>") 'projectile-command-map)
 
-;; (projectile-mode +1)
-;; (define-key projectile-mode-map (kbd "<s-kp-enter>") 'projectile-command-map)
+(setq projectile-completion-system 'helm)
+(setq projectile-project-search-path '("~/Development/00-Present"))
 
-;; (setq projectile-completion-system 'helm)
-;; (setq projectile-project-search-path '("~/Development/00-Present"))
-
-;; (require 'helm-projectile)
-;; (helm-projectile-on)
+(require 'helm-projectile)
+(helm-projectile-on)
 
 ;; (setq markdown-asymmetric-header t)
 ;; (setq markdown-enable-math t)
@@ -1294,9 +1289,9 @@ Otherwise, kill. Besides, delete window it occupied."
 
 ;; From http://tuhdo.github.io/helm-intro.html
 ;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
-;; Changed to "C-c C-h". Note: We must set "C-c C-h" globally, because we
+;; Changed to "s-h". Note: We must set "C-c C-h" globally, because we
 ;; cannot change `helm-command-prefix-key' once `helm-config' is loaded.
-(global-set-key (kbd "C-c C-h") 'helm-command-prefix)
+(global-set-key (kbd "s-h") 'helm-command-prefix)
 (global-unset-key (kbd "C-x c"))
 (global-set-key (kbd "C-x b") 'helm-mini)
 

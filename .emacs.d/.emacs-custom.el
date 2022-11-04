@@ -76,6 +76,9 @@
  '(initial-major-mode (quote org-mode))
  '(initial-scratch-message nil)
  '(line-spacing 0.1)
+ '(lsp-clangd-binary-path "/usr/bin/clangd")
+ '(lsp-clangd-version "15.0.3")
+ '(lsp-clients-clangd-executable "/usr/bin/clangd")
  '(lsp-clients-deno-server "/home/fnaufel/.deno/bin/deno")
  '(lsp-keymap-prefix "<s-kp-add>")
  '(max-lisp-eval-depth 1000)
@@ -260,7 +263,7 @@
  '(package-pinned-packages (quote ((telega . "MELPA Stable"))))
  '(package-selected-packages
    (quote
-    (go-mode yafolding org-mime ebib language-detection telega zotxt org-noter org-noter-pdftools lsp-origami origami json-mode flycheck-pyflakes org-clock-csv visual-fill-column adaptive-wrap org-ref org-journal org-superstar helm-bibtex poly-R polymode all-the-icons all-the-icons-dired all-the-icons-gnus treemacs-all-the-icons major-mode-hydra pretty-hydra paradox buffer-move lsp-pyright rainbow-delimiters helm-projectile projectile company-box setup use-package helm-lsp lsp-treemacs lsp-ui which-key lsp-mode ac-js2 skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion cdlatex yaml-mode all elm-mode elm-yasnippets auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl typo web-beautify markdown-toc markdown-preview-mode markdown-mode magit lua-mode htmlize dash-functional multiple-cursors expand-region)))
+    (helm-lsp lsp-mode lsp-pyright lsp-treemacs lsp-ui go-mode yafolding org-mime ebib language-detection telega zotxt org-noter org-noter-pdftools origami json-mode flycheck-pyflakes org-clock-csv visual-fill-column adaptive-wrap org-ref org-journal org-superstar helm-bibtex poly-R polymode all-the-icons all-the-icons-dired all-the-icons-gnus treemacs-all-the-icons major-mode-hydra pretty-hydra paradox buffer-move rainbow-delimiters helm-projectile projectile company-box setup use-package which-key ac-js2 skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion cdlatex yaml-mode all elm-mode elm-yasnippets auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl typo web-beautify markdown-toc markdown-preview-mode markdown-mode magit lua-mode htmlize dash-functional multiple-cursors expand-region)))
  '(paradox-execute-asynchronously t)
  '(paradox-github-token t)
  '(pdf-annot-activate-created-annotations t)
