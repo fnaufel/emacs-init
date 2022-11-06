@@ -825,7 +825,7 @@ the \"file\" field is empty, return the empty string."
   (insert 160)
 )
 
-(global-set-key (kbd "C-;") 'insert-nbsp)
+;;; (global-set-key (kbd "C-;") 'insert-nbsp)
 
 ;;; Position point at window center, top, bottom
 (defvar cycle-window-line-last-op 'middle
@@ -878,6 +878,8 @@ A prefix argument is handled like `move-to-window-line':
 (global-set-key (kbd "C-<insert>") 'kill-ring-save)
 (global-set-key (kbd "C-<return>") 'cua-rectangle-mark-mode)
 (define-key org-mode-map (kbd "C-<return>") 'cua-rectangle-mark-mode)
+
+(require 'iedit)
 
 (global-set-key (kbd "C-x C-b") 'buffer-menu)
 
@@ -1085,6 +1087,7 @@ Otherwise, kill. Besides, delete window it occupied."
                 helpful-mode-hook
                 Man-mode-hook
                 woman-mode-hook
+                lsp-ui-imenu-mode-hook
                 treemacs-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
@@ -1190,7 +1193,7 @@ Otherwise, kill. Besides, delete window it occupied."
 
 (define-key lsp-mode-map (kbd "<tab>") 'company-indent-or-complete-common)
 (define-key lsp-mode-map (kbd "<s-i>") lsp-command-map)
-(setq lsp-keymap-prefix "<s-i>")
+;; (setq lsp-keymap-prefix "s-i")
 
 (defun efs/lsp-mode-setup ()
   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
@@ -1203,24 +1206,32 @@ Otherwise, kill. Besides, delete window it occupied."
 (require 'lsp-ui)
 (add-hook 'lsp-mode-hook 'lsp-ui-mode)
 (setq lsp-ui-doc-position 'bottom)
+(define-key lsp-command-map (kbd "g m") 'lsp-ui-imenu)
 
 (require 'lsp-treemacs)
 (lsp-treemacs-sync-mode 1)
+(define-key lsp-command-map (kbd "g s") 'lsp-treemacs-symbols)
 
 (require 'helm-lsp)
 ; C-M-.
 (define-key lsp-mode-map [remap xref-find-apropos] #'helm-lsp-workspace-symbol)
+(define-key lsp-command-map (kbd "r i") 'lsp-iedit-highlights)
+
+(require 'lsp-ido)
+
+(define-key lsp-mode-map (kbd "s-f") flycheck-command-map)
 
 (require 'projectile)
 
+(define-key projectile-mode-map (kbd "s-o") 'projectile-command-map)
 (projectile-mode +1)
-(define-key projectile-mode-map (kbd "<s-o>") 'projectile-command-map)
 
 (setq projectile-completion-system 'helm)
 (setq projectile-project-search-path '("~/Development/00-Present"))
 
 (require 'helm-projectile)
 (helm-projectile-on)
+;;(add-hook 'lsp-mode-hook 'projectile-mode)
 
 ;; (setq markdown-asymmetric-header t)
 ;; (setq markdown-enable-math t)
@@ -1294,6 +1305,7 @@ Otherwise, kill. Besides, delete window it occupied."
 (global-set-key (kbd "s-h") 'helm-command-prefix)
 (global-unset-key (kbd "C-x c"))
 (global-set-key (kbd "C-x b") 'helm-mini)
+(global-set-key (kbd "C-M-,") 'helm-imenu)
 
 (when (executable-find "curl")
   (setq helm-google-suggest-use-curl-p t))
@@ -1326,6 +1338,8 @@ Otherwise, kill. Besides, delete window it occupied."
       helm-use-undecorated-frame-option t)
 
 (helm-autoresize-mode t)
+
+(require 'helm-xref)
 
 (require 'bash-completion)
 (bash-completion-setup)
