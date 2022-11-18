@@ -9,9 +9,9 @@
  (position . 16775))
 ("org-capture-last-stored"
  (filename . "~/Documents/OrgFiles/email.org")
- (front-context-string . "*** TODO [#20] A")
+ (front-context-string . "*** TODO [#20] V")
  (rear-context-string . "o das Ostras]]\n\n")
- (position . 1110))
+ (position . 1574))
 ("maildir"
  (filename . "Sunrise Checkpoint: ~/Maildir/ | ~/Downloads/")
  (sunrise-directories "~/Maildir/" "~/Downloads/")

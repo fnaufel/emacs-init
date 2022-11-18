@@ -2369,10 +2369,10 @@ with leading and trailing spaces removed."
 
 ;;; Bash shell (splits window automatically)
 (shell)
-(sleep-for 3)
-(comint-send-string (get-buffer-process (shell)) "cd /home/fnaufel/\n")
-(sleep-for 1)
-(dirs)
+;; (sleep-for 3)
+;; (comint-send-string (get-buffer-process (shell)) "cd /home/fnaufel/\n")
+;; (sleep-for 1)
+;; (dirs)
 (delete-other-windows)
 
 ;;; Third frame: sunrise ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
