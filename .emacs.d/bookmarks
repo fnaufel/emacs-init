@@ -2,7 +2,11 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("org-capture-last-stored-marker"
+(("ebib-files"
+ (filename . "Sunrise Checkpoint: /home/BooksAndArticles/ebib-files/ | ~/Downloads/")
+ (sunrise-directories "/home/BooksAndArticles/ebib-files/" "~/Downloads/")
+ (handler . sunrise-checkpoint-handler))
+("org-capture-last-stored-marker"
  (filename . "~/Documents/OrgFiles/ga.org")
  (front-context-string . "********* TODO [")
  (rear-context-string . "\n        :END:\n\n")

@@ -1022,10 +1022,10 @@ Otherwise, kill. Besides, delete window it occupied."
       ("<end>"   buf-move-right "→ " :exit t))
 
      "Create"
-     (("i" (progn (split-window-below) (windmove-down)) "window ↑ " :exit t)
-      ("k" (split-window-below) "window ↓ " :exit t)
-      ("j" (progn (split-window-right) (windmove-right)) "window ← " :exit t)
-      ("l" (split-window-right) "window → " :exit t)
+     (("i" (split-window-below) "window ↑ " :exit t)
+      ("k" (progn (split-window-below) (windmove-down)) "window ↓ " :exit t)
+      ("j" (split-window-right) "window ← " :exit t)
+      ("l" (progn (split-window-right) (windmove-right)) "window → " :exit t)
       ("f" make-frame-command "frame " :exit t))
 
      "Delete"
