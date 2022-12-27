@@ -2207,7 +2207,7 @@ with leading and trailing spaces removed."
           (lambda ()
             (telega-mnz-mode 1)
             (setq line-spacing 0.0)
-            (setq telega-chat-input-markups '("markdown2" nil "org" "html"))))
+            (setq telega-chat-input-markups '("org" nil "markdown2" "html"))))
 
 (add-hook 'telega-root-mode-hook
           (lambda ()
