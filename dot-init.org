@@ -407,6 +407,12 @@
             (org-export-json)))
       #+end_src
 
+*** Export backend: markdown
+
+    #+begin_src emacs-lisp
+      (require 'ox-md)
+    #+end_src
+
 *** Parsing
 
     #+begin_src emacs-lisp

@@ -301,6 +301,8 @@
     (message "Exporting to JSON: %s" (car command-line-args-left))
     (org-export-json)))
 
+(require 'ox-md)
+
 (require 'orgba)
 
 ;; Based on  https://ogbe.net/emacs/references.html
