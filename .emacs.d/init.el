@@ -1120,6 +1120,11 @@ Otherwise, kill. Besides, delete window it occupied."
 ;; (add-to-list 'flycheck-disabled-checkers 'python-flake8)
 ;; (add-to-list 'flycheck-disabled-checkers 'python-pylint)
 
+(require 'flycheck-raku)
+(add-hook 'raku-mode-hook #'flycheck-mode)
+
+(require 'raku-mode)
+
 ;; (require 'zeal-at-point)
 ;; (global-set-key (kbd "s-h") 'zeal-at-point)
 

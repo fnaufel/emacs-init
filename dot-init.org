@@ -1413,6 +1413,15 @@
        ;; (add-to-list 'flycheck-disabled-checkers 'python-pylint)
      #+end_src
     
+*** raku
+
+    #+begin_src emacs-lisp
+      (require 'flycheck-raku)
+      (add-hook 'raku-mode-hook #'flycheck-mode)
+
+      (require 'raku-mode)
+    #+end_src
+
 *** zeal at point (disabled)
 
      #+begin_src emacs-lisp
