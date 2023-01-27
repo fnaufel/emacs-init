@@ -145,19 +145,19 @@
 (setq org-file-apps
       '((auto-mode . emacs)
         ("\\.mm\\'" . default)
-        ("\\.x?html?\\'" . default)
-        ("\\(?:xhtml\\|html\\)\\'" . default)
-        ("\\.pdf::[[:digit:]]+\\'" . find-file-other-frame)
-        ("\\.pdf\\'" . find-file-other-frame)
+        ("\\.x?html?\\'" . "brave-browser '%s'")
+        ("\\(?:xhtml\\|html\\)\\'" . "brave-browser '%s'")
+        ("\\.pdf::[[:digit:]]+\\'" . "okular '%s'")
+        ("\\.pdf\\'" . "okular '%s'")
         ("\\.\\(?:flac\\|mp3\\|m4a\\)\\(?:::\\([[:digit:]]+\\)\\)?\\'" .
          (funcall audio-link-function file (match-string 1 link)))
         ("\\.\\(?:avi\\|flv\\|wmv\\|mp4\\|ra\\)\\(?:::\\([[:digit:]]+\\)\\(?:-\\([[:digit:]]+\\)\\)?\\)?\\'" .
          (funcall video-link-function file (match-string 1 link) (match-string 2 link)))
-        ("\\(?:mobi\\|epub\\|azw\\)" . "ebook-viewer %s")
-        ("\\.Rproj\\'" . "rstudio %s")
-        ("\\.png\\'" . "gwenview %s")
-        ("\\.jpe?g\\'" . "gwenview %s")
-        ("\\.gif\\'" . "gwenview %s")))
+        ("\\(?:mobi\\|epub\\|azw\\)" . "ebook-viewer '%s'")
+        ("\\.Rproj\\'" . "rstudio '%s'")
+        ("\\.png\\'" . "gwenview '%s'")
+        ("\\.jpe?g\\'" . "gwenview '%s'")
+        ("\\.gif\\'" . "gwenview '%s'")))
 
 (defun convert-hhmmss-to-secs (time)
   "Receives a string of digits TIME of the form h...hhmmss and
@@ -1124,6 +1124,7 @@ Otherwise, kill. Besides, delete window it occupied."
 (add-hook 'raku-mode-hook #'flycheck-mode)
 
 (require 'raku-mode)
+(require 'ob-raku)
 
 ;; (require 'zeal-at-point)
 ;; (global-set-key (kbd "s-h") 'zeal-at-point)
