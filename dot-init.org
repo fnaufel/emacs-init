@@ -464,7 +464,7 @@
 
         ;; Programs to open files
         (setq ebib-file-associations
-              '(("pdf" . find-file-other-frame)))
+              '(("pdf" . "okular")))
 
         ;; Use full paths in file field
         (setq ebib-truncate-file-names nil)
