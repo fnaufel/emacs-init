@@ -147,7 +147,7 @@
         ("\\.mm\\'" . default)
         ("\\.x?html?\\'" . "brave-browser '%s'")
         ("\\(?:xhtml\\|html\\)\\'" . "brave-browser '%s'")
-        ("\\.pdf::[[:digit:]]+\\'" . "okular '%s'")
+        ("\\.pdf::\\([[:digit:]]+\\)\\'" . "okular -p %1 %s")
         ("\\.pdf\\'" . "okular '%s'")
         ("\\.\\(?:flac\\|mp3\\|m4a\\)\\(?:::\\([[:digit:]]+\\)\\)?\\'" .
          (funcall audio-link-function file (match-string 1 link)))
