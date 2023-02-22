@@ -1564,6 +1564,21 @@ with leading and trailing spaces removed."
 (define-key sunrise-mode-map (kbd "C-c b") nil)
 (define-key sunrise-mode-map (kbd "f") #'sunrise-flatten-branch)
 
+;;; From https://fuco1.github.io/2023-02-08-Visit-the-org-headline-from-the-attach-dired-buffer.html
+(defun my-org-attach-visit-headline-from-dired ()
+  "Go to the headline corresponding to this org-attach directory."
+  (interactive)
+  (let* ((id-parts (last (split-string default-directory "/" t) 2))
+         (id (apply #'concat id-parts)))
+    (let ((m (org-id-find id 'marker)))
+      (unless m (user-error "Cannot find entry with ID \"%s\"" id))
+      (pop-to-buffer (marker-buffer m))
+      (goto-char m)
+      (move-marker m nil)
+      (org-fold-show-context))))
+
+(define-key sunrise-mode-map (kbd "M-a") 'my-org-attach-visit-headline-from-dired)
+
 (require 'org-mime)
 
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
