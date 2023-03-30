@@ -143,7 +143,7 @@
  '(org-footnote-section nil)
  '(org-format-latex-options
    (quote
-    (:foreground default :background default :scale 1.5 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
+    (:foreground default :background default :scale 1.8 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
                  ("begin" "$1" "$" "$$" "\\(" "\\["))))
  '(org-hide-block-startup nil)
  '(org-hide-emphasis-markers nil)
@@ -170,6 +170,7 @@
  '(org-modern-list nil)
  '(org-modern-priority nil)
  '(org-modern-star nil)
+ '(org-modern-table t)
  '(org-modern-timestamp nil)
  '(org-modern-todo nil)
  '(org-modules
@@ -265,7 +266,7 @@
  '(package-pinned-packages (quote ((telega . "MELPA Stable"))))
  '(package-selected-packages
    (quote
-    (ebib magit flycheck-raku ob-raku raku-mode iedit helm-xref helm-lsp lsp-mode lsp-pyright lsp-treemacs lsp-ui go-mode yafolding org-mime language-detection telega zotxt org-noter org-noter-pdftools origami json-mode flycheck-pyflakes org-clock-csv visual-fill-column adaptive-wrap org-ref org-journal org-superstar helm-bibtex poly-R polymode all-the-icons all-the-icons-dired all-the-icons-gnus treemacs-all-the-icons major-mode-hydra pretty-hydra paradox buffer-move rainbow-delimiters helm-projectile projectile company-box setup use-package which-key ac-js2 skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion cdlatex yaml-mode all elm-mode elm-yasnippets auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl typo web-beautify markdown-toc markdown-preview-mode markdown-mode lua-mode htmlize dash-functional multiple-cursors expand-region)))
+    (yasnippet-snippets ebib magit flycheck-raku ob-raku raku-mode iedit helm-xref helm-lsp lsp-mode lsp-pyright lsp-treemacs lsp-ui go-mode yafolding org-mime language-detection telega zotxt org-noter org-noter-pdftools origami json-mode flycheck-pyflakes org-clock-csv visual-fill-column adaptive-wrap org-ref org-journal org-superstar helm-bibtex poly-R polymode all-the-icons all-the-icons-dired all-the-icons-gnus treemacs-all-the-icons major-mode-hydra pretty-hydra paradox buffer-move rainbow-delimiters helm-projectile projectile company-box setup use-package which-key ac-js2 skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion cdlatex yaml-mode all elm-mode elm-yasnippets auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl typo web-beautify markdown-toc markdown-preview-mode markdown-mode lua-mode htmlize dash-functional multiple-cursors expand-region)))
  '(paradox-execute-asynchronously t)
  '(paradox-github-token t)
  '(pdf-annot-activate-created-annotations t)
@@ -339,7 +340,13 @@
  '(vc-follow-symlinks t)
  '(visual-fill-column-enable-sensible-window-split nil)
  '(woman-use-own-frame nil)
- '(xterm-color-use-bold-for-bright t))
+ '(xterm-color-use-bold-for-bright t)
+ '(yas-prompt-functions
+   (quote
+    (shk-yas/helm-prompt yas-dropdown-prompt yas-completing-prompt yas-maybe-ido-prompt yas-no-prompt)))
+ '(yas-snippet-dirs
+   (quote
+    ("/home/fnaufel/.emacs.d/snippets" "/home/fnaufel/.emacs.d/elpa/yasnippet-snippets-20230314.2056" "/usr/share/yasnippet-snippets"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

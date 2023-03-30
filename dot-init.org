@@ -436,6 +436,9 @@
         ;; Show cursor
         (setq ebib-hide-cursor nil)
 
+        ;; Sort by author
+        (setq ebib-index-default-sort '("Author/Editor" . ascend))
+
         ;; Bib file
         (setq ebib-preload-bib-files '("/home/fnaufel/Documents/OrgFiles/bibliography.bib"))
 
@@ -656,6 +659,15 @@
          ;; (global-set-key (kbd "s-z") 'hydra-zot/body)
        #+end_src
 
+*** Pretty tables (disabled)
+
+    Not so good as org-modern.
+
+    #+begin_src emacs-lisp
+;      (require 'org-pretty-table)
+;      (add-hook 'org-mode-hook (lambda () (org-pretty-table-mode)))
+    #+end_src
+
 *** Misc (incl. hooks)
 
      #+begin_src emacs-lisp
@@ -709,6 +721,20 @@
        (setq org-startup-with-inline-images t)
        (setq org-image-actual-width 600)
     #+end_src
+
+*** Babel
+
+***** Javascript
+
+      + See https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-js.html
+
+      #+begin_src emacs-lisp
+        (require 'ob-js)
+
+        (add-to-list 'org-babel-load-languages '(js . t))
+        (org-babel-do-load-languages 'org-babel-load-languages org-babel-load-languages)
+        (add-to-list 'org-babel-tangle-lang-exts '("js" . "js"))
+      #+end_src
 
 * IPython and jupyter
 
@@ -1645,6 +1671,31 @@
        ;;; Turn off yasnippet for xonsh terminal
        (add-hook 'term-mode-hook (lambda()
                        (yas-minor-mode -1)))
+
+       ;;; Use helm for insert snippet
+       (defun shk-yas/helm-prompt (prompt choices &optional display-fn)
+         "Use helm to select a snippet. Put this into `yas-prompt-functions.'"
+         (interactive)
+         (if (require 'helm-config nil t)
+             (let ((result (helm-other-buffer
+                            (list `((name . ,prompt)
+                                    (candidates . ,(if display-fn (mapcar display-fn choices)
+                                                     choices))
+                                    (action . (("Expand" . identity)))))
+                            "*helm-select-yasnippet")))
+               (cond ((null result)
+                      (signal 'quit "user quit!"))
+                     (display-fn
+                      (catch 'result
+                        (dolist (choice choices)
+                          (when (equal (funcall display-fn choice) result)
+                            (throw 'result choice)))))
+                     (t result)))
+           nil))
+
+       ;;; Bind insert snippet to f12
+       (global-set-key (kbd "<f12>") 'yas-insert-snippet)
+
 
        ;;; https://orgmode.org/manual/Conflicts.html#Conflicts
        (defun yas/org-very-safe-expand ()

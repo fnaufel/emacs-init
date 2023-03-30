@@ -314,6 +314,9 @@
 ;; Show cursor
 (setq ebib-hide-cursor nil)
 
+;; Sort by author
+(setq ebib-index-default-sort '("Author/Editor" . ascend))
+
 ;; Bib file
 (setq ebib-preload-bib-files '("/home/fnaufel/Documents/OrgFiles/bibliography.bib"))
 
@@ -525,6 +528,9 @@ the \"file\" field is empty, return the empty string."
 
 ;; (global-set-key (kbd "s-z") 'hydra-zot/body)
 
+;      (require 'org-pretty-table)
+;      (add-hook 'org-mode-hook (lambda () (org-pretty-table-mode)))
+
 ;; Turn on Auto Fill mode automatically in Org mode
 (add-hook 'org-mode-hook
           '(lambda ()
@@ -574,6 +580,12 @@ the \"file\" field is empty, return the empty string."
 ;;; Images
 (setq org-startup-with-inline-images t)
 (setq org-image-actual-width 600)
+
+(require 'ob-js)
+
+(add-to-list 'org-babel-load-languages '(js . t))
+(org-babel-do-load-languages 'org-babel-load-languages org-babel-load-languages)
+(add-to-list 'org-babel-tangle-lang-exts '("js" . "js"))
 
 (defun ipython-qtconsole ()
   (interactive)
@@ -1292,6 +1304,31 @@ Otherwise, kill. Besides, delete window it occupied."
 ;;; Turn off yasnippet for xonsh terminal
 (add-hook 'term-mode-hook (lambda()
                 (yas-minor-mode -1)))
+
+;;; Use helm for insert snippet
+(defun shk-yas/helm-prompt (prompt choices &optional display-fn)
+  "Use helm to select a snippet. Put this into `yas-prompt-functions.'"
+  (interactive)
+  (if (require 'helm-config nil t)
+      (let ((result (helm-other-buffer
+                     (list `((name . ,prompt)
+                             (candidates . ,(if display-fn (mapcar display-fn choices)
+                                              choices))
+                             (action . (("Expand" . identity)))))
+                     "*helm-select-yasnippet")))
+        (cond ((null result)
+               (signal 'quit "user quit!"))
+              (display-fn
+               (catch 'result
+                 (dolist (choice choices)
+                   (when (equal (funcall display-fn choice) result)
+                     (throw 'result choice)))))
+              (t result)))
+    nil))
+
+;;; Bind insert snippet to f12
+(global-set-key (kbd "<f12>") 'yas-insert-snippet)
+
 
 ;;; https://orgmode.org/manual/Conflicts.html#Conflicts
 (defun yas/org-very-safe-expand ()
