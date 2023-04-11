@@ -4,6 +4,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(TeX-PDF-mode t)
+ '(TeX-complete-expert-commands t)
  '(TeX-debug-bad-boxes nil)
  '(TeX-debug-warnings t)
  '(TeX-save-query nil)
@@ -43,7 +44,7 @@
    "--time-style=+[%Y-%m-%d-%H:%M] --group-directories-first -alDhG")
  '(ebib-keywords
    (quote
-    ("visual languages" "ontologies" "usability" "description logics" "survey" "markov models" "psychology" "hidden markov models" "statistics" "evolution" "biology" "textbook" "sums" "elliptic curves" "mathematical models" "evolutionary biology" "math" "linguistics" "historical linguistics" "dreams" "combinatorics" "nlp" "talkativeness" "sex" "curves" "conics" "analytic geometry" "chaos" "matrices" "linear algebra" "Science / Life Sciences / Evolution" "Science / Life Sciences / Biophysics" "Science / Life Sciences / Biochemistry" "Mathematics / Applied" "R" "coincidences" "pascal" "letters" "history" "fermat" "arithmetic" "_tablet" "software engineering" "stochastic processes" "queues" "monte carlo" "markov chains" "gibbs fields" "probability" "inference" "confidence interval" "binomial")))
+    ("interval math" "visual languages" "ontologies" "usability" "description logics" "survey" "markov models" "psychology" "hidden markov models" "statistics" "evolution" "biology" "textbook" "sums" "elliptic curves" "mathematical models" "evolutionary biology" "math" "linguistics" "historical linguistics" "dreams" "combinatorics" "nlp" "talkativeness" "sex" "curves" "conics" "analytic geometry" "chaos" "matrices" "linear algebra" "Science / Life Sciences / Evolution" "Science / Life Sciences / Biophysics" "Science / Life Sciences / Biochemistry" "Mathematics / Applied" "R" "coincidences" "pascal" "letters" "history" "fermat" "arithmetic" "_tablet" "software engineering" "stochastic processes" "queues" "monte carlo" "markov chains" "gibbs fields" "probability" "inference" "confidence interval" "binomial")))
  '(eldoc-idle-delay 0)
  '(eldoc-minor-mode-string nil)
  '(enable-recursive-minibuffers nil)

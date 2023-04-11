@@ -1,0 +1,82 @@
+# key: projeto
+# name: projeto-pesquisa
+# --
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[brazil,english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amssymb,amsmath,amsthm}
+\usepackage[fixlanguage]{babelbib}
+\usepackage{url}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\hoje}{${1:???}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\selectbiblanguage{brazil}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% 
+
+\title{%
+  Projeto de Pesquisa:\\\\
+  ${2:???}%
+}
+
+\author{%
+  Prof.\ Fernando Náufel do Amaral\\\\
+  Matr.\ SIAPE 2295783\\\\
+  RCN -- Depto.\ de Ciências da Natureza\\\\
+  UFF -- Universidade Federal Fluminense%
+}
+
+
+\date{\hoje}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+\begin{document}
+
+\selectlanguage{brazil}
+
+\maketitle
+
+\begin{abstract}
+
+  ${3:???}
+   
+  \textbf{Área de conhecimento:}\\\\
+  \indent ${4:???};
+   
+\end{abstract}
+
+
+\section{Introdução}
+\label{sec-intro}
+
+  
+\section{Objetivos}
+\label{sec-obj}
+
+
+\section{Metodologia}
+\label{sec-metod}
+
+
+\section{Cronograma}
+\label{sec-cron}
+
+
+\section{Equipe}
+\label{sec-equipe}
+
+  
+\bibliographystyle{babplain}
+\bibliography{${5:???}}
+   
+
+\end{document}

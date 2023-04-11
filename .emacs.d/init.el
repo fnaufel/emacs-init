@@ -109,13 +109,13 @@
 (set-face-attribute 'org-level-2 nil :inherit 'org-level-8 :height 1.1) 
 (set-face-attribute 'org-level-1 nil :inherit 'org-level-8 :height 1.15)
 
-(require 'calfw)
-(require 'calfw-org)
+;; (require 'calfw)
+;; (require 'calfw-org)
 
-(global-set-key (kbd "s-c") 'cfw:open-org-calendar)
+;; (global-set-key (kbd "s-c") 'cfw:open-org-calendar)
 
-;; use org agenda buffer style keybinding.
-(setq cfw:org-overwrite-default-keybinding t)
+;; ;; use org agenda buffer style keybinding.
+;; (setq cfw:org-overwrite-default-keybinding t)
 
 (add-hook 'org-load-hook
           (lambda ()
@@ -1074,6 +1074,7 @@ Otherwise, kill. Besides, delete window it occupied."
 
 (global-set-key (kbd "C-x C-y") 'transpose-sentences)
 (global-set-key (kbd "C-z") 'undo)
+(global-set-key (kbd "s-c") 'calc)
 
 (add-hook 'after-init-hook #'global-flycheck-mode)
 

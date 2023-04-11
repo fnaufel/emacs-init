@@ -170,16 +170,16 @@
        (set-face-attribute 'org-level-1 nil :inherit 'org-level-8 :height 1.15) 
      #+end_src
     
-*** calfw and calfw-org
+*** calfw and calfw-org (disabled)
 
       #+begin_src emacs-lisp
-         (require 'calfw)
-         (require 'calfw-org)
+        ;; (require 'calfw)
+        ;; (require 'calfw-org)
 
-         (global-set-key (kbd "s-c") 'cfw:open-org-calendar)
+        ;; (global-set-key (kbd "s-c") 'cfw:open-org-calendar)
 
-         ;; use org agenda buffer style keybinding.
-         (setq cfw:org-overwrite-default-keybinding t) 
+        ;; ;; use org agenda buffer style keybinding.
+        ;; (setq cfw:org-overwrite-default-keybinding t) 
       #+end_src
     
 *** Key bindings
@@ -1333,6 +1333,7 @@
      #+begin_src emacs-lisp
        (global-set-key (kbd "C-x C-y") 'transpose-sentences)
        (global-set-key (kbd "C-z") 'undo)
+       (global-set-key (kbd "s-c") 'calc)
      #+end_src
     
 * Development environment
