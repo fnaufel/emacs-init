@@ -1450,6 +1450,15 @@
       (require 'ob-raku)
     #+end_src
 
+*** julia
+
+    #+begin_src emacs-lisp
+      (require 'julia-mode)
+      (require 'julia-repl)
+      ;; always use minor mode
+      (add-hook 'julia-mode-hook 'julia-repl-mode)
+    #+end_src
+
 *** zeal at point (disabled)
 
      #+begin_src emacs-lisp
