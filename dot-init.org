@@ -2018,10 +2018,14 @@
                    (t (ignore))))
            (nreverse dirs)))
 
+       ;; (defun open-dir-in-sunrise ()
+       ;;   (interactive)
+       ;;   (save-excursion
+       ;;     (sunrise-dired (ffap-guess-file-name-at-point))))
+
        (defun open-dir-in-sunrise ()
          (interactive)
-         (save-excursion
-           (sunrise-dired (ffap-guess-file-name-at-point))))
+         (sunrise-dired (ffap-guess-file-name-at-point)))
 
        (global-set-key (kbd "C-x C-j") 'open-dir-in-sunrise)
 

@@ -1139,6 +1139,11 @@ Otherwise, kill. Besides, delete window it occupied."
 (require 'raku-mode)
 (require 'ob-raku)
 
+(require 'julia-mode)
+(require 'julia-repl)
+;; always use minor mode
+(add-hook 'julia-mode-hook 'julia-repl-mode)
+
 ;; (require 'zeal-at-point)
 ;; (global-set-key (kbd "s-h") 'zeal-at-point)
 
@@ -1591,10 +1596,14 @@ with leading and trailing spaces removed."
             (t (ignore))))
     (nreverse dirs)))
 
+;; (defun open-dir-in-sunrise ()
+;;   (interactive)
+;;   (save-excursion
+;;     (sunrise-dired (ffap-guess-file-name-at-point))))
+
 (defun open-dir-in-sunrise ()
   (interactive)
-  (save-excursion
-    (sunrise-dired (ffap-guess-file-name-at-point))))
+  (sunrise-dired (ffap-guess-file-name-at-point)))
 
 (global-set-key (kbd "C-x C-j") 'open-dir-in-sunrise)
 

@@ -33,6 +33,7 @@
  '(comint-terminfo-terminal "eterm-color")
  '(company-selection-wrap-around t)
  '(company-tooltip-limit 30)
+ '(csv-separators (quote ("," ";")))
  '(cua-mode nil nil (cua-base))
  '(cua-remap-control-v nil)
  '(delete-by-moving-to-trash t)
@@ -131,6 +132,7 @@
  '(org-confirm-elisp-link-function (quote y-or-n-p))
  '(org-confirm-shell-link-function (quote y-or-n-p))
  '(org-cycle-global-at-bob t)
+ '(org-cycle-inline-images-display t)
  '(org-cycle-level-faces nil)
  '(org-cycle-separator-lines 1)
  '(org-deadline-warning-days 7)
@@ -202,7 +204,7 @@
  '(org-reveal-transition "none")
  '(org-reverse-note-order t)
  '(org-special-ctrl-a/e t)
- '(org-src-window-setup (quote other-frame))
+ '(org-src-window-setup (quote split-window-right))
  '(org-startup-folded t)
  '(org-structure-template-alist
    (quote
@@ -267,7 +269,7 @@
  '(package-pinned-packages (quote ((telega . "MELPA Stable"))))
  '(package-selected-packages
    (quote
-    (yasnippet-snippets ebib magit flycheck-raku ob-raku raku-mode iedit helm-xref helm-lsp lsp-mode lsp-pyright lsp-treemacs lsp-ui go-mode yafolding org-mime language-detection telega zotxt org-noter org-noter-pdftools origami json-mode flycheck-pyflakes org-clock-csv visual-fill-column adaptive-wrap org-ref org-journal org-superstar helm-bibtex poly-R polymode all-the-icons all-the-icons-dired all-the-icons-gnus treemacs-all-the-icons major-mode-hydra pretty-hydra paradox buffer-move rainbow-delimiters helm-projectile projectile company-box setup use-package which-key ac-js2 skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion cdlatex yaml-mode all elm-mode elm-yasnippets auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl typo web-beautify markdown-toc markdown-preview-mode markdown-mode lua-mode htmlize dash-functional multiple-cursors expand-region)))
+    (flycheck-julia julia-mode julia-repl julia-shell julia-vterm lsp-julia ob-ess-julia lingva yasnippet-snippets ebib magit flycheck-raku ob-raku raku-mode iedit helm-xref helm-lsp lsp-mode lsp-pyright lsp-treemacs lsp-ui go-mode yafolding org-mime language-detection telega zotxt org-noter org-noter-pdftools origami json-mode flycheck-pyflakes org-clock-csv visual-fill-column adaptive-wrap org-ref org-journal org-superstar helm-bibtex poly-R polymode all-the-icons all-the-icons-dired all-the-icons-gnus treemacs-all-the-icons major-mode-hydra pretty-hydra paradox buffer-move rainbow-delimiters helm-projectile projectile company-box setup use-package which-key ac-js2 skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion cdlatex yaml-mode all elm-mode elm-yasnippets auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl typo web-beautify markdown-toc markdown-preview-mode markdown-mode lua-mode htmlize dash-functional multiple-cursors expand-region)))
  '(paradox-execute-asynchronously t)
  '(paradox-github-token t)
  '(pdf-annot-activate-created-annotations t)
