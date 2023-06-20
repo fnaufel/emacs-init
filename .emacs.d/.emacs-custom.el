@@ -71,6 +71,8 @@
  '(initial-buffer-choice nil)
  '(initial-major-mode 'org-mode)
  '(initial-scratch-message nil)
+ '(julia-snail-multimedia-enable t)
+ '(julia-snail-repl-display-eval-results t)
  '(line-spacing 0.1)
  '(lsp-clangd-binary-path "/usr/bin/clangd")
  '(lsp-clangd-version "15.0.3")
@@ -251,7 +253,7 @@
  '(package-enable-at-startup nil)
  '(package-pinned-packages '((telega . "MELPA Stable")))
  '(package-selected-packages
-   '(flycheck-raku flycheck-pyflakes flycheck flycheck-julia epl magit magit-section julia-snail vterm julia-mode julia-repl julia-shell julia-vterm lingva yasnippet-snippets ebib ob-raku raku-mode iedit helm-xref helm-lsp lsp-mode lsp-pyright lsp-treemacs lsp-ui go-mode yafolding org-mime language-detection telega zotxt org-noter org-noter-pdftools origami json-mode org-clock-csv visual-fill-column adaptive-wrap org-ref org-journal org-superstar helm-bibtex poly-R polymode all-the-icons all-the-icons-dired all-the-icons-gnus treemacs-all-the-icons major-mode-hydra pretty-hydra paradox buffer-move rainbow-delimiters company-box setup use-package which-key ac-js2 skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion cdlatex yaml-mode all elm-mode elm-yasnippets auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl typo web-beautify markdown-toc markdown-preview-mode markdown-mode lua-mode htmlize dash-functional multiple-cursors expand-region))
+   '(code-cells flycheck-raku flycheck-pyflakes flycheck flycheck-julia epl magit magit-section julia-snail vterm julia-mode julia-repl julia-shell julia-vterm lingva yasnippet-snippets ebib ob-raku raku-mode iedit helm-xref helm-lsp lsp-mode lsp-pyright lsp-treemacs lsp-ui go-mode yafolding org-mime language-detection telega zotxt org-noter org-noter-pdftools origami json-mode org-clock-csv visual-fill-column adaptive-wrap org-ref org-journal org-superstar helm-bibtex poly-R polymode all-the-icons all-the-icons-dired all-the-icons-gnus treemacs-all-the-icons major-mode-hydra pretty-hydra paradox buffer-move rainbow-delimiters company-box setup use-package which-key ac-js2 skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion cdlatex yaml-mode all elm-mode elm-yasnippets auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl typo web-beautify markdown-toc markdown-preview-mode markdown-mode lua-mode htmlize dash-functional multiple-cursors expand-region))
  '(paradox-execute-asynchronously t)
  '(paradox-github-token t)
  '(pdf-annot-activate-created-annotations t)

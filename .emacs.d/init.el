@@ -1086,6 +1086,8 @@ Otherwise, kill. Besides, delete window it occupied."
 (require 'flycheck)
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
+(require 'code-cells)
+
 (require 'web-beautify)
 
 (require 'rainbow-delimiters)
@@ -1150,11 +1152,33 @@ Otherwise, kill. Besides, delete window it occupied."
 
 (require 'julia-mode)
 (require 'julia-repl)
-;; always use minor mode
-(add-hook 'julia-mode-hook 'julia-repl-mode)
+
 (flycheck-julia-setup)
+
 (require 'julia-snail)
 (add-hook 'julia-mode-hook #'julia-snail-mode)
+
+(defun julia-snail-copy-repl-region ()
+  "Copy the current line or the region (requires transient-mark) to the Julia REPL and evaluate it.
+This is not module-context aware."
+  (interactive)
+  (let* ((block-start
+          (if (null (use-region-p))
+              (line-beginning-position)
+            (region-beginning)))
+         (block-end
+          (if (null (use-region-p))
+              (line-end-position)
+            (region-end)))
+         (text (s-trim (buffer-substring-no-properties block-start block-end))))
+    (julia-snail--send-to-repl text)
+    (julia-snail--flash-region (point-at-bol) (point-at-eol))
+    (deactivate-mark t)))
+
+(define-key julia-snail-mode-map (kbd "C-c C-c") 'julia-snail-copy-repl-region)
+
+;; (add-hook 'julia-mode-hook #'code-cells-mode)
+;; (add-to-list 'code-cells-eval-region-commands '(julia-snail-mode . julia-snail-send-code-cell))
 
 ;; (require 'zeal-at-point)
 ;; (global-set-key (kbd "s-h") 'zeal-at-point)
