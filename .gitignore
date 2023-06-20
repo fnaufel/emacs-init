@@ -19,3 +19,4 @@
 
 /.emacs.d/request/
 *.gpg
+/.emacs.d/eln-cache/
