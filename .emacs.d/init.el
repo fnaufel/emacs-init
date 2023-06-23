@@ -1086,7 +1086,33 @@ Otherwise, kill. Besides, delete window it occupied."
 (require 'flycheck)
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
-(require 'code-cells)
+(require 'quarto-mode)
+
+(add-to-list 'auto-mode-alist '("\\.Rmd\\'" . poly-quarto-mode))
+(define-key poly-quarto-mode-map (kbd "C-S-<return>") 'polymode-eval-chunk)
+
+;;; Send text to julia repl
+(defun julia-snail-copy-repl-text (beg end msg)
+  "Copy text between BEG and END to the Julia REPL and evaluate it.
+This is not module-context aware."
+  (interactive)
+  (let* ((block-start beg)
+         (block-end end)
+         (text (s-trim (buffer-substring-no-properties block-start block-end))))
+    (message msg)
+    (julia-snail--send-to-repl text)
+    (julia-snail--flash-region beg end)))
+
+;;; Eval julia chunk from polymode buffer
+(defun poly-julia-eval-chunk (beg end msg)
+    (julia-snail-copy-repl-text beg end msg))
+
+(defun poly-julia-mode-setup ()
+  (setq-local polymode-eval-region-function #'poly-julia-eval-chunk))
+
+(add-hook 'julia-mode-hook #'poly-julia-mode-setup)
+
+;;;(require 'code-cells)
 
 (require 'web-beautify)
 
@@ -1177,8 +1203,9 @@ This is not module-context aware."
 
 (define-key julia-snail-mode-map (kbd "C-c C-c") 'julia-snail-copy-repl-region)
 
-;; (add-hook 'julia-mode-hook #'code-cells-mode)
-;; (add-to-list 'code-cells-eval-region-commands '(julia-snail-mode . julia-snail-send-code-cell))
+;;; Disabled code-cells. Use quarto instead.
+;;; (add-hook 'julia-mode-hook #'code-cells-mode)
+;;; (add-to-list 'code-cells-eval-region-commands '(julia-snail-mode . julia-snail-send-code-cell))
 
 ;; (require 'zeal-at-point)
 ;; (global-set-key (kbd "s-h") 'zeal-at-point)
@@ -1313,7 +1340,7 @@ This is not module-context aware."
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.Rmd\\'" . markdown-mode))
 
-(require 'markdown-toc)
+;; (require 'markdown-toc)
 
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
@@ -1370,7 +1397,6 @@ This is not module-context aware."
 
 ;;; Bind insert snippet to f12
 (global-set-key (kbd "<f12>") 'yas-insert-snippet)
-
 
 ;;; https://orgmode.org/manual/Conflicts.html#Conflicts
 (defun yas/org-very-safe-expand ()

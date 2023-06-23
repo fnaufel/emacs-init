@@ -63,7 +63,7 @@
  '(helm-prevent-escaping-from-minibuffer nil)
  '(help-window-select t)
  '(hl-line-sticky-flag nil)
- '(html-mode-hook '((lambda nil (auto-fill-mode -1) (setq sgml-xml-mode t))) t)
+ '(html-mode-hook '((lambda nil (auto-fill-mode -1) (setq sgml-xml-mode t))))
  '(indent-tabs-mode nil)
  '(indicate-buffer-boundaries 'right)
  '(indicate-empty-lines nil)
@@ -80,6 +80,20 @@
  '(lsp-clients-deno-server "/home/fnaufel/.deno/bin/deno")
  '(lsp-keymap-prefix "s-i")
  '(magit-post-display-buffer-hook nil)
+ '(markdown-code-lang-modes
+   '(("ocaml" . tuareg-mode)
+     ("elisp" . emacs-lisp-mode)
+     ("ditaa" . artist-mode)
+     ("asymptote" . asy-mode)
+     ("dot" . fundamental-mode)
+     ("sqlite" . sql-mode)
+     ("calc" . fundamental-mode)
+     ("C" . c-mode)
+     ("cpp" . c++-mode)
+     ("C++" . c++-mode)
+     ("screen" . shell-script-mode)
+     ("shell" . sh-mode)
+     ("bash" . sh-mode)))
  '(max-lisp-eval-depth 1000)
  '(max-specpdl-size 3000)
  '(mc/mode-line '(" mc:" (:eval (format "%d" (mc/num-cursors)))))
@@ -253,7 +267,7 @@
  '(package-enable-at-startup nil)
  '(package-pinned-packages '((telega . "MELPA Stable")))
  '(package-selected-packages
-   '(code-cells flycheck-raku flycheck-pyflakes flycheck flycheck-julia epl magit magit-section julia-snail vterm julia-mode julia-repl julia-shell julia-vterm lingva yasnippet-snippets ebib ob-raku raku-mode iedit helm-xref helm-lsp lsp-mode lsp-pyright lsp-treemacs lsp-ui go-mode yafolding org-mime language-detection telega zotxt org-noter org-noter-pdftools origami json-mode org-clock-csv visual-fill-column adaptive-wrap org-ref org-journal org-superstar helm-bibtex poly-R polymode all-the-icons all-the-icons-dired all-the-icons-gnus treemacs-all-the-icons major-mode-hydra pretty-hydra paradox buffer-move rainbow-delimiters company-box setup use-package which-key ac-js2 skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion cdlatex yaml-mode all elm-mode elm-yasnippets auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl typo web-beautify markdown-toc markdown-preview-mode markdown-mode lua-mode htmlize dash-functional multiple-cursors expand-region))
+   '(poly-R poly-noweb poly-org quarto-mode julia-snail ess edit-indirect code-cells flycheck-raku flycheck-pyflakes flycheck flycheck-julia epl magit magit-section vterm julia-mode julia-repl julia-shell julia-vterm lingva yasnippet-snippets ebib ob-raku raku-mode iedit helm-xref helm-lsp lsp-mode lsp-pyright lsp-treemacs lsp-ui go-mode yafolding org-mime language-detection telega zotxt org-noter org-noter-pdftools origami json-mode org-clock-csv visual-fill-column adaptive-wrap org-ref org-journal org-superstar helm-bibtex all-the-icons all-the-icons-dired all-the-icons-gnus treemacs-all-the-icons major-mode-hydra pretty-hydra paradox buffer-move rainbow-delimiters company-box setup use-package which-key ac-js2 skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion cdlatex yaml-mode all elm-mode elm-yasnippets auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl typo web-beautify markdown-preview-mode lua-mode htmlize dash-functional multiple-cursors expand-region))
  '(paradox-execute-asynchronously t)
  '(paradox-github-token t)
  '(pdf-annot-activate-created-annotations t)
@@ -276,7 +290,9 @@
  '(recentf-max-saved-items 100)
  '(recentf-mode t)
  '(safe-local-variable-values
-   '((eval add-hook 'after-save-hook
+   '((polymode-default-inner-mode . "julia-mode")
+     (polymode-default-inner-mode . "julia")
+     (eval add-hook 'after-save-hook
            (lambda nil
              (my/tangle-async))
            nil t)
@@ -329,7 +345,7 @@
  '(yas-prompt-functions
    '(shk-yas/helm-prompt yas-dropdown-prompt yas-completing-prompt yas-maybe-ido-prompt yas-no-prompt))
  '(yas-snippet-dirs
-   '("/home/fnaufel/.emacs.d/snippets" "/home/fnaufel/.emacs.d/elpa/yasnippet-snippets-20230314.2056" "/usr/share/yasnippet-snippets")))
+   '("/home/fnaufel/.emacs.d/snippets" "/home/fnaufel/.emacs.d/elpa/yasnippet-snippets-20230622.1323" "/usr/share/yasnippet-snippets" yasnippet-snippets-dir "/home/fnaufel/.emacs.d/elpa/elm-yasnippets-20160401.524/snippets")))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
