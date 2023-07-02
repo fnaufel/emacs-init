@@ -432,7 +432,7 @@ the \"file\" field is empty, return the empty string."
          (title (ebib-get-field-value
                  "title" key ebib--cur-db 'noerror 'unbraced))
          (query (concat author " " title)))
-    (kill-new query)
+    ;; (kill-new query) ;; Do not insert current entry in kill ring
     (biblio-lookup nil nil)))
 
 ;; Bibliography hydra
@@ -443,7 +443,7 @@ the \"file\" field is empty, return the empty string."
   (:quit-key "q" :title hydra-bib--title :foreign-keys warn :exit t)
   (""
    (("e" (ebib) "[E]bib " :exit t)
-    ("b" (lookup-entry) "[B]iblio (yank for current entry) " :exit t)
+    ("b" (lookup-entry) "[B]iblio " :exit t)
     ("c" (ebib-insert-citation) "[C]ite current entry " :exit t)
     ("f" (ebib-import-file) "[F]ile for current entry " :exit t)
     ("u" (ebib-download-url nil) "[U]rl download for current entry " :exit t)
@@ -451,7 +451,8 @@ the \"file\" field is empty, return the empty string."
     ("n" (do.refs/ebib-add-newest-from-downloads) "[N]ewest file for current entry " :exit t))
 
    ""
-   (("q" nil "quit "))))
+   (("q" nil "quit ")
+    ("<SPC>" nil "quit "))))
 
 (global-set-key (kbd "s-z") 'hydra-bib/body)
 
@@ -579,7 +580,7 @@ the \"file\" field is empty, return the empty string."
 
 ;;; Images
 (setq org-startup-with-inline-images t)
-(setq org-image-actual-width 600)
+(setq org-image-actual-width '(600))
 
 (require 'ob-js)
 
@@ -1340,7 +1341,10 @@ This is not module-context aware."
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.Rmd\\'" . markdown-mode))
 
-;; (require 'markdown-toc)
+(setq markdown-code-block-braces t)
+(setq markdown-enable-math t)
+
+(require 'markdown-toc)
 
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
@@ -2322,8 +2326,6 @@ with leading and trailing spaces removed."
 
 ;;        ))
 
-(message "after mu4e")
-
 (require 'telega)
 (require 'ol-telega)
 
@@ -2395,7 +2397,19 @@ with leading and trailing spaces removed."
 
 (define-key global-map (kbd "s-t") telega-prefix-map)
 
-(message "after telega")
+(require 'chatgpt-shell)
+
+;; Using auth-sources, e.g., so the file ~/.authinfo has this line:
+;; machine api.openai.com password OPENAI_KEY
+(setq chatgpt-shell-openai-key
+      (auth-source-pick-first-password :host "api.openai.com"))
+
+(require 'dall-e-shell)
+
+;; Using auth-sources, e.g., so the file ~/.authinfo has this line:
+;; machine api.openai.com password OPENAI_KEY
+(setq dall-e-shell-openai-key
+      (auth-source-pick-first-password :host "api.openai.com"))
 
 (require 'pp+)
 
