@@ -39,6 +39,8 @@
 
 (require 'package)
 
+(add-to-list 'load-path "/home/fnaufel/.emacs.d/lisp/")
+
 (setq package-archives
       '(("GNU ELPA"     . "https://elpa.gnu.org/packages/")
         ("MELPA Stable" . "https://stable.melpa.org/packages/")
@@ -49,8 +51,6 @@
         ("MELPA"        . 10)))
 
 (package-initialize)
-
-(add-to-list 'load-path "/home/fnaufel/.emacs.d/lisp/")
 
 ;; (package-refresh-contents)
 
@@ -1090,12 +1090,20 @@ Otherwise, kill. Besides, delete window it occupied."
 (require 'quarto-mode)
 
 (add-to-list 'auto-mode-alist '("\\.Rmd\\'" . poly-quarto-mode))
-(define-key poly-quarto-mode-map (kbd "C-S-<return>") 'polymode-eval-chunk)
+(define-key poly-quarto-mode-map (kbd "s-n") 'polymode-map)
 
-;;; Send text to julia repl
+(define-key polymode-map (kbd "n") 'polymode-next-chunk)
+(define-key polymode-map (kbd "p") 'polymode-previous-chunk)
+(define-key polymode-map (kbd "t") 'polymode-toggle-chunk-narrowing)
+(define-key polymode-map (kbd "C-t") 'polymode-tangle)
+
+(define-key poly-quarto-mode-map (kbd "C-S-<return>") 'polymode-eval-chunk)
+(define-key poly-quarto-mode-map (kbd "C-M-i") 'markdown-insert-gfm-code-block)
+
+      ;;; Send text to julia repl
 (defun julia-snail-copy-repl-text (beg end msg)
   "Copy text between BEG and END to the Julia REPL and evaluate it.
-This is not module-context aware."
+      This is not module-context aware."
   (interactive)
   (let* ((block-start beg)
          (block-end end)
@@ -1104,9 +1112,9 @@ This is not module-context aware."
     (julia-snail--send-to-repl text)
     (julia-snail--flash-region beg end)))
 
-;;; Eval julia chunk from polymode buffer
+      ;;; Eval julia chunk from polymode buffer
 (defun poly-julia-eval-chunk (beg end msg)
-    (julia-snail-copy-repl-text beg end msg))
+  (julia-snail-copy-repl-text beg end msg))
 
 (defun poly-julia-mode-setup ()
   (setq-local polymode-eval-region-function #'poly-julia-eval-chunk))
@@ -1356,10 +1364,14 @@ This is not module-context aware."
 
 (require 'company)
 
+;; enable globally
+;; (add-hook 'after-init-hook 'global-company-mode)
+
 ;; elisp
 (add-hook 'ielm-mode-hook 'company-mode)
 (add-hook 'emacs-lisp-mode-hook 'company-mode)
 (add-hook 'lsp-mode-hook 'company-mode)
+(add-hook 'prog-mode-hook 'company-mode)
 
 (global-set-key (kbd "<s-return>") 'company-complete)
 (define-key company-active-map (kbd "<tab>") 'company-complete-selection)
@@ -1512,6 +1524,11 @@ This is not module-context aware."
 (setq-default TeX-master nil)
 
 ;; (require 'auto-complete-auctex)
+
+(require 'texfrag)
+
+;;(add-hook 'markdown-mode-hook #'texfrag-mode)
+(texfrag-global-mode)
 
 ;; Invoke Kupfer with name of current buffer:
 (defun buffer-file-to-kupfer () 

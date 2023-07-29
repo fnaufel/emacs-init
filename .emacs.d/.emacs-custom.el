@@ -30,11 +30,16 @@
  '(comint-input-ring-file-name "/home/fnaufel/.bash_history")
  '(comint-input-ring-size 5000)
  '(comint-terminfo-terminal "eterm-color")
+ '(company-backends
+   '(company-capf company-bbdb company-semantic company-cmake company-clang company-files
+                  (company-dabbrev-code company-gtags company-etags company-keywords)
+                  company-oddmuse company-dabbrev))
  '(company-selection-wrap-around t)
  '(company-tooltip-limit 30)
  '(csv-separators '("," ";"))
  '(cua-mode nil nil (cua-base))
  '(cua-remap-control-v nil)
+ '(cursor-type 'box)
  '(delete-by-moving-to-trash t)
  '(delete-selection-mode t)
  '(describe-char-unidata-list
@@ -71,6 +76,7 @@
  '(initial-buffer-choice nil)
  '(initial-major-mode 'org-mode)
  '(initial-scratch-message nil)
+ '(julia-indent-offset 2)
  '(julia-snail-multimedia-enable t)
  '(julia-snail-repl-display-eval-results t)
  '(line-spacing 0.1)
@@ -267,7 +273,7 @@
  '(package-enable-at-startup nil)
  '(package-pinned-packages '((telega . "MELPA Stable")))
  '(package-selected-packages
-   '(dall-e-shell ob-dall-e-shell chatgpt-shell ob-chatgpt-shell csv-mode markdown-toc poly-R poly-noweb poly-org quarto-mode julia-snail ess edit-indirect code-cells flycheck-raku flycheck-pyflakes flycheck flycheck-julia epl magit magit-section vterm julia-mode julia-repl julia-shell julia-vterm lingva yasnippet-snippets ebib ob-raku raku-mode iedit helm-xref helm-lsp lsp-mode lsp-pyright lsp-treemacs lsp-ui go-mode yafolding org-mime language-detection telega zotxt org-noter org-noter-pdftools origami json-mode org-clock-csv visual-fill-column adaptive-wrap org-ref org-journal org-superstar helm-bibtex all-the-icons all-the-icons-dired all-the-icons-gnus treemacs-all-the-icons major-mode-hydra pretty-hydra paradox buffer-move rainbow-delimiters company-box setup use-package which-key ac-js2 skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion cdlatex yaml-mode all elm-mode elm-yasnippets auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl typo web-beautify markdown-preview-mode lua-mode htmlize dash-functional multiple-cursors expand-region))
+   '(texfrag dall-e-shell ob-dall-e-shell chatgpt-shell ob-chatgpt-shell csv-mode markdown-toc poly-R poly-noweb poly-org quarto-mode julia-snail ess edit-indirect code-cells flycheck-raku flycheck-pyflakes flycheck flycheck-julia epl magit magit-section vterm julia-mode julia-repl julia-shell julia-vterm lingva yasnippet-snippets ebib ob-raku raku-mode iedit helm-xref helm-lsp lsp-mode lsp-pyright lsp-treemacs lsp-ui go-mode yafolding org-mime language-detection telega zotxt org-noter org-noter-pdftools origami json-mode org-clock-csv visual-fill-column adaptive-wrap org-ref org-journal org-superstar helm-bibtex all-the-icons all-the-icons-dired all-the-icons-gnus treemacs-all-the-icons major-mode-hydra pretty-hydra paradox buffer-move rainbow-delimiters company-box setup use-package which-key ac-js2 skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion cdlatex yaml-mode all elm-mode elm-yasnippets auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl typo web-beautify markdown-preview-mode lua-mode htmlize dash-functional multiple-cursors expand-region))
  '(paradox-execute-asynchronously t)
  '(paradox-github-token t)
  '(pdf-annot-activate-created-annotations t)
@@ -336,6 +342,7 @@
  '(telega-msg-save-dir "/home/fnaufel/Downloads")
  '(telega-rainbow-saturation '(90 . 90))
  '(term-mode-hook '((lambda nil (yas-minor-mode -1))))
+ '(texfrag-scale 1.1)
  '(tool-bar-mode nil)
  '(user-full-name "")
  '(vc-follow-symlinks t)

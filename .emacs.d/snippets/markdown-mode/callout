@@ -1,0 +1,8 @@
+# key: callout
+# name: callout
+# --
+::: {.callout-${1:$$(yas-choose-value '("note" "warning" "important" "tip" "caution"))} title="$2"}
+
+$0
+
+:::
