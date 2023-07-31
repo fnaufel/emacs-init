@@ -1709,138 +1709,138 @@ with leading and trailing spaces removed."
 
 (define-key sunrise-mode-map (kbd "M-a") 'my-org-attach-visit-headline-from-dired)
 
-;; (require 'org-mime)
+(require 'org-mime)
 
-;; (add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
+(add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
 
-;; (require 'mu4e)
+(require 'mu4e)
 
-;; ;; use mu4e for e-mail in emacs
-;; (setq mail-user-agent 'mu4e-user-agent)
+;; use mu4e for e-mail in emacs
+(setq mail-user-agent 'mu4e-user-agent)
 
-;; (setq mu4e-maildir (expand-file-name "~/Maildir"))
+(setq mu4e-maildir (expand-file-name "~/Maildir"))
 
-;; (setq mu4e-get-mail-command "offlineimap"
-;;       mu4e-html2text-command "w3m -T text/html"
-;;       mu4e-view-prefer-html nil
-;;       mu4e-update-interval 3600
-;;       mu4e-headers-auto-update t
-;;       mu4e-compose-signature-auto-include nil
-;;       mu4e-compose-format-flowed t)
+(setq mu4e-get-mail-command "offlineimap"
+      mu4e-html2text-command "w3m -T text/html"
+      mu4e-view-prefer-html nil
+      mu4e-update-interval 3600
+      mu4e-headers-auto-update t
+      mu4e-compose-signature-auto-include nil
+      mu4e-compose-format-flowed t)
 
-;; (setq mu4e-completing-read-function 'helm-completing-read-default-2)
+(setq mu4e-completing-read-function 'helm-completing-read-default-2)
 
-;; ;; Use unicode chars for marks? No
-;; (setq mu4e-use-fancy-chars nil)
+;; Use unicode chars for marks? No
+(setq mu4e-use-fancy-chars nil)
 
-;; ;; Actions: view
-;; (setq mu4e-view-actions
-;;       '(("capture message" . mu4e-action-capture-message)
-;;         ("show this thread" . mu4e-action-show-thread)
-;;         ("viewInBrowser" . mu4e-action-view-in-browser)))
+;; Actions: view
+(setq mu4e-view-actions
+      '(("capture message" . mu4e-action-capture-message)
+        ("show this thread" . mu4e-action-show-thread)
+        ("viewInBrowser" . mu4e-action-view-in-browser)))
 
-;; ;; Actions: headers
-;; (setq mu4e-headers-actions
-;;       '(("capture message" . mu4e-action-capture-message)
-;;         ("show this thread" . mu4e-action-show-thread)
-;;         ("viewInBrowser" . mu4e-action-view-in-browser)))
+;; Actions: headers
+(setq mu4e-headers-actions
+      '(("capture message" . mu4e-action-capture-message)
+        ("show this thread" . mu4e-action-show-thread)
+        ("viewInBrowser" . mu4e-action-view-in-browser)))
 
 
-;; ;; Retagging in bulk
-;; ;; For some weird reason, it's asking me for the tags after I mark
-;; ;; each message!
-;; ;; If I mark with * and then resolve, then ok.
-;; ;; Or select a region before marking.
-;; (add-to-list 'mu4e-marks
-;;              '(tag
-;;                :char       "l"
-;;                :prompt     "labels"
-;;                :ask-target (lambda ()
-;;                              (completing-read-multiple
-;;                               "Tags: "
-;;                               mu4e-action-tags-completion-list))
-;;                :action      (lambda (docid msg target)
-;;                               (setq tags (s-join "," target))
-;;                               (mu4e-action-retag-message msg tags))))
+;; Retagging in bulk
+;; For some weird reason, it's asking me for the tags after I mark
+;; each message!
+;; If I mark with * and then resolve, then ok.
+;; Or select a region before marking.
+(add-to-list 'mu4e-marks
+             '(tag
+               :char       "l"
+               :prompt     "labels"
+               :ask-target (lambda ()
+                             (completing-read-multiple
+                              "Tags: "
+                              mu4e-action-tags-completion-list))
+               :action      (lambda (docid msg target)
+                              (setq tags (s-join "," target))
+                              (mu4e-action-retag-message msg tags))))
 
-;; (mu4e~headers-defun-mark-for tag)
-;; (define-key mu4e-headers-mode-map (kbd "l") 'mu4e-headers-mark-for-tag)
+(mu4e~headers-defun-mark-for tag)
+(define-key mu4e-headers-mode-map (kbd "l") 'mu4e-headers-mark-for-tag)
 
-;; (mu4e~view-defun-mark-for tag)
-;; (define-key mu4e-view-mode-map (kbd "l") 'mu4e-view-mark-for-tag)
+(mu4e~view-defun-mark-for tag)
+(define-key mu4e-view-mode-map (kbd "l") 'mu4e-view-mark-for-tag)
 
-;; ;; enable inline images
-;; (setq mu4e-view-show-images t)
-;; ;; use imagemagick, if available
-;; (when (fboundp 'imagemagick-register-types)
-;;   (imagemagick-register-types))
+;; enable inline images
+(setq mu4e-view-show-images t)
+;; use imagemagick, if available
+(when (fboundp 'imagemagick-register-types)
+  (imagemagick-register-types))
 
-;; ;; every new email composition gets its own frame!
-;; (setq mu4e-compose-in-new-frame t)
+;; every new email composition gets its own frame!
+(setq mu4e-compose-in-new-frame t)
 
-;; ;; Use hard line breaks in compose
-;; (setq use-hard-newlines t)
-;; (add-hook 'message-mode-hook
+;; Use hard line breaks in compose
+(setq use-hard-newlines t)
+(add-hook 'message-mode-hook
+          (lambda () (auto-fill-mode -1)))
+;; (add-hook 'mu4e-compose-pre-hook
 ;;           (lambda () (auto-fill-mode -1)))
-;; ;; (add-hook 'mu4e-compose-pre-hook
-;; ;;           (lambda () (auto-fill-mode -1)))
-;; ;; (add-hook 'mu4e-compose-mode-hook
-;; ;;           (lambda () (auto-fill-mode -1)))
+;; (add-hook 'mu4e-compose-mode-hook
+;;           (lambda () (auto-fill-mode -1)))
 
-;; ;; Note, when using GMail/IMAP, you should set this to either trash or
-;; ;; delete, since GMail already takes care of keeping copies in the
-;; ;; sent folder.
-;; ;;
-;; ;; But I am not syncing the sent folder, so I'll try this here:
-;; (setq mu4e-sent-messages-behavior 'sent)
+;; Note, when using GMail/IMAP, you should set this to either trash or
+;; delete, since GMail already takes care of keeping copies in the
+;; sent folder.
+;;
+;; But I am not syncing the sent folder, so I'll try this here:
+(setq mu4e-sent-messages-behavior 'sent)
 
-;; (add-hook 'mu4e-view-mode-hook #'visual-line-mode)
+(add-hook 'mu4e-view-mode-hook #'visual-line-mode)
 
-;; ;; <tab> to navigate to links, <RET> to open them in browser
-;; (add-hook 'mu4e-view-mode-hook
-;;           (lambda()
-;;             (local-set-key (kbd "<RET>") 'mu4e~view-browse-url-from-binding)
-;;             (local-set-key (kbd "<tab>") 'org-next-link)
-;;             (local-set-key (kbd "<backtab>") 'org-previous-link)))
+;; <tab> to navigate to links, <RET> to open them in browser
+(add-hook 'mu4e-view-mode-hook
+          (lambda()
+            (local-set-key (kbd "<RET>") 'mu4e~view-browse-url-from-binding)
+            (local-set-key (kbd "<tab>") 'org-next-link)
+            (local-set-key (kbd "<backtab>") 'org-previous-link)))
 
-;; ;; from https://www.reddit.com/r/emacs/comments/bfsck6/mu4e_for_dummies/elgoumx
-;; (add-hook 'mu4e-headers-mode-hook
-;;           (defun my/mu4e-change-headers ()
-;;             (interactive)
-;;             (setq mu4e-headers-fields
-;;                   `((:date . 25) 
-;;                     (:flags . 6)
-;;                     (:from . 22)
-;;                     (:thread-subject . ,(- (window-body-width) 90)) ;; alternatively, use :subject
-;;                     (:tags . nil)))))
+;; from https://www.reddit.com/r/emacs/comments/bfsck6/mu4e_for_dummies/elgoumx
+(add-hook 'mu4e-headers-mode-hook
+          (defun my/mu4e-change-headers ()
+            (interactive)
+            (setq mu4e-headers-fields
+                  `((:date . 25) 
+                    (:flags . 6)
+                    (:from . 22)
+                    (:thread-subject . ,(- (window-body-width) 90)) ;; alternatively, use :subject
+                    (:tags . nil)))))
 
-;; ;; if you use date instead of human-date in the above, use this setting
-;; ;; give me ISO(ish) format date-time stamps in the header list
-;; (setq mu4e-headers-date-format "%Y-%m-%d (%a) %H:%M")
+;; if you use date instead of human-date in the above, use this setting
+;; give me ISO(ish) format date-time stamps in the header list
+(setq mu4e-headers-date-format "%Y-%m-%d (%a) %H:%M")
 
-;; (require 'smtpmail)
+(require 'smtpmail)
 
-;; ;;rename files when moving
-;; ;;NEEDED FOR MBSYNC, disabled for offlinemap
-;; ;;(setq mu4e-change-filenames-when-moving t)
+;;rename files when moving
+;;NEEDED FOR MBSYNC, disabled for offlinemap
+;;(setq mu4e-change-filenames-when-moving t)
 
-;; ;;set up queue for offline email
-;; ;;use mu mkdir  ~/Maildir/acc/queue to set up first
-;; (setq smtpmail-queue-mail nil)  ;; start in normal mode
+;;set up queue for offline email
+;;use mu mkdir  ~/Maildir/acc/queue to set up first
+(setq smtpmail-queue-mail nil)  ;; start in normal mode
 
-;; (setq mu4e-attachment-dir  "~/Downloads")
-;; (setq message-kill-buffer-on-exit t)
-;; (setq mu4e-compose-dont-reply-to-self t)
+(setq mu4e-attachment-dir  "~/Downloads")
+(setq message-kill-buffer-on-exit t)
+(setq mu4e-compose-dont-reply-to-self t)
 
-;; ;; use org structures and tables in message mode
-;; (require 'org-mu4e)
-;; (add-hook 'message-mode-hook 'turn-on-orgtbl)
+;; use org structures and tables in message mode
+(require 'org-mu4e)
+(add-hook 'message-mode-hook 'turn-on-orgtbl)
 
-;; ;; Not working
-;; ;(add-hook 'message-mode-hook 'turn-on-orgstruct++)
+;; Not working
+;(add-hook 'message-mode-hook 'turn-on-orgstruct++)
 
-;; ;;store link to message if in header view, not to header query
-;; (setq org-mu4e-link-query-in-headers-mode nil)
+;;store link to message if in header view, not to header query
+(setq org-mu4e-link-query-in-headers-mode nil)
 
 (setq org-capture-templates nil)
 
@@ -1856,492 +1856,492 @@ with leading and trailing spaces removed."
           :unnarrowed t))
        org-capture-templates))
 
-;; ;; convert org mode to HTML automatically
-;; ;; (setq org-mu4e-convert-to-html t)
+;; convert org mode to HTML automatically
+;; (setq org-mu4e-convert-to-html t)
 
-;; ;;from vxlabs config
-;; ;; show full addresses in view message (instead of just names)
-;; ;; toggle per name with M-RET
-;; (setq mu4e-view-show-addresses 't)
+;;from vxlabs config
+;; show full addresses in view message (instead of just names)
+;; toggle per name with M-RET
+(setq mu4e-view-show-addresses 't)
 
-;; ;; don't ask when quitting
-;; (setq mu4e-confirm-quit nil)
+;; don't ask when quitting
+(setq mu4e-confirm-quit nil)
 
-;; ;; bookmarks
-;; (setq mu4e-bookmarks `(
-;;                        ("x:\\\\Inbox AND recip:/fnaufel/" "Inbox fnaufel" ?i)
-;;                        ("x:\\\\Inbox AND recip:/jln.neuer/" "Inbox jln.neuer" ?j)
-;;                        (,(concat "flag:unread AND "
-;;                                  "NOT flag:trashed AND "
-;;                                  "NOT maildir:/Spam$/ AND "
-;;                                  "NOT maildir:/Trash$/") "Unread messages" ?u)
-;;                        ("date:today..now" "Today's messages" ?t)
-;;                        ("date:7d..now" "Last 7 days" ?w)
-;;                        ("x:UFF/Disciplinas/GA" "GA" ?g)
-;;                        ("x:UFF/Disciplinas/ProbEstatistica" "ProbEst" ?p)
-;;                        ("flag:flagged" "Flagged messages" ?f)))
+;; bookmarks
+(setq mu4e-bookmarks `(
+                       ("x:\\\\Inbox AND recip:/fnaufel/" "Inbox fnaufel" ?i)
+                       ("x:\\\\Inbox AND recip:/jln.neuer/" "Inbox jln.neuer" ?j)
+                       (,(concat "flag:unread AND "
+                                 "NOT flag:trashed AND "
+                                 "NOT maildir:/Spam$/ AND "
+                                 "NOT maildir:/Trash$/") "Unread messages" ?u)
+                       ("date:today..now" "Today's messages" ?t)
+                       ("date:7d..now" "Last 7 days" ?w)
+                       ("x:UFF/Disciplinas/GA" "GA" ?g)
+                       ("x:UFF/Disciplinas/ProbEstatistica" "ProbEst" ?p)
+                       ("flag:flagged" "Flagged messages" ?f)))
 
-;; ;; Upon refiling and trashing, remove Inbox and unread tag
-;; (add-hook 'mu4e-mark-execute-pre-hook
-;;           (lambda (mark msg)
-;;             (when (member mark '(refile trash))
-;;               (mu4e-action-retag-message msg "-\\Inbox")
-;;               (let ((docid (mu4e-message-field msg :docid)))
-;;                 ;; Mark as seen and read
-;;                 (mu4e~proc-move docid nil "+S-u")))))
-
-
-;; ;; I want to insert signature where I am in the buffer
-;; (defun fna/message-insert-signature (&optional force)
-;;   "Insert a signature.  See documentation for variable `message-signature'."
-;;   (interactive (list 0))
-;;   (let* ((signature
-;;       (cond
-;;        ((and (null message-signature)
-;;          (eq force 0))
-;;         (save-excursion
-;;           (goto-char (point-max))
-;;           (not (re-search-backward message-signature-separator nil t))))
-;;        ((and (null message-signature)
-;;          force)
-;;         t)
-;;        ((functionp message-signature)
-;;         (funcall message-signature))
-;;        ((listp message-signature)
-;;         (eval message-signature))
-;;        (t message-signature)))
-;;      signature-file)
-;;     (setq signature
-;;       (cond ((stringp signature)
-;;          signature)
-;;         ((and (eq t signature) message-signature-file)
-;;          (setq signature-file
-;;                (if (and message-signature-directory
-;;                 ;; don't actually use the signature directory
-;;                 ;; if message-signature-file contains a path.
-;;                 (not (file-name-directory
-;;                       message-signature-file)))
-;;                (expand-file-name message-signature-file
-;;                          message-signature-directory)
-;;              message-signature-file))
-;;          (file-exists-p signature-file))))
-;;     (when signature
-;;       ;; Insert the signature.
-;;       (unless (bolp)
-;;     (newline))
-;;       (when message-signature-insert-empty-line
-;;     (newline))
-;;       (insert "-- ")
-;;       (newline)
-;;       (if (eq signature t)
-;;       (insert-file-contents signature-file)
-;;     (insert signature))
-;;       (or (bolp) (newline)))))
-
-;; (global-set-key [remap message-insert-signature] 'fna/message-insert-signature)
+;; Upon refiling and trashing, remove Inbox and unread tag
+(add-hook 'mu4e-mark-execute-pre-hook
+          (lambda (mark msg)
+            (when (member mark '(refile trash))
+              (mu4e-action-retag-message msg "-\\Inbox")
+              (let ((docid (mu4e-message-field msg :docid)))
+                ;; Mark as seen and read
+                (mu4e~proc-move docid nil "+S-u")))))
 
 
-;; ;; Labels for fnaufel
-;; (setq fnaufel-tags-raw
-;;       '("\\Important"
-;;         "\\Inbox"
-;;         "\\Muted"
-;;         "\\Sent"
-;;         "\\Starred"
-;;         "\\Draft"
-;;         "1-Agir"
-;;         "2-Ver"
-;;         "4-Interessante"
-;;         "7-Pagar"
-;;         "Bancos"
-;;         "Books"
-;;         "Carros"
-;;         "Comics"
-;;         "Imoveis/AptoJB"
-;;         "Imoveis/CasaCostaAzul"
-;;         "Imoveis/CasaGarrido"
-;;         "Imoveis/CasaIriri"
-;;         "Imoveis/CasaPiaui"
-;;         "Imoveis/CasaRioBonito"
-;;         "Movies"
-;;         "Multiplus"
-;;         "Music"
-;;         "Ni"
-;;         "Nihongo"
-;;         "Pesquisa"
-;;         "Pesquisa/Android"
-;;         "Pesquisa/Causality"
-;;         "Pesquisa/Deutsch"
-;;         "Pesquisa/Emacs"
-;;         "Pesquisa/Espa&APE-ol"
-;;         "Pesquisa/Estatistica"
-;;         "Pesquisa/GNULinux"
-;;         "Pesquisa/Graphs"
-;;         "Pesquisa/Latin"
-;;         "Pesquisa/Linguistics"
-;;         "Pesquisa/NLP"
-;;         "Pesquisa/Postdoc"
-;;         "Pesquisa/Py"
-;;         "Pessoas"
-;;         "Pessoas/Bruno"
-;;         "Pessoas/CarlosAugusto"
-;;         "Pessoas/Cesar"
-;;         "Pessoas/Ex"
-;;         "Pessoas/Fatima"
-;;         "Pessoas/Flavio"
-;;         "Pessoas/Guizzardi"
-;;         "Pessoas/JulianNeuer"
-;;         "Pessoas/Julio"
-;;         "Pessoas/MFelix"
-;;         "Pessoas/Nanda"
-;;         "Pessoas/Ni"
-;;         "Pessoas/Romulo"
-;;         "Pessoas/Sagallesab!"
-;;         "Pessoas/Sesquip"
-;;         "Pessoas/Vaston"
-;;         "Pessoas/Vitor"
-;;         "Serenitas50"
-;;         "Travel"
-;;         "Travel/Cruzeiro2020"
-;;         "UFF"
-;;         "UFF/Deptos/RCN"
-;;         "UFF/Deptos/RFM"
-;;         "UFF/DesAcademico"
-;;         "UFF/Disciplinas"
-;;         "UFF/Disciplinas/Combinatoria"
-;;         "UFF/Disciplinas/EstatisticaPsi"
-;;         "UFF/Disciplinas/GA"
-;;         "UFF/Disciplinas/MD-PURO"
-;;         "UFF/Disciplinas/ProbEstatistica"
-;;         "UFF/Extensao/NovosTalentos"
-;;         "UFF/LLaRC"
-;;         "UFF/Monitoria"
-;;         "UFF/Politica"
-;;         "UFF/RCNPos"
-;;         "UFF/Sindicancia"
-;;         "UFF/TCC/Yasmin"
-;;         "WordPress"
-;;         "Writing"
-;;         "YouTube"
-;;         "ZZZ-Old/Acer"
-;;         "ZZZ-Old/CasaCostaAzul"
-;;         "ZZZ-Old/Concursos/Oxford"
-;;         "ZZZ-Old/Concursos/UFRGS"
-;;         "ZZZ-Old/Concursos/UFRN"
-;;         "ZZZ-Old/Concursos/ZZ-UFSCar2010"
-;;         "ZZZ-Old/Congressos"
-;;         "ZZZ-Old/Congressos/ALIO2010"
-;;         "ZZZ-Old/Congressos/EKAW2010"
-;;         "ZZZ-Old/Congressos/ESWC2010"
-;;         "ZZZ-Old/Congressos/HTEM2013"
-;;         "ZZZ-Old/Congressos/OntoBras"
-;;         "ZZZ-Old/Congressos/RR2010"
-;;         "ZZZ-Old/Congressos/VORTE2010"
-;;         "ZZZ-Old/Congressos/ZZ-DL2008"
-;;         "ZZZ-Old/Congressos/ZZ-ERMAC2008"
-;;         "ZZZ-Old/Congressos/ZZ-Most2009"
-;;         "ZZZ-Old/Congressos/ZZ-SBGames2009"
-;;         "ZZZ-Old/Congressos/ZZ-SemOnto2008"
-;;         "ZZZ-Old/Congressos/ZZ-SemOnto2009"
-;;         "ZZZ-Old/Congressos/ZZ-SemOnto2010"
-;;         "ZZZ-Old/Congressos/ZZ-TIL2008"
-;;         "ZZZ-Old/Congressos/ZZ-VJ2009"
-;;         "ZZZ-Old/Contas"
-;;         "ZZZ-Old/Diaspora"
-;;         "ZZZ-Old/Kindle"
-;;         "ZZZ-Old/Listas/Ceia-l"
-;;         "ZZZ-Old/Listas/DLList"
-;;         "ZZZ-Old/Listas/EFF"
-;;         "ZZZ-Old/Listas/FSF"
-;;         "ZZZ-Old/Listas/HPR"
-;;         "ZZZ-Old/Listas/Kupfer"
-;;         "ZZZ-Old/Listas/Logica-l"
-;;         "ZZZ-Old/Listas/NLTK"
-;;         "ZZZ-Old/Listas/NuSMV"
-;;         "ZZZ-Old/Listas/OpenVizList"
-;;         "ZZZ-Old/Listas/Orgmode"
-;;         "ZZZ-Old/Listas/PVS"
-;;         "ZZZ-Old/Listas/Prefuse"
-;;         "ZZZ-Old/Listas/Protege"
-;;         "ZZZ-Old/Listas/SMW-list"
-;;         "ZZZ-Old/Listas/Sbc-l"
-;;         "ZZZ-Old/Listas/TED"
-;;         "ZZZ-Old/Listas/TecConv"
-;;         "ZZZ-Old/Listas/WN-Users"
-;;         "ZZZ-Old/Listas/ZZ-CMapTools"
-;;         "ZZZ-Old/Listas/ZZ-Jena-dev"
-;;         "ZZZ-Old/Listas/ZZ-Pellet-users"
-;;         "ZZZ-Old/Listas/eev"
-;;         "ZZZ-Old/Moodle"
-;;         "ZZZ-Old/Pesquisa"
-;;         "ZZZ-Old/Pesquisa/Chisel"
-;;         "ZZZ-Old/Pesquisa/Git"
-;;         "ZZZ-Old/Pesquisa/InfoExtraction"
-;;         "ZZZ-Old/Pesquisa/JGraph"
-;;         "ZZZ-Old/Pesquisa/Javascript"
-;;         "ZZZ-Old/Pesquisa/LaTeX"
-;;         "ZZZ-Old/Pesquisa/NEMO"
-;;         "ZZZ-Old/Pesquisa/Pibic2011"
-;;         "ZZZ-Old/Pesquisa/Python"
-;;         "ZZZ-Old/Pesquisa/SMWBook"
-;;         "ZZZ-Old/Pesquisa/SMWQueries"
-;;         "ZZZ-Old/Pesquisa/SWJ"
-;;         "ZZZ-Old/Pesquisa/Ubuntu"
-;;         "ZZZ-Old/Pesquisa/Usability"
-;;         "ZZZ-Old/Pesquisa/VOQL"
-;;         "ZZZ-Old/Pesquisa/ZZ-ADDLabs"
-;;         "ZZZ-Old/Pesquisa/ZZ-Anubis"
-;;         "ZZZ-Old/Pesquisa/ZZ-CAP-PROPP"
-;;         "ZZZ-Old/Pesquisa/ZZ-Israel"
-;;         "ZZZ-Old/Pesquisa/ZZ-JPesq2008"
-;;         "ZZZ-Old/Pesquisa/ZZ-JPesqUFF2009"
-;;         "ZZZ-Old/Pesquisa/ZZ-LivrosAPQ1"
-;;         "ZZZ-Old/Pesquisa/ZZ-Petrucio"
-;;         "ZZZ-Old/Pesquisa/emacs"
-;;         "ZZZ-Old/ZZ-AluguelRuaRJ"
-;;         "ZZZ-Old/ZZ-AptoInga"
-;;         "ZZZ-Old/ZZ-Facebook"
-;;         "ZZZ-Old/ZZ-FlyingBlue"
-;;         "ZZZ-Old/ZZ-Gamela2010"
-;;         "ZZZ-Old/ZZ-Mac"
-;;         "ZZZ-Old/ZZ-UERJ"
-;;         "ZZZ-Old/ZZ-UFF-Old"
-;;         "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/BCC"
-;;         "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/Capacitacao"
-;;         "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/ChefiaRCT"
-;;         "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/EstProbatorio"
-;;         "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/Horario2010.2"
-;;         "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/ICT"
-;;         "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/IdUFF"
-;;         "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/LabCC"
-;;         "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/RAD"
-;;         "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/RCC"
-;;         "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/RCT"
-;;         "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/ReconhecimentoCC"
-;;         "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/SemanaCT2011"
-;;         "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/ZZ-Inscr2009"
-;;         "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/ZZ-SemanaCT2008"
-;;         "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/ZZ-SemanaCT2009"
-;;         "ZZZ-Old/ZZ-UFF-Old/Disciplinas/CompSoc"
-;;         "ZZZ-Old/ZZ-UFF-Old/Disciplinas/LFTC-PURO"
-;;         "ZZZ-Old/ZZ-UFF-Old/Disciplinas/Logica-PURO"
-;;         "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ProgsDisciplinasRCT"
-;;         "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-ACTN2006.2"
-;;         "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-Compila2008.1"
-;;         "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-Compila2008.2"
-;;         "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-Compila2009.2"
-;;         "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-IA2006.2"
-;;         "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-IA2007.2"
-;;         "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-Java2007.1"
-;;         "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-LFTC2006.2"
-;;         "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-LFTC2007.1"
-;;         "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-LFTC2007.2"
-;;         "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-LFTC2008.1"
-;;         "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-LFTC2009.1"
-;;         "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-Logica2007.1"
-;;         "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-Logica2007.2"
-;;         "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-Logica2008.2"
-;;         "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-Logica2009.1"
-;;         "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-Logica2009.2"
-;;         "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-T&APM-picosDL2009.1"
-;;         "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-TComp2008.1"
-;;         "ZZZ-Old/ZZ-UFF-Old/Estagios/Est&AOE-gios2011"
-;;         "ZZZ-Old/ZZ-UFF-Old/Estagios/Est&AOE-gios2012"
-;;         "ZZZ-Old/ZZ-UFF-Old/Estagios/ZZ-Est&AOE-gios2009"
-;;         "ZZZ-Old/ZZ-UFF-Old/Extensao/TraducaoELegendas"
-;;         "ZZZ-Old/ZZ-UFF-Old/Extensao/ZZ-CursoLaTeX"
-;;         "ZZZ-Old/ZZ-UFF-Old/LLaRC"
-;;         "ZZZ-Old/ZZ-UFF-Old/LLaRC/DCTR2008"
-;;         "ZZZ-Old/ZZ-UFF-Old/Monitoria/Monitoria2011"
-;;         "ZZZ-Old/ZZ-UFF-Old/Monitoria/ZZ-Monitoria2009"
-;;         "ZZZ-Old/ZZ-UFF-Old/Monitoria/ZZ-Monitoria2010"
-;;         "ZZZ-Old/ZZ-UFF-Old/P&APM-sIC"
-;;         "ZZZ-Old/ZZ-UFF-Old/Politica"
-;;         "ZZZ-Old/ZZ-UFF-Old/Politica/Consulta2010"
-;;         "ZZZ-Old/ZZ-UFF-Old/Politica/Consulta2011"
-;;         "ZZZ-Old/ZZ-UFF-Old/Politica/Consulta2013"
-;;         "ZZZ-Old/ZZ-UFF-Old/Politica/Greve2012"
-;;         "ZZZ-Old/ZZ-UFF-Old/Politica/PUROLeaks"
-;;         "ZZZ-Old/ZZ-UFF-Old/Politica/Ramiro"
-;;         "ZZZ-Old/ZZ-UFF-Old/ZZ-Concursos/ZZ-ConcursoGestao2009"
-;;         "ZZZ-Old/ZZ-UFF-Old/ZZ-Concursos/ZZ-ConcursoL&APM-gica2009"
-;;         "ZZZ-Old/ZZ-UFF-Old/ZZ-Concursos/ZZ-Concursos2008"
-;;         "ZZZ-Old/ZZ-UFF-Old/ZZ-Concursos/ZZ-Concursos2009"
-;;         "ZZZ-Old/ZZ-UFF-Old/ZZ-Concursos/ZZ-Concursos2012"
-;;         "ZZZ-Old/ZZ-UFF-Old/ZZ-Concursos/ZZ-FilasDeEspera"
-;;         "ZZZ-Old/ZZ-UFF-Old/ZZ-P&APM-sRCT"
-;;         "ZZZ-Old/ZZ-UFF-Old/ZZ-TCC/AnselmoPURO"
-;;         "ZZZ-Old/ZZ-UFF-Old/ZZ-TCC/ECG"
-;;         "ZZZ-Old/ZZ-UFF-Old/ZZ-TCC/Projeto1CC"
-;;         "ZZZ-Old/ZZ-UFF-Old/ZZ-TCC/TCCs"))
+;; I want to insert signature where I am in the buffer
+(defun fna/message-insert-signature (&optional force)
+  "Insert a signature.  See documentation for variable `message-signature'."
+  (interactive (list 0))
+  (let* ((signature
+      (cond
+       ((and (null message-signature)
+         (eq force 0))
+        (save-excursion
+          (goto-char (point-max))
+          (not (re-search-backward message-signature-separator nil t))))
+       ((and (null message-signature)
+         force)
+        t)
+       ((functionp message-signature)
+        (funcall message-signature))
+       ((listp message-signature)
+        (eval message-signature))
+       (t message-signature)))
+     signature-file)
+    (setq signature
+      (cond ((stringp signature)
+         signature)
+        ((and (eq t signature) message-signature-file)
+         (setq signature-file
+               (if (and message-signature-directory
+                ;; don't actually use the signature directory
+                ;; if message-signature-file contains a path.
+                (not (file-name-directory
+                      message-signature-file)))
+               (expand-file-name message-signature-file
+                         message-signature-directory)
+             message-signature-file))
+         (file-exists-p signature-file))))
+    (when signature
+      ;; Insert the signature.
+      (unless (bolp)
+    (newline))
+      (when message-signature-insert-empty-line
+    (newline))
+      (insert "-- ")
+      (newline)
+      (if (eq signature t)
+      (insert-file-contents signature-file)
+    (insert signature))
+      (or (bolp) (newline)))))
 
-;; (setq fnaufel-tags-plus-and-minus
-;;       (cl-mapcan
-;;        (lambda (s1 s2) (list (concat "-" s1) s2))
-;;        fnaufel-tags-raw
-;;        fnaufel-tags-raw))
+(global-set-key [remap message-insert-signature] 'fna/message-insert-signature)
 
-;; ;;; Labels for jln.neuer
-;; (setq jln.neuer-tags-raw
-;;       '(
-;;         "\\Important"
-;;         "\\Inbox"
-;;         "\\Muted"
-;;         "\\Sent"
-;;         "\\Starred"
-;;         "\\Draft"
-;;         "4-Interesting"
-;;         "ALISON"
-;;         "AskFM"
-;;         "CorianderPause"
-;;         "DeviantArt"
-;;         "Diaspora"
-;;         "Diaspora1"
-;;         "DouglasSmith"
-;;         "Evernote"
-;;         "Facebook"
-;;         "GitHub"
-;;         "Goodreads"
-;;         "Gotham"
-;;         "HPR"
-;;         "IFTTT"
-;;         "Images"
-;;         "Magazines"
-;;         "Magazines/AESciFi"
-;;         "Magazines/Apex"
-;;         "Magazines/BlueMondayReview"
-;;         "Magazines/Hypnos"
-;;         "Magazines/IGMS"
-;;         "Magazines/Nature"
-;;         "Magazines/Nightmare"
-;;         "Magazines/Orthogonal"
-;;         "Magazines/Pedestal"
-;;         "Magazines/Rattle"
-;;         "Magazines/Shimmer"
-;;         "Magazines/Storyteller"
-;;         "Magazines/TheDark"
-;;         "Magazines/UFOSeries"
-;;         "Music"
-;;         "Nihongo"
-;;         "Personatus50"
-;;         "Photography"
-;;         "Piano"
-;;         "Reviews"
-;;         "RobinSloan"
-;;         "Smashwords"
-;;         "Spotify"
-;;         "Viriditas50"
-;;         "Vonnegut"
-;;         "WordpressFollowed"))
 
-;; (setq jln.neuer-tags-plus-and-minus
-;;       (cl-mapcan
-;;        (lambda (s1 s2) (list (concat "-" s1) s2))
-;;        jln.neuer-tags-raw
-;;        jln.neuer-tags-raw))
+;; Labels for fnaufel
+(setq fnaufel-tags-raw
+      '("\\Important"
+        "\\Inbox"
+        "\\Muted"
+        "\\Sent"
+        "\\Starred"
+        "\\Draft"
+        "1-Agir"
+        "2-Ver"
+        "4-Interessante"
+        "7-Pagar"
+        "Bancos"
+        "Books"
+        "Carros"
+        "Comics"
+        "Imoveis/AptoJB"
+        "Imoveis/CasaCostaAzul"
+        "Imoveis/CasaGarrido"
+        "Imoveis/CasaIriri"
+        "Imoveis/CasaPiaui"
+        "Imoveis/CasaRioBonito"
+        "Movies"
+        "Multiplus"
+        "Music"
+        "Ni"
+        "Nihongo"
+        "Pesquisa"
+        "Pesquisa/Android"
+        "Pesquisa/Causality"
+        "Pesquisa/Deutsch"
+        "Pesquisa/Emacs"
+        "Pesquisa/Espa&APE-ol"
+        "Pesquisa/Estatistica"
+        "Pesquisa/GNULinux"
+        "Pesquisa/Graphs"
+        "Pesquisa/Latin"
+        "Pesquisa/Linguistics"
+        "Pesquisa/NLP"
+        "Pesquisa/Postdoc"
+        "Pesquisa/Py"
+        "Pessoas"
+        "Pessoas/Bruno"
+        "Pessoas/CarlosAugusto"
+        "Pessoas/Cesar"
+        "Pessoas/Ex"
+        "Pessoas/Fatima"
+        "Pessoas/Flavio"
+        "Pessoas/Guizzardi"
+        "Pessoas/JulianNeuer"
+        "Pessoas/Julio"
+        "Pessoas/MFelix"
+        "Pessoas/Nanda"
+        "Pessoas/Ni"
+        "Pessoas/Romulo"
+        "Pessoas/Sagallesab!"
+        "Pessoas/Sesquip"
+        "Pessoas/Vaston"
+        "Pessoas/Vitor"
+        "Serenitas50"
+        "Travel"
+        "Travel/Cruzeiro2020"
+        "UFF"
+        "UFF/Deptos/RCN"
+        "UFF/Deptos/RFM"
+        "UFF/DesAcademico"
+        "UFF/Disciplinas"
+        "UFF/Disciplinas/Combinatoria"
+        "UFF/Disciplinas/EstatisticaPsi"
+        "UFF/Disciplinas/GA"
+        "UFF/Disciplinas/MD-PURO"
+        "UFF/Disciplinas/ProbEstatistica"
+        "UFF/Extensao/NovosTalentos"
+        "UFF/LLaRC"
+        "UFF/Monitoria"
+        "UFF/Politica"
+        "UFF/RCNPos"
+        "UFF/Sindicancia"
+        "UFF/TCC/Yasmin"
+        "WordPress"
+        "Writing"
+        "YouTube"
+        "ZZZ-Old/Acer"
+        "ZZZ-Old/CasaCostaAzul"
+        "ZZZ-Old/Concursos/Oxford"
+        "ZZZ-Old/Concursos/UFRGS"
+        "ZZZ-Old/Concursos/UFRN"
+        "ZZZ-Old/Concursos/ZZ-UFSCar2010"
+        "ZZZ-Old/Congressos"
+        "ZZZ-Old/Congressos/ALIO2010"
+        "ZZZ-Old/Congressos/EKAW2010"
+        "ZZZ-Old/Congressos/ESWC2010"
+        "ZZZ-Old/Congressos/HTEM2013"
+        "ZZZ-Old/Congressos/OntoBras"
+        "ZZZ-Old/Congressos/RR2010"
+        "ZZZ-Old/Congressos/VORTE2010"
+        "ZZZ-Old/Congressos/ZZ-DL2008"
+        "ZZZ-Old/Congressos/ZZ-ERMAC2008"
+        "ZZZ-Old/Congressos/ZZ-Most2009"
+        "ZZZ-Old/Congressos/ZZ-SBGames2009"
+        "ZZZ-Old/Congressos/ZZ-SemOnto2008"
+        "ZZZ-Old/Congressos/ZZ-SemOnto2009"
+        "ZZZ-Old/Congressos/ZZ-SemOnto2010"
+        "ZZZ-Old/Congressos/ZZ-TIL2008"
+        "ZZZ-Old/Congressos/ZZ-VJ2009"
+        "ZZZ-Old/Contas"
+        "ZZZ-Old/Diaspora"
+        "ZZZ-Old/Kindle"
+        "ZZZ-Old/Listas/Ceia-l"
+        "ZZZ-Old/Listas/DLList"
+        "ZZZ-Old/Listas/EFF"
+        "ZZZ-Old/Listas/FSF"
+        "ZZZ-Old/Listas/HPR"
+        "ZZZ-Old/Listas/Kupfer"
+        "ZZZ-Old/Listas/Logica-l"
+        "ZZZ-Old/Listas/NLTK"
+        "ZZZ-Old/Listas/NuSMV"
+        "ZZZ-Old/Listas/OpenVizList"
+        "ZZZ-Old/Listas/Orgmode"
+        "ZZZ-Old/Listas/PVS"
+        "ZZZ-Old/Listas/Prefuse"
+        "ZZZ-Old/Listas/Protege"
+        "ZZZ-Old/Listas/SMW-list"
+        "ZZZ-Old/Listas/Sbc-l"
+        "ZZZ-Old/Listas/TED"
+        "ZZZ-Old/Listas/TecConv"
+        "ZZZ-Old/Listas/WN-Users"
+        "ZZZ-Old/Listas/ZZ-CMapTools"
+        "ZZZ-Old/Listas/ZZ-Jena-dev"
+        "ZZZ-Old/Listas/ZZ-Pellet-users"
+        "ZZZ-Old/Listas/eev"
+        "ZZZ-Old/Moodle"
+        "ZZZ-Old/Pesquisa"
+        "ZZZ-Old/Pesquisa/Chisel"
+        "ZZZ-Old/Pesquisa/Git"
+        "ZZZ-Old/Pesquisa/InfoExtraction"
+        "ZZZ-Old/Pesquisa/JGraph"
+        "ZZZ-Old/Pesquisa/Javascript"
+        "ZZZ-Old/Pesquisa/LaTeX"
+        "ZZZ-Old/Pesquisa/NEMO"
+        "ZZZ-Old/Pesquisa/Pibic2011"
+        "ZZZ-Old/Pesquisa/Python"
+        "ZZZ-Old/Pesquisa/SMWBook"
+        "ZZZ-Old/Pesquisa/SMWQueries"
+        "ZZZ-Old/Pesquisa/SWJ"
+        "ZZZ-Old/Pesquisa/Ubuntu"
+        "ZZZ-Old/Pesquisa/Usability"
+        "ZZZ-Old/Pesquisa/VOQL"
+        "ZZZ-Old/Pesquisa/ZZ-ADDLabs"
+        "ZZZ-Old/Pesquisa/ZZ-Anubis"
+        "ZZZ-Old/Pesquisa/ZZ-CAP-PROPP"
+        "ZZZ-Old/Pesquisa/ZZ-Israel"
+        "ZZZ-Old/Pesquisa/ZZ-JPesq2008"
+        "ZZZ-Old/Pesquisa/ZZ-JPesqUFF2009"
+        "ZZZ-Old/Pesquisa/ZZ-LivrosAPQ1"
+        "ZZZ-Old/Pesquisa/ZZ-Petrucio"
+        "ZZZ-Old/Pesquisa/emacs"
+        "ZZZ-Old/ZZ-AluguelRuaRJ"
+        "ZZZ-Old/ZZ-AptoInga"
+        "ZZZ-Old/ZZ-Facebook"
+        "ZZZ-Old/ZZ-FlyingBlue"
+        "ZZZ-Old/ZZ-Gamela2010"
+        "ZZZ-Old/ZZ-Mac"
+        "ZZZ-Old/ZZ-UERJ"
+        "ZZZ-Old/ZZ-UFF-Old"
+        "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/BCC"
+        "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/Capacitacao"
+        "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/ChefiaRCT"
+        "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/EstProbatorio"
+        "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/Horario2010.2"
+        "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/ICT"
+        "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/IdUFF"
+        "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/LabCC"
+        "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/RAD"
+        "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/RCC"
+        "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/RCT"
+        "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/ReconhecimentoCC"
+        "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/SemanaCT2011"
+        "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/ZZ-Inscr2009"
+        "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/ZZ-SemanaCT2008"
+        "ZZZ-Old/ZZ-UFF-Old/DeptosColegiadosCursos/ZZ-SemanaCT2009"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/CompSoc"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/LFTC-PURO"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/Logica-PURO"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ProgsDisciplinasRCT"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-ACTN2006.2"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-Compila2008.1"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-Compila2008.2"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-Compila2009.2"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-IA2006.2"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-IA2007.2"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-Java2007.1"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-LFTC2006.2"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-LFTC2007.1"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-LFTC2007.2"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-LFTC2008.1"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-LFTC2009.1"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-Logica2007.1"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-Logica2007.2"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-Logica2008.2"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-Logica2009.1"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-Logica2009.2"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-T&APM-picosDL2009.1"
+        "ZZZ-Old/ZZ-UFF-Old/Disciplinas/ZZ-TComp2008.1"
+        "ZZZ-Old/ZZ-UFF-Old/Estagios/Est&AOE-gios2011"
+        "ZZZ-Old/ZZ-UFF-Old/Estagios/Est&AOE-gios2012"
+        "ZZZ-Old/ZZ-UFF-Old/Estagios/ZZ-Est&AOE-gios2009"
+        "ZZZ-Old/ZZ-UFF-Old/Extensao/TraducaoELegendas"
+        "ZZZ-Old/ZZ-UFF-Old/Extensao/ZZ-CursoLaTeX"
+        "ZZZ-Old/ZZ-UFF-Old/LLaRC"
+        "ZZZ-Old/ZZ-UFF-Old/LLaRC/DCTR2008"
+        "ZZZ-Old/ZZ-UFF-Old/Monitoria/Monitoria2011"
+        "ZZZ-Old/ZZ-UFF-Old/Monitoria/ZZ-Monitoria2009"
+        "ZZZ-Old/ZZ-UFF-Old/Monitoria/ZZ-Monitoria2010"
+        "ZZZ-Old/ZZ-UFF-Old/P&APM-sIC"
+        "ZZZ-Old/ZZ-UFF-Old/Politica"
+        "ZZZ-Old/ZZ-UFF-Old/Politica/Consulta2010"
+        "ZZZ-Old/ZZ-UFF-Old/Politica/Consulta2011"
+        "ZZZ-Old/ZZ-UFF-Old/Politica/Consulta2013"
+        "ZZZ-Old/ZZ-UFF-Old/Politica/Greve2012"
+        "ZZZ-Old/ZZ-UFF-Old/Politica/PUROLeaks"
+        "ZZZ-Old/ZZ-UFF-Old/Politica/Ramiro"
+        "ZZZ-Old/ZZ-UFF-Old/ZZ-Concursos/ZZ-ConcursoGestao2009"
+        "ZZZ-Old/ZZ-UFF-Old/ZZ-Concursos/ZZ-ConcursoL&APM-gica2009"
+        "ZZZ-Old/ZZ-UFF-Old/ZZ-Concursos/ZZ-Concursos2008"
+        "ZZZ-Old/ZZ-UFF-Old/ZZ-Concursos/ZZ-Concursos2009"
+        "ZZZ-Old/ZZ-UFF-Old/ZZ-Concursos/ZZ-Concursos2012"
+        "ZZZ-Old/ZZ-UFF-Old/ZZ-Concursos/ZZ-FilasDeEspera"
+        "ZZZ-Old/ZZ-UFF-Old/ZZ-P&APM-sRCT"
+        "ZZZ-Old/ZZ-UFF-Old/ZZ-TCC/AnselmoPURO"
+        "ZZZ-Old/ZZ-UFF-Old/ZZ-TCC/ECG"
+        "ZZZ-Old/ZZ-UFF-Old/ZZ-TCC/Projeto1CC"
+        "ZZZ-Old/ZZ-UFF-Old/ZZ-TCC/TCCs"))
 
-;; ;; mu4e1-context
-;; (setq mu4e-context-policy 'pick-first)
-;; (setq mu4e-compose-context-policy 'ask-if-none)
-;; (setq mu4e-contexts
-;;       (list
+(setq fnaufel-tags-plus-and-minus
+      (cl-mapcan
+       (lambda (s1 s2) (list (concat "-" s1) s2))
+       fnaufel-tags-raw
+       fnaufel-tags-raw))
 
-;;        (make-mu4e-context
-;;         :name "fnaufel"
-;;         :enter-func (lambda () (mu4e-message "Entering context fnaufel"))
-;;         :leave-func (lambda () (mu4e-message "Leaving context fnaufel"))
-;;         :match-func (lambda (msg)
-;;                       (when msg
-;;                         (mu4e-message-contact-field-matches
-;;                          msg '(:from :to :cc :bcc) "fnaufel@gmail.com")))
-;;         :vars `((user-mail-address . "fnaufel@gmail.com")
-;;                 (user-full-name . "Fernando Náufel")
-;;                 (mu4e-sent-folder . "/fnaufel-gmail/[Gmail].All Mail")
-;;                 (mu4e-drafts-folder . "/fnaufel-gmail/[Gmail].Drafts")
-;;                 (mu4e-trash-folder . "/fnaufel-gmail/[Gmail].Trash")
-;;                 (mu4e-refile-folder . "/fnaufel-gmail/[Gmail].All Mail")
-;;                 (mu4e-compose-signature . (concat
-;;                                            "Fernando Náufel\n"
-;;                                            "  fnaufel@gmail.com\n"
-;;                                            "  https://fnaufel.github.io/site\n"))
-;;                 (smtpmail-queue-dir . "~/Maildir/fnaufel-gmail/queue/cur")
-;;                 (message-send-mail-function . smtpmail-send-it)
-;;                 (smtpmail-smtp-user . "fnaufel")
-;;                 (smtpmail-starttls-credentials . (("smtp.gmail.com" 587 nil nil)))
-;;                 (smtpmail-auth-credentials . (expand-file-name "~/.authinfo-fnaufel.gpg"))
-;;                 (smtpmail-default-smtp-server . "smtp.gmail.com")
-;;                 (smtpmail-smtp-server . "smtp.gmail.com")
-;;                 (smtpmail-smtp-service . 587)
-;;                 (smtpmail-debug-info . t)
-;;                 (smtpmail-debug-verbose . t)
-;;                 (mu4e-maildir-shortcuts . (
-;;                                            ("/fnaufel-gmail/[Gmail].Trash"     . ?t)
-;;                                            ("/fnaufel-gmail/[Gmail].All Mail"  . ?a)
-;;                                            ("/fnaufel-gmail/[Gmail].Drafts"    . ?d)))
-;;                 (mu4e-action-tags-completion-list . ,fnaufel-tags-plus-and-minus)))
+;;; Labels for jln.neuer
+(setq jln.neuer-tags-raw
+      '(
+        "\\Important"
+        "\\Inbox"
+        "\\Muted"
+        "\\Sent"
+        "\\Starred"
+        "\\Draft"
+        "4-Interesting"
+        "ALISON"
+        "AskFM"
+        "CorianderPause"
+        "DeviantArt"
+        "Diaspora"
+        "Diaspora1"
+        "DouglasSmith"
+        "Evernote"
+        "Facebook"
+        "GitHub"
+        "Goodreads"
+        "Gotham"
+        "HPR"
+        "IFTTT"
+        "Images"
+        "Magazines"
+        "Magazines/AESciFi"
+        "Magazines/Apex"
+        "Magazines/BlueMondayReview"
+        "Magazines/Hypnos"
+        "Magazines/IGMS"
+        "Magazines/Nature"
+        "Magazines/Nightmare"
+        "Magazines/Orthogonal"
+        "Magazines/Pedestal"
+        "Magazines/Rattle"
+        "Magazines/Shimmer"
+        "Magazines/Storyteller"
+        "Magazines/TheDark"
+        "Magazines/UFOSeries"
+        "Music"
+        "Nihongo"
+        "Personatus50"
+        "Photography"
+        "Piano"
+        "Reviews"
+        "RobinSloan"
+        "Smashwords"
+        "Spotify"
+        "Viriditas50"
+        "Vonnegut"
+        "WordpressFollowed"))
 
-;;        (make-mu4e-context
-;;         :name "jneuer"
-;;         :enter-func (lambda () (mu4e-message "Entering context jneuer"))
-;;         :leave-func (lambda () (mu4e-message "Leaving context jneuer"))
-;;         :match-func (lambda (msg)
-;;                       (when msg
-;;                         (mu4e-message-contact-field-matches
-;;                          msg '(:from :to :cc :bcc) "jln.neuer@gmail.com")))
-;;         :vars `((user-mail-address . "jln.neuer@gmail.com")
-;;                 (user-full-name . "Julian Neuer")
-;;                 (mu4e-sent-folder . "/jneuer-gmail/[Gmail].All Mail")
-;;                 (mu4e-drafts-folder . "/jneuer-gmail/[Gmail].Drafts")
-;;                 (mu4e-trash-folder . "/jneuer-gmail/[Gmail].Trash")
-;;                 (mu4e-refile-folder . "/jneuer-gmail/[Gmail].All Mail")
-;;                 (mu4e-compose-signature . (concat "Julian Neuer\n" "Emacs 25, org-mode 9, mu4e 1.0\n"))
-;;                 (smtpmail-queue-dir . "~/Maildir/jneuer-gmail/queue/cur")
-;;                 (message-send-mail-function . smtpmail-send-it)
-;;                 (smtpmail-smtp-user . "jln.neuer")
-;;                 (smtpmail-starttls-credentials . (("smtp.gmail.com" 587 nil nil)))
-;;                 (smtpmail-auth-credentials . (expand-file-name "~/.authinfo-jneuer.gpg"))
-;;                 (smtpmail-default-smtp-server . "smtp.gmail.com")
-;;                 (smtpmail-smtp-server . "smtp.gmail.com")
-;;                 (smtpmail-smtp-service . 587)
-;;                 (smtpmail-debug-info . t)
-;;                 (smtpmail-debug-verbose . t)
-;;                 (mu4e-maildir-shortcuts . (
-;;                                            ("/jneuer-gmail/[Gmail].Trash"     . ?t)
-;;                                            ("/jneuer-gmail/[Gmail].All Mail"  . ?a)
-;;                                            ("/jneuer-gmail/[Gmail].Drafts"    . ?d)))
-;;                 (mu4e-action-tags-completion-list . ,jln.neuer-tags-plus-and-minus)))
+(setq jln.neuer-tags-plus-and-minus
+      (cl-mapcan
+       (lambda (s1 s2) (list (concat "-" s1) s2))
+       jln.neuer-tags-raw
+       jln.neuer-tags-raw))
 
-;;        ;; (make-mu4e-context
-;;        ;;  :name "sesquipedalian"
-;;        ;;  :enter-func (lambda () (mu4e-message "Entering context sesquipedalian"))
-;;        ;;  :leave-func (lambda () (mu4e-message "Leaving context sesquipedalian"))
-;;        ;;  :match-func (lambda (msg)
-;;        ;;                (when msg
-;;        ;;                  (mu4e-message-contact-field-matches
-;;        ;;                   msg '(:from :to :cc :bcc) "sesquipedalian.overtones@gmail.com")))
-;;        ;;  :vars '((user-mail-address . "sesquipedalian.overtones@gmail.com")
-;;        ;;          (user-full-name . "Sesquipedalian Overtones")
-;;        ;;          (mu4e-sent-folder . "/sesquipedalian-gmail/[Gmail].All Mail")
-;;        ;;          (mu4e-drafts-folder . "/sesquipedalian-gmail/[Gmail].Drafts")
-;;        ;;          (mu4e-trash-folder . "/sesquipedalian-gmail/[Gmail].Trash")
-;;        ;;          (mu4e-refile-folder . "/sesquipedalian-gmail/[Gmail].All Mail")
-;;        ;;          (mu4e-compose-signature . (concat "Sesquipedalian Overtones\n" "Emacs 25, org-mode 9, mu4e 1.0\n"))
-;;        ;;          (smtpmail-queue-dir . "~/Maildir/sesquipedalian-gmail/queue/cur")
-;;        ;;          (message-send-mail-function . smtpmail-send-it)
-;;        ;;          (smtpmail-smtp-user . "sesquipedalian.overtones")
-;;        ;;          (smtpmail-starttls-credentials . (("smtp.gmail.com" 587 nil nil)))
-;;        ;;          (smtpmail-auth-credentials . (expand-file-name "~/.authinfo-sesq.gpg"))
-;;        ;;          (smtpmail-default-smtp-server . "smtp.gmail.com")
-;;        ;;          (smtpmail-smtp-server . "smtp.gmail.com")
-;;        ;;          (smtpmail-smtp-service . 587)
-;;        ;;          (smtpmail-debug-info . t)
-;;        ;;          (smtpmail-debug-verbose . t)
-;;        ;;          (mu4e-maildir-shortcuts . (
-;;        ;;                                     ("/sesquipedalian-gmail/[Gmail].Trash"     . ?t)
-;;        ;;                                     ("/sesquipedalian-gmail/[Gmail].All Mail"  . ?a)
-;;        ;;                                     ("/sesquipedalian-gmail/[Gmail].Drafts"    . ?d)))))
+;; mu4e1-context
+(setq mu4e-context-policy 'pick-first)
+(setq mu4e-compose-context-policy 'ask-if-none)
+(setq mu4e-contexts
+      (list
 
-;;        ))
+       (make-mu4e-context
+        :name "fnaufel"
+        :enter-func (lambda () (mu4e-message "Entering context fnaufel"))
+        :leave-func (lambda () (mu4e-message "Leaving context fnaufel"))
+        :match-func (lambda (msg)
+                      (when msg
+                        (mu4e-message-contact-field-matches
+                         msg '(:from :to :cc :bcc) "fnaufel@gmail.com")))
+        :vars `((user-mail-address . "fnaufel@gmail.com")
+                (user-full-name . "Fernando Náufel")
+                (mu4e-sent-folder . "/fnaufel-gmail/[Gmail].All Mail")
+                (mu4e-drafts-folder . "/fnaufel-gmail/[Gmail].Drafts")
+                (mu4e-trash-folder . "/fnaufel-gmail/[Gmail].Trash")
+                (mu4e-refile-folder . "/fnaufel-gmail/[Gmail].All Mail")
+                (mu4e-compose-signature . (concat
+                                           "Fernando Náufel\n"
+                                           "  fnaufel@gmail.com\n"
+                                           "  https://fnaufel.github.io/site\n"))
+                (smtpmail-queue-dir . "~/Maildir/fnaufel-gmail/queue/cur")
+                (message-send-mail-function . smtpmail-send-it)
+                (smtpmail-smtp-user . "fnaufel")
+                (smtpmail-starttls-credentials . (("smtp.gmail.com" 587 nil nil)))
+                (smtpmail-auth-credentials . (expand-file-name "~/.authinfo-fnaufel.gpg"))
+                (smtpmail-default-smtp-server . "smtp.gmail.com")
+                (smtpmail-smtp-server . "smtp.gmail.com")
+                (smtpmail-smtp-service . 587)
+                (smtpmail-debug-info . t)
+                (smtpmail-debug-verbose . t)
+                (mu4e-maildir-shortcuts . (
+                                           ("/fnaufel-gmail/[Gmail].Trash"     . ?t)
+                                           ("/fnaufel-gmail/[Gmail].All Mail"  . ?a)
+                                           ("/fnaufel-gmail/[Gmail].Drafts"    . ?d)))
+                (mu4e-action-tags-completion-list . ,fnaufel-tags-plus-and-minus)))
+
+       (make-mu4e-context
+        :name "jneuer"
+        :enter-func (lambda () (mu4e-message "Entering context jneuer"))
+        :leave-func (lambda () (mu4e-message "Leaving context jneuer"))
+        :match-func (lambda (msg)
+                      (when msg
+                        (mu4e-message-contact-field-matches
+                         msg '(:from :to :cc :bcc) "jln.neuer@gmail.com")))
+        :vars `((user-mail-address . "jln.neuer@gmail.com")
+                (user-full-name . "Julian Neuer")
+                (mu4e-sent-folder . "/jneuer-gmail/[Gmail].All Mail")
+                (mu4e-drafts-folder . "/jneuer-gmail/[Gmail].Drafts")
+                (mu4e-trash-folder . "/jneuer-gmail/[Gmail].Trash")
+                (mu4e-refile-folder . "/jneuer-gmail/[Gmail].All Mail")
+                (mu4e-compose-signature . (concat "Julian Neuer\n" "Emacs 25, org-mode 9, mu4e 1.0\n"))
+                (smtpmail-queue-dir . "~/Maildir/jneuer-gmail/queue/cur")
+                (message-send-mail-function . smtpmail-send-it)
+                (smtpmail-smtp-user . "jln.neuer")
+                (smtpmail-starttls-credentials . (("smtp.gmail.com" 587 nil nil)))
+                (smtpmail-auth-credentials . (expand-file-name "~/.authinfo-jneuer.gpg"))
+                (smtpmail-default-smtp-server . "smtp.gmail.com")
+                (smtpmail-smtp-server . "smtp.gmail.com")
+                (smtpmail-smtp-service . 587)
+                (smtpmail-debug-info . t)
+                (smtpmail-debug-verbose . t)
+                (mu4e-maildir-shortcuts . (
+                                           ("/jneuer-gmail/[Gmail].Trash"     . ?t)
+                                           ("/jneuer-gmail/[Gmail].All Mail"  . ?a)
+                                           ("/jneuer-gmail/[Gmail].Drafts"    . ?d)))
+                (mu4e-action-tags-completion-list . ,jln.neuer-tags-plus-and-minus)))
+
+       ;; (make-mu4e-context
+       ;;  :name "sesquipedalian"
+       ;;  :enter-func (lambda () (mu4e-message "Entering context sesquipedalian"))
+       ;;  :leave-func (lambda () (mu4e-message "Leaving context sesquipedalian"))
+       ;;  :match-func (lambda (msg)
+       ;;                (when msg
+       ;;                  (mu4e-message-contact-field-matches
+       ;;                   msg '(:from :to :cc :bcc) "sesquipedalian.overtones@gmail.com")))
+       ;;  :vars '((user-mail-address . "sesquipedalian.overtones@gmail.com")
+       ;;          (user-full-name . "Sesquipedalian Overtones")
+       ;;          (mu4e-sent-folder . "/sesquipedalian-gmail/[Gmail].All Mail")
+       ;;          (mu4e-drafts-folder . "/sesquipedalian-gmail/[Gmail].Drafts")
+       ;;          (mu4e-trash-folder . "/sesquipedalian-gmail/[Gmail].Trash")
+       ;;          (mu4e-refile-folder . "/sesquipedalian-gmail/[Gmail].All Mail")
+       ;;          (mu4e-compose-signature . (concat "Sesquipedalian Overtones\n" "Emacs 25, org-mode 9, mu4e 1.0\n"))
+       ;;          (smtpmail-queue-dir . "~/Maildir/sesquipedalian-gmail/queue/cur")
+       ;;          (message-send-mail-function . smtpmail-send-it)
+       ;;          (smtpmail-smtp-user . "sesquipedalian.overtones")
+       ;;          (smtpmail-starttls-credentials . (("smtp.gmail.com" 587 nil nil)))
+       ;;          (smtpmail-auth-credentials . (expand-file-name "~/.authinfo-sesq.gpg"))
+       ;;          (smtpmail-default-smtp-server . "smtp.gmail.com")
+       ;;          (smtpmail-smtp-server . "smtp.gmail.com")
+       ;;          (smtpmail-smtp-service . 587)
+       ;;          (smtpmail-debug-info . t)
+       ;;          (smtpmail-debug-verbose . t)
+       ;;          (mu4e-maildir-shortcuts . (
+       ;;                                     ("/sesquipedalian-gmail/[Gmail].Trash"     . ?t)
+       ;;                                     ("/sesquipedalian-gmail/[Gmail].All Mail"  . ?a)
+       ;;                                     ("/sesquipedalian-gmail/[Gmail].Drafts"    . ?d)))))
+
+       ))
 
 (require 'telega)
 (require 'ol-telega)
