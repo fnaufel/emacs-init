@@ -1711,22 +1711,25 @@ with leading and trailing spaces removed."
 
 (require 'org-mime)
 
-(add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
+(add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
 
 (require 'mu4e)
 
 ;; use mu4e for e-mail in emacs
 (setq mail-user-agent 'mu4e-user-agent)
 
-(setq mu4e-maildir (expand-file-name "~/Maildir"))
+(setq mu4e-maildir "/home/fnaufel/Maildir")
 
 (setq mu4e-get-mail-command "offlineimap"
-      mu4e-html2text-command "w3m -T text/html"
-      mu4e-view-prefer-html nil
       mu4e-update-interval 3600
       mu4e-headers-auto-update t
       mu4e-compose-signature-auto-include nil
       mu4e-compose-format-flowed t)
+
+# Discourage html view
+(with-eval-after-load "mm-decode"
+  (add-to-list 'mm-discouraged-alternatives "text/html")
+  (add-to-list 'mm-discouraged-alternatives "text/richtext"))
 
 (setq mu4e-completing-read-function 'helm-completing-read-default-2)
 
@@ -1766,7 +1769,7 @@ with leading and trailing spaces removed."
 (mu4e~headers-defun-mark-for tag)
 (define-key mu4e-headers-mode-map (kbd "l") 'mu4e-headers-mark-for-tag)
 
-(mu4e~view-defun-mark-for tag)
+(mu4e--view-defun-mark-for tag)
 (define-key mu4e-view-mode-map (kbd "l") 'mu4e-view-mark-for-tag)
 
 ;; enable inline images
@@ -1833,7 +1836,6 @@ with leading and trailing spaces removed."
 (setq mu4e-compose-dont-reply-to-self t)
 
 ;; use org structures and tables in message mode
-(require 'org-mu4e)
 (add-hook 'message-mode-hook 'turn-on-orgtbl)
 
 ;; Not working
@@ -1887,8 +1889,8 @@ with leading and trailing spaces removed."
             (when (member mark '(refile trash))
               (mu4e-action-retag-message msg "-\\Inbox")
               (let ((docid (mu4e-message-field msg :docid)))
-                ;; Mark as seen and read
-                (mu4e~proc-move docid nil "+S-u")))))
+                ;; Mark as seen and read and not new
+                (mu4e--server-move docid nil "+S-u-N")))))
 
 
 ;; I want to insert signature where I am in the buffer
