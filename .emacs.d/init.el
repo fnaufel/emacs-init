@@ -1724,6 +1724,7 @@ with leading and trailing spaces removed."
       mu4e-update-interval 3600
       mu4e-headers-auto-update t
       mu4e-compose-signature-auto-include nil
+      mu4e-modeline-support nil
       mu4e-compose-format-flowed t)
 
 ;;; Discourage html view
