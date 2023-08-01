@@ -1726,15 +1726,15 @@ with leading and trailing spaces removed."
       mu4e-compose-signature-auto-include nil
       mu4e-compose-format-flowed t)
 
-# Discourage html view
+;;; Discourage html view
 (with-eval-after-load "mm-decode"
   (add-to-list 'mm-discouraged-alternatives "text/html")
   (add-to-list 'mm-discouraged-alternatives "text/richtext"))
 
 (setq mu4e-completing-read-function 'helm-completing-read-default-2)
 
-;; Use unicode chars for marks? No
-(setq mu4e-use-fancy-chars nil)
+;; Use unicode chars for marks?
+(setq mu4e-use-fancy-chars t)
 
 ;; Actions: view
 (setq mu4e-view-actions
@@ -1853,6 +1853,7 @@ with leading and trailing spaces removed."
           entry
           (file+headline "/home/fnaufel/Documents/OrgFiles/email.org" "Tasks")
           "* TODO [#20] %?\n\n  %a\n"
+          :prepend t
           :jump-to-captured t
           :empty-lines 1
           :unnarrowed t))
@@ -2277,8 +2278,10 @@ with leading and trailing spaces removed."
                 (smtpmail-debug-info . t)
                 (smtpmail-debug-verbose . t)
                 (mu4e-maildir-shortcuts . (
-                                           ("/fnaufel-gmail/[Gmail].Trash"     . ?t)
                                            ("/fnaufel-gmail/[Gmail].All Mail"  . ?a)
+                                           ("/fnaufel-gmail/[Gmail].Sent"      . ?s)
+                                           ("/fnaufel-gmail/[Gmail].Trash"     . ?t)
+                                           ("/fnaufel-gmail/[Gmail].Spam"      . ?x)
                                            ("/fnaufel-gmail/[Gmail].Drafts"    . ?d)))
                 (mu4e-action-tags-completion-list . ,fnaufel-tags-plus-and-minus)))
 
@@ -2308,8 +2311,10 @@ with leading and trailing spaces removed."
                 (smtpmail-debug-info . t)
                 (smtpmail-debug-verbose . t)
                 (mu4e-maildir-shortcuts . (
-                                           ("/jneuer-gmail/[Gmail].Trash"     . ?t)
                                            ("/jneuer-gmail/[Gmail].All Mail"  . ?a)
+                                           ("/jneuer-gmail/[Gmail].Sent"      . ?s)
+                                           ("/jneuer-gmail/[Gmail].Trash"     . ?t)
+                                           ("/jneuer-gmail/[Gmail].Spam"      . ?x)
                                            ("/jneuer-gmail/[Gmail].Drafts"    . ?d)))
                 (mu4e-action-tags-completion-list . ,jln.neuer-tags-plus-and-minus)))
 
