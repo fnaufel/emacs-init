@@ -343,6 +343,9 @@
 (require 'ebib-biblio)
 (define-key biblio-selection-mode-map (kbd "e") #'ebib-biblio-selection-import)
 
+;; v key views file too (besides f)
+(define-key ebib-index-mode-map (kbd "v") #'ebib-view-file)
+
 ;; Programs to open files
 (setq ebib-file-associations
       '(("pdf" . "okular")))
