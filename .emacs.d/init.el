@@ -1883,6 +1883,7 @@ with leading and trailing spaces removed."
                        ("date:7d..now" "Last 7 days" ?w)
                        ("x:UFF/Disciplinas/GA" "GA" ?g)
                        ("x:UFF/Disciplinas/ProbEstatistica" "ProbEst" ?p)
+                       ("x:UFF/Deptos/RCN OR contact:/RCN/" "RCN" ?r)
                        ("flag:flagged" "Flagged messages" ?f)))
 
 ;; Upon refiling and trashing, remove Inbox and unread tag
