@@ -1,4 +1,4 @@
-;;;; Emacs Bookmark Format Version 1 ;;;; -*- coding: utf-8-emacs -*- 
+;;;; Emacs Bookmark Format Version 1;;;; -*- coding: utf-8-emacs; mode: lisp-data -*-
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
@@ -13,9 +13,9 @@
  (position . 16775))
 ("org-capture-last-stored"
  (filename . "~/Documents/OrgFiles/email.org")
- (front-context-string . "*** TODO [#20] V")
- (rear-context-string . "o das Ostras]]\n\n")
- (position . 1574))
+ (front-context-string . "*** TODO [#20] P")
+ (rear-context-string)
+ (position . 10))
 ("maildir"
  (filename . "Sunrise Checkpoint: ~/Maildir/ | ~/Downloads/")
  (sunrise-directories "~/Maildir/" "~/Downloads/")

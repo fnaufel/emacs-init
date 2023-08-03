@@ -1635,9 +1635,9 @@ with leading and trailing spaces removed."
 (define-key sunrise-mode-map [backtab] 'sunrise-change-window)
 
 (defun sunrise-reset-panes ()
-      "Hard-reset SC panes."
-      (interactive)
-      (when sunrise-running (sunrise-setup-windows)))
+  "Hard-reset SC panes."
+  (interactive)
+  (when sunrise-running (sunrise-setup-windows)))
 
 ;;; Modified to refrain from opening a new frame when browsing a (pdf,
 ;;; html etc.) file
@@ -1650,9 +1650,17 @@ with leading and trailing spaces removed."
   (sunrise-save-selected-window
    ;; I don't want a viewer window or frame to open!
    ;; (sr-select-viewer-window)
-   (let ((buff (current-buffer)))
-     (call-process shell-file-name nil nil nil shell-command-switch
-                  (format "xdg-open \"%s\"" file))
+   (let ((buff (current-buffer))
+         (proc-name (concat "sunrise browse " file))
+         (proc-buff-name "sunrise-browse")
+         (program "xdg-open"))
+     ;; Write msgs to buffer capturing output from asynchronous processes:
+     (save-current-buffer
+       (set-buffer (get-buffer-create proc-buff-name))
+       (goto-char (point-max))
+       (insert (concat "\nStarting process " proc-name "\n\n")))
+     ;; Call ASYNCHRONOUS process
+     (start-process proc-name proc-buff-name program file)
      (unless (eq buff (current-buffer))
        (sunrise-scrollable-viewer (current-buffer))))))
 
