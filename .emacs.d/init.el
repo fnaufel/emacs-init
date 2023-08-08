@@ -2448,6 +2448,13 @@ with leading and trailing spaces removed."
 (setq dall-e-shell-openai-key
       (auth-source-pick-first-password :host "api.openai.com"))
 
+(require 'org-ai)
+(add-hook 'org-mode-hook #'org-ai-mode)
+(org-ai-global-mode)
+;;(setq org-ai-default-chat-model "gpt-4") ; if you are on the gpt-4 beta:
+(org-ai-install-yasnippets) ; if you are using yasnippet and want `ai` snippets
+(setq org-ai-openai-api-token (auth-source-pick-first-password :host "api.openai.com"))
+
 (require 'pp+)
 
 (global-set-key [remap eval-expression] 'pp-eval-expression)
