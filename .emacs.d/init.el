@@ -250,12 +250,12 @@
                           "/usr/bin/audacious"
                           file)))))
 
-;; (require 'org-journal)
+(require 'org-journal)
+;;; See also custom.el
 
-;; (global-unset-key (kbd "C-c C-j"))
-;; (global-set-key (kbd "C-c s") 'org-journal-search)
-;; (global-set-key (kbd "C-J") 'org-journal-new-entry)
-;; (define-key org-mode-map (kbd "C-J") 'org-journal-new-entry)
+(global-set-key (kbd "C-c s") 'org-journal-search)
+(global-set-key (kbd "C-J") 'org-journal-new-entry)
+(define-key org-mode-map (kbd "C-J") 'org-journal-new-entry)
 
 (defun subtree-html-export-to-clipboard ()
   "Export current subtree to html fragment and put in clipboard."
@@ -809,18 +809,19 @@ the \"file\" field is empty, return the empty string."
    (("e" (find-file "~/Documents/OrgFiles/mail.org") "email ")
     ("b" (find-file "~/.bashrc") ".bashrc ")
     ("p" (find-file "~/.profile") ".profile ")
-    ("s" (find-file "~/Stow") "Stow ")
     ("c" (find-file "~/Stow/emacs/.emacs.d/.emacs-custom.el") "custom.el ")
     ("i" (find-file "~/Stow/emacs/dot-init.org") "init "))
 
    "Python"
-   (("j" (ipython-notebook-int) "jupyter")
-    ("y" (ipython-qtconsole) "ipython")
+   (("y" (ipython-notebook-int) "jupyter")
+    ("o" (ipython-qtconsole) "ipython"))
     ;; ("x" (ansi-term "/home/fnaufel/.local/bin/xonsh" "xonsh") "new xonsh "))
-    ("x" (message "xonsh disabled for now") "new xonsh "))
+    ;; ("x" (message "xonsh disabled for now") "new xonsh "))
 
-   "Clock"
-   (("t" (update-clock-tables) "clock tables "))
+   "Journal"
+   (("j" (org-journal-new-entry) "new entry ")
+    ("s" (org-journal-search) "search journal ")
+    ("t" (update-clock-tables) "clock tables "))
 
    "Quit"
    (("q" nil "quit ")
@@ -1151,7 +1152,7 @@ Otherwise, kill. Besides, delete window it occupied."
                 helpful-mode-hook
                 Man-mode-hook
                 woman-mode-hook
-                lsp-ui-imenu-mode-hook
+                ;; lsp-ui-imenu-mode-hook
                 treemacs-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
@@ -1214,6 +1215,8 @@ This is not module-context aware."
     (deactivate-mark t)))
 
 (define-key julia-snail-mode-map (kbd "C-c C-c") 'julia-snail-copy-repl-region)
+(define-key julia-snail-mode-map (kbd "C-S-<return>") 'julia-snail-send-dwim)
+(define-key julia-snail-mode-map (kbd "C-M-<return>") 'julia-snail-send-buffer-file)
 
 ;;; Disabled code-cells. Use quarto instead.
 ;;; (add-hook 'julia-mode-hook #'code-cells-mode)
@@ -1593,15 +1596,15 @@ with leading and trailing spaces removed."
 (global-set-key "\C-cq" 'buffer-file-to-kupfer)
 
 ;;; Require
-(require 'pdf-tools)
-(require 'pdf-occur)
-(require 'pdf-history)
-(require 'pdf-links)
-(require 'pdf-outline)
-(require 'pdf-annot)
-(require 'pdf-sync)
+;; (require 'pdf-tools)
+;; (require 'pdf-occur)
+;; (require 'pdf-history)
+;; (require 'pdf-links)
+;; (require 'pdf-outline)
+;; (require 'pdf-annot)
+;; (require 'pdf-sync)
 
-(pdf-tools-install)
+;; (pdf-tools-install t)
 
 (require 'dired-x)
 (setq-default dired-omit-files-p t) ; Buffer-local variable
@@ -1897,14 +1900,29 @@ with leading and trailing spaces removed."
                        ("x:UFF/Deptos/RCN OR contact:/RCN/" "RCN" ?r)
                        ("flag:flagged" "Flagged messages" ?f)))
 
-;; Upon refiling and trashing, remove Inbox and unread tag
+;; Upon refiling or trashing, remove Inbox
 (add-hook 'mu4e-mark-execute-pre-hook
           (lambda (mark msg)
-            (when (member mark '(refile trash))
-              (mu4e-action-retag-message msg "-\\Inbox")
-              (let ((docid (mu4e-message-field msg :docid)))
-                ;; Mark as seen and read and not new
-                (mu4e--server-move docid nil "+S-u-N")))))
+            (when (member mark '(trash refile))
+              (mu4e-action-retag-message msg "-\\Inbox"))))
+
+;; Upon refiling, remove Inbox and unread tag
+;; (add-hook 'mu4e-mark-execute-pre-hook
+;;           (lambda (mark msg)
+;;             (when (member mark '(refile))
+;;               (mu4e-action-retag-message msg "-\\Inbox")
+;;               (let ((docid (mu4e-message-field msg :docid)))
+;;                 ;; Mark as seen and read and not new
+;;                 (mu4e--server-move docid nil "+S-u-N")))))
+
+;; Upon trashing, remove Inbox and unread tag, and add trash tag
+;; (add-hook 'mu4e-mark-execute-pre-hook
+;;           (lambda (mark msg)
+;;             (when (member mark '(trash))
+;;               (mu4e-action-retag-message msg "-\\Inbox")
+;;               (let ((docid (mu4e-message-field msg :docid)))
+;;                 ;; Mark as seen and read and not new and trash
+;;                 (mu4e--server-move docid nil "+S-u-N+T")))))
 
 
 ;; I want to insert signature where I am in the buffer
@@ -1912,46 +1930,46 @@ with leading and trailing spaces removed."
   "Insert a signature.  See documentation for variable `message-signature'."
   (interactive (list 0))
   (let* ((signature
-      (cond
-       ((and (null message-signature)
-         (eq force 0))
-        (save-excursion
-          (goto-char (point-max))
-          (not (re-search-backward message-signature-separator nil t))))
-       ((and (null message-signature)
-         force)
-        t)
-       ((functionp message-signature)
-        (funcall message-signature))
-       ((listp message-signature)
-        (eval message-signature))
-       (t message-signature)))
-     signature-file)
+          (cond
+           ((and (null message-signature)
+                 (eq force 0))
+            (save-excursion
+              (goto-char (point-max))
+              (not (re-search-backward message-signature-separator nil t))))
+           ((and (null message-signature)
+                 force)
+            t)
+           ((functionp message-signature)
+            (funcall message-signature))
+           ((listp message-signature)
+            (eval message-signature))
+           (t message-signature)))
+         signature-file)
     (setq signature
-      (cond ((stringp signature)
-         signature)
-        ((and (eq t signature) message-signature-file)
-         (setq signature-file
-               (if (and message-signature-directory
-                ;; don't actually use the signature directory
-                ;; if message-signature-file contains a path.
-                (not (file-name-directory
-                      message-signature-file)))
-               (expand-file-name message-signature-file
-                         message-signature-directory)
-             message-signature-file))
-         (file-exists-p signature-file))))
+          (cond ((stringp signature)
+                 signature)
+                ((and (eq t signature) message-signature-file)
+                 (setq signature-file
+                       (if (and message-signature-directory
+                                ;; don't actually use the signature directory
+                                ;; if message-signature-file contains a path.
+                                (not (file-name-directory
+                                      message-signature-file)))
+                           (expand-file-name message-signature-file
+                                             message-signature-directory)
+                         message-signature-file))
+                 (file-exists-p signature-file))))
     (when signature
       ;; Insert the signature.
       (unless (bolp)
-    (newline))
+        (newline))
       (when message-signature-insert-empty-line
-    (newline))
+        (newline))
       (insert "-- ")
       (newline)
       (if (eq signature t)
-      (insert-file-contents signature-file)
-    (insert signature))
+          (insert-file-contents signature-file)
+        (insert signature))
       (or (bolp) (newline)))))
 
 (global-set-key [remap message-insert-signature] 'fna/message-insert-signature)
@@ -2279,7 +2297,7 @@ with leading and trailing spaces removed."
                 (mu4e-compose-signature . (concat
                                            "Fernando Náufel\n"
                                            "  fnaufel@gmail.com\n"
-                                           "  https://fnaufel.github.io/site\n"))
+                                           "  https://fnaufel.github.io\n"))
                 (smtpmail-queue-dir . "~/Maildir/fnaufel-gmail/queue/cur")
                 (message-send-mail-function . smtpmail-send-it)
                 (smtpmail-smtp-user . "fnaufel")

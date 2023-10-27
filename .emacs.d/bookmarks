@@ -2,7 +2,39 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("ebib-files"
+(("Install"
+ (filename . "Sunrise Checkpoint: ~/Install/ | ~/Downloads/")
+ (sunrise-directories "~/Install/" "~/Downloads/")
+ (handler . sunrise-checkpoint-handler))
+("Templates"
+ (filename . "Sunrise Checkpoint: ~/Templates/ | ~/Downloads/")
+ (sunrise-directories "~/Templates/" "~/Downloads/")
+ (handler . sunrise-checkpoint-handler))
+("OrgFiles"
+ (filename . "Sunrise Checkpoint: ~/Documents/OrgFiles/ | ~/Downloads/")
+ (sunrise-directories "~/Documents/OrgFiles/" "~/Downloads/")
+ (handler . sunrise-checkpoint-handler))
+("Experiments"
+ (filename . "Sunrise Checkpoint: ~/Development/Experiments/ | ~/Downloads/")
+ (sunrise-directories "~/Development/Experiments/" "~/Downloads/")
+ (handler . sunrise-checkpoint-handler))
+("MMA"
+ (filename . "Sunrise Checkpoint: ~/Documents/UFF/Ensino/Disciplinas/MMA/ | ~/Downloads/")
+ (sunrise-directories "~/Documents/UFF/Ensino/Disciplinas/MMA/" "~/Downloads/")
+ (handler . sunrise-checkpoint-handler))
+("GeomAlg"
+ (filename . "Sunrise Checkpoint: ~/Documents/Research/GeomAlg/ | ~/Downloads/")
+ (sunrise-directories "~/Documents/Research/GeomAlg/" "~/Downloads/")
+ (handler . sunrise-checkpoint-handler))
+("Julio"
+ (filename . "Sunrise Checkpoint: ~/Documents/Personal/Julio/ | ~/Downloads/")
+ (sunrise-directories "~/Documents/Personal/Julio/" "~/Downloads/")
+ (handler . sunrise-checkpoint-handler))
+("ai-images"
+ (filename . "Sunrise Checkpoint: ~/Pictures/org-ai-images/ | ~/Downloads/")
+ (sunrise-directories "~/Pictures/org-ai-images/" "~/Downloads/")
+ (handler . sunrise-checkpoint-handler))
+("ebib-files"
  (filename . "Sunrise Checkpoint: /home/BooksAndArticles/ebib-files/ | ~/Downloads/")
  (sunrise-directories "/home/BooksAndArticles/ebib-files/" "~/Downloads/")
  (handler . sunrise-checkpoint-handler))
@@ -13,7 +45,7 @@
  (position . 16775))
 ("org-capture-last-stored"
  (filename . "~/Documents/OrgFiles/email.org")
- (front-context-string . "*** TODO [#20] P")
+ (front-context-string . "*** TODO [#20] F")
  (rear-context-string)
  (position . 10))
 ("maildir"
@@ -92,8 +124,8 @@
  (sunrise-directories "~/" "~/Downloads/")
  (handler . sunrise-checkpoint-handler))
 ("site"
- (filename . "Sunrise Checkpoint: ~/Documents/PersonalWebPage/Pessoal2020-blogdown-academic/site/ | ~/Downloads/")
- (sunrise-directories "~/Documents/PersonalWebPage/Pessoal2020-blogdown-academic/site/" "~/Downloads/")
+ (filename . "Sunrise Checkpoint: ~/Documents/PersonalWebPage/Pessoal2023-quarto/ | ~/Downloads/")
+ (sunrise-directories "~/Documents/PersonalWebPage/Pessoal2023-quarto/" "~/Downloads/")
  (handler . sunrise-checkpoint-handler))
 ("Witten-Statistical-Learning"
  (filename . "Sunrise Checkpoint: ~/Documents/Research/Statistics/Witten-Statistical-Learning/ | ~/Downloads/")
