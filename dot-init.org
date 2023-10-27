@@ -1053,7 +1053,7 @@
 
           "Journal"
           (("j" (org-journal-new-entry) "new entry ")
-           ("s" (org-journal-search) "search journal ")
+           ("s" (call-interactively 'org-journal-search) "search journal ")
            ("t" (update-clock-tables) "clock tables "))
 
           "Quit"
@@ -1175,7 +1175,7 @@
           (set-face-background hl-line-face "gray20")
         #+end_src
 
-***** Buffers, windows, frames: killing, deleting, creating
+***** Buffers, windows, frames: killing, deleting, creating (hydra)
 
           #+begin_src emacs-lisp
             (defun prev-window ()
@@ -1301,7 +1301,7 @@
                   ("}" hydra-move-splitter-down "↓ ")
                   ("[" hydra-move-splitter-left "← ")
                   ("]" hydra-move-splitter-right "→ ")
-                  ("=" balance-windows "= "))
+                  ("=" balance-windows "= " :exit t))
 
                  "Swap"
                  (("<prior>" buf-move-up "↑ " :exit t)

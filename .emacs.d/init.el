@@ -820,7 +820,7 @@ the \"file\" field is empty, return the empty string."
 
    "Journal"
    (("j" (org-journal-new-entry) "new entry ")
-    ("s" (org-journal-search) "search journal ")
+    ("s" (call-interactively 'org-journal-search) "search journal ")
     ("t" (update-clock-tables) "clock tables "))
 
    "Quit"
@@ -1038,7 +1038,7 @@ Otherwise, kill. Besides, delete window it occupied."
       ("}" hydra-move-splitter-down "↓ ")
       ("[" hydra-move-splitter-left "← ")
       ("]" hydra-move-splitter-right "→ ")
-      ("=" balance-windows "= "))
+      ("=" balance-windows "= " :exit t))
 
      "Swap"
      (("<prior>" buf-move-up "↑ " :exit t)

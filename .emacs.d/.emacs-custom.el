@@ -176,7 +176,7 @@
  '(org-journal-follow-mode t)
  '(org-journal-hide-entries-p nil)
  '(org-journal-mode-hook nil)
- '(org-journal-prefix-key "nil")
+ '(org-journal-prefix-key "")
  '(org-journal-start-on-weekday 7)
  '(org-journal-time-format "%R ")
  '(org-journal-time-prefix "
@@ -361,7 +361,7 @@
  '(yas-prompt-functions
    '(shk-yas/helm-prompt yas-dropdown-prompt yas-completing-prompt yas-maybe-ido-prompt yas-no-prompt))
  '(yas-snippet-dirs
-   '("/home/fnaufel/.emacs.d/snippets" "/home/fnaufel/.emacs.d/elpa/yasnippet-snippets-20230622.1323" "/usr/share/yasnippet-snippets" yasnippet-snippets-dir "/home/fnaufel/.emacs.d/elpa/elm-yasnippets-20160401.524/snippets")))
+   '("/home/fnaufel/.emacs.d/snippets" "/usr/share/yasnippet-snippets" yasnippet-snippets-dir "/home/fnaufel/Stow/emacs/.emacs.d/elpa/org-ai-20230910.1314/snippets")))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
