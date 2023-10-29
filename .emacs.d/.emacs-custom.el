@@ -177,6 +177,7 @@
  '(org-journal-hide-entries-p nil)
  '(org-journal-mode-hook nil)
  '(org-journal-prefix-key "")
+ '(org-journal-search-result-date-format "[%Y-%m-%d %A]")
  '(org-journal-start-on-weekday 7)
  '(org-journal-time-format "%R ")
  '(org-journal-time-prefix "

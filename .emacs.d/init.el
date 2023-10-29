@@ -1467,6 +1467,8 @@ This is not module-context aware."
 (add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
 (global-set-key (kbd "C-h SPC") 'helm-all-mark-rings)
 
+(define-key helm-command-map (kbd "P") 'helm-system-packages)
+
 ;;; Make helm use new frame instead of minibuffer
 (setq helm-display-function 'helm-display-buffer-in-own-frame
       helm-display-buffer-reuse-frame nil
