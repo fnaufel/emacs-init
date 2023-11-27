@@ -1162,6 +1162,20 @@
     
 *** Buffers and windows
 
+***** spacious-padding
+
+      #+begin_src emacs-lisp
+        (setq spacious-padding-widths
+              '( :internal-border-width 15
+                 :header-line-width 4
+                 :mode-line-width 6
+                 :tab-width 4
+                 :right-divider-width 30
+                 :scroll-bar-width 8))
+
+        (spacious-padding-mode 1)
+      #+end_src
+
 ***** Misc
 
         #+begin_src emacs-lisp
@@ -2941,7 +2955,7 @@
     (require 'org-ai)
     (add-hook 'org-mode-hook #'org-ai-mode)
     (org-ai-global-mode)
-    ;;(setq org-ai-default-chat-model "gpt-4") ; if you are on the gpt-4 beta:
+    ;; (setq org-ai-default-chat-model "gpt-4") ; if you are on the gpt-4 beta:
     (org-ai-install-yasnippets) ; if you are using yasnippet and want `ai` snippets
     (setq org-ai-openai-api-token (auth-source-pick-first-password :host "api.openai.com"))
   #+end_src
@@ -3070,8 +3084,8 @@
     ;;; Update: I have changed variable org-agenda-window-setup so that
     ;;; the agenda opens in the current window, with no splitting.
     (org-agenda nil "i")
-    ;(split-window-horizontally)
-    ;(find-file "~/Documents/OrgFiles/todo.org")
+    (split-window-horizontally)
+    (find-file "~/Documents/OrgFiles/todo.org")
     (maximize-current-frame)
 
     ;;; Second frame: shell ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -3084,6 +3098,7 @@
     ;; (ansi-term "/home/fnaufel/.local/bin/xonsh" "xonsh")
 
     ;;; Bash shell (splits window automatically)
+    (cd "~")
     (shell)
     ;; (sleep-for 3)
     ;; (comint-send-string (get-buffer-process (shell)) "cd /home/fnaufel/\n")

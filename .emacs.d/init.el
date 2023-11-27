@@ -906,6 +906,16 @@ A prefix argument is handled like `move-to-window-line':
 
 (require 'iedit)
 
+(setq spacious-padding-widths
+      '( :internal-border-width 15
+         :header-line-width 4
+         :mode-line-width 6
+         :tab-width 4
+         :right-divider-width 30
+         :scroll-bar-width 8))
+
+(spacious-padding-mode 1)
+
 (global-set-key (kbd "C-x C-b") 'buffer-menu)
 
 ;;; Maximize frame
@@ -2471,7 +2481,7 @@ with leading and trailing spaces removed."
 (require 'org-ai)
 (add-hook 'org-mode-hook #'org-ai-mode)
 (org-ai-global-mode)
-;;(setq org-ai-default-chat-model "gpt-4") ; if you are on the gpt-4 beta:
+;; (setq org-ai-default-chat-model "gpt-4") ; if you are on the gpt-4 beta:
 (org-ai-install-yasnippets) ; if you are using yasnippet and want `ai` snippets
 (setq org-ai-openai-api-token (auth-source-pick-first-password :host "api.openai.com"))
 
@@ -2570,8 +2580,8 @@ with leading and trailing spaces removed."
 ;;; Update: I have changed variable org-agenda-window-setup so that
 ;;; the agenda opens in the current window, with no splitting.
 (org-agenda nil "i")
-;(split-window-horizontally)
-;(find-file "~/Documents/OrgFiles/todo.org")
+(split-window-horizontally)
+(find-file "~/Documents/OrgFiles/todo.org")
 (maximize-current-frame)
 
 ;;; Second frame: shell ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -2584,6 +2594,7 @@ with leading and trailing spaces removed."
 ;; (ansi-term "/home/fnaufel/.local/bin/xonsh" "xonsh")
 
 ;;; Bash shell (splits window automatically)
+(cd "~")
 (shell)
 ;; (sleep-for 3)
 ;; (comint-send-string (get-buffer-process (shell)) "cd /home/fnaufel/\n")
