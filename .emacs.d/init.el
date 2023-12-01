@@ -145,7 +145,8 @@
 (setq org-file-apps
       '((auto-mode . emacs)
         ("\\.mm\\'" . default)
-        ("\\.x?html?\\'" . "brave-browser '%s'")
+        ;;;("\\.x?html?\\'" . "brave-browser '%s'")
+        ("\\.x?html?\\'" . default)
         ("\\(?:xhtml\\|html\\)\\'" . "brave-browser '%s'")
         ("\\.pdf::\\([[:digit:]]+\\)\\'" . "okular -p %1 %s")
         ("\\.pdf\\'" . "okular '%s'")
@@ -907,11 +908,11 @@ A prefix argument is handled like `move-to-window-line':
 (require 'iedit)
 
 (setq spacious-padding-widths
-      '( :internal-border-width 15
+      '( :internal-border-width 20
          :header-line-width 4
-         :mode-line-width 6
+         :mode-line-width 4
          :tab-width 4
-         :right-divider-width 30
+         :right-divider-width 20
          :scroll-bar-width 8))
 
 (spacious-padding-mode 1)
