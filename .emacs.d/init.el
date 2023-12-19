@@ -915,7 +915,7 @@ A prefix argument is handled like `move-to-window-line':
          :right-divider-width 20
          :scroll-bar-width 8))
 
-(spacious-padding-mode 1)
+;;;(spacious-padding-mode 1)
 
 (global-set-key (kbd "C-x C-b") 'buffer-menu)
 

@@ -136,7 +136,14 @@
  '(org-agenda-window-setup 'current-window)
  '(org-ai-image-directory "/home/fnaufel/Pictures/org-ai-images/")
  '(org-ai-sd-directory "/home/fnaufel/Pictures/org-ai-images/")
- '(org-babel-load-languages '((emacs-lisp . t) (shell . t) (latex . t)))
+ '(org-babel-load-languages
+   '((python . t)
+     (julia . t)
+     (js . t)
+     (emacs-lisp . t)
+     (shell . t)
+     (latex . t)
+     (R . t)))
  '(org-blank-before-new-entry '((heading . t) (plain-list-item . t)))
  '(org-catch-invisible-edits nil)
  '(org-clock-clocktable-default-properties
@@ -367,7 +374,7 @@
  '(yas-prompt-functions
    '(shk-yas/helm-prompt yas-dropdown-prompt yas-completing-prompt yas-maybe-ido-prompt yas-no-prompt))
  '(yas-snippet-dirs
-   '("/home/fnaufel/.emacs.d/snippets" "/usr/share/yasnippet-snippets" yasnippet-snippets-dir "/home/fnaufel/Stow/emacs/.emacs.d/elpa/org-ai-20230910.1314/snippets")))
+   '("/home/fnaufel/.emacs.d/snippets" "/usr/share/yasnippet-snippets" yasnippet-snippets-dir)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -389,8 +396,8 @@
  '(mode-line-inactive ((t :box (:line-width 4 :color "grey30" :style nil))))
  '(mu4e-context-face ((t (:background "RoyalBlue3" :foreground "white smoke" :weight bold))))
  '(mu4e-modeline-face ((t (:background "maroon" :foreground "white smoke" :weight bold))))
- '(org-block ((t (:background "gray15"))))
- '(org-block-begin-line ((t (:inherit org-meta-line :background "#103030"))))
+ '(org-block-begin-line ((t (:inherit org-meta-line :extend t :background "dark slate blue" :foreground "yellow"))))
+ '(org-block-end-line ((t (:inherit org-block-begin-line :extend t :background "dark slate blue" :foreground "yellow"))))
  '(org-ellipsis ((t (:foreground "LightGoldenrod" :underline nil))))
  '(org-journal-calendar-entry-face ((t (:foreground "#bbbb00" :slant italic))))
  '(org-journal-calendar-scheduled-face ((t (:foreground "#ff0000" :slant italic))))
