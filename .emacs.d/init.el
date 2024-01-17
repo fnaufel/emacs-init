@@ -807,8 +807,7 @@ the \"file\" field is empty, return the empty string."
   (:quit-key "q" :title hydra-fnjump--title :foreign-keys warn :exit t)
 
   ("Files"
-   (("e" (find-file "~/Documents/OrgFiles/mail.org") "email ")
-    ("b" (find-file "~/.bashrc") ".bashrc ")
+   (("b" (find-file "~/.bashrc") ".bashrc ")
     ("p" (find-file "~/.profile") ".profile ")
     ("c" (find-file "~/Stow/emacs/.emacs.d/.emacs-custom.el") "custom.el ")
     ("i" (find-file "~/Stow/emacs/dot-init.org") "init "))
@@ -820,7 +819,8 @@ the \"file\" field is empty, return the empty string."
     ;; ("x" (message "xonsh disabled for now") "new xonsh "))
 
    "Journal"
-   (("j" (org-journal-new-entry) "new entry ")
+   (("j" (find-file "~/Documents/OrgFiles/Journal/2024") "open 2024 ")
+    ("e" (org-journal-new-entry) "new entry ")
     ("s" (call-interactively 'org-journal-search) "search journal ")
     ("t" (update-clock-tables) "clock tables "))
 
@@ -1911,6 +1911,7 @@ with leading and trailing spaces removed."
                        ("x:UFF/Disciplinas/GA" "GA" ?g)
                        ("x:UFF/Disciplinas/ProbEstatistica" "ProbEst" ?p)
                        ("x:UFF/Deptos/RCN OR contact:/RCN/" "RCN" ?r)
+                       ("x:SBC" "SBC" ?s)
                        ("flag:flagged" "Flagged messages" ?f)))
 
 ;; Upon refiling or trashing, remove Inbox
@@ -2275,6 +2276,7 @@ with leading and trailing spaces removed."
         "Piano"
         "Reviews"
         "RobinSloan"
+        "SBC"
         "Smashwords"
         "Spotify"
         "Viriditas50"
