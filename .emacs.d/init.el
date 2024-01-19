@@ -808,6 +808,7 @@ the \"file\" field is empty, return the empty string."
 
   ("Files"
    (("b" (find-file "~/.bashrc") ".bashrc ")
+    ("h" (helm-buffers-list) "helm-buffers-list")
     ("p" (find-file "~/.profile") ".profile ")
     ("c" (find-file "~/Stow/emacs/.emacs.d/.emacs-custom.el") "custom.el ")
     ("i" (find-file "~/Stow/emacs/dot-init.org") "init "))
