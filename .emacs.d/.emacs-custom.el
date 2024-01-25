@@ -143,7 +143,9 @@
      (emacs-lisp . t)
      (shell . t)
      (latex . t)
-     (R . t)))
+     (R . t)
+     (awk . t)
+     (lua . t)))
  '(org-blank-before-new-entry '((heading . t) (plain-list-item . t)))
  '(org-catch-invisible-edits nil)
  '(org-clock-clocktable-default-properties
