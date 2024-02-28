@@ -48,7 +48,7 @@
  '(dired-listing-switches
    "--time-style=+[%Y-%m-%d-%H:%M] --group-directories-first -alDhG")
  '(ebib-keywords
-   '("LLM" "teaching" "data science" "neural networks" "interval math" "visual languages" "ontologies" "usability" "description logics" "survey" "markov models" "psychology" "hidden markov models" "statistics" "evolution" "biology" "textbook" "sums" "elliptic curves" "mathematical models" "evolutionary biology" "math" "linguistics" "historical linguistics" "dreams" "combinatorics" "nlp" "talkativeness" "sex" "curves" "conics" "analytic geometry" "chaos" "matrices" "linear algebra" "Science / Life Sciences / Evolution" "Science / Life Sciences / Biophysics" "Science / Life Sciences / Biochemistry" "Mathematics / Applied" "R" "coincidences" "pascal" "letters" "history" "fermat" "arithmetic" "_tablet" "software engineering" "stochastic processes" "queues" "monte carlo" "markov chains" "gibbs fields" "probability" "inference" "confidence interval" "binomial"))
+   '("classification" "ranking" "machine learning" "LLM" "teaching" "data science" "neural networks" "interval math" "visual languages" "ontologies" "usability" "description logics" "survey" "markov models" "psychology" "hidden markov models" "statistics" "evolution" "biology" "textbook" "sums" "elliptic curves" "mathematical models" "evolutionary biology" "math" "linguistics" "historical linguistics" "dreams" "combinatorics" "nlp" "talkativeness" "sex" "curves" "conics" "analytic geometry" "chaos" "matrices" "linear algebra" "Science / Life Sciences / Evolution" "Science / Life Sciences / Biophysics" "Science / Life Sciences / Biochemistry" "Mathematics / Applied" "R" "coincidences" "pascal" "letters" "history" "fermat" "arithmetic" "_tablet" "software engineering" "stochastic processes" "queues" "monte carlo" "markov chains" "gibbs fields" "probability" "inference" "confidence interval" "binomial"))
  '(eldoc-idle-delay 0)
  '(eldoc-minor-mode-string nil)
  '(enable-recursive-minibuffers nil)
@@ -63,6 +63,8 @@
  '(fringe-mode nil nil (fringe))
  '(global-hl-line-mode t)
  '(global-origami-mode nil)
+ '(gptel-default-mode 'org-mode)
+ '(gptel-model "gpt-4")
  '(helm-autoresize-mode t)
  '(helm-man-or-woman-function 'woman)
  '(helm-org-format-outline-path t)
@@ -184,6 +186,7 @@
  '(org-journal-file-format "%Y")
  '(org-journal-file-type 'yearly)
  '(org-journal-find-file 'find-file-other-window)
+ '(org-journal-find-file-fn 'find-file-other-window)
  '(org-journal-follow-mode t)
  '(org-journal-hide-entries-p nil)
  '(org-journal-mode-hook nil)
@@ -293,7 +296,7 @@
  '(package-enable-at-startup nil)
  '(package-pinned-packages '((telega . "MELPA Stable")))
  '(package-selected-packages
-   '(spacious-padding helm-system-packages org-ai texfrag dall-e-shell ob-dall-e-shell chatgpt-shell ob-chatgpt-shell csv-mode markdown-toc poly-R poly-noweb poly-org quarto-mode julia-snail ess edit-indirect flycheck-raku flycheck-pyflakes flycheck flycheck-julia epl magit magit-section vterm julia-mode julia-repl julia-shell julia-vterm lingva yasnippet-snippets ebib ob-raku raku-mode iedit helm-xref go-mode yafolding org-mime language-detection telega org-noter org-noter-pdftools json-mode org-clock-csv adaptive-wrap org-ref org-journal org-superstar helm-bibtex all-the-icons all-the-icons-dired all-the-icons-gnus major-mode-hydra pretty-hydra paradox buffer-move rainbow-delimiters company-box setup use-package which-key ac-js2 skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion yaml-mode all auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl typo web-beautify markdown-preview-mode lua-mode htmlize dash-functional multiple-cursors expand-region))
+   '(gptel pandoc-mode spacious-padding helm-system-packages texfrag dall-e-shell ob-dall-e-shell csv-mode markdown-toc poly-R poly-noweb poly-org quarto-mode julia-snail ess edit-indirect flycheck-raku flycheck-pyflakes flycheck flycheck-julia epl magit magit-section vterm julia-mode julia-repl julia-shell julia-vterm lingva yasnippet-snippets ebib ob-raku raku-mode iedit helm-xref go-mode yafolding org-mime language-detection telega org-noter org-noter-pdftools json-mode org-clock-csv adaptive-wrap org-ref org-journal org-superstar helm-bibtex all-the-icons all-the-icons-dired all-the-icons-gnus major-mode-hydra pretty-hydra paradox buffer-move rainbow-delimiters company-box setup use-package which-key ac-js2 skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion yaml-mode all auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl typo web-beautify markdown-preview-mode lua-mode htmlize dash-functional multiple-cursors expand-region))
  '(paradox-execute-asynchronously t)
  '(paradox-github-token t)
  '(pdf-annot-activate-created-annotations t)
@@ -409,7 +412,7 @@
  '(org-noter-no-notes-exist-face ((t (:foreground "blue" :weight bold))))
  '(org-noter-notes-exist-face ((t (:foreground "tomato4" :weight bold))))
  '(org-ref-cite-face ((t (:inherit org-link :foreground "pale green"))))
- '(paradox-mode-line-face ((t (:inherit (font-lock-keyword-face mode-line-buffer-id) :foreground "medium blue" :weight normal))))
+ '(paradox-mode-line-face ((t (:inherit (font-lock-keyword-face mode-line-buffer-id) :foreground "green" :weight normal))))
  '(rainbow-delimiters-base-error-face ((t (:inherit rainbow-delimiters-base-face :foreground "red"))))
  '(rainbow-delimiters-base-face ((t (:inherit default))))
  '(rainbow-delimiters-depth-1-face ((t (:inherit rainbow-delimiters-base-face :foreground "gray90"))))

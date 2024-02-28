@@ -414,6 +414,15 @@
       (require 'ox-md)
     #+end_src
 
+*** Export via pandoc
+
+    #+begin_src emacs-lisp
+      (require 'ox-pandoc)
+
+      ;; default options for all output formats
+      (setq org-pandoc-options '((standalone . t)))
+    #+end_src
+
 *** Parsing
 
     #+begin_src emacs-lisp
@@ -2934,12 +2943,15 @@
 * ChatGPT
 
   #+begin_src emacs-lisp
-    (require 'chatgpt-shell)
+    (require 'gptel)
 
     ;; Using auth-sources, e.g., so the file ~/.authinfo has this line:
     ;; machine api.openai.com password OPENAI_KEY
     (setq chatgpt-shell-openai-key
           (auth-source-pick-first-password :host "api.openai.com"))
+
+    (add-hook 'gptel-post-stream-hook 'gptel-auto-scroll)
+    (add-hook 'gptel-post-response-functions 'gptel-end-of-response)
   #+end_src
 
 * Dall-e
@@ -2951,17 +2963,6 @@
     ;; machine api.openai.com password OPENAI_KEY
     (setq dall-e-shell-openai-key
           (auth-source-pick-first-password :host "api.openai.com"))
-  #+end_src
-
-* org-ai
-
-  #+begin_src emacs-lisp
-    (require 'org-ai)
-    (add-hook 'org-mode-hook #'org-ai-mode)
-    (org-ai-global-mode)
-    ;; (setq org-ai-default-chat-model "gpt-4") ; if you are on the gpt-4 beta:
-    (org-ai-install-yasnippets) ; if you are using yasnippet and want `ai` snippets
-    (setq org-ai-openai-api-token (auth-source-pick-first-password :host "api.openai.com"))
   #+end_src
 
 * Misc

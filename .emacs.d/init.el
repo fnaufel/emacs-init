@@ -304,6 +304,11 @@
 
 (require 'ox-md)
 
+(require 'ox-pandoc)
+
+;; default options for all output formats
+(setq org-pandoc-options '((standalone . t)))
+
 (require 'orgba)
 
 ;; Based on  https://ogbe.net/emacs/references.html
@@ -2468,12 +2473,15 @@ with leading and trailing spaces removed."
 
 (define-key global-map (kbd "s-t") telega-prefix-map)
 
-(require 'chatgpt-shell)
+(require 'gptel)
 
 ;; Using auth-sources, e.g., so the file ~/.authinfo has this line:
 ;; machine api.openai.com password OPENAI_KEY
 (setq chatgpt-shell-openai-key
       (auth-source-pick-first-password :host "api.openai.com"))
+
+(add-hook 'gptel-post-stream-hook 'gptel-auto-scroll)
+(add-hook 'gptel-post-response-functions 'gptel-end-of-response)
 
 (require 'dall-e-shell)
 
@@ -2481,13 +2489,6 @@ with leading and trailing spaces removed."
 ;; machine api.openai.com password OPENAI_KEY
 (setq dall-e-shell-openai-key
       (auth-source-pick-first-password :host "api.openai.com"))
-
-(require 'org-ai)
-(add-hook 'org-mode-hook #'org-ai-mode)
-(org-ai-global-mode)
-;; (setq org-ai-default-chat-model "gpt-4") ; if you are on the gpt-4 beta:
-(org-ai-install-yasnippets) ; if you are using yasnippet and want `ai` snippets
-(setq org-ai-openai-api-token (auth-source-pick-first-password :host "api.openai.com"))
 
 (require 'pp+)
 
