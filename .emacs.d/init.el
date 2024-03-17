@@ -1368,6 +1368,9 @@ This is not module-context aware."
 ;; ;; uses braces around code block language strings:
 ;; (setq markdown-code-block-braces t)
 
+(autoload 'setl-mode "setl-mode.el")
+(add-to-list 'auto-mode-alist '("\\.setlx?\\'" . setl-mode))
+
 (require 'markdown-mode)
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.Rmd\\'" . markdown-mode))
@@ -2473,22 +2476,17 @@ with leading and trailing spaces removed."
 
 (define-key global-map (kbd "s-t") telega-prefix-map)
 
-(require 'gptel)
+;; (require 'gptel)
 
-;; Using auth-sources, e.g., so the file ~/.authinfo has this line:
-;; machine api.openai.com password OPENAI_KEY
-(setq chatgpt-shell-openai-key
-      (auth-source-pick-first-password :host "api.openai.com"))
+;; (add-hook 'gptel-post-stream-hook 'gptel-auto-scroll)
+;; (add-hook 'gptel-post-response-functions 'gptel-end-of-response)
 
-(add-hook 'gptel-post-stream-hook 'gptel-auto-scroll)
-(add-hook 'gptel-post-response-functions 'gptel-end-of-response)
+;; (require 'dall-e-shell)
 
-(require 'dall-e-shell)
-
-;; Using auth-sources, e.g., so the file ~/.authinfo has this line:
-;; machine api.openai.com password OPENAI_KEY
-(setq dall-e-shell-openai-key
-      (auth-source-pick-first-password :host "api.openai.com"))
+;; ;; Using auth-sources, e.g., so the file ~/.authinfo has this line:
+;; ;; machine api.openai.com password OPENAI_KEY
+;; (setq dall-e-shell-openai-key
+;;       (auth-source-pick-first-password :host "api.openai.com"))
 
 (require 'pp+)
 

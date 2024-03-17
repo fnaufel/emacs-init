@@ -2947,29 +2947,24 @@
     (define-key global-map (kbd "s-t") telega-prefix-map)
   #+end_src
 
-* ChatGPT
+* ChatGPT (disabled)
 
   #+begin_src emacs-lisp
-    (require 'gptel)
+    ;; (require 'gptel)
 
-    ;; Using auth-sources, e.g., so the file ~/.authinfo has this line:
-    ;; machine api.openai.com password OPENAI_KEY
-    (setq chatgpt-shell-openai-key
-          (auth-source-pick-first-password :host "api.openai.com"))
-
-    (add-hook 'gptel-post-stream-hook 'gptel-auto-scroll)
-    (add-hook 'gptel-post-response-functions 'gptel-end-of-response)
+    ;; (add-hook 'gptel-post-stream-hook 'gptel-auto-scroll)
+    ;; (add-hook 'gptel-post-response-functions 'gptel-end-of-response)
   #+end_src
 
-* Dall-e
+* Dall-e (disabled)
 
   #+begin_src emacs-lisp
-    (require 'dall-e-shell)
+    ;; (require 'dall-e-shell)
 
-    ;; Using auth-sources, e.g., so the file ~/.authinfo has this line:
-    ;; machine api.openai.com password OPENAI_KEY
-    (setq dall-e-shell-openai-key
-          (auth-source-pick-first-password :host "api.openai.com"))
+    ;; ;; Using auth-sources, e.g., so the file ~/.authinfo has this line:
+    ;; ;; machine api.openai.com password OPENAI_KEY
+    ;; (setq dall-e-shell-openai-key
+    ;;       (auth-source-pick-first-password :host "api.openai.com"))
   #+end_src
 
 * Misc
