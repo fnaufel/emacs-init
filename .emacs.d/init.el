@@ -1369,7 +1369,7 @@ This is not module-context aware."
 ;; (setq markdown-code-block-braces t)
 
 (autoload 'setl-mode "setl-mode.el")
-(add-to-list 'auto-mode-alist '("\\.setlx?\\'" . setl-mode))
+(add-to-list 'auto-mode-alist '("\\.se?tlx?\\'" . setl-mode))
 
 (require 'markdown-mode)
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
