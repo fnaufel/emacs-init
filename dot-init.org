@@ -1734,6 +1734,13 @@
       ;; (setq markdown-code-block-braces t)
     #+end_src
 
+*** SETLX
+
+    #+begin_src emacs-lisp
+      (autoload 'setl-mode "setl-mode.el")
+      (add-to-list 'auto-mode-alist '("\\.setlx?\\'" . setl-mode))
+    #+end_src
+
 * Document languages
 
 *** markdown
