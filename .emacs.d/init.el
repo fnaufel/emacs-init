@@ -1918,6 +1918,7 @@ with leading and trailing spaces removed."
                        ("date:today..now" "Today's messages" ?t)
                        ("date:7d..now" "Last 7 days" ?w)
                        ("x:UFF/Disciplinas/GA" "GA" ?g)
+                       ("x:UFF/Disciplinas/MD-PURO" "MD" ?m)
                        ("x:UFF/Disciplinas/ProbEstatistica" "ProbEst" ?p)
                        ("x:UFF/Deptos/RCN OR contact:/RCN/" "RCN" ?r)
                        ("x:SBC" "SBC" ?s)
