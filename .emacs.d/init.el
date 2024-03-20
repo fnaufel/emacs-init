@@ -1179,7 +1179,7 @@ Otherwise, kill. Besides, delete window it occupied."
 
 (require 'skewer-mode)
 
-(add-hook 'json-mode-hook #'flycheck-mode)
+(require 'jsonian)
 
 (add-to-list 'interpreter-mode-alist
              '("python3" . python-mode))

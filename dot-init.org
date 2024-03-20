@@ -1502,10 +1502,10 @@
 
 *** json
     
-***** json-mode
+***** jsonian-mode
 
       #+begin_src emacs-lisp
-        (add-hook 'json-mode-hook #'flycheck-mode)
+        (require 'jsonian)
       #+end_src
 
 *** python
