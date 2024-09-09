@@ -40,6 +40,7 @@
 (require 'package)
 
 (add-to-list 'load-path "/home/fnaufel/.emacs.d/lisp/")
+(add-to-list 'load-path "/home/fnaufel/.emacs.d/lisp/telega/")
 
 (setq package-archives
       '(("GNU ELPA"     . "https://elpa.gnu.org/packages/")
@@ -2406,6 +2407,7 @@ with leading and trailing spaces removed."
 
        ))
 
+(setq telega-use-docker t)
 (require 'telega)
 (require 'ol-telega)
 

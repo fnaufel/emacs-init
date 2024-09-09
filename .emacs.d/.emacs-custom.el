@@ -110,7 +110,7 @@
      ("shell" . sh-mode)
      ("bash" . sh-mode)))
  '(max-lisp-eval-depth 1000)
- '(max-specpdl-size 3000)
+ '(max-specpdl-size 3000 t)
  '(mc/mode-line '(" mc:" (:eval (format "%d" (mc/num-cursors)))))
  '(menu-bar-mode nil)
  '(minibuffer-auto-raise nil)
@@ -150,7 +150,6 @@
      (js . t)
      (emacs-lisp . t)
      (shell . t)
-     (latex . t)
      (R . t)
      (awk . t)
      (lua . t)))
@@ -186,8 +185,7 @@
  '(org-id-link-to-org-use-id 'create-if-interactive-and-no-custom-id)
  '(org-indent-mode-turns-off-org-adapt-indentation nil)
  '(org-journal-date-format "[%Y-%m-%d %A]")
- '(org-journal-date-prefix "
-* ")
+ '(org-journal-date-prefix "\12* ")
  '(org-journal-dir "/home/fnaufel/Documents/OrgFiles/Journal")
  '(org-journal-enable-agenda-integration t)
  '(org-journal-file-format "%Y")
@@ -201,8 +199,7 @@
  '(org-journal-search-result-date-format "[%Y-%m-%d %A]")
  '(org-journal-start-on-weekday 7)
  '(org-journal-time-format "%R ")
- '(org-journal-time-prefix "
-*** ")
+ '(org-journal-time-prefix "\12*** ")
  '(org-link-elisp-confirm-function 'y-or-n-p)
  '(org-link-search-must-match-exact-headline nil)
  '(org-link-shell-confirm-function 'y-or-n-p)
@@ -290,20 +287,16 @@
      (lisp-interaction-mode . origami-elisp-parser)
      (clojure-mode . origami-clj-parser)
      (triple-braces .
-                    #[257 "\303\304\305\306\307\300\301\302$\310\"\311\312%\207"
-                          ["{{{" "}}}" "\\(?:\\(?:{{{\\|}}}\\)\\)" make-byte-code 257 "\304\302\"\305\303\300\301$\207" vconcat vector
+                    #[257 "\303\304\305\306\307\300\301\302\6\10$\310\"\311\312%\207"
+                          ["{{{" "}}}" "\\(?:\\(?:{{{\\|}}}\\)\\)" make-byte-code 257 "\304\1\302\"\305\303\300\301\4$\207" vconcat vector
                            [origami-get-positions origami-build-pair-tree]
-                           7 "
-
-(fn CONTENT)"]
-                          10 "
-
-(fn CREATE)"])))
+                           7 "\12\12(fn CONTENT)"]
+                          10 "\12\12(fn CREATE)"])))
  '(origami-show-fold-header nil)
  '(package-enable-at-startup nil)
  '(package-pinned-packages '((telega . "MELPA Stable")))
  '(package-selected-packages
-   '(format-all jsonian jq-format gptel pandoc-mode spacious-padding helm-system-packages texfrag dall-e-shell ob-dall-e-shell csv-mode markdown-toc poly-R poly-noweb poly-org quarto-mode julia-snail ess edit-indirect flycheck-raku flycheck-pyflakes flycheck flycheck-julia epl magit magit-section vterm julia-mode julia-repl julia-shell julia-vterm lingva yasnippet-snippets ebib ob-raku raku-mode iedit helm-xref go-mode yafolding org-mime language-detection telega org-noter org-noter-pdftools org-clock-csv adaptive-wrap org-ref org-journal org-superstar helm-bibtex all-the-icons all-the-icons-dired all-the-icons-gnus major-mode-hydra pretty-hydra paradox buffer-move rainbow-delimiters company-box setup use-package which-key ac-js2 skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion yaml-mode all auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl typo web-beautify markdown-preview-mode lua-mode htmlize dash-functional multiple-cursors expand-region))
+   '(apache-mode bar-cursor bm boxquote browse-kill-ring color-theme-modern diminish eproject folding graphviz-dot-mode initsplit session tabbar format-all jsonian jq-format gptel pandoc-mode spacious-padding helm-system-packages texfrag dall-e-shell ob-dall-e-shell csv-mode markdown-toc poly-R poly-noweb poly-org quarto-mode julia-snail ess edit-indirect flycheck-raku flycheck-pyflakes flycheck flycheck-julia epl magit magit-section vterm julia-mode julia-repl julia-shell julia-vterm lingva yasnippet-snippets ebib ob-raku raku-mode iedit helm-xref go-mode yafolding org-mime language-detection org-noter org-noter-pdftools org-clock-csv adaptive-wrap org-ref org-journal org-superstar helm-bibtex all-the-icons all-the-icons-dired all-the-icons-gnus major-mode-hydra pretty-hydra paradox buffer-move rainbow-delimiters company-box setup use-package which-key ac-js2 skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion yaml-mode all auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl typo web-beautify markdown-preview-mode lua-mode htmlize dash-functional multiple-cursors expand-region))
  '(paradox-execute-asynchronously t)
  '(paradox-github-token t)
  '(pdf-annot-activate-created-annotations t)

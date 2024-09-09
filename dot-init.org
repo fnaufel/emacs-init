@@ -74,6 +74,7 @@
     (require 'package)
 
     (add-to-list 'load-path "/home/fnaufel/.emacs.d/lisp/")
+    (add-to-list 'load-path "/home/fnaufel/.emacs.d/lisp/telega/")
 
     (setq package-archives
           '(("GNU ELPA"     . "https://elpa.gnu.org/packages/")
@@ -2876,6 +2877,7 @@
   Pinned to MELPA stable. See [[file:.emacs.d/.emacs-custom.el::'(package-pinned-packages (quote ((telega . "MELPA Stable"))))][.emacs-custom.el]]
 
   #+begin_src emacs-lisp
+    (setq telega-use-docker t)
     (require 'telega)
     (require 'ol-telega)
 
