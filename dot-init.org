@@ -146,29 +146,36 @@
     #+begin_src emacs-lisp
       (require 'org-modern)
 
-      (global-org-modern-mode)
+      ;; Ellipsis styling
+      (setq org-ellipsis "…")
+      (set-face-attribute 'org-ellipsis nil :inherit 'default :box nil)
+
+      ;; Heading font size
+      (set-face-attribute 'org-level-3 nil :height 1.05) 
+      (set-face-attribute 'org-level-2 nil :height 1.1) 
+      (set-face-attribute 'org-level-1 nil :height 1.15)
     #+end_src
 
-*** org-superstar
+*** org-superstar (disabled)
 
     + See customizations in [[/home/fnaufel/Stow/emacs/.emacs.d/.emacs-custom.el]]
    
      #+begin_src emacs-lisp
        ;; org-superstar
-       (require 'org-superstar)
-       (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
+       ;; (require 'org-superstar)
+       ;; (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
 
        ;; set basic title font
-       (set-face-attribute 'org-level-8 nil :weight 'bold :inherit 'default :foreground "dark orange")
+       ;; (set-face-attribute 'org-level-8 nil :weight 'bold :inherit 'default :foreground "dark orange")
 
        ;; ;; Low levels are unimportant => no scaling
-       (set-face-attribute 'org-level-7 nil :inherit 'org-level-8)
-       (set-face-attribute 'org-level-6 nil :inherit 'org-level-8)
-       (set-face-attribute 'org-level-5 nil :inherit 'org-level-8)
-       (set-face-attribute 'org-level-4 nil :inherit 'org-level-8)
-       (set-face-attribute 'org-level-3 nil :inherit 'org-level-8 :height 1.05) 
-       (set-face-attribute 'org-level-2 nil :inherit 'org-level-8 :height 1.1) 
-       (set-face-attribute 'org-level-1 nil :inherit 'org-level-8 :height 1.15) 
+       ;; (set-face-attribute 'org-level-7 nil :inherit 'org-level-8)
+       ;; (set-face-attribute 'org-level-6 nil :inherit 'org-level-8)
+       ;; (set-face-attribute 'org-level-5 nil :inherit 'org-level-8)
+       ;; (set-face-attribute 'org-level-4 nil :inherit 'org-level-8)
+       ;; (set-face-attribute 'org-level-3 nil :inherit 'org-level-8 :height 1.05) 
+       ;; (set-face-attribute 'org-level-2 nil :inherit 'org-level-8 :height 1.1) 
+       ;; (set-face-attribute 'org-level-1 nil :inherit 'org-level-8 :height 1.15) 
      #+end_src
     
 *** calfw and calfw-org calendars (disabled)
@@ -183,6 +190,26 @@
         ;; (setq cfw:org-overwrite-default-keybinding t) 
       #+end_src
     
+*** Casual suite
+
+    #+begin_src emacs-lisp
+      (require 'casual-agenda) ; optional
+      (keymap-set org-agenda-mode-map "C-o" #'casual-agenda-tmenu)
+
+      (require 'casual-bookmarks) ;; optional
+      (keymap-set bookmark-bmenu-mode-map "C-o" #'casual-bookmarks-tmenu)
+
+      (require 'casual-calc) ;; optional
+      (keymap-set calc-mode-map "C-o" #'casual-calc-tmenu)
+      (keymap-set calc-alg-map "C-o" #'casual-calc-tmenu)
+
+      (require 'casual-info) ;; optional
+      (keymap-set Info-mode-map "C-o" #'casual-info-tmenu)
+
+      (require 'casual-isearch)
+      (keymap-set isearch-mode-map "C-o" #'casual-isearch-tmenu)
+    #+end_src
+
 *** Key bindings
 
 ***** General
@@ -1373,6 +1400,21 @@
             (global-set-key (kbd "s-k") 'hydra-kill/body)
           #+end_src
     
+*** Suggested by org-modern (borders and dividers)
+
+    #+begin_src emacs-lisp
+      ;; Add frame borders and window dividers
+      (modify-all-frames-parameters
+       '((right-divider-width . 20)
+         (internal-border-width . 20)))
+      (dolist (face '(window-divider
+                      window-divider-first-pixel
+                      window-divider-last-pixel))
+        (face-spec-reset-face face)
+        (set-face-foreground face (face-attribute 'default :background)))
+      (set-face-background 'fringe (face-attribute 'default :background))
+    #+end_src
+
 *** Misc
 
      #+begin_src emacs-lisp

@@ -92,23 +92,30 @@
 
 (require 'org-modern)
 
-(global-org-modern-mode)
+;; Ellipsis styling
+(setq org-ellipsis "…")
+(set-face-attribute 'org-ellipsis nil :inherit 'default :box nil)
+
+;; Heading font size
+(set-face-attribute 'org-level-3 nil :height 1.05) 
+(set-face-attribute 'org-level-2 nil :height 1.1) 
+(set-face-attribute 'org-level-1 nil :height 1.15)
 
 ;; org-superstar
-(require 'org-superstar)
-(add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
+;; (require 'org-superstar)
+;; (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
 
 ;; set basic title font
-(set-face-attribute 'org-level-8 nil :weight 'bold :inherit 'default :foreground "dark orange")
+;; (set-face-attribute 'org-level-8 nil :weight 'bold :inherit 'default :foreground "dark orange")
 
 ;; ;; Low levels are unimportant => no scaling
-(set-face-attribute 'org-level-7 nil :inherit 'org-level-8)
-(set-face-attribute 'org-level-6 nil :inherit 'org-level-8)
-(set-face-attribute 'org-level-5 nil :inherit 'org-level-8)
-(set-face-attribute 'org-level-4 nil :inherit 'org-level-8)
-(set-face-attribute 'org-level-3 nil :inherit 'org-level-8 :height 1.05) 
-(set-face-attribute 'org-level-2 nil :inherit 'org-level-8 :height 1.1) 
-(set-face-attribute 'org-level-1 nil :inherit 'org-level-8 :height 1.15)
+;; (set-face-attribute 'org-level-7 nil :inherit 'org-level-8)
+;; (set-face-attribute 'org-level-6 nil :inherit 'org-level-8)
+;; (set-face-attribute 'org-level-5 nil :inherit 'org-level-8)
+;; (set-face-attribute 'org-level-4 nil :inherit 'org-level-8)
+;; (set-face-attribute 'org-level-3 nil :inherit 'org-level-8 :height 1.05) 
+;; (set-face-attribute 'org-level-2 nil :inherit 'org-level-8 :height 1.1) 
+;; (set-face-attribute 'org-level-1 nil :inherit 'org-level-8 :height 1.15)
 
 ;; (require 'calfw)
 ;; (require 'calfw-org)
@@ -117,6 +124,22 @@
 
 ;; ;; use org agenda buffer style keybinding.
 ;; (setq cfw:org-overwrite-default-keybinding t)
+
+(require 'casual-agenda) ; optional
+(keymap-set org-agenda-mode-map "C-o" #'casual-agenda-tmenu)
+
+(require 'casual-bookmarks) ;; optional
+(keymap-set bookmark-bmenu-mode-map "C-o" #'casual-bookmarks-tmenu)
+
+(require 'casual-calc) ;; optional
+(keymap-set calc-mode-map "C-o" #'casual-calc-tmenu)
+(keymap-set calc-alg-map "C-o" #'casual-calc-tmenu)
+
+(require 'casual-info) ;; optional
+(keymap-set Info-mode-map "C-o" #'casual-info-tmenu)
+
+(require 'casual-isearch)
+(keymap-set isearch-mode-map "C-o" #'casual-isearch-tmenu)
 
 (add-hook 'org-load-hook
           (lambda ()
@@ -1100,6 +1123,17 @@ Otherwise, kill. Besides, delete window it occupied."
       ("<SPC>" nil "quit "))))
 
 (global-set-key (kbd "s-k") 'hydra-kill/body)
+
+;; Add frame borders and window dividers
+(modify-all-frames-parameters
+ '((right-divider-width . 20)
+   (internal-border-width . 20)))
+(dolist (face '(window-divider
+                window-divider-first-pixel
+                window-divider-last-pixel))
+  (face-spec-reset-face face)
+  (set-face-foreground face (face-attribute 'default :background)))
+(set-face-background 'fringe (face-attribute 'default :background))
 
 (global-set-key (kbd "C-x C-y") 'transpose-sentences)
 (global-set-key (kbd "C-z") 'undo)

@@ -26,6 +26,7 @@
    '((holiday-fixed 1 1 "New Year's Day")
      (holiday-easter-etc)
      (holiday-fixed 12 25 "Christmas")))
+ '(casual-lib-use-unicode nil)
  '(column-number-mode t)
  '(comint-input-ignoredups t)
  '(comint-input-ring-file-name "/home/fnaufel/.bash_history")
@@ -62,6 +63,7 @@
  '(flymake-gui-warnings-enabled nil)
  '(fringe-mode nil nil (fringe))
  '(global-hl-line-mode t)
+ '(global-org-modern-mode t)
  '(global-origami-mode nil)
  '(gptel-api-key 'gptel-api-key-from-auth-source)
  '(gptel-default-mode 'org-mode)
@@ -144,6 +146,7 @@
  '(org-agenda-window-setup 'current-window)
  '(org-ai-image-directory "/home/fnaufel/Pictures/org-ai-images/")
  '(org-ai-sd-directory "/home/fnaufel/Pictures/org-ai-images/")
+ '(org-autolist-enable-delete nil)
  '(org-babel-load-languages
    '((python . t)
      (julia . t)
@@ -153,20 +156,17 @@
      (R . t)
      (awk . t)
      (lua . t)))
- '(org-blank-before-new-entry '((heading . t) (plain-list-item . t)))
- '(org-catch-invisible-edits nil)
+ '(org-blank-before-new-entry '((heading . t) (plain-list-item . auto)))
  '(org-clock-clocktable-default-properties
    '(:maxlevel 3 :scope agenda :block thisweek :step day :fileskip0 t :link t :narrow 70! :hidefiles nil :formula % :stepskip0 t :tcolumns 1))
  '(org-clock-mode-line-total 'today)
  '(org-complete-tags-always-offer-all-agenda-tags t)
- '(org-confirm-elisp-link-function 'y-or-n-p)
- '(org-confirm-shell-link-function 'y-or-n-p)
  '(org-cycle-global-at-bob t)
+ '(org-cycle-hide-block-startup nil)
  '(org-cycle-inline-images-display t)
  '(org-cycle-level-faces nil)
  '(org-cycle-separator-lines 1)
  '(org-deadline-warning-days 7)
- '(org-default-priority 40)
  '(org-directory "/home/fnaufel/Documents/OrgFiles/")
  '(org-duration-format '((special . h:mm)))
  '(org-ellipsis " 🡇")
@@ -178,9 +178,9 @@
  '(org-format-latex-options
    '(:foreground default :background default :scale 1.8 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
                  ("begin" "$1" "$" "$$" "\\(" "\\[")))
- '(org-hide-block-startup nil)
  '(org-hide-emphasis-markers nil)
  '(org-hide-leading-stars t)
+ '(org-highlight-latex-and-related '(native))
  '(org-html-htmlize-output-type 'css)
  '(org-id-link-to-org-use-id 'create-if-interactive-and-no-custom-id)
  '(org-indent-mode-turns-off-org-adapt-indentation nil)
@@ -205,24 +205,18 @@
  '(org-link-shell-confirm-function 'y-or-n-p)
  '(org-log-done 'time)
  '(org-log-into-drawer t)
- '(org-lowest-priority 60)
+ '(org-modern-block-fringe 16)
  '(org-modern-hide-stars nil)
- '(org-modern-list nil)
- '(org-modern-priority nil)
- '(org-modern-star nil)
- '(org-modern-table t)
- '(org-modern-timestamp nil)
- '(org-modern-todo nil)
  '(org-modules
    '(ol-bbdb ol-bibtex ol-docview ol-doi ol-eww ol-gnus ol-info org-inlinetask ol-irc ol-mhe ol-rmail ol-w3m org-collector))
  '(org-noter-doc-property-in-notes t)
  '(org-noter-hide-other nil)
  '(org-noter-separate-notes-from-heading t)
  '(org-num-face 'success)
- '(org-num-max-level 2)
+ '(org-num-max-level 4)
  '(org-odd-levels-only t)
  '(org-outline-path-complete-in-steps nil)
- '(org-pretty-entities nil)
+ '(org-pretty-entities t)
  '(org-priority-default 40)
  '(org-priority-highest 1)
  '(org-priority-lowest 60)
@@ -242,6 +236,7 @@
  '(org-special-ctrl-a/e t)
  '(org-src-window-setup 'split-window-right)
  '(org-startup-folded t)
+ '(org-startup-indented nil)
  '(org-structure-template-alist
    '(("a" . "export ascii")
      ("c" . "center")
@@ -270,7 +265,13 @@
  '(org-table-convert-region-max-lines 99999)
  '(org-todo-keywords
    '((sequence "TODO(t!)" "NEXT(n!)" "STARTED(s!)" "|" "CANCELED(c!)" "DONE(d!)")))
- '(org-use-speed-commands t)
+ '(org-use-speed-commands
+   '(lambda nil
+      (and
+       (looking-at org-outline-regexp)
+       (or
+        (looking-at "*")
+        (looking-back " ")))))
  '(origami-parser-alist
    '((java-mode . origami-java-parser)
      (c-mode . origami-c-parser)
@@ -296,7 +297,7 @@
  '(package-enable-at-startup nil)
  '(package-pinned-packages '((telega . "MELPA Stable")))
  '(package-selected-packages
-   '(apache-mode bar-cursor bm boxquote browse-kill-ring color-theme-modern diminish eproject folding graphviz-dot-mode initsplit session tabbar format-all jsonian jq-format gptel pandoc-mode spacious-padding helm-system-packages texfrag dall-e-shell ob-dall-e-shell csv-mode markdown-toc poly-R poly-noweb poly-org quarto-mode julia-snail ess edit-indirect flycheck-raku flycheck-pyflakes flycheck flycheck-julia epl magit magit-section vterm julia-mode julia-repl julia-shell julia-vterm lingva yasnippet-snippets ebib ob-raku raku-mode iedit helm-xref go-mode yafolding org-mime language-detection org-noter org-noter-pdftools org-clock-csv adaptive-wrap org-ref org-journal org-superstar helm-bibtex all-the-icons all-the-icons-dired all-the-icons-gnus major-mode-hydra pretty-hydra paradox buffer-move rainbow-delimiters company-box setup use-package which-key ac-js2 skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion yaml-mode all auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl typo web-beautify markdown-preview-mode lua-mode htmlize dash-functional multiple-cursors expand-region))
+   '(casual-agenda casual-bookmarks casual-calc casual-info casual-isearch casual-lib org-modern apache-mode bar-cursor bm boxquote browse-kill-ring color-theme-modern diminish eproject folding graphviz-dot-mode initsplit session tabbar format-all jsonian jq-format gptel pandoc-mode spacious-padding helm-system-packages texfrag dall-e-shell ob-dall-e-shell csv-mode markdown-toc poly-R poly-noweb poly-org quarto-mode julia-snail ess edit-indirect flycheck-raku flycheck-pyflakes flycheck flycheck-julia epl magit magit-section vterm julia-mode julia-repl julia-shell julia-vterm lingva yasnippet-snippets ebib ob-raku raku-mode iedit helm-xref go-mode yafolding org-mime language-detection org-noter org-noter-pdftools org-clock-csv adaptive-wrap org-ref org-journal org-superstar helm-bibtex all-the-icons all-the-icons-dired all-the-icons-gnus major-mode-hydra pretty-hydra paradox buffer-move rainbow-delimiters company-box setup use-package which-key ac-js2 skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion yaml-mode all auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl typo web-beautify markdown-preview-mode lua-mode htmlize dash-functional multiple-cursors expand-region))
  '(paradox-execute-asynchronously t)
  '(paradox-github-token t)
  '(pdf-annot-activate-created-annotations t)
@@ -378,8 +379,7 @@
  '(xterm-color-use-bold-for-bright t)
  '(yas-prompt-functions
    '(shk-yas/helm-prompt yas-dropdown-prompt yas-completing-prompt yas-maybe-ido-prompt yas-no-prompt))
- '(yas-snippet-dirs
-   '("/home/fnaufel/.emacs.d/snippets" "/usr/share/yasnippet-snippets" yasnippet-snippets-dir)))
+ '(yas-snippet-dirs '("/home/fnaufel/.emacs.d/snippets" yasnippet-snippets-dir)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -407,7 +407,7 @@
  '(org-journal-calendar-entry-face ((t (:foreground "#bbbb00" :slant italic))))
  '(org-journal-calendar-scheduled-face ((t (:foreground "#ff0000" :slant italic))))
  '(org-modern-block-keyword ((t (:weight light :height 0.9))))
- '(org-modern-label ((t (:inherit variable-pitch :box (:line-width -3 :color "black") :underline nil :weight regular :height 1.0 :width condensed))))
+ '(org-modern-label ((t nil)))
  '(org-modern-symbol ((t (:height 1.1 :family "Hack"))) t)
  '(org-noter-no-notes-exist-face ((t (:foreground "blue" :weight bold))))
  '(org-noter-notes-exist-face ((t (:foreground "tomato4" :weight bold))))
