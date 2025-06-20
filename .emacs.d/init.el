@@ -666,7 +666,7 @@ the \"file\" field is empty, return the empty string."
 
 ;;; Set font
 (defun fontify-frame (frame)
-  (set-frame-parameter frame 'font "Cousine-13")
+  (set-frame-parameter frame 'font "Cousine-14")
   (set-frame-parameter frame 'background-color "black")
   (set-frame-parameter frame 'foreground-color "bisque"))
 
@@ -2524,6 +2524,11 @@ with leading and trailing spaces removed."
 ;; ;; machine api.openai.com password OPENAI_KEY
 ;; (setq dall-e-shell-openai-key
 ;;       (auth-source-pick-first-password :host "api.openai.com"))
+
+;;; Disable visual fill mode
+(add-hook 'csv-mode-hook
+          (lambda ()
+            (visual-fill-column-mode -1)))
 
 (require 'pp+)
 

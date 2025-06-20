@@ -38,6 +38,8 @@
                   company-oddmuse company-dabbrev))
  '(company-selection-wrap-around t)
  '(company-tooltip-limit 30)
+ '(csv-align-style 'left)
+ '(csv-invisibility-default t)
  '(csv-separators '("," ";"))
  '(cua-mode nil nil (cua-base))
  '(cua-remap-control-v nil)
@@ -49,7 +51,7 @@
  '(dired-listing-switches
    "--time-style=+[%Y-%m-%d-%H:%M] --group-directories-first -alDhG")
  '(ebib-keywords
-   '("classification" "ranking" "machine learning" "LLM" "teaching" "data science" "neural networks" "interval math" "visual languages" "ontologies" "usability" "description logics" "survey" "markov models" "psychology" "hidden markov models" "statistics" "evolution" "biology" "textbook" "sums" "elliptic curves" "mathematical models" "evolutionary biology" "math" "linguistics" "historical linguistics" "dreams" "combinatorics" "nlp" "talkativeness" "sex" "curves" "conics" "analytic geometry" "chaos" "matrices" "linear algebra" "Science / Life Sciences / Evolution" "Science / Life Sciences / Biophysics" "Science / Life Sciences / Biochemistry" "Mathematics / Applied" "R" "coincidences" "pascal" "letters" "history" "fermat" "arithmetic" "_tablet" "software engineering" "stochastic processes" "queues" "monte carlo" "markov chains" "gibbs fields" "probability" "inference" "confidence interval" "binomial"))
+   '("research/cv" "geometric algebra" "research/robotics" "software/libraries" "research/ptc" "classification" "ranking" "machine learning" "LLM" "teaching" "data science" "neural networks" "interval math" "visual languages" "ontologies" "usability" "description logics" "survey" "markov models" "psychology" "hidden markov models" "statistics" "evolution" "biology" "textbook" "sums" "elliptic curves" "mathematical models" "evolutionary biology" "math" "linguistics" "historical linguistics" "dreams" "combinatorics" "nlp" "talkativeness" "sex" "curves" "conics" "analytic geometry" "chaos" "matrices" "linear algebra" "Science / Life Sciences / Evolution" "Science / Life Sciences / Biophysics" "Science / Life Sciences / Biochemistry" "Mathematics / Applied" "R" "coincidences" "pascal" "letters" "history" "fermat" "arithmetic" "_tablet" "software engineering" "stochastic processes" "queues" "monte carlo" "markov chains" "gibbs fields" "probability" "inference" "confidence interval" "binomial"))
  '(eldoc-idle-delay 0)
  '(eldoc-minor-mode-string nil)
  '(enable-recursive-minibuffers nil)
@@ -65,6 +67,7 @@
  '(global-hl-line-mode t)
  '(global-org-modern-mode t)
  '(global-origami-mode nil)
+ '(global-visual-fill-column-mode t)
  '(gptel-api-key 'gptel-api-key-from-auth-source)
  '(gptel-default-mode 'org-mode)
  '(gptel-model "gpt-4")
@@ -297,7 +300,7 @@
  '(package-enable-at-startup nil)
  '(package-pinned-packages '((telega . "MELPA Stable")))
  '(package-selected-packages
-   '(casual-agenda casual-bookmarks casual-calc casual-info casual-isearch casual-lib org-modern apache-mode bar-cursor bm boxquote browse-kill-ring color-theme-modern diminish eproject folding graphviz-dot-mode initsplit session tabbar format-all jsonian jq-format gptel pandoc-mode spacious-padding helm-system-packages texfrag dall-e-shell ob-dall-e-shell csv-mode markdown-toc poly-R poly-noweb poly-org quarto-mode julia-snail ess edit-indirect flycheck-raku flycheck-pyflakes flycheck flycheck-julia epl magit magit-section vterm julia-mode julia-repl julia-shell julia-vterm lingva yasnippet-snippets ebib ob-raku raku-mode iedit helm-xref go-mode yafolding org-mime language-detection org-noter org-noter-pdftools org-clock-csv adaptive-wrap org-ref org-journal org-superstar helm-bibtex all-the-icons all-the-icons-dired all-the-icons-gnus major-mode-hydra pretty-hydra paradox buffer-move rainbow-delimiters company-box setup use-package which-key ac-js2 skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion yaml-mode all auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl typo web-beautify markdown-preview-mode lua-mode htmlize dash-functional multiple-cursors expand-region))
+   '(visual-fill-column casual-agenda casual-bookmarks casual-calc casual-info casual-isearch casual-lib org-modern apache-mode bar-cursor bm boxquote browse-kill-ring color-theme-modern diminish eproject folding graphviz-dot-mode initsplit session tabbar format-all jsonian jq-format gptel pandoc-mode spacious-padding helm-system-packages texfrag dall-e-shell ob-dall-e-shell csv-mode markdown-toc poly-R poly-noweb poly-org quarto-mode julia-snail ess edit-indirect flycheck-raku flycheck-pyflakes flycheck flycheck-julia epl magit magit-section vterm julia-mode julia-repl julia-shell julia-vterm lingva yasnippet-snippets ebib ob-raku raku-mode iedit helm-xref go-mode yafolding org-mime language-detection org-noter org-noter-pdftools org-clock-csv adaptive-wrap org-ref org-journal org-superstar helm-bibtex all-the-icons all-the-icons-dired all-the-icons-gnus major-mode-hydra pretty-hydra paradox buffer-move rainbow-delimiters company-box setup use-package which-key ac-js2 skewer-mode company-web web-mode web-mode-edit-element git-timemachine bash-completion yaml-mode all auctex auto-complete-auctex calfw calfw-org helm-org system-packages org-ac xonsh-mode js2-mode anzu helpful info-colors js-comint nodejs-repl typo web-beautify markdown-preview-mode lua-mode htmlize dash-functional multiple-cursors expand-region))
  '(paradox-execute-asynchronously t)
  '(paradox-github-token t)
  '(pdf-annot-activate-created-annotations t)
@@ -365,6 +368,12 @@
  '(tab-width 4)
  '(telega-completing-read-function 'helm--completing-read-default)
  '(telega-emoji-animated-play nil)
+ '(telega-emoji-custom-alist
+   '((":skin-light:" . "🏻")
+     (":skin-medium-light:" . "🏼")
+     ("skin-medium:" . "🏽")
+     (":skin-medium-dark:" . "🏾")
+     (":skin-dark:" . "🏿")))
  '(telega-emoji-font-family "")
  '(telega-emoji-use-images nil)
  '(telega-msg-save-dir "/home/fnaufel/Downloads")
@@ -374,7 +383,9 @@
  '(tool-bar-mode nil)
  '(user-full-name "")
  '(vc-follow-symlinks t)
+ '(visual-fill-column-center-text t)
  '(visual-fill-column-enable-sensible-window-split nil)
+ '(visual-fill-column-width 80)
  '(woman-use-own-frame nil)
  '(xterm-color-use-bold-for-bright t)
  '(yas-prompt-functions

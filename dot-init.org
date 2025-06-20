@@ -851,7 +851,7 @@
      #+begin_src emacs-lisp
        ;;; Set font
        (defun fontify-frame (frame)
-         (set-frame-parameter frame 'font "Cousine-13")
+         (set-frame-parameter frame 'font "Cousine-14")
          (set-frame-parameter frame 'background-color "black")
          (set-frame-parameter frame 'foreground-color "bisque"))
 
@@ -3013,6 +3013,15 @@
   #+end_src
 
 * Misc
+
+*** CSV mode
+
+    #+begin_src emacs-lisp
+      ;;; Disable visual fill mode
+      (add-hook 'csv-mode-hook
+                (lambda ()
+                  (visual-fill-column-mode -1)))
+    #+end_src
 
 *** Pretty print sexps
 

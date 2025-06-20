@@ -2,7 +2,11 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("24.04 LTS"
+(("Running"
+ (filename . "Sunrise Checkpoint: ~/Documents/Running/ | ~/Downloads/")
+ (sunrise-directories "~/Documents/Running/" "~/Downloads/")
+ (handler . sunrise-checkpoint-handler))
+("24.04 LTS"
  (filename . "~/Documents/OrgFiles/ubuntu.org")
  (front-context-string . "***** STARTED [2")
  (rear-context-string . "nstall history\n\n")
