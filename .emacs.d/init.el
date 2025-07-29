@@ -148,8 +148,8 @@
             (define-key org-mode-map (kbd "C-M-<return>") 'org-insert-heading-respect-content)))
 
 ;;; Shorter key bindings for next and previous link
-(define-key org-mode-map (kbd "C-n") 'org-next-link)
-(define-key org-mode-map (kbd "C-p") 'org-previous-link)
+(define-key org-mode-map (kbd "s-n") 'org-next-link)
+(define-key org-mode-map (kbd "s-p") 'org-previous-link)
 
 (require 'org-id)
 (define-key org-mode-map (kbd "C-c C-k") 'org-store-link)
