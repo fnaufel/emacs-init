@@ -666,7 +666,7 @@ the \"file\" field is empty, return the empty string."
 
 ;;; Set font
 (defun fontify-frame (frame)
-  (set-frame-parameter frame 'font "Cousine-14")
+  (set-frame-parameter frame 'font "Cousine-12")
   (set-frame-parameter frame 'background-color "black")
   (set-frame-parameter frame 'foreground-color "bisque"))
 
