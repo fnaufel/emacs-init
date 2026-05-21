@@ -2648,10 +2648,10 @@ with leading and trailing spaces removed."
 (delete-other-windows)
 
 ;;; Third frame: sunrise ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(make-frame)
-(other-frame -1)
-(maximize-current-frame)
-(sunrise "/home/fnaufel" "/home/fnaufel/Downloads")
+;; (make-frame)
+;; (other-frame -1)
+;; (maximize-current-frame)
+;; (sunrise "/home/fnaufel" "/home/fnaufel/Downloads")
 ;; Set tree view for left-hand pane...
 ;; (sunrise-tree-view)
 ;; ...and for right-hand pane
