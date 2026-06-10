@@ -2502,6 +2502,40 @@ with leading and trailing spaces removed."
     (select-window chatbuf)
     (mapc #'telega-chatbuf-attach-file files)))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Attach tagged files in mc to telega chat buffer
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun fn/mc-telega--read-nul-separated-file-list (list-file)
+  "Read NUL-separated file names from LIST-FILE."
+  (with-temp-buffer
+    (insert-file-contents-literally list-file)
+
+    (let ((files (split-string (buffer-string) "\0" t)))
+      (dolist (file files)
+        files))))
+
+(defun fn/mc-telega-attach-files (files)
+  "Attach FILES to the current Telega chat buffer."
+  (when-let*
+      ((chatbuf (telega-dwim-chatbuf)))
+    (select-window chatbuf)
+    (mapc #'telega-chatbuf-attach-file files))
+  (message "[mc-telega] Finished attaching %d file(s)" (length files)))
+
+(defun fn/mc-telega-attach-files-from-list-file (list-file)
+  "Read file names from LIST-FILE and attach them to the current Telega chat."
+  (unwind-protect
+      (let ((files (fn/mc-telega--read-nul-separated-file-list list-file)))
+        (fn/mc-telega-attach-files files))
+    (message "[mc-telega] Cleaning up temp file: %S" list-file)
+    (ignore-errors
+      (delete-file list-file))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (define-key sunrise-mode-map (kbd "a") 'sunrise-telega-copy)
 
 (setq telega-chat--display-buffer-action '((display-buffer-reuse-window display-buffer-pop-up-window)))
