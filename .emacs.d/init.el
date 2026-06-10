@@ -2512,10 +2512,7 @@ with leading and trailing spaces removed."
   "Read NUL-separated file names from LIST-FILE."
   (with-temp-buffer
     (insert-file-contents-literally list-file)
-
-    (let ((files (split-string (buffer-string) "\0" t)))
-      (dolist (file files)
-        files))))
+    (split-string (buffer-string) "\0" t)))
 
 (defun fn/mc-telega-attach-files (files)
   "Attach FILES to the current Telega chat buffer."
