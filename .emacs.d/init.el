@@ -1544,6 +1544,65 @@ This is not module-context aware."
 ;;; Force save comint-input-ring upon killing emacs
 (add-hook 'kill-emacs-hook 'comint-write-input-ring)
 
+(require 'ansi-color)
+(require 'comint)
+(require 'seq)
+
+(defun fn/delete-terminal-osc-sequences (beg end)
+  "Delete OSC terminal-control sequences between BEG and END.
+
+OSC sequences may be terminated by BEL or by the two-character
+String Terminator sequence ESC backslash."
+  (save-excursion
+    (goto-char beg)
+    (let ((marker (copy-marker end)))
+      (while (re-search-forward
+              "\e\\][^\a\e]*\\(?:\a\\|\e\\\\\\)"
+              marker t)
+        (replace-match "" t t))
+      (set-marker marker nil))))
+
+(defun fn/kitty-scrollback-pager (file line)
+  "Display Kitty scrollback from FILE, initially positioned at LINE."
+  (let ((buffer (generate-new-buffer "*kitty scrollback*"))
+        (frame (seq-find #'display-graphic-p (frame-list))))
+    (unwind-protect
+        (progn
+          (with-current-buffer buffer
+            (let ((coding-system-for-read 'utf-8))
+              (insert-file-contents file))
+
+            ;; Reconstruct lines overwritten using carriage return.
+            (comint-carriage-motion (point-min) (point-max))
+
+            ;; Remove Kitty shell-integration markers and other OSC
+            ;; terminal-control sequences.
+            (fn/delete-terminal-osc-sequences
+             (point-min)
+             (point-max))
+
+            ;; Interpret ordinary ANSI SGR colors and attributes.
+            (ansi-color-apply-on-region
+             (point-min)
+             (point-max))
+
+            (special-mode)
+            (setq-local truncate-lines t)
+
+            (goto-char (point-min))
+            (forward-line (max 0 (1- line))))
+
+          (unless (frame-live-p frame)
+            (error "No graphical Emacs frame is available"))
+
+          (with-selected-frame frame
+            (let ((window (frame-selected-window frame)))
+              (set-window-buffer window buffer)
+              (select-window window))))
+
+      (when (file-exists-p file)
+        (delete-file file)))))
+
 ;; (require 'xonsh-mode)
 
 ;; ;;; Bind yank
@@ -2662,21 +2721,21 @@ with leading and trailing spaces removed."
 
 ;;; Second frame: shell ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(make-frame)
-(other-frame -1)
-(maximize-current-frame)
+;; (make-frame)
+;; (other-frame -1)
+;; (maximize-current-frame)
 
 ;;; disabled
 ;; (ansi-term "/home/fnaufel/.local/bin/xonsh" "xonsh")
 
 ;;; Bash shell (splits window automatically)
-(cd "~")
-(shell)
+;; (cd "~")
+;; (shell)
 ;; (sleep-for 3)
 ;; (comint-send-string (get-buffer-process (shell)) "cd /home/fnaufel/\n")
 ;; (sleep-for 1)
 ;; (dirs)
-(delete-other-windows)
+;; (delete-other-windows)
 
 ;;; Third frame: sunrise ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; (make-frame)
