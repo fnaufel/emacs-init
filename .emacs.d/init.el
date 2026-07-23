@@ -1586,7 +1586,8 @@ String Terminator sequence ESC backslash."
              (point-min)
              (point-max))
 
-            (special-mode)
+            (sh-mode)
+            (setq-local buffer-read-only t)
             (setq-local truncate-lines t)
 
             (goto-char (point-min))
